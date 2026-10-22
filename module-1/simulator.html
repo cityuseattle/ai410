@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 HOS 1 simulator: step through the frontend, backend, LLM and tool hops of an agentic loop with tool calling.">
+<title>Agentic Loop Simulator</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.sim-layout { display:grid; grid-template-columns:minmax(260px,340px) 1fr; gap:16px; align-items:start; }
+@media (max-width:860px){ .sim-layout { grid-template-columns:1fr; } }
+.panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow); margin-bottom:16px; min-width:0; }
+.panel h2 { font-size:1.02rem; margin-bottom:10px; }
+.panel h3 { font-size:.9rem; margin:14px 0 6px; }
+.presets { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px; }
+.presets button { font-family:inherit; font-size:.74rem; border:1px solid var(--border); background:var(--surface2); color:var(--text); border-radius:14px; padding:4px 10px; cursor:pointer; }
+.presets button:hover { border-color:var(--accent); }
+.toggle { display:flex; gap:8px; align-items:flex-start; font-size:.85rem; margin:6px 0; cursor:pointer; }
+.toggle input { accent-color:var(--accent); margin-top:4px; }
+.toggle small { display:block; color:var(--muted); font-size:.74rem; }
+.lanes { display:grid; grid-template-columns:repeat(var(--lanes,4),1fr); gap:8px; margin-bottom:12px; }
+.lane { border:2px solid var(--border); border-radius:10px; padding:10px; text-align:center; font-size:.8rem; background:var(--surface2); transition:all .2s; min-width:0; }
+.lane b { display:block; font-size:.86rem; }
+.lane .ic { font-size:1.3rem; display:block; }
+.lane.from { border-color:var(--blue); background:var(--blue-bg); }
+.lane.to { border-color:var(--accent); background:var(--accent-light); box-shadow:0 0 0 3px var(--accent-light); }
+.lane.err { border-color:var(--bad); background:var(--bad-bg); }
+@media (max-width:520px){ .lanes { grid-template-columns:repeat(2,1fr); } }
+.stepbox { border:1px solid var(--border); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; background:var(--surface2); margin-bottom:12px; min-height:84px; }
+.stepbox.err { border-left-color:var(--bad); } .stepbox.warn { border-left-color:var(--amber); }
+.stepbox .k { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.steps-list { list-style:none; margin:0; padding:0; font-size:.8rem; }
+.steps-list li { padding:5px 8px; border-radius:6px; color:var(--muted); display:flex; gap:8px; }
+.steps-list li.cur { background:var(--accent-light); color:var(--text); font-weight:700; }
+.steps-list li.past { color:var(--text); }
+.steps-list li .n { flex:none; width:20px; text-align:right; }
+.steps-list li.bad { color:var(--bad); }
+.verdict { border-radius:8px; padding:10px 14px; font-size:.86rem; margin-top:10px; }
+.verdict.ok { background:var(--ok-bg); color:var(--ok); } .verdict.bad { background:var(--bad-bg); color:var(--bad); } .verdict.warn { background:var(--amber-bg); color:var(--amber); }
+.kv { display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:.82rem; }
+.kv dt { color:var(--muted); } .kv dd { margin:0; font-weight:600; }
+.bar-row { display:grid; grid-template-columns:70px 1fr 48px; gap:8px; align-items:center; font-size:.78rem; margin-bottom:4px; }
+.bar-track { height:12px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; overflow:hidden; position:relative; }
+.bar-fill { height:100%; background:var(--accent); }
+.project-tip { border:1px dashed var(--accent); border-radius:var(--radius); padding:14px 18px; background:var(--accent-light); font-size:.88rem; }
+.project-tip b.h { display:block; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent2); margin-bottom:4px; }
+
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Simulator 1 · Pairs with HOS 1 (Weeks 1–2)</div>
+    <h1>Agentic Loop Simulator</h1>
+    <p class="lede">Send a message and step through every hop: frontend → backend → model → tool → back to the model. Toggle tools and backend settings to see a correct call, a confident guess, a graceful failure, and a crash.</p>
+    <div class="chips"><span class="chip">Outcome O1</span><span class="chip">Tool calling</span><span class="chip">Loop limits</span><span class="chip">Error handling</span></div>
+  </div>
+</section>
+<main id="main">
+<div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><span class="tag">1 · Agentic Loop</span><a class="tag blue" href="../module-2/simulator.html" style="text-decoration:none">2 · RAG Pipeline</a><a class="tag blue" href="../module-3/simulator.html" style="text-decoration:none">3 · Guardrails &amp; Queue</a><a class="tag blue" href="../module-4/simulator.html" style="text-decoration:none">4 · Push &amp; Observability</a></div>
+<p class="sim-note">⚠ Simulation only — a rule-based stand-in for Gemini. No API key, no network calls.</p>
+<div class="sim-layout">
+  <div>
+    <div class="panel">
+      <h2>1 · Send a message</h2>
+      <label class="field" for="msg">User message</label>
+      <input type="text" id="msg" value="What's 342 times 87?">
+      <div class="presets" id="presets">
+        <button type="button">What's 342 times 87?</button>
+        <button type="button">Say hi in French</button>
+        <button type="button">Calculate 12 / (3 -</button>
+        <button type="button">What time is it in Tokyo?</button>
+        <button type="button">What's 15 times 4, and what time is it in London?</button>
+        <button type="button">Convert 10 km to miles</button>
+      </div>
+      <h3>Tools the backend declares</h3>
+      <label class="toggle"><input type="checkbox" id="tCalc" checked><span><code>calculate(expression)</code><small>The HOS 1 build tool</small></span></label>
+      <label class="toggle"><input type="checkbox" id="tTime"><span><code>get_current_time(timezone)</code><small>A possible Understand &amp; Refine second tool</small></span></label>
+      <label class="toggle"><input type="checkbox" id="tConv"><span><code>convert_units(value, from, to)</code><small>Another second-tool option</small></span></label>
+      <h3>Backend settings</h3>
+      <label class="toggle"><input type="checkbox" id="tTry" checked><span>Wrap tool calls in try/except<small>Off = a tool error crashes the request</small></span></label>
+      <label class="toggle"><input type="checkbox" id="tKeyFront"><span>Put the API key in the frontend<small>What the worked example warns against</small></span></label>
+      <label class="field" for="maxIt">Max tool calls per request: <span id="maxItV">3</span></label>
+      <input type="range" id="maxIt" min="1" max="5" value="3">
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="send" type="button">Send</button>
+        <button class="btn secondary" id="step" type="button" disabled>Next step ▸</button>
+        <button class="btn secondary" id="runAll" type="button" disabled>Run to end</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <h2>2 · Watch the loop</h2>
+      <div class="lanes" style="--lanes:4">
+        <div class="lane" id="L-frontend"><span class="ic">🖥️</span><b>Frontend</b>Streamlit</div>
+        <div class="lane" id="L-backend"><span class="ic">⚙️</span><b>Backend</b>FastAPI /chat</div>
+        <div class="lane" id="L-model"><span class="ic">🧠</span><b>LLM</b>Gemini (simulated)</div>
+        <div class="lane" id="L-tool"><span class="ic">🔧</span><b>Tool</b>Python function</div>
+      </div>
+      <div class="stepbox" id="stepbox"><span class="k">Ready</span><p style="margin:0">Pick a message and press <b>Send</b>. Then step through one hop at a time.</p></div>
+      <ol class="steps-list" id="stepsList"></ol>
+      <div id="verdict"></div>
+    </div>
+    <div class="panel">
+      <h2>3 · What the model sees (<code>contents</code>)</h2>
+      <p class="small muted">The backend resends this whole list on every model call — the model has no other memory of the conversation.</p>
+      <div class="log" id="history">[]</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>What this teaches</h2>
+  <ul>
+    <li><b>The model only asks; your code runs.</b> Every tool call passes through the Backend lane — Gemini never touches the Python function.</li>
+    <li><b>The loop can repeat.</b> Try the two-part question with both tools on: two function calls, then text. Drop max iterations to 1 and watch the backend cut it off.</li>
+    <li><b>A missing tool doesn't cause an error — it causes a guess.</b> Turn <code>calculate</code> off and ask the math question. The answer looks confident and is wrong. That's what Evaluate is for.</li>
+    <li><b>Failures should be data, not crashes.</b> Turn off try/except and send the broken expression.</li>
+  </ul>
+</div>
+<div class="project-tip">
+  <b class="h">For your Team Project</b>
+  List the 2–4 tools your project's agent needs. For each, write the one-line <em>description</em> the model would read — then ask: would a vague description make the model call it at the wrong time? Pair with the <a href="index.html#challenge">Application Challenge</a>'s auto / confirm / never sort.
+</div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+var $=function(id){return document.getElementById(id);};
+var steps=[], idx=-1, history=[];
+
+[].slice.call(document.querySelectorAll('#presets button')).forEach(function(b){ b.addEventListener('click',function(){ $('msg').value=b.textContent; }); });
+$('maxIt').addEventListener('input',function(){ $('maxItV').textContent=this.value; });
+
+function wordsToExpr(s){
+  var t=s.toLowerCase().replace(/,/g,' ');
+  t=t.replace(/\btimes\b|\bmultiplied by\b|×/g,'*').replace(/\bplus\b/g,'+').replace(/\bminus\b/g,'-').replace(/\bdivided by\b/g,'/');
+  var m=t.match(/[\d\.\s\+\-\*\/\(\)]*\d[\d\.\s\+\-\*\/\(\)]*/g); if(!m) return null;
+  m=m.map(function(x){return x.trim();}).filter(function(x){return /[\+\-\*\/]/.test(x) || /\(/.test(x);});
+  return m.length? m[0] : null;
+}
+var ZONES={tokyo:['Asia/Tokyo',9],london:['Europe/London',1],seattle:['America/Los_Angeles',-7],'new york':['America/New_York',-4],paris:['Europe/Paris',2]};
+function detect(msg){
+  var needs=[], low=msg.toLowerCase();
+  var parts=msg.split(/,? and (?=what|how|convert)/i);
+  parts.forEach(function(p){
+    var pl=p.toLowerCase();
+    var conv=pl.match(/(\d+(?:\.\d+)?)\s*(km|kilometers?|miles?|mi|kg|lbs?|pounds?)\s+(?:to|in)\s+(km|kilometers?|miles?|mi|kg|lbs?|pounds?)/);
+    if(conv){ needs.push({tool:'convert_units',args:{value:+conv[1],from:conv[2],to:conv[3]}}); return; }
+    if(/\btime\b/.test(pl) && !/\btimes\b/.test(pl)){
+      var z=Object.keys(ZONES).filter(function(k){return pl.indexOf(k)>=0;})[0]||'seattle';
+      needs.push({tool:'get_current_time',args:{timezone:ZONES[z][0]}}); return;
+    }
+    var e=wordsToExpr(p); if(e && (/calc|what|how much|\d\s*[\+\-\*\/x]/i.test(pl))) needs.push({tool:'calculate',args:{expression:e}});
+  });
+  return needs;
+}
+function runTool(n){
+  if(n.tool==='calculate'){
+    var e=n.args.expression;
+    if(!/^[\d\s\.\+\-\*\/\(\)]+$/.test(e)) throw new Error('invalid characters');
+    var depth=0; for(var i=0;i<e.length;i++){ if(e[i]==='(')depth++; if(e[i]===')')depth--; }
+    if(depth!==0 || /[\+\-\*\/]\s*$/.test(e)) throw new Error("SyntaxError: '(' was never closed");
+    var v=Function('"use strict";return ('+e+')')(); return Math.round(v*1e6)/1e6;
+  }
+  if(n.tool==='get_current_time'){
+    var z=Object.keys(ZONES).filter(function(k){return ZONES[k][0]===n.args.timezone;})[0];
+    var d=new Date(Date.now()+ZONES[z][1]*3600e3); var h=d.getUTCHours(), m=d.getUTCMinutes();
+    return (h<10?'0':'')+h+':'+(m<10?'0':'')+m+' ('+n.args.timezone+')';
+  }
+  if(n.tool==='convert_units'){
+    var f=n.args.from, t=n.args.to, v=n.args.value, r;
+    if(/^k(m|ilo)/.test(f) && /^mi/.test(t)) r=v*0.621371; else if(/^mi/.test(f) && /^k/.test(t)) r=v*1.60934;
+    else if(/^kg/.test(f) && /^(lb|pound)/.test(t)) r=v*2.20462; else if(/^(lb|pound)/.test(f) && /^kg/.test(t)) r=v/2.20462;
+    else throw new Error('unsupported units');
+    return Math.round(r*100)/100+' '+t;
+  }
+}
+function enabled(t){ return {calculate:$('tCalc').checked,get_current_time:$('tTime').checked,convert_units:$('tConv').checked}[t]; }
+function S(from,to,title,detail,opts){ opts=opts||{}; steps.push({from:from,to:to,title:title,detail:detail,cls:opts.cls||'',hist:opts.hist||null}); }
+
+function build(){
+  steps=[]; idx=-1; history=[];
+  var msg=$('msg').value.trim()||'Hello';
+  var maxIt=+$('maxIt').value, tryOn=$('tTry').checked;
+  var declared=['calculate','get_current_time','convert_units'].filter(enabled);
+  if($('tKeyFront').checked){
+    S('frontend','model','Frontend calls Gemini directly — key exposed','The API key is bundled into code that runs in the user\'s browser. Anyone can open developer tools and copy <code>AIza…</code>. The call still "works", which is exactly why this bug ships.',{cls:'err'});
+  }
+  S('frontend','backend','POST /chat','<code>{"message": "'+esc(msg)+'"}</code>',{hist:{role:'user',parts:[{text:msg}]}});
+  var needs=detect(msg), usable=needs.filter(function(n){return enabled(n.tool);}), missing=needs.filter(function(n){return !enabled(n.tool);});
+  var answers=[], it=0, crashed=false, capped=false;
+  S('backend','model','Call Gemini (iteration 1)','Sends <code>contents</code> (1 message) + declared tools: '+(declared.length?declared.map(function(d){return '<code>'+d+'</code>';}).join(', '):'<em>none</em>')+'.');
+  for(var i=0;i<usable.length;i++){
+    it++;
+    if(it>maxIt){ capped=true; break; }
+    var n=usable[i];
+    S('model','backend','Model returns a function call','No text — just <code>'+n.tool+'('+JSON.stringify(n.args)+')</code>.',{hist:{role:'model',parts:[{functionCall:{name:n.tool,args:n.args}}]}});
+    var result, err=null;
+    try { result=runTool(n); } catch(e){ err=e.message; }
+    if(err && !tryOn){
+      S('backend','tool','Backend runs '+n.tool+' → exception','<code>'+esc(err)+'</code> is raised and nothing catches it.',{cls:'err'});
+      S('backend','frontend','HTTP 500 Internal Server Error','The whole request dies. The user sees a generic error — and the model never gets a chance to explain.',{cls:'err'});
+      crashed=true; break;
+    }
+    var payload= err? {error:err} : {result:result};
+    S('backend','tool','Backend runs the real function', err? 'Exception caught → returned as data: <code>'+esc(JSON.stringify(payload))+'</code>' : '<code>'+n.tool+'</code> → <code>'+esc(String(result))+'</code>',{cls:err?'warn':''});
+    answers.push(err? null : {n:n,r:result});
+    if(it+1>maxIt && i<usable.length-1){ capped=true; S('backend','backend','Max iterations reached','The model still wanted another tool call, but the loop limit ('+maxIt+') stops it here.',{cls:'warn',hist:{role:'user',parts:[{functionResponse:{name:n.tool,response:payload}}]}}); break; }
+    S('backend','model','Send function_response (iteration '+(it+1)+')','Appends the result to <code>contents</code> and resends the <em>whole list</em> — this is the loop.',{hist:{role:'user',parts:[{functionResponse:{name:n.tool,response:payload}}]}});
+    if(err){ answers.errText="That expression looks incomplete — could you double-check it? (The calculator reported: "+err+")"; }
+  }
+  if(crashed){ return finish('bad','Crashed: a tool error with no try/except takes down the whole request. Turn try/except back on — a failure should come back to the model as data.'); }
+  if(capped){
+    S('backend','frontend','Return partial / fallback reply','"Sorry, I couldn\'t finish that request." — the loop cap is a safety net against a model that keeps calling tools forever.',{cls:'warn'});
+    return finish('warn','Stopped by the max-iteration cap. Raise it to 2+ to let a two-tool question finish.');
+  }
+  var text;
+  if(answers.errText) text=answers.errText;
+  else if(usable.length){
+    text=answers.filter(Boolean).map(function(a){
+      if(a.n.tool==='calculate') return a.n.args.expression+' = '+Number(a.r).toLocaleString();
+      if(a.n.tool==='get_current_time') return 'It\'s '+a.r;
+      return a.n.args.value+' '+a.n.args.from+' ≈ '+a.r;
+    }).join('. ')+'.';
+  }
+  if(missing.length){
+    var guess=missing.map(function(n){
+      if(n.tool==='calculate'){ var real; try{ real=runTool(n);}catch(e){ real=null; } return real===null? 'That works out to about 4.' : 'That\'s about '+Math.round(real*(1+(Math.random()*0.06+0.02))).toLocaleString()+'.'; }
+      if(n.tool==='get_current_time') return 'It\'s probably around 3 PM there.';
+      return 'That\'s roughly '+Math.round(n.args.value*0.7)+' '+n.args.to+'.';
+    }).join(' ');
+    text=(text? text+' ':'')+guess;
+  }
+  if(!needs.length) text=/french/i.test(msg)?'Bonjour ! 👋':'Here\'s a direct answer — no tool needed for this one.';
+  S('model','backend','Model returns plain text → loop ends','<code>"'+esc(text)+'"</code>',{hist:{role:'model',parts:[{text:text}]}});
+  S('backend','frontend','Response to the user','Streamlit renders the reply. Total model calls: '+(Math.min(it,maxIt)+1)+'.');
+  if(missing.length) return finish('bad','Hallucination risk: the question needed <code>'+missing.map(function(m){return m.tool;}).join(', ')+'</code> but it wasn\'t declared, so the model guessed — confidently. No error was raised anywhere. Only a deliberate Evaluate test catches this.');
+  if(answers.errText) return finish('ok','Graceful failure: the tool error went back to the model as data, and the model explained it to the user instead of crashing.');
+  if($('tKeyFront').checked) return finish('bad','The answer was right, but the key was public the whole time. Move the Gemini call behind the backend.');
+  if(!needs.length) return finish('ok','Correct: no tool needed, so the model answered directly in one round trip.');
+  finish('ok','Correct: '+usable.length+' tool call'+(usable.length>1?'s':'')+', each result fed back before the final answer.');
+}
+var verdict=null;
+function finish(kind,text){ verdict={kind:kind,text:text}; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function render(){
+  ['frontend','backend','model','tool'].forEach(function(l){ $('L-'+l).className='lane'; });
+  var list=$('stepsList');
+  list.innerHTML=steps.map(function(s,i){ return '<li class="'+(i===idx?'cur':i<idx?'past':'')+(s.cls==='err'?' bad':'')+'"><span class="n">'+(i+1)+'</span><span>'+s.title+'</span></li>'; }).join('');
+  if(idx<0){ return; }
+  var s=steps[idx];
+  $('L-'+s.from).classList.add('from'); if(s.to!==s.from) $('L-'+s.to).classList.add(s.cls==='err'?'err':'to');
+  $('stepbox').className='stepbox '+s.cls;
+  $('stepbox').innerHTML='<span class="k">Step '+(idx+1)+' of '+steps.length+' · '+s.from+' → '+s.to+'</span><p style="margin:2px 0 0"><b>'+s.title+'</b></p><p style="margin:4px 0 0" class="small">'+s.detail+'</p>';
+  var shown=[]; for(var i=0;i<=idx;i++){ if(steps[i].hist) shown.push(steps[i].hist); }
+  $('history').textContent=JSON.stringify(shown,null,1);
+  var done=idx===steps.length-1;
+  $('step').disabled=done; $('runAll').disabled=done;
+  $('verdict').innerHTML= done&&verdict ? '<div class="verdict '+verdict.kind+'">'+verdict.text+'</div>' : '';
+}
+$('send').addEventListener('click',function(){ verdict=null; build(); idx=0; $('verdict').innerHTML=''; render(); });
+$('step').addEventListener('click',function(){ if(idx<steps.length-1){ idx++; render(); } });
+$('runAll').addEventListener('click',function(){ idx=steps.length-1; render(); });
+</script>
+</body>
+</html>

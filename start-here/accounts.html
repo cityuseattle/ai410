@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 410 — Account &amp; Service Setup Guide</title>
+    <link rel="stylesheet" href="../assets/course.css">
+    <style>
+        .intro-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:15px 18px; margin:18px 0; border-radius:0 6px 6px 0; font-size:0.92rem; }
+        .intro-box h4 { margin:0 0 6px; color:var(--blue); font-size:0.95rem; }
+
+        table.map-table { width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:0.85rem; }
+        table.map-table th, table.map-table td { border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top; }
+        table.map-table th { background:var(--surface2); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--muted); }
+        table.map-table td.svc-name { font-weight:700; color:var(--accent); white-space:nowrap; }
+        table.map-table a.jump { font-weight:600; text-decoration:none; color:var(--blue); }
+        table.map-table a.jump:hover { text-decoration:underline; }
+
+        .service-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:6px; }
+        .service-head h2 { margin:0; border-bottom:none; padding-bottom:0; }
+        .service-pills { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+        .svc-pill { font-size:0.74rem; font-weight:700; padding:3px 10px; border-radius:999px; }
+        .svc-pill.when { background:var(--blue-bg); color:var(--violet); }
+        .svc-pill.cost { background:var(--accent-light); color:var(--accent2); }
+        .why-line { font-size:0.92rem; color:var(--text); margin:0 0 18px; }
+        .why-line strong { color:var(--text); }
+
+        ol.steps { padding-left:1.3em; }
+        ol.steps > li { margin-bottom:14px; }
+        pre { background:var(--code-bg); color:var(--code-text); padding:14px 16px; border-radius:6px; overflow-x:auto; font-size:0.8rem; line-height:1.5; }
+        code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+        p code, li code, dd code { background:var(--surface2); color:var(--rose); padding:1px 5px; border-radius:4px; font-size:0.88em; }
+        .explain { background:var(--surface2); border-left:3px solid var(--border); padding:8px 14px; margin:10px 0; font-size:0.9rem; border-radius:0 4px 4px 0; }
+        .explain strong { color:var(--text); }
+        .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:18px 0 0; border-radius:4px; font-size:0.88rem; }
+        .snag-box h4 { margin:0 0 8px; color:var(--amber); font-size:0.9rem; }
+        .done-box { background:var(--accent-light); border-left:5px solid var(--accent); padding:13px 18px; margin:16px 0 0; border-radius:4px; font-size:0.88rem; }
+        .done-box h4 { margin:0 0 6px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
+        .done-box ul { margin:0; padding-left:20px; }
+
+        /* Anatomy diagram for the Redis connection string */
+        .anatomy-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px 16px 16px; margin:18px 0; overflow-x:auto; }
+        .anatomy-string { font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:0.95rem; white-space:nowrap; text-align:center; margin-bottom:4px; }
+        .anatomy-part { padding:2px 4px; border-radius:3px; }
+        .part-scheme { background:var(--blue-bg); color:var(--violet); }
+        .part-user { background:var(--blue-bg); color:var(--blue); }
+        .part-pass { background:var(--bad-bg); color:var(--bad); }
+        .part-host { background:var(--accent-light); color:var(--accent2); }
+        .part-port { background:var(--amber-bg); color:var(--amber); }
+        .anatomy-legend { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:14px; font-size:0.8rem; }
+        .anatomy-legend span.swatch { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:middle; }
+
+        .glossary-box { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:14px 0; font-size:0.85rem; }
+        .glossary-box h5 { margin:0 0 6px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--muted); }
+        .glossary-box dl { margin:0; }
+        .glossary-box dt { font-weight:700; color:var(--text); display:inline; }
+        .glossary-box dd { display:inline; margin:0 0 0 4px; color:var(--muted); }
+        .glossary-box dd::after { content:""; display:block; margin-bottom:4px; }
+
+        .env-example { overflow-x:auto; background:var(--code-bg); color:var(--code-text); padding:16px 18px; border-radius:8px; font-size:0.82rem; line-height:1.7; margin:14px 0; }
+        .env-example .comment { color:var(--code-text); opacity:.6; }
+        .env-example .key { color:#93c5fd; }
+
+        .back-to-top { display:inline-block; margin-top:30px; font-size:0.85rem; color:var(--link); text-decoration:none; font-weight:600; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Start here · Before you need each service</div>
+    <h1>Account &amp; Service Setup</h1>
+    <p class="lede">Every external account the course asks you to create, in one place: what to click, what each one is for, and when you first need it. Set up GitHub and Gemini before Week 1; the rest can wait until their module.</p>
+    <div class="chips"><span class="chip">Do this once, before you need it</span><span class="chip">Every service has a free tier — no credit card required anywhere</span><span class="chip">5 services</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#find">Find your service</a>
+    <a href="#github">GitHub</a>
+    <a href="#google">Gemini key</a>
+    <a href="#redis">Redis</a>
+    <a href="#expo">Expo</a>
+    <a href="#langfuse">Langfuse</a>
+    <a href="#together">All together</a>
+  </div>
+</nav>
+
+<section class="module card" id="find">
+  <div class="module-head"><div class="module-icon">🗺️</div><div><h2>Find your service</h2></div></div>
+        <div class="intro-box">
+            <h4>What this page is</h4>
+            <p>Every external account this course ever asks you to create, in one place, with exactly what to click and — for Redis specifically — what that intimidating connection string actually means. You don't need all five on day one: GitHub and Google are needed immediately (HOS 1), Redis isn't needed until HOS 3, and Expo and Langfuse aren't needed until HOS 4. Each section below says when, so you can set things up as you go instead of all at once.</p>
+        </div>
+        <div class="table-wrap" tabindex="0"><table class="map-table">
+            <tr><th>Service</th><th>What it's for</th><th>First needed</th><th>Jump</th></tr>
+            <tr>
+                <td class="svc-name">GitHub</td>
+                <td>Hosting your code, Codespaces (recommended dev environment)</td>
+                <td>HOS 1</td>
+                <td><a class="jump" href="#github">Read →</a></td>
+            </tr>
+            <tr>
+                <td class="svc-name">Google AI Studio</td>
+                <td>Your Gemini API key — every LLM call all term runs through this</td>
+                <td>HOS 1</td>
+                <td><a class="jump" href="#google">Read →</a></td>
+            </tr>
+            <tr>
+                <td class="svc-name">Upstash (Redis)</td>
+                <td>The job queue behind background/async document processing</td>
+                <td>HOS 3</td>
+                <td><a class="jump" href="#redis">Read →</a></td>
+            </tr>
+            <tr>
+                <td class="svc-name">Expo</td>
+                <td>Your mobile app's EAS project ID — required for push notifications to work at all</td>
+                <td>HOS 4</td>
+                <td><a class="jump" href="#expo">Read →</a></td>
+            </tr>
+            <tr>
+                <td class="svc-name">Langfuse</td>
+                <td>Tracing/observability for your pipeline</td>
+                <td>HOS 4</td>
+                <td><a class="jump" href="#langfuse">Read →</a></td>
+            </tr>
+        </table></div>
+</section>
+
+<section class="module card" id="github">
+  <div class="module-head"><div class="module-icon">🐙</div><div><h2>GitHub</h2><div class="module-meta"><span class="tag blue">First needed: HOS 1</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> hosting your own copy of each HOS's starter code, and — the recommended path all term — <strong>GitHub Codespaces</strong>, a ready-made cloud dev environment that sidesteps the most common setup bug in this course (an old package on your own machine silently shadowing the project's real one).</p>
+
+            <ol class="steps">
+                <li>Go to <a href="https://github.com" target="_blank" rel="noopener">github.com</a> and click <strong>Sign up</strong> (top right).</li>
+                <li>Enter an email, create a password, and pick a username. Use something professional — this account is worth keeping and using beyond this course, for internships and job applications.</li>
+                <li>Verify your email when GitHub sends the confirmation.</li>
+                <li>That's it for a free account — no payment information is requested or required.</li>
+            </ol>
+
+            <div class="explain"><strong>Already have a GitHub account</strong> from a bootcamp, another course, or personal projects? Use that one — don't create a second account. One consistent GitHub profile is more useful to you later than several scattered ones.</div>
+
+            <div class="done-box">
+                <h4>You'll know it worked when…</h4>
+                <ul><li>You can sign in at github.com, and can see the option <strong>Code → Codespaces → Create codespace on main</strong> on any repository (including your own copy of a starter-code folder).</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="google">
+  <div class="module-head"><div class="module-icon">🔑</div><div><h2>Google AI Studio: Gemini API key</h2><div class="module-meta"><span class="tag blue">First needed: HOS 1</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> the API key that lets your backend talk to Gemini. You get this once, in HOS 1, and reuse the exact same key for every remaining HOS — chat, embeddings, everything.</p>
+
+            <ol class="steps">
+                <li>Go to <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> and sign in with any Google account (a personal Gmail account is fine — you don't need a special one).</li>
+                <li>Click <strong>Create API key</strong>.</li>
+                <li>Copy the long string it gives you — it starts with something like <code>AIza...</code>.</li>
+                <li>Paste it into your project's <code>.env</code> file:
+<pre tabindex="0">GEMINI_API_KEY=AIzaSyD-your-real-key-goes-right-here</pre>
+                </li>
+            </ol>
+
+            <div class="explain"><strong>Treat this like a password.</strong> Anyone who has your key can make Gemini requests billed to your account. Never paste it into a file you commit to Git, a chat message, or a screenshot — that's exactly why it lives in <code>.env</code> and not in your code.</div>
+
+            <div class="done-box">
+                <h4>You'll know it worked when…</h4>
+                <ul><li>You have a copied key starting with <code>AIza</code> saved in your own notes somewhere safe, and pasted into <code>.env</code> as <code>GEMINI_API_KEY</code> (not <code>.env.example</code> — that file is just a template).</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="redis">
+  <div class="module-head"><div class="module-icon">🧱</div><div><h2>Upstash: Redis database</h2><div class="module-meta"><span class="tag blue">First needed: HOS 3</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> Redis is the fast, simple database your background job queue runs on — one process (your API) adds "please ingest this document" tasks to it, and a separate worker process pulls them off. Upstash gives you a managed, free Redis instance with no server to install yourself.</p>
+
+            <ol class="steps">
+                <li>Go to <a href="https://upstash.com" target="_blank" rel="noopener">upstash.com</a> and sign up — GitHub or Google sign-in both work, so you likely don't need a new password.</li>
+                <li>Click <strong>Create database</strong>.</li>
+                <li>Choose the <strong>Redis</strong> type, give it any name (e.g. <code>ai410-queue</code>), and pick a region close to you. Leave other settings at their defaults.</li>
+                <li>Once it's created, open the database's page and find the <strong>connection string / URL</strong> field — not just the hostname. Click to copy the <em>whole</em> string.</li>
+                <li>Paste it into <code>backend/.env</code> as <code>REDIS_URL</code>, alongside your existing <code>GEMINI_API_KEY</code>.</li>
+            </ol>
+
+            <h3 style="font-size:1rem;color:var(--text);margin-top:22px">What that connection string actually means</h3>
+            <p style="font-size:0.9rem;color:var(--muted)">It looks intimidating, but it's five plain pieces glued together in one line — the same shape as any URL, just with a login baked in:</p>
+
+            <div class="anatomy-box" tabindex="0">
+                <div class="anatomy-string">
+<span class="anatomy-part part-scheme">rediss://</span><span class="anatomy-part part-user">default</span>:<span class="anatomy-part part-pass">AbCdEf123...</span>@<span class="anatomy-part part-host">your-instance-name.upstash.io</span>:<span class="anatomy-part part-port">6379</span>
+                </div>
+                <div class="anatomy-legend">
+                    <span><span class="swatch" style="background:var(--blue-bg)"></span>Scheme</span>
+                    <span><span class="swatch" style="background:var(--blue-bg)"></span>Username</span>
+                    <span><span class="swatch" style="background:var(--bad-bg)"></span>Password</span>
+                    <span><span class="swatch" style="background:var(--accent-light)"></span>Host</span>
+                    <span><span class="swatch" style="background:var(--amber-bg)"></span>Port</span>
+                </div>
+            </div>
+
+            <div class="glossary-box">
+                <h5>Piece by piece</h5>
+                <dl>
+                    <dt>rediss://</dt><dd>the protocol — this is TCP under the hood (Redis's own wire protocol, not HTTP), and the extra <code>s</code> means the connection is TLS-encrypted. Upstash requires this — don't swap it for plain <code>redis://</code>.</dd>
+                    <dt>default</dt><dd>the username. Upstash's free tier always uses the literal username <code>default</code> — you didn't choose it and don't need to change it.</dd>
+                    <dt>AbCdEf123...</dt><dd>the password, auto-generated by Upstash specifically for this database.</dd>
+                    <dt>your-instance-name.upstash.io</dt><dd>the host — the actual address of your Redis database on the internet.</dd>
+                    <dt>6379</dt><dd>the port — Redis's standard port, on every provider, essentially always this number.</dd>
+                </dl>
+            </div>
+
+            <div class="explain"><strong>Why copy the whole string instead of the pieces separately?</strong> The library this course uses (<code>Redis.from_url(...)</code>) reads all five pieces out of one string at once. Copying just the hostname, or just the password, means your code has no way to authenticate or find the right port — you need the entire <code>rediss://...</code> line, exactly as Upstash shows it, pasted as one value.</div>
+
+            <div class="snag-box">
+                <h4>Common snags</h4>
+                <ul>
+                    <li><strong>Copied only the hostname</strong> — if <code>REDIS_URL</code> in your <code>.env</code> doesn't start with <code>rediss://</code>, you copied the wrong field. Go back to the Upstash dashboard and look for a field explicitly labeled "connection string" or "URL," not "endpoint" or "host" alone.</li>
+                    <li><strong>Used <code>redis://</code> instead of <code>rediss://</code></strong> — Upstash's free tier requires the TLS-secured version. If Upstash's dashboard shows you both, always use the one with the extra <code>s</code>.</li>
+                    <li><strong>Pasted it with surrounding quotes</strong> — a <code>.env</code> value shouldn't have quote marks around it: <code>REDIS_URL=rediss://...</code>, not <code>REDIS_URL="rediss://..."</code>.</li>
+                </ul>
+            </div>
+
+            <div class="done-box">
+                <h4>You'll know it worked when…</h4>
+                <ul><li>Your <code>.env</code> has one line starting <code>REDIS_URL=rediss://default:...@...upstash.io:6379</code>, and HOS 3's <code>queue_setup.py</code> can connect without a connection error.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="expo">
+  <div class="module-head"><div class="module-icon">📱</div><div><h2>Expo: account, login &amp; EAS project ID</h2><div class="module-meta"><span class="tag blue">First needed: HOS 4</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> two separate things, both solved by the same free account. First — on current versions of <strong>Expo Go for iOS</strong>, you must be logged in to the same Expo account in <em>both</em> your terminal and the Expo Go app just to load the project at all (a newer Expo Go requirement, not specific to this course). Second — requesting a <strong>push token</strong> specifically also requires the app to be linked to a project on Expo's own servers (EAS), separately from the login above.</p>
+
+            <ol class="steps">
+                <li>Go to <a href="https://expo.dev/signup" target="_blank" rel="noopener">expo.dev/signup</a> and create a free account.</li>
+                <li><strong>Log in on the CLI</strong> — in your Codespaces terminal, inside <code>mobile/</code>:
+<pre tabindex="0">npx expo login</pre>
+                It prints a link; open it, sign in with the account from step 1, and the terminal picks it up automatically.</li>
+                <li><strong>Log in on your phone too</strong> — open the Expo Go app, tap the avatar/profile icon in the top-right of its home screen, and sign in with the <em>same</em> account. Both have to match — logged in as one user in the terminal and a different one (or no one) in Expo Go won't load the project.</li>
+                <li>Then, for push notifications specifically, still inside <code>mobile/</code>:
+<pre tabindex="0">npx eas init</pre>
+                It'll confirm you're logged in (from step 2) and confirm creating a new project — say yes. It writes an <code>extra.eas.projectId</code> field directly into your <code>mobile/app.json</code> for you; you don't edit anything by hand.</li>
+                <li>Restart <code>npx expo start --tunnel</code> so the app picks up the updated login state and <code>app.json</code>.</li>
+            </ol>
+
+            <div class="explain"><strong>Chat still works without the EAS project step (step 4).</strong> Only "register for push notifications" needs it — the guides' starter/answer code already fails on that one step gracefully (a console warning, not a crash) if you haven't done it yet. But steps 2 and 3 (logging in on both ends) currently gate <em>everything</em> in Expo Go on iOS, chat included. This is rolling out to Android too, just not required there yet.</div>
+
+            <div class="snag-box">
+                <h4>Don't want to deal with phone login or Expo Go at all? Use Expo web instead</h4>
+                <p>For quickly testing the chat screen — no phone, no Expo Go, no account login required — run this inside <code>mobile/</code> instead:</p>
+<pre tabindex="0">npx expo start --web</pre>
+                <p>This opens the app in a regular browser tab (in Codespaces, it uses the forwarded-port preview automatically). It's the fastest way to confirm the chat UI and your backend connection work before dealing with phones at all. <strong>Trade-off:</strong> push notifications don't exist on Expo web — <code>expo-notifications</code> isn't supported there, so <code>Device.isDevice</code> is <code>false</code> and this app's code already skips push registration cleanly on its own (no error, it just doesn't run). Use web to verify chat, then switch to a real phone only for the push-notification stages.</p>
+            </div>
+
+            <div class="snag-box">
+                <h4>"Project is incompatible with this version of Expo Go"</h4>
+                <p>The Expo Go app on your phone only ever supports the <em>current</em> Expo SDK — and it auto-updates itself, so which SDK counts as "current" keeps moving forward over time, independent of this course. If the version this project is pinned to falls behind, Expo Go will refuse to open it and tell you exactly which SDK it wants instead. Fix it by upgrading the project to match, right inside <code>mobile/</code>:</p>
+<pre tabindex="0">npx expo install expo@latest
+npx expo install --fix</pre>
+                <p>The second command re-aligns every other Expo/React Native package to versions compatible with whatever <code>expo@latest</code> turned out to be. Restart <code>npx expo start --tunnel</code> afterward. This will happen again the next time Expo ships a new SDK — the fix is always these same two commands.</p>
+            </div>
+
+            <div class="done-box">
+                <h4>You'll know it worked when…</h4>
+                <ul>
+                    <li>The project actually loads in Expo Go on your phone (not stuck on a login/loading screen) — confirming the CLI and phone are logged into the same account.</li>
+                    <li><code>mobile/app.json</code> has a new <code>extra.eas.projectId</code> field after running <code>eas init</code>, and the app logs a real push token to the console instead of the "No EAS project ID found" warning.</li>
+                </ul>
+            </div>
+</section>
+
+<section class="module card" id="langfuse">
+  <div class="module-head"><div class="module-icon">🔭</div><div><h2>Langfuse</h2><div class="module-meta"><span class="tag blue">First needed: HOS 4</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> observability — recording what actually happened on every real request (timing, inputs, outputs, cost) so you can look at data instead of guessing when something's slow or wrong. You won't need this until the observability HOS, but it's included here so this page covers every account the course asks for.</p>
+
+            <ol class="steps">
+                <li>Go to <a href="https://cloud.langfuse.com" target="_blank" rel="noopener">cloud.langfuse.com</a> and sign up.</li>
+                <li>Create a new project (any name — e.g. <code>ai410</code>).</li>
+                <li>Go to <strong>Settings → API Keys</strong> and create a new key pair. You'll get a <strong>Public Key</strong> (starts with <code>pk-lf-...</code>) and a <strong>Secret Key</strong> (starts with <code>sk-lf-...</code>).</li>
+                <li>Add all three to <code>backend/.env</code>:
+<pre tabindex="0">LANGFUSE_PUBLIC_KEY=pk-lf-...
+LANGFUSE_SECRET_KEY=sk-lf-...
+LANGFUSE_HOST=https://cloud.langfuse.com</pre>
+                </li>
+            </ol>
+
+            <div class="explain"><strong>Two keys, not one.</strong> Unlike the Gemini key, Langfuse gives you a pair — a public key and a secret key — both required together. If either is missing, tracing calls will fail silently or error at startup depending on the SDK version, so double-check both made it into <code>.env</code>.</div>
+
+            <div class="done-box">
+                <h4>You'll know it worked when…</h4>
+                <ul><li>Your Langfuse project's <strong>Traces</strong> tab shows real entries after you send a few chat messages through your HOS 4 app.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="together">
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Putting it all together</h2></div></div>
+        <p style="font-size:0.9rem;color:var(--muted)">By the end of the term, your <code>backend/.env</code> holds all four — but you add them one at a time, as each HOS needs them, not all on day one:</p>
+        <div class="env-example" tabindex="0">
+<span class="comment"># HOS 1</span><br>
+<span class="key">GEMINI_API_KEY</span>=AIzaSyD-your-real-key-goes-right-here<br>
+<br>
+<span class="comment"># HOS 3</span><br>
+<span class="key">REDIS_URL</span>=rediss://default:AbCdEf123...@your-instance-name.upstash.io:6379<br>
+<br>
+<span class="comment"># HOS 4</span><br>
+<span class="key">LANGFUSE_PUBLIC_KEY</span>=pk-lf-...<br>
+<span class="key">LANGFUSE_SECRET_KEY</span>=sk-lf-...<br>
+<span class="key">LANGFUSE_HOST</span>=https://cloud.langfuse.com
+        </div>
+        <p style="font-size:0.85rem;color:var(--muted)">This file is already excluded from Git by this project's <code>.gitignore</code> — it stays on your machine (or your Codespace) only, never committed.</p>
+
+        <a class="back-to-top" href="#find">↑ Back to Find your service</a>
+</section>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+<script>
+/* section nav highlight (scrolls only the nav row, never the page) */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

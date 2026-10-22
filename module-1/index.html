@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 Module 1 (Weeks 1-2): lecture, Muddiest Point, Concept Debate, CEAU stages, Application Challenge and knowledge check for Foundations & the Agentic Loop.">
+<title>Module 1: Foundations &amp; the Agentic Loop</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Module 1 · Weeks 1–2</div>
+    <h1>Foundations &amp; the Agentic Loop</h1>
+    <p class="lede">What a full-stack AI app is actually made of, what an LLM actually does, and the loop that lets a model ask your code to run a real function — built fast in Week 1, explained and extended by hand in Week 2.</p>
+    <div class="chips"><span class="chip">Outcome O1</span><span class="chip">2 weeks</span><span class="chip">Lecture · Muddiest Point · Concept Debate</span><span class="chip">HOS 1 (Hands-On Skill): 4 stages</span><span class="chip">Application Challenge</span><span class="chip">Codespaces · free tier</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Lesson sections">
+  <div class="secnav-inner">
+    <a href="#overview">Overview</a>
+    <span class="sep">Week 1</span>
+    <a href="#lecture">Lecture</a>
+    <a href="#muddiest">Muddiest Point</a>
+    <a href="#debate">Concept Debate</a>
+    <a href="#create">HOS 1 · Create</a>
+    <a href="#evaluate">HOS 1 · Evaluate</a>
+    <span class="sep">Week 2</span>
+    <a href="#analyze">HOS 1 · Analyze</a>
+    <a href="#refine">HOS 1 · Understand &amp; Refine</a>
+    <a href="#challenge">Application Challenge</a>
+    <a href="#check">Knowledge Check</a>
+    <a href="#project">Team Project</a>
+  </div>
+</nav>
+
+<p class="small muted" style="margin-top:18px">Everything in this HOS runs in GitHub Codespaces on free tiers, with no credit card. Which accounts you need, and when: <a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a>.</p>
+
+<section class="module card" id="overview">
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O1</span><span class="tag blue">HOS 1: 10% of course</span><span class="tag">+ Muddiest Point · Concept Debate · Application Challenge · Knowledge Check</span></div></div></div>
+  <div class="callout blue">
+    <span class="label">What's the HOS?</span>
+    <p><strong>HOS 1 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 1, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 2. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 2. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
+  </div>
+  <p>Most people meet a large language model through a chat box, and it's easy to think the chat box <em>is</em> the model. It isn't. Behind every AI product there are at least three separate pieces — a <strong>frontend</strong> the user sees, a <strong>backend</strong> that holds secrets and makes decisions, and the <strong>LLM</strong> itself, which only ever turns text into more text. This first HOS is about seeing those pieces clearly, and then about the one idea that turns a chat app into an <em>agent</em>: letting the model ask your code to run a real function and wait for the answer.</p>
+  <p>You'll spend Week 1 getting a working app running quickly with an AI coding assistant and then judging it on purpose. Week 2 is the harder half: explaining exactly how the loop works, extending it by hand, and applying the same judgment to a business you've never built for.</p>
+  <div class="callout blue">
+    <span class="label">Anchoring analogy</span>
+    <p>Think of the LLM as a very well-read consultant on a phone line. They can reason, explain, and draft — but they can't touch anything. A <em>tool</em> is you, on the other end, offering "I can look that up / run that calculation for you." The agentic loop is the conversation where the consultant says "please run <code>calculate('342*87')</code> and tell me what you get," waits for your answer, and only then replies to the customer. The consultant never sees your filing cabinet; they only ever see what you read back to them.</p>
+  </div>
+  <h3>Learning objectives</h3>
+  <p class="small muted">By the end of the two weeks you will be able to:</p>
+  <ol class="lo">
+    <li>Identify the frontend, backend, and LLM in a full-stack AI app, and explain why the API key belongs only in the backend. <span class="tag">O1</span></li>
+    <li>Describe what an LLM actually produces — tokens predicted from a context window — and why the same input can give different outputs. <span class="tag">O1</span></li>
+    <li>Distinguish prompt engineering (wording the request) from context engineering (deciding what information the model sees). <span class="tag">O1</span></li>
+    <li>Trace the agentic loop step by step: model → function call → backend executes → result returned → final answer. <span class="tag">O1</span></li>
+    <li>Judge which functions a model should be allowed to call on its own, and which need a human in the loop. <span class="tag">O1</span></li>
+  </ol>
+  <h3>Your two weeks at a glance</h3>
+  <div class="flow">
+    <a href="#lecture"><span class="n">Wk 1 · Mon</span><span class="t">Lecture</span><span class="w">~30 min, 3 parts</span></a>
+    <a href="#muddiest"><span class="n">Wk 1 · by Wed</span><span class="t">Muddiest Point</span><span class="w">graded · 5% pool</span></a>
+    <a href="#debate"><span class="n">Wk 1 · Tue–Sat</span><span class="t">Concept Debate</span><span class="w">graded · 3 stages</span></a>
+    <a href="#create"><span class="n">Wk 1 · Wed–Thu</span><span class="t">HOS 1 · Create / Scaffold</span><span class="w">Engagement · 20% of HOS</span></a>
+    <a href="#evaluate"><span class="n">Wk 1 · Fri–Sun</span><span class="t">HOS 1 · Evaluate</span><span class="w">part of Skills (80%)</span></a>
+    <a href="#analyze"><span class="n">Wk 2 · Mon–Tue</span><span class="t">HOS 1 · Analyze</span><span class="w">part of Skills (80%)</span></a>
+    <a href="#refine"><span class="n">Wk 2 · Wed–Thu</span><span class="t">HOS 1 · Understand &amp; Refine</span><span class="w">part of Skills · no AI</span></a>
+    <a href="#challenge"><span class="n">Wk 2 · Fri–Sun</span><span class="t">Application Challenge</span><span class="w">5% of course</span></a>
+    <a href="#check"><span class="n">Wk 2 · any time</span><span class="t">Knowledge Check</span><span class="w">graded · 10% pool</span></a>
+  </div>
+  <p class="small muted" style="margin-top:10px">Days are a suggested pacing for an online term, not fixed deadlines — your instructor's Brightspace dates win.</p>
+</section>
+
+<!-- ========================= WEEK 1 ========================= -->
+<div class="week-tabs no-print" role="group" aria-label="Weeks"><button type="button" data-week="1" aria-controls="week-1">Week 1<span class="tab-sub"> · Build &amp; Judge</span></button><button type="button" data-week="2" aria-controls="week-2">Week 2<span class="tab-sub"> · Explain &amp; Master</span></button><button type="button" class="show-all">Show both weeks</button></div>
+<div class="week-panel" id="week-1" data-week="1">
+<div class="part-banner"><b>Week 1 · Build &amp; Judge</b><span>Lecture → Muddiest Point → Concept Debate → HOS 1: Create → Evaluate</span></div>
+<div class="due-card"><h3>Week 1: what's due</h3><label><input type="checkbox" data-k="l1-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-0"><span><a href="#muddiest">Muddiest Point</a></span><span class="when">by Wed</span></label><label><input type="checkbox" data-k="l1-w0-1"><span><a href="#debate">Concept Debate: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w0-cc"><span><a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l1-w0-2"><span><a href="#create">HOS 1 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w0-3"><span><a href="#evaluate">HOS 1 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+
+
+<section class="module card" id="lecture">
+  <div class="module-head"><div class="module-icon">🎓</div><div><h2>Lecture: from chat box to agent</h2><div class="module-meta"><span class="tag">≈ 30 min with videos</span><span class="tag blue">3 short parts</span><span class="tag">O1</span></div></div></div>
+  <p class="small muted">Three short segments instead of one long one: watch the video, read the notes, then try the quick check before moving on. The notes cover everything you need, so the videos are a second explanation rather than a requirement. If something stays fuzzy, that's exactly what your <a href="#muddiest">Muddiest Point</a> is for.</p>
+
+  <div class="lecture-part">
+    <h3>Part 1 — Anatomy of a full-stack AI app <small>≈ 5 min</small></h3>
+    <div class="watch">
+      <div class="watch-head"><span class="label">Optional video</span><span class="small muted">1:15 · Codecademy</span></div>
+      <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/1mXrxc_sv1o" title="Front-end vs back-end: What's the difference? (Codecademy)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+      <p class="watch-note">A quick picture of the two halves of every app you'll build. Watch for what each half is responsible for, then read on for the part the video skips: why the API key has to live in the backend. <a href="https://www.youtube.com/watch?v=1mXrxc_sv1o" target="_blank" rel="noopener">Open on YouTube</a>. Auto-generated captions only; everything in it is covered in the notes below.</p>
+    </div>
+    <p>Every app you build this term has the same three-piece shape. The <strong>frontend</strong> (a Streamlit page now, an Expo mobile app in HOS 4) collects the user's message and shows the reply. The <strong>backend</strong> (a FastAPI server) receives that message over HTTP, adds anything the model needs, calls the LLM, and runs any tools. The <strong>LLM</strong> (Google's Gemini, via the free API) receives text and returns text — or, as you'll see in Part 3, a structured request to run a function.</p>
+    <div class="arch" aria-label="Frontend to backend to LLM">
+      <div class="box"><b>Frontend</b>Streamlit chat page. Runs on the user's machine / browser. <em>Anyone can inspect it.</em></div>
+      <div class="arrow">⇄</div>
+      <div class="box key"><b>Backend 🔑</b>FastAPI <code>POST /chat</code>. Holds <code>GEMINI_API_KEY</code> in <code>.env</code>. Runs tools.</div>
+      <div class="arrow">⇄</div>
+      <div class="box"><b>LLM</b>Gemini API. Sees only what the backend sends it.</div>
+    </div>
+    <div class="callout">
+      <span class="label">Worked example</span>
+      <p>A classmate ships a quick demo that calls Gemini directly from the frontend, with the API key pasted into the JavaScript. It works — and within an hour of posting the link, anyone who opens the browser's developer tools can copy the key and spend its quota. Moving the call behind a backend endpoint doesn't make the app smarter; it makes the secret unreachable. That's the first reason the backend exists. The second is that tools (Part 3) have to run somewhere trustworthy too.</p>
+    </div>
+    <p>The two halves talk over <strong>HTTP</strong>. The frontend sends a request (<code>POST /chat</code> with a small JSON body such as <code>{"message": "What's 342 times 87?"}</code>) and the backend answers with JSON (<code>{"reply": "342 × 87 = 29,754."}</code>). That request and response are the <em>contract</em> between the halves. As long as it stays the same, you can replace either side: HOS 4 adds a phone app without touching the backend's AI code at all.</p>
+    <div class="mistakes">
+      <h4>⚠ Common mistakes</h4>
+      <ul>
+        <li><b>Putting the API key anywhere the user's device can see it</b>: frontend code, a mobile app, or a public repo. It belongs in <code>backend/.env</code>, which is git-ignored.</li>
+        <li><b>Committing <code>.env</code>.</b> If a key ever lands in a commit, treat it as leaked: delete it in Google AI Studio and make a new one.</li>
+        <li><b>Calling the model from the frontend "just for now."</b> Shortcuts like this tend to ship. Start with the backend in the middle.</li>
+      </ul>
+    </div>
+    <div class="callout violet">
+      <span class="label">Quick check</span>
+      <p>Name two things the backend does that the frontend must never do, and one reason for each.</p>
+    </div>
+  </div>
+
+  <div class="lecture-part">
+    <h3>Part 2 — What an LLM actually does <small>≈ 15 min</small></h3>
+    <div class="watch">
+      <div class="watch-head"><span class="label">Watch first</span><span class="small muted">7:58 · 3Blue1Brown</span></div>
+      <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/LPZh9BOjkQs" title="Large Language Models explained briefly (3Blue1Brown)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+      <p class="watch-note">Watch for two ideas this lesson builds on: the model predicts the next word piece from probabilities, and it samples, so the same input can give different answers. <a href="https://www.youtube.com/watch?v=LPZh9BOjkQs" target="_blank" rel="noopener">Open on YouTube</a> (human captions).</p>
+      <p class="deeper"><b>Go deeper (optional):</b> IBM Technology, <a href="https://www.youtube.com/watch?v=vD0E3EUb8-8" target="_blank" rel="noopener">Context Engineering vs. Prompt Engineering</a> (7:52). It explains the difference in the table below, then goes on to retrieval and agents, which you'll meet in Module 2 and later courses.</p>
+    </div>
+    <p>An LLM reads a sequence of <strong>tokens</strong> (word pieces) and predicts the next one, over and over, until it decides to stop. Everything it "knows" about your conversation is whatever fits in its <strong>context window</strong> for that single request — the system instruction, the chat history your backend chose to resend, any retrieved documents, and the user's latest message. It doesn't remember the last request unless you send it again.</p>
+    <p>Because each next token is <em>sampled</em> from a probability distribution, the same input can produce different outputs. That <strong>nondeterminism</strong> is a feature for writing and a hazard for software — it's why HOS 3 adds guardrails, and why "it worked once" is never a complete Evaluate.</p>
+    <div class="table-wrap" tabindex="0"><table class="t">
+      <tr><th></th><th>Prompt engineering</th><th>Context engineering</th></tr>
+      <tr><td><b>Question it answers</b></td><td>How should I word the request?</td><td>What information should the model see at all?</td></tr>
+      <tr><td><b>Where it lives</b></td><td>The instruction text</td><td>The backend code that assembles each request</td></tr>
+      <tr><td><b>Example</b></td><td>"Answer in two sentences, cite the policy."</td><td>Resend only the last 6 turns; attach the 3 most relevant policy chunks; list the tools available.</td></tr>
+      <tr><td><b>Where you'll see it</b></td><td>Every HOS</td><td>Tool declarations (HOS 1), retrieval (HOS 2), trace review (HOS 4)</td></tr>
+    </table></div>
+    <div class="callout">
+      <span class="label">Worked example</span>
+      <p>A student types "I'm Dana," then "What's my name?" The Streamlit page shows both messages, so it looks like a conversation with memory. The model answers "I don't know your name." In the HOS 1 build, the frontend keeps the chat on screen, but each <code>POST /chat</code> sends only the latest message, and the backend starts a fresh request to Gemini every time. What the user sees and what the model sees are different things. If you want the model to remember, your backend has to send the earlier turns.</p>
+    </div>
+    <div class="mistakes">
+      <h4>⚠ Common mistakes</h4>
+      <ul>
+        <li><b>Believing the model remembers you.</b> It only sees what's in this request. History is your backend's job.</li>
+        <li><b>Testing once.</b> Sampling means one good answer proves little. Run important checks several times.</li>
+        <li><b>Sending ever-longer history.</b> Every resent turn costs tokens and eventually hits the context window. Real apps trim or summarise.</li>
+      </ul>
+    </div>
+    <div class="callout violet">
+      <span class="label">Quick check</span>
+      <p>The Streamlit page keeps a list of every message, but the backend receives only the latest one. Does the model remember earlier turns? Decide, then confirm by trying it in Week 1's build.</p>
+    </div>
+  </div>
+
+  <div class="lecture-part">
+    <h3>Part 3 — The agentic loop &amp; tool calling <small>≈ 10 min</small></h3>
+    <div class="watch">
+      <div class="watch-head"><span class="label">Watch first</span><span class="small muted">2:55 · Google Cloud Tech</span></div>
+      <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/mVXrdvXplj0" title="Function calling with the Gemini API (Google Cloud Tech)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+      <p class="watch-note">The same Gemini API you'll use in the build. Watch for the moment the model asks for a function instead of answering, and who actually runs it. The model names in the video may be older; use <code>gemini-3.8-flash</code>, as in the hands-on guide. <a href="https://www.youtube.com/watch?v=mVXrdvXplj0" target="_blank" rel="noopener">Open on YouTube</a> (human captions).</p>
+      <p class="deeper"><b>Go deeper (optional):</b> IBM Technology, <a href="https://www.youtube.com/watch?v=h8gMhXYAv1k" target="_blank" rel="noopener">What is Tool Calling?</a> (4:56). The same idea without tying it to one vendor; its second half covers a variation that's beyond this module.</p>
+    </div>
+    <p>A plain chat app is one round trip: message in, text out. An <strong>agent</strong> adds a loop. Your backend tells the model which functions exist (a name, a description, and a parameter schema). When the model decides a function would help, it doesn't reply with text — it replies with a <strong>function call</strong>: a name and arguments. Your backend runs the real function, sends the result back, and asks again. The loop ends when the model replies with plain text.</p>
+    <ol class="seq">
+      <li>User types <em>"What's 342 times 87?"</em>; the frontend POSTs it to <code>/chat</code>.</li>
+      <li>Backend sends the message + the <code>calculate</code> tool declaration to Gemini.</li>
+      <li>Gemini replies with <code>function_call: calculate(expression="342*87")</code> — no text yet.</li>
+      <li>Backend runs the real Python function → <code>29754</code>.</li>
+      <li class="loopback">Backend sends the <code>function_response</code> back to Gemini, along with the history so far. <em>(This is the "loop" — it can repeat.)</em></li>
+      <li>Gemini replies with text: <em>"342 × 87 = 29,754."</em> Backend returns it to the frontend.</li>
+    </ol>
+<pre tabindex="0"><code># the shape of a tool declaration (simplified)
+calculate_tool = {
+    "name": "calculate",
+    "description": "Evaluate a basic arithmetic expression. Use for any math.",
+    "parameters": {
+        "type": "object",
+        "properties": {"expression": {"type": "string", "description": "e.g. '342*87'"}},
+        "required": ["expression"],
+    },
+}</code></pre>
+    <p>Notice what the model <em>never</em> does: it never runs the function. It only asks. That's the property that makes tool calling safe to reason about — and it's why deciding <em>which</em> functions to expose is an engineering judgment, not a detail (you'll practice that in the <a href="#challenge">Application Challenge</a>).</p>
+    <div class="mistakes">
+      <h4>⚠ Common mistakes</h4>
+      <ul>
+        <li><b>A vague tool description.</b> The description is the only thing the model reads to decide when to call a tool. "Does math" gets ignored; "Evaluate a basic arithmetic expression. Use for any math." gets used.</li>
+        <li><b>Forgetting to send the result back.</b> If the backend runs the tool but never returns a <code>function_response</code>, the model never gets to answer.</li>
+        <li><b>No limit on the loop.</b> A model that keeps asking for tools can loop forever. Cap the number of turns.</li>
+        <li><b>Letting a tool crash the request.</b> Wrap the tool in try/except and return the error as data, so the model can explain it.</li>
+      </ul>
+    </div>
+    <div class="callout violet">
+      <span class="label">Quick check</span>
+      <p>A user asks "What's 2 + 2, and what's 10 times that?" How many times might the loop go round, and what does the backend send Gemini on each pass?</p>
+    </div>
+    <p class="try-it">▶ <b>Rehearse before the build:</b> Open the <a href="simulator.html"><strong>Agentic Loop Simulator</strong></a> and step through "What's 342 times 87?", then "Tell me a joke", then "Calculate 12 / (3 -". Watch where each one exits the loop.</p>
+  </div>
+
+  <details class="gloss-box"><summary>New words this week (4)</summary><dl class="gloss">
+    <dt>Frontend / backend</dt><dd>What the user sees vs. the server that holds your API key and runs tools.</dd>
+    <dt>Token &amp; context window</dt><dd>The word pieces a model reads and writes, and the maximum amount of them it can consider in one request.</dd>
+    <dt>Agentic loop</dt><dd>The cycle of model → function call → your code runs it → result back to the model, repeated until the model answers in text.</dd>
+    <dt>Tool / function declaration</dt><dd>The name, description, and parameter schema you give the model so it knows a function exists and how to ask for it.</dd>
+  </dl></details>
+</section>
+
+<section class="module card" id="muddiest">
+  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
+  <p>Not a blank box. Four short fields, because a specific confusion is much easier for your instructor to fix than "this week was confusing." Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
+  <div class="two" style="margin-bottom:14px">
+    <div class="eg weak"><span class="label">Doesn't meet the bar</span>"I didn't really get the agent loop part. Tool calling is confusing."</div>
+    <div class="eg strong"><span class="label">Meets the bar</span>"In Part 3, step 5: why does the backend have to resend the whole history with the function result? Couldn't it just send <code>29754</code>? I re-read step 5 and tried the simulator — the log shows the history growing but not why."</div>
+  </div>
+  <form id="mpForm" onsubmit="return false">
+    <label class="field" for="mp1">1 · What were you doing right before you got confused?</label>
+    <input type="text" id="mp1" placeholder="e.g. Lecture Part 3, step 5 — or a line in the hands-on guide">
+    <label class="field" for="mp2">2 · The exact place you got stuck</label>
+    <textarea id="mp2" placeholder="Not 'I don't get agents' — the specific thing that doesn't add up."></textarea>
+    <div class="counter" id="mp2count">0 words</div>
+    <label class="field" for="mp3">3 · What you already tried</label>
+    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator…"></textarea>
+    <label class="field" for="mp4">4 · Optional: your best guess at the answer</label>
+    <textarea id="mp4" placeholder="Even if you think it's wrong."></textarea>
+  </form>
+  <div class="spec-meter"><b>Specificity</b><div class="spec-track"><div class="spec-fill" id="specFill"></div></div><span id="specLabel">—</span></div>
+  <ul class="hints" id="specHints"></ul>
+  <div class="row"><button class="btn" id="mpCopy" type="button">Copy for submission</button><button class="btn secondary" id="mpClear" type="button">Clear draft</button><span class="small muted" id="mpStatus" aria-live="polite"></span></div>
+  <p class="small muted" style="margin-top:10px"><b>Grading:</b> Participation — on time, addresses a genuine confusion (80%) · Writing — clear, specific, not generic (20%). The meter above is a nudge, not your grade.</p>
+</section>
+
+<section class="module card" id="debate">
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span></div></div></div>
+  <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>When a request might need a tool, who should decide — the model, or deterministic backend code?</strong></p></div>
+  <p>You'll argue a side you're <em>assigned</em>, then argue the other one, then drop advocacy and synthesize. Nobody gets to post "I agree" — by Stage 3 everyone has argued both sides.</p>
+  <div class="callout blue">
+    <span class="label">How your side is assigned</span>
+    <p>Before the first debate you join <b>Debate Group 1</b> or <b>Debate Group 2</b>, either assigned by your instructor or chosen yourself, as long as the two groups stay close to even. You stay in that group all term; find yours under <b>Communication → Groups</b>. The sides rotate each HOS, so nobody argues the same kind of position all term:</p>
+    <div class="table-wrap" tabindex="0"><table class="t" style="margin:6px 0 8px;background:var(--surface)">
+      <tr><th></th><th>HOS 1</th><th>HOS 2</th><th>HOS 3</th><th>HOS 4</th><th>Integration (Wk 8)</th></tr>
+      <tr><td><b>Group 1</b></td><td>Side A</td><td>Side B</td><td>Side A</td><td>Side B</td><td>Side A</td></tr>
+      <tr><td><b>Group 2</b></td><td>Side B</td><td>Side A</td><td>Side B</td><td>Side A</td><td>Side B</td></tr>
+    </table></div>
+    <p class="small"><b>Not in a group?</b> (for example, you added the course late) Before posting Stage 1, count the posts on each side and join the side with fewer; if they're tied, take Side A.</p>
+  </div>
+  <div class="row" style="margin-bottom:10px">
+    <label for="teamInput" class="small"><b>My Brightspace group:</b></label>
+    <select id="teamInput" style="width:auto"><option value="">—</option><option value="1">Debate Group 1</option><option value="2">Debate Group 2</option></select>
+    <span class="small" id="sideResult" aria-live="polite"></span>
+  </div>
+  <div class="two">
+    <div class="side a" id="sideA">
+      <h4><span>Side A — Let the model decide</span><span class="tag blue">Group 1 this HOS</span></h4>
+      <p>Declare the tools and let the LLM choose when to call them.</p>
+      <ul class="small">
+        <li>Handles phrasing no rule anticipated ("what's a 15% tip on $48?").</li>
+        <li>Adding a tool is one declaration, not a new routing rule.</li>
+        <li>This is how the Gemini function-calling API is designed to work.</li>
+      </ul>
+    </div>
+    <div class="side b" id="sideB">
+      <h4><span>Side B — Backend code decides</span><span class="tag rose">Group 2 this HOS</span></h4>
+      <p>Use rules (regex, keywords, a classifier) to decide, and only ask the model to phrase the answer.</p>
+      <ul class="small">
+        <li>Deterministic: the same input always takes the same path — testable.</li>
+        <li>The model can't call a tool it was never routed to.</li>
+        <li>Cheaper: fewer model round trips per request.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="stages">
+    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a test you ran, a line of the guide, a simulator run. Not a topic summary.</div>
+    <div class="stage"><span class="day">Stage 2 · by Thu</span><h4>Argue the opposite</h4>Before replying to anyone, post the <em>strongest</em> version of the side you didn't hold.</div>
+    <div class="stage"><span class="day">Stage 3 · by Sat</span><h4>Synthesis</h4>Drop advocacy. State a real position (it can be "it depends on X"), citing at least one specific point from a classmate's post.</div>
+  </div>
+  <details class="eg-toggle"><summary>See a weak vs. strong example</summary>
+  <div class="two">
+    <div class="eg weak"><span class="label">Weak synthesis</span>"Great points everyone, I think both sides are right and it depends on the situation."</div>
+    <div class="eg strong"><span class="label">Strong synthesis</span>"Priya's point that a routing rule is testable changed my mind for anything that writes data. I'd let the model choose read-only tools like <code>calculate</code>, but route anything that sends email or charges money through backend code that checks the request first — which is roughly what HOS 3's guardrails do."</div>
+  </div>
+  </details>
+  <p class="small muted" style="margin-top:10px"><b>Grading:</b> Participation — initial position plus response to at least one peer (50%) · Writing — quality of argument and reasoning (50%). <a href="../reference/concept-debate-example.html">See a worked example: four students through one debate, with a timeline →</a> A reply that only affirms agreement without citing what it agrees with doesn't meet the Writing criterion.</p>
+</section>
+
+<section class="module card" id="create">
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span></div></div></div>
+  <div class="callout violet">
+    <span class="label">Before you build</span>
+    <p>Try the self-check at the end of <a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1</a>. If you can answer every question, start building. If one stumps you, read that module first (about 10 minutes); it's quicker than untangling the same idea in the middle of the build.</p>
+  </div>
+  <p>Get a working app running fast with an AI coding assistant. This is the starting point, not the deliverable — you don't hand-edit anything yet.</p>
+  <ol>
+    <li>Open <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-01-foundations-agentic-loop" target="_blank" rel="noopener">the HOS 1 starter-code folder</a> in GitHub Codespaces (its <code>.devcontainer</code> sets up Python for you).</li>
+    <li>Put your free Gemini key in <code>backend/.env</code> as <code>GEMINI_API_KEY=…</code> — never in the frontend.</li>
+    <li>Give your assistant the starting prompt below, and iterate until the chat app calls at least one tool.</li>
+  </ol>
+<pre tabindex="0"><code>Build a full-stack chat app in THIS existing workspace (the starter-code folder
+that's already open) — edit files here; do not create a new workspace or project:
+- backend/: a FastAPI server with a POST /chat endpoint that calls the Gemini API
+  (google-genai) with model "gemini-3.8-flash" (kept in one MODEL constant),
+  reading GEMINI_API_KEY from backend/.env. Give it an agentic loop:
+  the model should be able to call a real tool (e.g. a calculator) via function
+  calling, and the tool's result should go back to the model before it replies.
+- frontend/: a Streamlit chat app that calls the backend's /chat endpoint over HTTP.
+- requirements.txt files for both.</code></pre>
+  <p class="small"><b>Two gotchas caught in testing:</b> (1) Codespaces' default Copilot Chat agent likes to build in a <em>new</em> workspace instead of your starter folder — use Agent mode and say “this existing workspace” (the prompt does). (2) A <code>502 Bad Gateway</code> usually means the assistant picked a retired model like <code>gemini-2.5-flash</code>, which new keys can't use — set it to <code>gemini-3.8-flash</code> and restart the backend.</p>
+  <p class="small">Full step-by-step instructions, troubleshooting, and the exact submission list are in the <a href="hos-guide.html">HOS 1 hands-on guide</a>. Unsure what a generated file does? <a href="../reference/starter-code-walkthrough.html#hos1">Starter code walkthrough →</a></p>
+  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>hos/NOTES.md</code>, add a screenshot of the scaffolded app running to <code>hos/screenshots/</code>, then commit and push to your Module 1 repo.</p>
+</section>
+
+<section class="module card" id="evaluate">
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 2 of 4</span></div></div></div>
+  <p>Is the AI-produced result actually right? Test it <em>on purpose</em>. Tick each test as you run it and jot what happened — this becomes your Evaluate note.</p>
+  <div class="progress-line" id="evalProgress">0 / 4 tests run</div>
+  <div class="checklist" id="evalList">
+    <label><input type="checkbox"><span><b>Needs the tool:</b> "What's 342 times 87?" — did the backend log show a real <code>calculate</code> call, or did the model guess the number in text?</span></label>
+    <label><input type="checkbox"><span><b>Doesn't need the tool:</b> "Say hi in French" — did it answer directly instead of forcing a tool call?</span></label>
+    <label><input type="checkbox"><span><b>Breaks the tool:</b> "Calculate 12 / (3 -" — does it fail gracefully, or crash the whole request with a 500?</span></label>
+    <label><input type="checkbox"><span><b>Your own test:</b> one input you chose because you suspect the AI got something wrong. Say why you suspected it.</span></label>
+  </div>
+  <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
+  <textarea id="evalNote" placeholder="What I tested · what I found · what the AI got wrong, missed, or handled surprisingly well"></textarea>
+  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>hos/NOTES.md</code>, add a screenshot of the working app to <code>hos/screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
+</section>
+
+<!-- ========================= WEEK 2 ========================= -->
+</div>
+
+<div class="week-panel" id="week-2" data-week="2">
+<div class="part-banner"><b>Week 2 · Explain &amp; Master</b><span>HOS 1: Analyze → Understand &amp; Refine → Application Challenge → Knowledge Check</span></div>
+<div class="due-card"><h3>Week 2: what's due</h3><label><input type="checkbox" data-k="l1-w1-0"><span><a href="#analyze">HOS 1 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l1-w1-1"><span><a href="#refine">HOS 1 · Understand &amp; Refine: the second tool, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w1-2"><span><a href="#challenge">Application Challenge 1</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w1-3"><span><a href="#check">Knowledge Check quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l1-w1-4"><span><a href="#project">Team Project: form your team (Phase 1 is due end of Week 3)</a></span><span class="when">this week</span></label><label><input type="checkbox" data-k="l1-w1-5"><span><a href="#refine">HOS 1: push your repo and submit its link in Brightspace</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+
+
+<section class="module card" id="analyze">
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why does this work?</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 3 of 4</span></div></div></div>
+  <p>Pick <strong>one</strong> specific piece of the AI-generated code and explain, in your own words, exactly how it works. Depth beats breadth: one function explained well scores higher than a tour of every file.</p>
+  <div class="pick" id="analyzePick">
+    <button type="button" aria-pressed="false" data-k="loop"><b>The loop in <code>agent.py</code></b>What stops it? What happens if the model calls a tool twice in a row?</button>
+    <button type="button" aria-pressed="false" data-k="decl"><b>The tool declaration</b>How does the model know <code>expression</code> is a string, and what does the description change?</button>
+    <button type="button" aria-pressed="false" data-k="flow"><b>The <code>/chat</code> request flow</b>From Streamlit's HTTP call to the JSON the backend returns — every hop.</button>
+  </div>
+  <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
+  <p class="small muted">Common trap: pasting the AI's own explanation of the code. Your instructor will ask a follow-up about one line — write it so you could answer.</p>
+  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>hos/NOTES.md</code>, then commit and push.</p>
+</section>
+
+<section class="module card" id="refine">
+  <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
+  <p>Add a <strong>second tool</strong> yourself — for example <code>get_current_time(timezone)</code> or <code>convert_units(value, from_unit, to_unit)</code> — and prove the agent chooses the right tool for the right question.</p>
+  <div class="progress-line" id="refineProgress">0 / 5 done</div>
+  <div class="checklist" id="refineList">
+    <label><input type="checkbox"><span>Write the Python function and test it on its own (no model involved).</span></label>
+    <label><input type="checkbox"><span>Write its declaration: name, a description that says <em>when</em> to use it, and a parameter schema.</span></label>
+    <label><input type="checkbox"><span>Register it alongside <code>calculate</code> and add it to the backend's dispatch (name → function).</span></label>
+    <label><input type="checkbox"><span>Ask one question for each tool and one needing neither — screenshot the backend log for all three.</span></label>
+    <label><input type="checkbox"><span>Write 2–3 sentences: what you changed, and one thing that surprised you.</span></label>
+  </div>
+  <p class="small muted">This is the mastery check: can you change the system correctly without the assistant doing it for you? Rehearse first in the <a href="simulator.html">simulator</a> — toggle a second tool on and watch the routing change.</p>
+  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in <code>hos/</code> and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>hos/NOTES.md</code>, with its screenshots in <code>hos/screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 1 assignment in Brightspace by the end of Week 2.</p>
+</section>
+
+<section class="module card" id="challenge">
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a clinic's booking agent</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span></div></div></div>
+  <p>Build the tools for Cascade Family Clinic's booking agent from a written spec with provided tests, make the one call the spec leaves open (what happens to a cancellation inside the $40 late-fee window), and argue which other tools the model should never get. Everything you need is in the <a href="application-challenge.html"><b>AC 1 guide</b></a>: the spec, the starter code, and the rubric.</p>
+  <p class="small">Warm up first: the judgment is the same one the challenge asks for. Pick a business and sort its proposed tools.</p>
+  <div class="pick" id="bizPick">
+    <button type="button" aria-pressed="true" data-b="vet"><b>🐾 Neighborhood vet clinic</b>Appointment booking &amp; pet records</button>
+    <button type="button" aria-pressed="false" data-b="bike"><b>🚲 City bike-share</b>Station availability &amp; rider accounts</button>
+    <button type="button" aria-pressed="false" data-b="lib"><b>📚 Community library</b>Catalog, holds &amp; fines</button>
+  </div>
+  <h3>Warm-up: sort the proposed tools</h3>
+  <p class="small">For each tool, decide: can the model call it <b>automatically</b>, does it need <b>user confirmation</b> first, or should it <b>never</b> be exposed to the model? Then reveal the reasoning.</p>
+  <div id="sorter"></div>
+  <div class="row" style="margin:8px 0 16px"><button class="btn" id="sorterReveal" type="button">Reveal reasoning</button><span class="small" id="sorterScore" aria-live="polite"></span></div>
+  <div class="callout"><span class="label">What to submit</span>
+    <ul>
+      <li><code>tools.py</code> and <code>tests/test_my_rules.py</code></li>
+      <li>The output of <code>pytest</code>, all tests passing (including yours)</li>
+      <li><code>TRANSCRIPT.md</code>: two chat sessions with the tool calls showing</li>
+      <li><code>DECISIONS.md</code>: your late-cancellation rule, and your call on two more tools</li>
+    </ul>
+  </div>
+  <p class="small muted"><b>Grading:</b> Application — genuinely applied to the new scenario, not a restatement of the calculator build (10%) · Analysis — break the problem into its parts (20%) · Evaluation — justify your call against clear criteria (30%) · Design — your own original solution (40%).</p>
+</section>
+
+<section class="module card" id="check">
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span></div></div></div>
+  <p>Five quick questions. Then answer the two open questions below out loud or in a notes file — they're the ones your instructor will ask in the Week 2 check-in.</p>
+  <div id="quiz"></div>
+  <p class="score" id="quizScore" aria-live="polite"></p>
+  <h3>Open questions</h3>
+  <ol>
+    <li>What's the difference between the frontend and backend, and why does the API key live in the backend only?</li>
+    <li>Walk through what happens, step by step, from typing a message to the agent deciding to call a tool.</li>
+  </ol>
+</section>
+
+<section class="module card" id="project">
+  <div class="module-head"><div class="module-icon">🚀</div><div><h2>Team Project — Phase 1 begins</h2><div class="module-meta"><span class="tag amber">Phase 1 due end of Week 3</span></div></div></div>
+  <p>The Team Project combines all 4 HOS into one agent-driven app, built by a team of three (four with instructor approval) and presented in Week 10. <b>Phase 1 runs Weeks 1–3:</b> form your team and lock your scope: which HOS pieces your project combines and why, who owns each piece, and a rough architecture sketch. <b>Due end of Week 3:</b> System v0.3 in a shared GitHub repository with a README, and a one-page proposal with three key references. A good first question: <strong>what are the 2–4 tools your project's agent would need, and which of them should require confirmation?</strong> That's this week's Application Challenge, pointed at your own idea.</p>
+  <div class="table-wrap" tabindex="0"><table class="t project-map">
+    <tr><th>HOS</th><th>What it contributes to your project</th><th>Rehearse it in</th></tr>
+    <tr><td>HOS 1</td><td>The agent and its tools</td><td><a href="simulator.html">Agentic Loop Simulator</a></td></tr>
+    <tr><td>HOS 2</td><td>Answers grounded in your project's own documents</td><td><a href="../module-2/simulator.html">RAG Pipeline Simulator</a></td></tr>
+    <tr><td>HOS 3</td><td>Validated tool calls and slow work moved to a background job</td><td><a href="../module-3/simulator.html">Guardrails &amp; Queue Simulator</a></td></tr>
+    <tr><td>HOS 4</td><td>A mobile client, push notifications, and traces you can debug from</td><td><a href="../module-4/simulator.html">Push &amp; Observability Simulator</a></td></tr>
+  </table></div>
+  <p class="small">Phases, deliverables and rubrics: the Team Project section of the syllabus (in Brightspace).</p>
+</section>
+
+</div>
+
+<section class="card">
+  <h2>Resources</h2>
+  <ul>
+    <li><a href="hos-guide.html">HOS 1 hands-on guide</a> — the full build, stage by stage</li>
+    <li><a href="../reference/concept-companion.html">Concept Companion</a> — every concept to know before starting a HOS</li>
+    <li><a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a> — free Gemini key, GitHub, Codespaces</li>
+    <li><a href="simulator.html">Agentic Loop Simulator</a></li>
+    <li>Next: <a href="../module-2/index.html">Module 2 lesson — Embeddings, Chunking &amp; RAG</a> →</li>
+  </ul>
+</section>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){ return null; } }
+
+/* section nav highlight */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a'));
+  var map={}; links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+
+/* Muddiest Point */
+(function(){
+  var ids=['mp1','mp2','mp3','mp4'], els=ids.map(function(i){return document.getElementById(i);});
+  els.forEach(function(el){ var v=store('ai410-l1-'+el.id); if(v) el.value=v; el.addEventListener('input',update); });
+  var vague=/\b(confus(ing|ed)|everything|all of it|the whole|in general|not sure about anything|kind of|stuff)\b/i;
+  var concrete=/(`|\(|\)|\.py|\/|step \d|part \d|line|function|endpoint|api|key|token|schema|history|loop|tool|call|json|backend|frontend|model|declar)/i;
+  function words(s){ return (s.trim().match(/\S+/g)||[]).length; }
+  function update(){
+    els.forEach(function(el){ store('ai410-l1-'+el.id, el.value); });
+    var ctx=els[0].value, stuck=els[1].value, tried=els[2].value;
+    var w=words(stuck); document.getElementById('mp2count').textContent=w+' words';
+    var checks=[
+      [words(ctx)>=3,'Context names where you were (a part, step, or line)'],
+      [w>=15,'Stuck point is at least ~15 words'],
+      [concrete.test(stuck),'Stuck point mentions a concrete thing (a step, function, file, term)'],
+      [!vague.test(stuck)||w>=30,'Avoids vague catch-alls like "confusing" or "everything"'],
+      [words(tried)>=5,'Says what you already tried']
+    ];
+    var n=checks.filter(function(c){return c[0];}).length, pct=n/checks.length*100;
+    var f=document.getElementById('specFill'); f.style.width=pct+'%';
+    f.style.background= pct>=80?'var(--ok)':pct>=40?'var(--amber)':'var(--bad)';
+    document.getElementById('specLabel').textContent= pct>=80?'Specific':pct>=40?'Getting there':'Too vague';
+    document.getElementById('specHints').innerHTML=checks.map(function(c){return '<li class="'+(c[0]?'ok':'no')+'">'+(c[0]?'✓ ':'○ ')+c[1]+'</li>';}).join('');
+  }
+  update();
+  document.getElementById('mpCopy').addEventListener('click',function(){
+    var t='MUDDIEST POINT — AI 410 HOS 1\n\n1. Right before I got confused: '+els[0].value+'\n\n2. Where I got stuck: '+els[1].value+'\n\n3. What I already tried: '+els[2].value+'\n\n4. My best guess: '+(els[3].value||'(none)');
+    var s=document.getElementById('mpStatus');
+    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ s.textContent='Copied — paste it into Brightspace.'; },function(){ s.textContent='Copy blocked — select the fields manually.'; }); }
+    else s.textContent='Copy not supported — select the fields manually.';
+  });
+  document.getElementById('mpClear').addEventListener('click',function(){ els.forEach(function(el){ el.value=''; }); update(); document.getElementById('mpStatus').textContent='Draft cleared.'; });
+})();
+
+/* Debate side: Brightspace group -> side for HOS 1 (Group 1 = A) */
+(function(){
+  var sel=document.getElementById('teamInput'), out=document.getElementById('sideResult');
+  var v=store('ai410-team'); if(v) sel.value=v;
+  function upd(){
+    var a=document.getElementById('sideA'), b=document.getElementById('sideB');
+    a.classList.remove('mine'); b.classList.remove('mine');
+    if(sel.value===''){ out.textContent=''; return; }
+    store('ai410-team',sel.value);
+    var sideA=sel.value==='1';
+    (sideA?a:b).classList.add('mine');
+    out.innerHTML='In HOS 1 you argue <b>'+(sideA?'Side A — Let the model decide':'Side B — Backend code decides')+'</b> in Stage 1.';
+  }
+  sel.addEventListener('change',upd); upd();
+})();
+
+/* checklists */
+function wireChecklist(listId, progId, suffix, key){
+  var boxes=[].slice.call(document.querySelectorAll('#'+listId+' input'));
+  var saved=(store(key)||'').split(',');
+  boxes.forEach(function(b,i){ if(saved[i]==='1') b.checked=true; b.addEventListener('change',upd); });
+  function upd(){
+    boxes.forEach(function(b){ b.parentNode.classList.toggle('done',b.checked); });
+    var n=boxes.filter(function(b){return b.checked;}).length;
+    document.getElementById(progId).textContent=n+' / '+boxes.length+' '+suffix;
+    store(key, boxes.map(function(b){return b.checked?'1':'0';}).join(','));
+  }
+  upd();
+}
+wireChecklist('evalList','evalProgress','tests run','ai410-l1-eval');
+wireChecklist('refineList','refineProgress','done','ai410-l1-refine');
+(function(){ var t=document.getElementById('evalNote'); var v=store('ai410-l1-evalnote'); if(v) t.value=v; t.addEventListener('input',function(){ store('ai410-l1-evalnote',t.value); }); })();
+
+/* Analyze frames */
+(function(){
+  var frames={
+    loop:['What condition ends the loop? Point to the exact line.','What does the backend append to the history after each tool call, and why must the model see it?','What would happen with no maximum-iteration limit if the model kept calling tools?'],
+    decl:['Which parts of the declaration does the model actually read when deciding to call it?','Change the description to something vague — predict what changes in behavior, then test it.','Why is the parameter a schema rather than free text?'],
+    flow:['List every hop: browser → Streamlit → HTTP → FastAPI → Gemini → back. What data shape crosses each hop?','Where exactly is the API key read, and could the frontend ever see it?','If Gemini is slow, which component is waiting, and what does the user see?']
+  };
+  var btns=[].slice.call(document.querySelectorAll('#analyzePick button')), box=document.getElementById('analyzeFrame');
+  btns.forEach(function(b){ b.addEventListener('click',function(){
+    btns.forEach(function(x){x.setAttribute('aria-pressed','false');}); b.setAttribute('aria-pressed','true');
+    box.innerHTML='<span class="label">Explain-it frame</span><ul>'+frames[b.dataset.k].map(function(q){return '<li>'+q+'</li>';}).join('')+'</ul><p class="small">Aim for 250–400 words. Quote the line(s) you are explaining.</p>';
+  }); });
+})();
+
+/* Application Challenge sorter */
+(function(){
+  var biz={
+    vet:[
+      ['check_open_slots(date, service)','auto','Read-only and harmless — the worst case is a wrong answer the user can see.'],
+      ['book_appointment(pet_id, slot)','confirm','Creates a real commitment. The model should propose it; the owner confirms.'],
+      ['get_vaccination_record(pet_id)','confirm','Read-only, but it is a private record — confirm the caller actually owns the pet.'],
+      ['issue_refund(invoice_id, amount)','never','Moves money. Keep it with staff; the agent can explain the refund policy instead.']
+    ],
+    bike:[
+      ['find_nearest_station(lat, lng)','auto','Public, read-only data. Safe to call freely.'],
+      ['reserve_bike(station_id)','confirm','Holds inventory other riders need; confirm before committing.'],
+      ['end_ride(ride_id)','confirm','Ends billing — a mistaken call strands or overcharges the rider.'],
+      ['update_payment_method(card)','never','Card numbers should never pass through a model. Link to the secure account page.']
+    ],
+    lib:[
+      ['search_catalog(query)','auto','Public catalog search — the textbook safe tool.'],
+      ['place_hold(item_id)','confirm','Low stakes, but it acts on the patron\'s account; a one-tap confirm is cheap.'],
+      ['renew_items(patron_id)','confirm','Usually fine, but a wrong patron_id renews someone else\'s items.'],
+      ['waive_fine(patron_id, amount)','never','A policy decision with money attached — staff only.']
+    ]
+  };
+  var cur='vet', answers={};
+  var host=document.getElementById('sorter'), score=document.getElementById('sorterScore');
+  function render(){
+    answers={}; score.textContent='';
+    host.innerHTML=biz[cur].map(function(t,i){
+      return '<div class="sorter-row" data-i="'+i+'"><code>'+t[0]+'</code><div class="opts">'+
+        ['auto','confirm','never'].map(function(o){return '<button type="button" class="'+o+'" aria-pressed="false" data-o="'+o+'">'+(o==='auto'?'Auto':o==='confirm'?'Confirm first':'Never')+'</button>';}).join('')+
+        '</div><div class="why"></div></div>';
+    }).join('');
+    [].slice.call(host.querySelectorAll('.opts button')).forEach(function(b){ b.addEventListener('click',function(){
+      var row=b.closest('.sorter-row'); [].slice.call(row.querySelectorAll('button')).forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true'); answers[row.dataset.i]=b.dataset.o;
+    }); });
+  }
+  [].slice.call(document.querySelectorAll('#bizPick button')).forEach(function(b){ b.addEventListener('click',function(){
+    [].slice.call(document.querySelectorAll('#bizPick button')).forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true'); cur=b.dataset.b; render();
+  }); });
+  document.getElementById('sorterReveal').addEventListener('click',function(){
+    var right=0;
+    [].slice.call(host.querySelectorAll('.sorter-row')).forEach(function(row){
+      var t=biz[cur][row.dataset.i], mine=answers[row.dataset.i];
+      if(mine===t[1]) right++;
+      var lbl=t[1]==='auto'?'Auto':t[1]==='confirm'?'Confirm first':'Never';
+      row.querySelector('.why').innerHTML='<b>Suggested: '+lbl+'.</b> '+t[2];
+      row.classList.add('revealed');
+    });
+    score.textContent=right+' / '+biz[cur].length+' match the suggested call — disagreeing is fine if you can defend it in your write-up.';
+  });
+  render();
+})();
+
+/* Quiz */
+(function(){
+  var qs=[
+    ['Where should GEMINI_API_KEY live in the HOS 1 app?',['In the Streamlit frontend so it can call Gemini directly','In the backend .env file, read only by the FastAPI server','In the tool declaration so the model can see it','In the chat history'],1,'The backend is the only piece users can\'t inspect. Anything shipped to the frontend is public.'],
+    ['When the model "calls" the calculate tool, what actually happens first?',['Gemini runs the Python function on Google\'s servers','Streamlit evaluates the expression','The tool result is guessed and verified later','The model returns a structured function call; your backend runs the function'],3,'The model only asks. Your code runs the function and sends the result back.'],
+    ['Why can the same question get two different answers?',['Tokens are sampled from a probability distribution','The API key rotates','The tool declaration changes','FastAPI caches responses'],0,'Nondeterminism comes from sampling — it\'s why a single successful test isn\'t a full Evaluate.'],
+    ['Which is context engineering rather than prompt engineering?',['Rewording "be concise" as "answer in two sentences"','Adding "please" to the instruction','Choosing to resend only the last 6 turns and attach the tool list','Using a friendlier tone'],2,'Context engineering decides what information reaches the model at all.'],
+    ['What normally ends the agentic loop?',['The model returns plain text instead of a function call','The tool returns a number','The frontend times out','The user sends a second message'],0,'No function call means the model is done — return its text to the user. A max-iteration cap is the safety net.']
+  ];
+  var host=document.getElementById('quiz'), right=0, done=0;
+  host.innerHTML=qs.map(function(q,i){
+    return '<div class="q" data-i="'+i+'"><div class="stem">'+(i+1)+'. '+q[0]+'</div>'+q[1].map(function(o,j){return '<button type="button" class="opt" data-j="'+j+'">'+o+'</button>';}).join('')+'<div class="fb"></div></div>';
+  }).join('');
+  [].slice.call(host.querySelectorAll('.q')).forEach(function(card){
+    var q=qs[card.dataset.i];
+    [].slice.call(card.querySelectorAll('.opt')).forEach(function(b){ b.addEventListener('click',function(){
+      if(card.classList.contains('answered')) return;
+      card.classList.add('answered'); done++;
+      var j=+b.dataset.j, ok=j===q[2]; if(ok) right++;
+      b.classList.add(ok?'right':'wrong'); card.querySelectorAll('.opt')[q[2]].classList.add('right');
+      card.querySelector('.fb').innerHTML=(ok?'✓ ':'✗ ')+q[3];
+      document.getElementById('quizScore').textContent= done===qs.length ? 'Score: '+right+' / '+qs.length+(right===qs.length?' — ready for the Week 2 check-in.':' — revisit the lecture parts you missed.') : '';
+    }); });
+  });
+})();
+
+/* week tabs: show one week at a time; links and #hash jumps switch tabs */
+(function(){
+  var panels=[].slice.call(document.querySelectorAll('.week-panel')); if(!panels.length) return;
+  var tabs=[].slice.call(document.querySelectorAll('.week-tabs [data-week]')), all=document.querySelector('.week-tabs .show-all');
+  var key='ai410-tab-'+location.pathname;
+  function save(v){ try{ localStorage.setItem(key,v); }catch(e){} }
+  function load(){ try{ return localStorage.getItem(key); }catch(e){ return null; } }
+  function show(w){
+    panels.forEach(function(p){ p.hidden = !(w==='all' || p.getAttribute('data-week')===w); });
+    tabs.forEach(function(t){ t.setAttribute('aria-pressed', String(t.getAttribute('data-week')===w)); });
+    if(all) all.textContent = w==='all' ? 'Show one week at a time' : 'Show both weeks';
+  }
+  function weekOf(id){ var el=id && document.getElementById(id); var p=el && el.closest('.week-panel'); return p ? p.getAttribute('data-week') : null; }
+  document.body.classList.add('tabs-on');
+  var start = weekOf(location.hash.slice(1)) || load() || panels[0].getAttribute('data-week');
+  show(start);
+  if(location.hash){ var tgt=document.getElementById(location.hash.slice(1)); if(tgt){ var go=function(){ tgt.scrollIntoView({block:'start', behavior:'instant'}); }; setTimeout(go,0); window.addEventListener('load',go); } }
+  tabs.forEach(function(t){ t.addEventListener('click',function(){ var w=t.getAttribute('data-week'); show(w); save(w); var p=document.querySelector('.week-panel[data-week="'+w+'"]'); if(p) p.scrollIntoView({block:'start'}); }); });
+  if(all) all.addEventListener('click',function(){ var cur=tabs.filter(function(t){return t.getAttribute('aria-pressed')==='true';})[0]; var w = cur ? 'all' : (load()&&load()!=='all'?load():panels[0].getAttribute('data-week')); show(w); save(w); });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+    var w=weekOf(a.getAttribute('href').slice(1)); if(!w) return;
+    var cur=panels.filter(function(p){return !p.hidden;}).map(function(p){return p.getAttribute('data-week');});
+    if(cur.indexOf(w)===-1){ show(w); save(w); }
+  }, true);
+  window.addEventListener('hashchange',function(){ var w=weekOf(location.hash.slice(1)); if(w && document.querySelector('.week-panel[data-week="'+w+'"]').hidden){ show(w); var el=document.getElementById(location.hash.slice(1)); if(el) el.scrollIntoView(); } });
+  /* due checklist ticks */
+  [].slice.call(document.querySelectorAll('.due-card input[data-k]')).forEach(function(cb){
+    var k='ai410-due-'+cb.getAttribute('data-k'); try{ cb.checked = localStorage.getItem(k)==='1'; }catch(e){}
+    cb.addEventListener('change',function(){ try{ localStorage.setItem(k, cb.checked?'1':'0'); }catch(e){} });
+  });
+})();
+</script>
+</body>
+</html>

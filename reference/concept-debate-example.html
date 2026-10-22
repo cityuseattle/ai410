@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 worked example: four students through one Concept Debate, with every post, a day-by-day timeline, the Brightspace thread view, grading, and setup steps.">
+<title>Concept Debate Example</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.pipe-row { display:flex; align-items:stretch; gap:6px; flex-wrap:wrap; margin:6px 0; }
+.pipe-row .box { flex:1 1 120px; border:2px solid var(--border); border-radius:10px; padding:8px 10px; background:var(--surface2); font-size:.8rem; }
+.pipe-row .box b { display:block; font-size:.84rem; }
+.pipe-row .arrow { align-self:center; font-weight:900; color:var(--muted); }
+.pipe-label { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:10px; }
+.vec-demo { display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:.84rem; align-items:center; margin:8px 0 12px; }
+.vec-demo .s { font-weight:800; color:var(--accent2); }
+.review-code { counter-reset:ln; }
+
+.internal { background:var(--amber-bg); border:1px solid var(--amber); color:var(--amber); font-weight:700; font-size:.82rem; padding:8px 14px; border-radius:8px; margin:20px 0 0; }
+.ex { border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin:10px 0; background:var(--surface); font-size:.88rem; }
+.ex.strong { border-left:5px solid var(--ok); } .ex.weak { border-left:5px solid var(--amber); }
+.ex .hd { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:baseline; margin-bottom:6px; }
+.ex .hd b { font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; }
+.ex.strong .hd b { color:var(--ok); } .ex.weak .hd b { color:var(--amber); }
+.ex .score { font-weight:800; font-size:.9rem; }
+.ex blockquote { margin:6px 0 8px; padding:8px 12px; background:var(--surface2); border-radius:6px; font-size:.86rem; }
+.ex blockquote p:last-child { margin-bottom:0; }
+.ex pre { margin:6px 0; }
+.why { font-size:.84rem; }
+.why li { margin-bottom:3px; }
+.prompt { font-size:.9rem; }
+
+
+/* Concept Debate example */
+.timeline { display:grid; gap:0; margin:8px 0 16px; border-left:3px solid var(--border); padding-left:18px; }
+.tl { position:relative; padding:0 0 16px; }
+.tl::before { content:""; position:absolute; left:-25px; top:4px; width:11px; height:11px; border-radius:50%; background:var(--accent); border:2px solid var(--surface); }
+.tl.inst::before { background:var(--violet); }
+.tl .when { font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.tl h4 { margin:2px 0 4px; font-size:.95rem; }
+.tl p { margin:0; font-size:.88rem; }
+.cast { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; margin:10px 0 4px; }
+.person { border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:var(--surface2); font-size:.85rem; }
+.person b { display:block; font-size:.95rem; }
+.thread-view { border:1px solid var(--border); border-radius:10px; background:var(--surface); overflow:hidden; margin:10px 0 16px; font-size:.86rem; }
+.thread-view .tv-head { background:var(--surface2); padding:8px 12px; font-weight:700; font-size:.8rem; color:var(--muted); border-bottom:1px solid var(--border); }
+.tv-row { padding:7px 12px; border-bottom:1px solid var(--border); display:flex; gap:8px; flex-wrap:wrap; align-items:baseline; }
+.tv-row:last-child { border-bottom:none; }
+.tv-row.r1 { padding-left:34px; } .tv-row.r2 { padding-left:56px; }
+.tv-row .who { font-weight:700; } .tv-row .ts { color:var(--muted); font-size:.78rem; margin-left:auto; }
+.post { border:1px solid var(--border); border-radius:10px; background:var(--surface); margin:10px 0; overflow:hidden; }
+.post.reply { margin-left:26px; }
+.post .ph { display:flex; flex-wrap:wrap; gap:6px 10px; align-items:baseline; padding:8px 12px; background:var(--surface2); border-bottom:1px solid var(--border); font-size:.8rem; }
+.post .ph b { font-size:.88rem; }
+.post .ph .ts { color:var(--muted); margin-left:auto; }
+.post .pb { padding:10px 12px; font-size:.88rem; }
+.post .pb p { margin:0 0 6px; } .post .pb p:last-child { margin:0; }
+.post .note { padding:8px 12px; font-size:.8rem; border-top:1px dashed var(--border); color:var(--muted); }
+.post .note b { color:var(--text); }
+.post.weakp { border-left:5px solid var(--bad); } .post.strongp { border-left:5px solid var(--ok); } .post.instp { border-left:5px solid var(--violet); }
+@media (max-width:560px) { .post.reply { margin-left:10px; } .tv-row.r1 { padding-left:22px; } .tv-row.r2 { padding-left:34px; } }
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Concept Debate</div>
+    <h1>Concept Debate: A Worked Example</h1>
+    <p class="lede">Four students, one debate, one week. Every post they write, when they write it, what the Brightspace thread looks like, what the instructor does, and how each student is graded.</p>
+    <div class="chips"><span class="chip">Module 1 debate</span><span class="chip">3 stages</span><span class="chip">For students and instructors</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Sections" style="margin-top:14px">
+  <div class="secnav-inner"><a href="#setup">The setup</a><a href="#timeline">Timeline</a><a href="#thread">Thread view</a><a href="#posts">The posts</a><a href="#grading">Grading</a><a href="#brightspace">Brightspace setup</a></div>
+</nav>
+
+<section class="module card" id="setup" style="margin-top:18px">
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>The setup</h2><div class="module-meta"><span class="tag">HOS 1 · Week 1</span><span class="tag">O1</span></div></div></div>
+  <p><b>The question</b> (already in the Module 1 lesson): <em>When a request might need a tool, who should decide: the model, or deterministic backend code?</em></p>
+  <ul>
+    <li><b>Side A — Let the model decide.</b> Declare the tools and let the LLM choose when to call them.</li>
+    <li><b>Side B — Backend code decides.</b> Use rules to route the request, and only ask the model to phrase the answer.</li>
+  </ul>
+  <p>Before the first debate, the class is split into two debate groups of about the same size, either assigned by the instructor or chosen by students. In HOS 1, Debate Group 1 argues Side A and Debate Group 2 argues Side B. The four students below are fictional.</p>
+  <div class="cast">
+    <div class="person"><b>Priya</b>Debate Group 1 · Side A<br><span class="muted">Strong throughout</span></div>
+    <div class="person"><b>Marcus</b>Debate Group 1 · Side A<br><span class="muted">On time, but general</span></div>
+    <div class="person"><b>Dana</b>Debate Group 2 · Side B<br><span class="muted">Strong throughout</span></div>
+    <div class="person"><b>Jordan</b>Debate Group 2 · Side B<br><span class="muted">Strong, but Stage 1 late</span></div>
+  </div>
+</section>
+
+<section class="module card" id="timeline">
+  <div class="module-head"><div class="module-icon">🗓️</div><div><h2>Timeline</h2><div class="module-meta"><span class="tag">Week 1 of the HOS</span><span class="tag violet">Instructor steps in purple</span></div></div></div>
+  <p class="small muted">Days follow the suggested pacing in the lessons; your Brightspace dates win.</p>
+  <div class="timeline">
+    <div class="tl"><span class="when">Week 1 · Monday</span><h4>The topic opens</h4><p>After the lecture, students read the question and both sides in the lesson. The instructor posts nothing new; the question is already in the course.</p></div>
+    <div class="tl inst"><span class="when">Monday · instructor</span><h4>Check the groups</h4><p>Confirm the two debate groups are close to even, and place anyone who added late.</p></div>
+    <div class="tl"><span class="when">Monday – Tuesday</span><h4>Stage 1: initial position</h4><p>Each student starts <b>their own thread</b>, titled with their side and name. Until they post it, Brightspace hides everyone else's threads.</p></div>
+    <div class="tl inst"><span class="when">Wednesday · instructor</span><h4>Skim Stage 1 and nudge</h4><p>About 15 minutes. Look for topic summaries with no claim or evidence, and leave one short public question on those threads. Note anyone who hasn't posted.</p></div>
+    <div class="tl"><span class="when">Wednesday – Thursday</span><h4>Stage 2: argue the opposite</h4><p>Each student replies <b>to their own thread</b> with the strongest case for the side they didn't argue. Now they can read everyone's posts.</p></div>
+    <div class="tl"><span class="when">Friday – Saturday</span><h4>Stage 3: synthesis</h4><p>Each student replies <b>to a classmate's thread from the other side</b>, citing one specific point from it. The topic closes Saturday night.</p></div>
+    <div class="tl inst"><span class="when">Week 2 · Monday · instructor</span><h4>Grade and reuse</h4><p>Grade from the topic's Assessment view (about 2 minutes per student; each student's posts appear together). Quote one strong synthesis, anonymized or with permission, in the Week 2 lecture.</p></div>
+  </div>
+</section>
+
+<section class="module card" id="thread">
+  <div class="module-head"><div class="module-icon">🧵</div><div><h2>What the thread looks like in Brightspace</h2><div class="module-meta"><span class="tag">One topic, one thread per student</span></div></div></div>
+  <p>One whole-class topic for this debate. Each student's thread holds their Stage 1 and Stage 2; Stage 3 lives in someone else's thread.</p>
+  <div class="thread-view" role="group" aria-label="Brightspace topic: HOS 1 Concept Debate">
+    <div class="tv-head">Concept Debates › HOS 1: Who decides when to call a tool?</div>
+    <div class="tv-row"><span class="who">Side A — Priya</span><span class="tag">Stage 1</span><span class="ts">Mon 8:40 pm</span></div>
+    <div class="tv-row r1"><span>↳ Priya</span><span class="tag">Stage 2</span><span class="ts">Wed 6:05 pm</span></div>
+    <div class="tv-row r1"><span>↳ Dana</span><span class="tag">Stage 3</span><span class="ts">Sat 11:20 am</span></div>
+    <div class="tv-row"><span class="who">Side B — Dana</span><span class="tag">Stage 1</span><span class="ts">Tue 10:15 am</span></div>
+    <div class="tv-row r1"><span>↳ Dana</span><span class="tag">Stage 2</span><span class="ts">Thu 2:30 pm</span></div>
+    <div class="tv-row r1"><span>↳ Priya</span><span class="tag">Stage 3</span><span class="ts">Fri 7:45 pm</span></div>
+    <div class="tv-row"><span class="who">Side A — Marcus</span><span class="tag">Stage 1</span><span class="ts">Tue 9:50 pm</span></div>
+    <div class="tv-row r1"><span>↳ Instructor</span><span class="tag violet">Nudge</span><span class="ts">Wed 9:10 am</span></div>
+    <div class="tv-row r1"><span>↳ Marcus</span><span class="tag">Stage 2</span><span class="ts">Thu 11:05 pm</span></div>
+    <div class="tv-row r1"><span>↳ Jordan</span><span class="tag">Stage 3</span><span class="ts">Sat 4:10 pm</span></div>
+    <div class="tv-row"><span class="who">Side B — Jordan</span><span class="tag bad">Stage 1 · late</span><span class="ts">Wed 7:30 am</span></div>
+    <div class="tv-row r1"><span>↳ Jordan</span><span class="tag">Stage 2</span><span class="ts">Thu 8:00 pm</span></div>
+    <div class="tv-row r1"><span>↳ Marcus</span><span class="tag">Stage 3</span><span class="ts">Sat 10:55 pm</span></div>
+  </div>
+</section>
+
+<section class="module card" id="posts">
+  <div class="module-head"><div class="module-icon">💬</div><div><h2>The posts</h2><div class="module-meta"><span class="tag">In the order they were written</span></div></div></div>
+  <h3>Stage 1 · Monday – Tuesday: initial position</h3>
+<div class="post strongp"><div class="ph"><b>Side A — Priya</b><span class="tag blue">Side A</span><span class="tag">Stage 1</span><span class="ts">Mon 8:40 pm</span></div><div class="pb"><p><b>Claim:</b> the model should decide when to call a tool, because people phrase requests in ways no rule anticipates.</p><p><b>Evidence:</b> in the Agentic Loop Simulator I asked "what's a 15% tip on $48?" There's no operator and no word like "calculate", but the model called <code>calculate(expression="48*0.15")</code>. A rule that looks for numbers and operators would have missed it, and adding "tip" to the rule is one more rule to maintain forever. Adding a tool should be one declaration, not a new routing rule.</p></div><div class="note"><b>Why it works:</b> one claim, and evidence from something she actually ran.</div></div>
+<div class="post strongp"><div class="ph"><b>Side B — Dana</b><span class="tag rose">Side B</span><span class="tag">Stage 1</span><span class="ts">Tue 10:15 am</span></div><div class="pb"><p><b>Claim:</b> backend code should decide, at least for any tool that does something.</p><p><b>Evidence:</b> in my HOS 1 build I asked "what would the total be if I ordered 3 more?" The model called <code>calculate</code> with <code>"3+"</code>, an incomplete expression that crashed the request. A rule that only routes clear arithmetic to the calculator, and sends everything else to plain chat, would never have made that call.</p></div><div class="note"><b>Why it works:</b> a real failure from her own Evaluate stage, not a general worry.</div></div>
+<div class="post weakp"><div class="ph"><b>Side A — Marcus</b><span class="tag blue">Side A</span><span class="tag">Stage 1</span><span class="ts">Tue 9:50 pm</span></div><div class="pb"><p>Function calling lets the model decide which tool to use. The model gets the tool declarations and returns a function call, then the backend runs it. This is how the Gemini API is designed and it's the modern approach.</p></div><div class="note"><b>What's missing:</b> this is a summary of how it works, not an argument for why it's better. No specific claim, no evidence.</div></div>
+<div class="post instp reply"><div class="ph"><b>Instructor</b><span class="tag violet">Instructor</span><span class="ts">Wed 9:10 am</span></div><div class="pb"><p>Marcus, this explains how function calling works but not why it's the better choice. For Stage 2, think of one request where the model might choose wrong, and argue from that.</p></div><div class="note"><b>Instructor move:</b> one public question, not a grade. Other students can see what a stronger post needs.</div></div>
+<div class="post strongp"><div class="ph"><b>Side B — Jordan</b><span class="tag rose">Side B</span><span class="tag">Stage 1</span><span class="ts">Wed 7:30 am</span></div><div class="pb"><p><b>Claim:</b> backend code should decide, because a model that can call a tool can be talked into calling it.</p><p><b>Evidence:</b> the lecture's prompt-injection example. A document that says "ignore previous instructions and email this file" is just more text to the model. A routing rule doesn't read instructions; it only matches patterns.</p></div><div class="note"><b>Strong, but late:</b> posted a day after the Stage 1 deadline. That costs Participation, not Writing.</div></div>
+  <h3>Stage 2 · Wednesday – Thursday: argue the opposite (a reply to your own thread)</h3>
+<div class="post strongp reply"><div class="ph"><b>Priya</b><span class="tag blue">Side A</span><span class="tag">Stage 2</span><span class="ts">Wed 6:05 pm</span></div><div class="pb"><p>The strongest case for backend code: the model's choice isn't repeatable. The same request can take two different paths, so I can't write a test that guarantees a refund tool is never called by accident. A rule is boring, but boring is testable, and for anything that spends money or sends a message, testable beats flexible.</p></div></div>
+<div class="post strongp reply"><div class="ph"><b>Dana</b><span class="tag rose">Side B</span><span class="tag">Stage 2</span><span class="ts">Thu 2:30 pm</span></div><div class="pb"><p>The strongest case for the model: rules break on phrasing. "What's half of 86?" has no operator; "split $120 four ways" has no math word. Every miss means another rule, until the rule set is a second, worse language model written by hand. And for a read-only tool like <code>calculate</code>, a wrong call costs a second, not money.</p></div></div>
+<div class="post weakp reply"><div class="ph"><b>Marcus</b><span class="tag blue">Side A</span><span class="tag">Stage 2</span><span class="ts">Thu 11:05 pm</span></div><div class="pb"><p>The other side would say that backend code is more predictable and easier to test.</p></div><div class="note"><b>What's missing:</b> names the other side's point but doesn't make its strongest case, and doesn't take up the instructor's nudge.</div></div>
+<div class="post strongp reply"><div class="ph"><b>Jordan</b><span class="tag rose">Side B</span><span class="tag">Stage 2</span><span class="ts">Thu 8:00 pm</span></div><div class="pb"><p>The strongest case for the model: Priya's tip example shows that rules miss real requests, and a missed request is a failure the user sees right away. Injection is a real risk, but it's a risk about <em>which tools exist</em>, not about who picks between them. You can let the model choose and simply not give it an email tool.</p></div></div>
+  <h3>Stage 3 · Friday – Saturday: synthesis (a reply to a classmate from the other side)</h3>
+<div class="post strongp"><div class="ph"><b>Priya → Dana's thread</b><span class="tag blue">Side A</span><span class="tag">Stage 3</span><span class="ts">Fri 7:45 pm</span></div><div class="pb"><p>Dana's "3+" crash changed where I draw the line. The model wasn't wrong to pick the calculator; it was wrong about the arguments, and that's a validation problem (HOS 3), not a routing one. My position: let the model choose among read-only tools, validate every argument before running it, and route anything that writes data or spends money through backend code that checks the request first.</p></div><div class="note"><b>Why it works:</b> cites a specific point from Dana, changes her own view because of it, and lands on a position that isn't just "it depends".</div></div>
+<div class="post strongp"><div class="ph"><b>Dana → Priya's thread</b><span class="tag rose">Side B</span><span class="tag">Stage 3</span><span class="ts">Sat 11:20 am</span></div><div class="pb"><p>Priya's tip example convinced me that keyword rules can't keep up with how people phrase things, so I'm dropping "rules for everything". I'd keep backend control for one category: tools with side effects. The model can <em>propose</em> sending an email; backend code decides whether it runs. That keeps the flexibility Priya wants wherever a mistake is cheap.</p></div></div>
+<div class="post strongp"><div class="ph"><b>Jordan → Marcus's thread</b><span class="tag rose">Side B</span><span class="tag">Stage 3</span><span class="ts">Sat 4:10 pm</span></div><div class="pb"><p>Building on Marcus's point that this is how the Gemini API is designed: the API actually supports both sides, because you pass a tool list with each request. So backend code can decide which tools are available for this request, and the model decides among them. My synthesis: code sets the menu, the model orders from it.</p></div><div class="note"><b>Why it works:</b> finds the one usable point in a weak post and builds on it, which counts as engaging with a classmate.</div></div>
+<div class="post weakp"><div class="ph"><b>Marcus → Jordan's thread</b><span class="tag blue">Side A</span><span class="tag">Stage 3</span><span class="ts">Sat 10:55 pm</span></div><div class="pb"><p>Great points! I agree both sides have pros and cons and it really depends on the situation.</p></div><div class="note"><b>What's missing:</b> no point from Jordan's post, and no position. This is the response Stage 3 is designed to rule out.</div></div>
+</section>
+
+<section class="module card" id="grading">
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>How each student is graded</h2><div class="module-meta"><span class="tag">10 points per debate</span><span class="tag">Participation 50% · Writing 50%</span></div></div></div>
+  <div class="table-wrap" tabindex="0"><table class="t">
+    <tr><th>Student</th><th>Participation (5)</th><th>Writing (5)</th><th>Total</th><th>Why</th></tr>
+    <tr><td><b>Priya</b></td><td>5</td><td>5</td><td><b>10</b></td><td>All three stages on time. Specific evidence, a genuine Stage 2, and a synthesis that cites Dana and changes her own view.</td></tr>
+    <tr><td><b>Dana</b></td><td>5</td><td>5</td><td><b>10</b></td><td>All three on time. Evidence from her own build, and a synthesis that narrows her position because of Priya's point.</td></tr>
+    <tr><td><b>Jordan</b></td><td>3</td><td>5</td><td><b>8</b></td><td>Stage 1 a day late (checked from the post time). The writing is strong at every stage.</td></tr>
+    <tr><td><b>Marcus</b></td><td>5</td><td>1</td><td><b>6</b></td><td>Posted every stage on time, so full Participation. Stage 1 is a summary, Stage 2 a one-liner, and Stage 3 "great points, I agree", which doesn't meet the Writing criterion.</td></tr>
+  </table></div>
+  <div class="callout"><span class="label">Feedback that moves Marcus up next time</span><p>"Your Stage 3 needs one point from Jordan's post, in your own words, and what it made you think. Jordan's "code sets the menu" idea was there to respond to."</p></div>
+</section>
+
+<section class="module card" id="brightspace">
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Set it up in Brightspace</h2><div class="module-meta"><span class="tag">Instructor · once per term, then once per debate</span></div></div></div>
+  <ol>
+    <li><b>One forum,</b> "Concept Debates", with <b>one topic per debate</b>: HOS 1–4 and the Week 8 Integration debate. Paste the question and both sides into each topic's description.</li>
+    <li><b>Turn on "Users must start a thread before they can read and reply to other threads in this topic"</b> (Post and View settings). Nobody can read and borrow arguments before posting their own Stage 1.</li>
+    <li><b>Set the topic's end date to the Stage 3 deadline.</b> Brightspace allows one end date per topic, so check Stage 1 and Stage 2 times when grading rather than splitting a debate into three topics.</li>
+    <li><b>Assessment tab:</b> score out of 10 and attach the Participation 50 / Writing 50 rubric, so you can grade from the topic with each student's posts together.</li>
+    <li><b>Tell students the thread title format:</b> "Side A — First name L." It makes the topic easy to scan.</li>
+    <li><b>Keep it one whole-class topic.</b> Above about 30–35 students, use Brightspace groups to make two or three restricted copies of the topic, each with a mix of both sides. Don't split by side: Stages 2 and 3 need the other side's posts.</li>
+  </ol>
+  <p class="small muted">Not one thread for everyone: replies nest until they're unreadable, the start-a-thread-first setting stops working, and grading means hunting for each student's posts.</p>
+</section>
+
+<section class="card"><h2>Related</h2><ul>
+<li>The debates themselves: <a href="../module-1/index.html#debate">Module 1</a> · <a href="../module-2/index.html#debate">Module 2</a> · <a href="../module-3/index.html#debate">Module 3</a> · <a href="../module-4/index.html#debate">Module 4</a> · <a href="../module-4/index.html#integration">Integration (Week 8)</a></li>
+</ul></section>
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a) a.classList.add('active'); } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

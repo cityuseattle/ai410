@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 Team Project, Phase 3 (Weeks 9-10): phases and deliverables, Scrum-lite backlog builder, roles and PM tools, build habits, feature freeze checklist, presentation and demo plan.">
+<title>Module 5: Team Project</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.pipe-row { display:flex; align-items:stretch; gap:6px; flex-wrap:wrap; margin:6px 0; }
+.pipe-row .box { flex:1 1 120px; border:2px solid var(--border); border-radius:10px; padding:8px 10px; background:var(--surface2); font-size:.8rem; }
+.pipe-row .box b { display:block; font-size:.84rem; }
+.pipe-row .arrow { align-self:center; font-weight:900; color:var(--muted); }
+.pipe-label { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:10px; }
+.vec-demo { display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:.84rem; align-items:center; margin:8px 0 12px; }
+.vec-demo .s { font-weight:800; color:var(--accent2); }
+.review-code { counter-reset:ln; }
+
+.story-form { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+@media (max-width:720px){ .story-form { grid-template-columns:1fr; } }
+.hos-chk { display:flex; gap:10px; flex-wrap:wrap; font-size:.82rem; margin:8px 0; }
+.hos-chk label { display:flex; gap:4px; align-items:center; cursor:pointer; }
+.hos-chk input { accent-color:var(--accent); }
+.story { display:grid; grid-template-columns:1fr auto; gap:6px 10px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:8px 10px; margin-bottom:6px; font-size:.85rem; background:var(--surface); }
+.story.later { border-left-color:var(--muted); opacity:.8; }
+.story .tags { display:flex; gap:4px; flex-wrap:wrap; margin-top:4px; }
+.story .acts { display:flex; gap:4px; align-items:start; }
+.story .acts button { font-family:inherit; font-size:.72rem; border:1px solid var(--border); background:var(--surface2); color:var(--text); border-radius:6px; padding:3px 8px; cursor:pointer; }
+.cover { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:10px 0; }
+@media (max-width:560px){ .cover { grid-template-columns:repeat(2,1fr); } }
+.cover div { border:1px solid var(--border); border-radius:8px; padding:8px; text-align:center; font-size:.78rem; background:var(--surface2); }
+.cover div b { display:block; font-size:1.2rem; }
+.cover div.ok { border-color:var(--ok); background:var(--ok-bg); } .cover div.ok b { color:var(--ok); }
+.demo-row { display:grid; grid-template-columns:70px 1fr; gap:10px; border-bottom:1px dashed var(--border); padding:8px 0; font-size:.86rem; }
+.demo-row .tm { font-weight:800; color:var(--accent2); }
+
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Module 5 · Weeks 9–10 · Team Project</div>
+    <h1>Team Project: Plan, Build &amp; Present</h1>
+    <p class="lede">All four HOS, combined by a team of three into one app a real user would want. Phases 1 and 2 set it up; Phase 3 (Weeks 9–10) reviews the architecture, builds, freezes, rehearses, and ends with the final system, report, presentation and demo video.</p>
+    <div class="chips"><span class="chip">Outcomes O1–O5</span><span class="chip">20% of course</span><span class="chip">Teams of three</span><span class="chip">Backlog builder</span><span class="chip">Demo plan</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#overview">Overview</a>
+    <span class="sep">Week 9</span>
+    <a href="#backlog">Backlog &amp; Sprint 1</a>
+    <a href="#roles">Roles &amp; tools</a>
+    <a href="#build">Build</a>
+    <a href="#standups">Standups</a>
+    <span class="sep">Week 10</span>
+    <a href="#freeze">Freeze &amp; rehearse</a>
+    <a href="#demo">Demo plan</a>
+    <a href="#reflect">Self-check &amp; reflection</a>
+  </div>
+</nav>
+
+<div class="callout amber" style="margin-top:20px">
+  <span class="label">Free tiers only</span>
+  <p>Like every module, your project runs in GitHub Codespaces, and it uses only free tiers — the same Gemini key, Chroma, Upstash Redis, Expo and Langfuse accounts you already have. Anything that would need a paid key or a billing account is out of scope.</p>
+</div>
+
+<section class="module card" id="overview">
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>What Weeks 9–10 are for</h2><div class="module-meta"><span class="tag">20% of course</span><span class="tag">Outcomes O1–O5</span><span class="tag blue">Teams of three</span></div></div></div>
+  <p>The Team Project combines all 4 HOS — the agent and its tools, retrieval over your own documents, guardrails and background jobs, and a mobile client with push and observability — into one app a real user would want. You've built every piece once already. The work now is <strong>synthesis</strong>: deciding how the pieces fit, building the combined version, and showing it working live.</p>
+  <p>The project runs all term in three phases. By Week 9 your team has locked its scope (Phase 1) and has a rough working version (Phase 2), so Phase 3 starts with a short architecture review and a backlog, then builds. Week 10 finishes, freezes, rehearses, and presents.</p>
+  <div class="table-wrap" tabindex="0"><table class="t">
+    <tr><th>Phase</th><th>Weeks</th><th>Goal</th><th>Due</th></tr>
+    <tr><td>1</td><td>1–3</td><td><b>Scope is locked:</b> which HOS your project combines and why, in writing; roles per HOS piece; a rough architecture sketch.</td><td>End of Week 3: System v0.3 (repo + README, 10 pts) and a one-page proposal with 3 references (10 pts). <a href="../module-1/index.html#project">HOS 1 lesson</a></td></tr>
+    <tr><td>2</td><td>4–8</td><td><b>A rough, working version:</b> something a partner or the instructor can run, touching at least two of the combined HOS pieces end to end.</td><td>End of Week 8: System v0.8 (30 pts) and a 2–3 page progress report with 12+ references (30 pts). <a href="../module-4/index.html#project">HOS 4 lesson</a></td></tr>
+    <tr><td><b>3</b></td><td><b>9–10</b></td><td><b>Feature-complete and rehearsed:</b> all combined HOS pieces work together; remaining time goes to polish, edge cases and a practiced walkthrough, not new features.</td><td><b>End of Week 10:</b> System v1.0, final report, presentation and demo video (below). <b>This page.</b></td></tr>
+  </table></div>
+  <h3>Phase 3 deliverables and how they're graded</h3>
+  <div class="table-wrap" tabindex="0"><table class="t">
+    <tr><th>Deliverable</th><th>Points</th><th>Graded on</th></tr>
+    <tr><td>System v1.0</td><td>40</td><td>Environment (one-click Codespace launch), Architecture (modular structure), Execution Guide (README with an AI tool disclosure), Security &amp; Configuration (no committed keys, a proper <code>.gitignore</code>), and Git Workflow &amp; Collaboration (commits from every member): 20% each.</td></tr>
+    <tr><td>Final report</td><td>50</td><td>5–6 pages, ISCAP template, 12+ references, ending with an Author Contribution statement. General computing knowledge 20%, critical thinking 60%, collaboration 20%.</td></tr>
+    <tr><td>Final presentation</td><td>20</td><td>15 content slides plus 4 (cover, agenda, key references, Q&amp;A); 15 minutes plus 5 for questions, every member speaking.</td></tr>
+    <tr><td>Demo video</td><td>10</td><td>1–2 minutes, public YouTube link: the problem, how the system works, and a title card with each member's contribution.</td></tr>
+  </table></div>
+  <p class="small">Full rubrics: the Team Project section of the syllabus (in Brightspace).</p>
+</section>
+
+<!-- ========================= WEEK 9 ========================= -->
+<div class="part-banner"><b>Week 9 · Review, then build</b><span>Architecture review → backlog → Sprint 1 → roles &amp; PM tool → build → standups</span></div>
+
+<section class="module card" id="backlog">
+  <div class="module-head"><div class="module-icon">🗂️</div><div><h2>Days 1–2: product backlog and Sprint 1</h2><div class="module-meta"><span class="tag">Scrum-lite</span><span class="tag amber">Keep it brief</span></div></div></div>
+  <p>Write everything the project might need as <strong>user stories</strong> — "As a [user], I want [capability], so that [benefit]" — and tag each with the HOS it depends on. Then mark a small, realistic subset as <strong>Sprint 1</strong>: what you can actually finish in the rest of Week 9 and Week 10. Everything else stays backlog, not a promise. Your list stays in this browser; copy it into your PM tool when it's ready.</p>
+  <div class="row" style="margin-bottom:8px"><button class="btn secondary" id="importCp" type="button">Import my HOS 3 check-in</button><span class="small muted" id="importStatus" aria-live="polite"></span></div>
+  <div class="story-form">
+    <div><label class="field" for="sWho">As a…</label><input type="text" id="sWho" placeholder="first-year student"></div>
+    <div><label class="field" for="sWant">I want…</label><input type="text" id="sWant" placeholder="to ask questions about my own syllabus"></div>
+    <div><label class="field" for="sWhy">so that…</label><input type="text" id="sWhy" placeholder="I don't miss a deadline"></div>
+  </div>
+  <div class="hos-chk" id="sHos">
+    <span class="small"><b>Depends on:</b></span>
+    <label><input type="checkbox" value="1"> HOS 1 · tools</label>
+    <label><input type="checkbox" value="2"> HOS 2 · RAG</label>
+    <label><input type="checkbox" value="3"> HOS 3 · guardrails/jobs</label>
+    <label><input type="checkbox" value="4"> HOS 4 · mobile/push/traces</label>
+    <label><input type="checkbox" id="sSprint" checked> In Sprint 1</label>
+  </div>
+  <div class="row"><button class="btn" id="sAdd" type="button">Add story</button><span class="small muted" id="sMsg" aria-live="polite"></span></div>
+  <h3>Coverage</h3>
+  <p class="small muted">Sprint 1 should touch at least two HOS end to end this week, and all four by the Week 10 demo.</p>
+  <div class="cover" id="cover"></div>
+  <div id="stories"></div>
+  <div class="row" style="margin-top:8px"><button class="btn" id="sCopy" type="button">Copy backlog as Markdown</button><button class="btn secondary" id="sClear" type="button">Clear all</button><span class="small muted" id="sCopyMsg" aria-live="polite"></span></div>
+  <div class="callout" style="margin-top:14px"><span class="label">Litmus test for each HOS</span>
+    <p>For every HOS, can you point to a specific part of your project and say why it's <em>really</em> that HOS? "This is HOS 2, and it's actually retrieval over documents users upload — not a hardcoded FAQ." If a HOS only has a token mention, the Architecture criterion and your final report will show it.</p>
+  </div>
+</section>
+
+<section class="module card" id="roles">
+  <div class="module-head"><div class="module-icon">👥</div><div><h2>Roles and a project management tool</h2><div class="module-meta"><span class="tag">Day 1–2</span></div></div></div>
+  <p><b>Teams of three (four with instructor approval):</b> assign an owner per area, not per week. One workable split: <em>agent &amp; tools</em> (HOS 1 + 3's guardrails), <em>data &amp; retrieval</em> (HOS 2 + 3's worker), <em>mobile &amp; push</em> (HOS 4 client), and <em>observability &amp; demo</em> (HOS 4 traces, plus owning the demo script). With three people, one person takes two areas. Everyone still commits code: the Git Workflow &amp; Collaboration criterion looks for commits from every member, not one big push before the deadline.</p>
+  <div class="table-wrap" tabindex="0"><table class="t">
+    <tr><th>Tool</th><th>Free tier</th><th>Why you might pick it</th></tr>
+    <tr><td><b>GitHub Projects</b> (recommended)</td><td>Free, unlimited</td><td>Already tied to your repo — your stories become Issues on a Kanban board, no extra sign-up.</td></tr>
+    <tr><td>Trello</td><td>Free for small teams</td><td>Simple and visual; fastest to learn if you've never used a PM tool.</td></tr>
+    <tr><td>Notion</td><td>Free for students</td><td>Backlog, meeting notes, and write-up in one place.</td></tr>
+  </table></div>
+</section>
+
+<section class="module card" id="build">
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Build: same Create → Evaluate habit, bigger scope</h2><div class="module-meta"><span class="tag">Rest of Week 9 → Week 10</span></div></div></div>
+  <ul>
+    <li><b>Start from your HOS 4 app.</b> It already has all four layers. Change what the project needs; don't start over.</li>
+    <li><b>Scaffold with an AI assistant, then judge it.</b> Use the <a href="https://clarkngo.github.io/prompt-builder/builders/term-project.html" target="_blank" rel="noopener">Term Project Prompt Builder</a> to scope what you ask it to build — the same way each HOS's Create/Scaffold stage worked.</li>
+    <li><b>Get one thin path working end to end first</b> — for example, one question that retrieves from your documents and calls one tool — before widening any single layer.</li>
+    <li><b>Keep Evaluating on purpose.</b> For each story, one test that should work and one that should fail gracefully. Your Evaluate habits from Weeks 1–8 are what keep demo day calm.</li>
+    <li><b>Rehearse in the simulators</b> when you're unsure how a layer should behave: <a href="../module-1/simulator.html">1</a> · <a href="../module-2/simulator.html">2</a> · <a href="../module-3/simulator.html">3</a> · <a href="../module-4/simulator.html">4</a>.</li>
+  </ul>
+</section>
+
+<section class="module card" id="standups">
+  <div class="module-head"><div class="module-icon">🗣️</div><div><h2>Standups</h2><div class="module-meta"><span class="tag">Async is fine</span></div></div></div>
+  <p>Brief, regular check-ins once building starts — a group chat is fine. The point is to catch "I've been stuck for three days" before demo week, not during it.</p>
+<pre tabindex="0"><code>Standup — [date] — [name]
+Did:      closed "upload notes as a background job" (HOS 3)
+Next:     push when flashcards are ready (HOS 4)
+Blocked:  Expo Go on Android won't receive push — need someone with an iPhone to test</code></pre>
+</section>
+
+<!-- ========================= WEEK 10 ========================= -->
+<div class="part-banner"><b>Week 10 · Finish, freeze, demo</b><span>Feature-complete early → rehearse → live demo = your sprint review</span></div>
+
+<section class="module card" id="freeze">
+  <div class="module-head"><div class="module-icon">🧊</div><div><h2>Feature freeze and rehearsal</h2><div class="module-meta"><span class="tag amber">Early Week 10</span></div></div></div>
+  <p>Early in Week 10, stop adding features. Remaining time goes to polish, edge cases, and practicing the demo.</p>
+  <div class="progress-line" id="freezeProgress">0 / 8 done</div>
+  <div class="checklist" id="freezeList">
+    <label><input type="checkbox"><span>Every Sprint 1 story works together, end to end, on a clean restart (uvicorn, worker, Expo).</span></label>
+    <label><input type="checkbox"><span>The Codespace backend port is public and the phone reaches it through <code>--tunnel</code>.</span></label>
+    <label><input type="checkbox"><span>Push arrives on the demo phone (iPhone, or a development build on Android).</span></label>
+    <label><input type="checkbox"><span>A good trace is open in Langfuse before the demo starts — retrieval and generation spans, with a faithfulness score.</span></label>
+    <label><input type="checkbox"><span>A backup: screenshots or a short screen recording of each step, in case the tunnel or Wi-Fi fails live.</span></label>
+    <label><input type="checkbox"><span>A full rehearsal, timed, with someone asking one hard question at the end.</span></label>
+    <label><input type="checkbox"><span>An honest list of what didn't make it in — the demo is a sprint review, not a sales pitch.</span></label>
+    <label><input type="checkbox"><span>The 1–2 minute demo video is recorded, edited to fit, and uploaded as a public YouTube link with a title card naming each member's contribution.</span></label>
+  </div>
+</section>
+
+<section class="module card" id="demo">
+  <div class="module-head"><div class="module-icon">🎤</div><div><h2>Demo plan — show every HOS working</h2><div class="module-meta"><span class="tag">Presentation · 20 pts</span></div></div></div>
+  <p>A suggested shape for the live-demo part of your 15-minute presentation (the rest is the problem, architecture and results on your 15 content slides). Adjust the times to your slot; keep the order.</p>
+  <div class="demo-row"><span class="tm">~0:30</span><span><b>The user and the problem.</b> Who is this for, and what's hard for them today? One sentence each.</span></div>
+  <div class="demo-row"><span class="tm">~3:00</span><span><b>One live path through all 4 HOS.</b> On the phone (HOS 4): ask a question answered from your documents (HOS 2) that triggers a tool (HOS 1); show a bad input handled by a guardrail (HOS 3); upload a document, keep chatting while it processes (HOS 3), and show the push arrive (HOS 4). Then open the trace (HOS 4) and point at retrieval, generation, and the score.</span></div>
+  <div class="demo-row"><span class="tm">~0:45</span><span><b>What didn't make it, and what you'd do next.</b> Name the corner you cut — your Integration Debate synthesis in practice.</span></div>
+  <div class="demo-row"><span class="tm">rest</span><span><b>Questions.</b> Expect "show me where HOS 2 is" — have the retrieval span ready.</span></div>
+</section>
+
+<section class="module card" id="reflect">
+  <div class="module-head"><div class="module-icon">🪞</div><div><h2>Self-check and reflection</h2><div class="module-meta"><span class="tag">Feeds your Author Contribution statement</span></div></div></div>
+  <p><b>Self-check from the schedule:</b> can you explain, without notes, how each of the 4 HOS shows up in your final project? Say it out loud once before the demo.</p>
+  <h3>Reflection prompts</h3>
+  <ul>
+    <li><b>Each member:</b> what you personally built (link commits or issues), one decision you argued for, and one thing a teammate did that made the project better.</li>
+    <li><b>Everyone:</b> one moment where Evaluate caught an AI-generated mistake before it reached the demo.</li>
+  </ul>
+  <p class="small">Your final report ends with an Author Contribution statement detailing each member's weekly tasks; these notes are its raw material. Full description: the Team Project section of the syllabus (in Brightspace).</p>
+</section>
+
+<section class="card">
+  <h2>Resources</h2>
+  <ul>
+    <li><a href="https://clarkngo.github.io/prompt-builder/builders/term-project.html" target="_blank" rel="noopener">Term Project Prompt Builder</a></li>
+    <li><a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a></li>
+    <li>HOS lessons: <a href="../module-1/index.html">1</a> · <a href="../module-2/index.html">2</a> · <a href="../module-3/index.html">3</a> · <a href="../module-4/index.html">4</a> · <a href="../index.html">All lessons &amp; simulators</a></li>
+  </ul>
+</section>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){ return null; } }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* section nav highlight */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+
+/* Backlog builder */
+(function(){
+  var KEY='ai410-project-backlog', stories=[];
+  try{ stories=JSON.parse(store(KEY)||'[]')||[]; }catch(e){ stories=[]; }
+  var $=function(id){return document.getElementById(id);};
+  var NAMES={1:'HOS 1 · tools',2:'HOS 2 · RAG',3:'HOS 3 · guardrails/jobs',4:'HOS 4 · mobile/push/traces'};
+  function save(){ store(KEY,JSON.stringify(stories)); }
+  function render(){
+    var html=stories.map(function(s,i){
+      return '<div class="story'+(s.sprint?'':' later')+'"><div><b>As a</b> '+esc(s.who)+', <b>I want</b> '+esc(s.want)+(s.why?', <b>so that</b> '+esc(s.why):'')+
+        '<div class="tags">'+(s.sprint?'<span class="tag ok">Sprint 1</span>':'<span class="tag">Backlog</span>')+s.hos.map(function(h){return '<span class="tag blue">'+NAMES[h]+'</span>';}).join('')+(s.hos.length?'':'<span class="tag bad">no HOS tagged</span>')+'</div></div>'+
+        '<div class="acts"><button type="button" data-a="toggle" data-i="'+i+'">'+(s.sprint?'→ Backlog':'→ Sprint 1')+'</button><button type="button" data-a="del" data-i="'+i+'" aria-label="Remove story">✕</button></div></div>';
+    }).join('');
+    $('stories').innerHTML=html||'<p class="small muted">No stories yet. Add your first one above.</p>';
+    [].slice.call($('stories').querySelectorAll('button')).forEach(function(b){ b.addEventListener('click',function(){
+      var i=+b.dataset.i; if(b.dataset.a==='del') stories.splice(i,1); else stories[i].sprint=!stories[i].sprint; save(); render();
+    }); });
+    var cov=[1,2,3,4].map(function(h){ var all=stories.filter(function(s){return s.hos.indexOf(h)>=0;}).length, sp=stories.filter(function(s){return s.sprint&&s.hos.indexOf(h)>=0;}).length; return [h,all,sp]; });
+    $('cover').innerHTML=cov.map(function(c){ return '<div class="'+(c[2]?'ok':'')+'"><b>'+c[2]+'</b>HOS '+c[0]+' in Sprint 1<br><span class="muted">'+c[1]+' in total</span></div>'; }).join('');
+    var sprintHos=cov.filter(function(c){return c[2]>0;}).length, allHos=cov.filter(function(c){return c[1]>0;}).length;
+    $('sMsg').textContent= !stories.length ? '' : sprintHos<2 ? 'Sprint 1 touches '+sprintHos+' HOS — aim for at least 2 this week.' : allHos<4 ? 'Good start. '+(4-allHos)+' HOS still missing from the backlog entirely.' : 'Every HOS is covered.';
+  }
+  $('sAdd').addEventListener('click',function(){
+    var who=$('sWho').value.trim(), want=$('sWant').value.trim(), why=$('sWhy').value.trim();
+    if(!who||!want){ $('sMsg').textContent='Fill in at least "As a…" and "I want…".'; return; }
+    var hos=[].slice.call(document.querySelectorAll('#sHos input[value]')).filter(function(c){return c.checked;}).map(function(c){return +c.value;});
+    stories.push({who:who,want:want,why:why,hos:hos,sprint:$('sSprint').checked}); save();
+    $('sWant').value=''; $('sWhy').value=''; [].slice.call(document.querySelectorAll('#sHos input[value]')).forEach(function(c){c.checked=false;});
+    render();
+  });
+  $('importCp').addEventListener('click',function(){
+    var n=0;
+    [1,2,3,4].forEach(function(h){ if(store('ai410-checkpoint-h'+h)==='1'){ var t=store('ai410-checkpoint-t'+h)||''; if(t){ stories.push({who:'user',want:t,why:'',hos:[h],sprint:true}); n++; } } });
+    save(); render();
+    $('importStatus').textContent= n ? 'Imported '+n+' HOS notes as draft stories — rewrite each as a real user story.' : 'No HOS 3 check-in found in this browser (it was drafted in the HOS 3 lesson).';
+  });
+  $('sCopy').addEventListener('click',function(){
+    function line(s){ return '- [ ] As a '+s.who+', I want '+s.want+(s.why?', so that '+s.why:'')+(s.hos.length?' ('+s.hos.map(function(h){return 'HOS '+h;}).join(', ')+')':''); }
+    var t='## Sprint 1\n'+stories.filter(function(s){return s.sprint;}).map(line).join('\n')+'\n\n## Backlog\n'+stories.filter(function(s){return !s.sprint;}).map(line).join('\n');
+    var m=$('sCopyMsg');
+    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ m.textContent='Copied — paste into a GitHub issue or your PM tool.'; },function(){ m.textContent='Copy blocked by the browser.'; }); } else m.textContent='Copy not supported here.';
+  });
+  $('sClear').addEventListener('click',function(){ if(stories.length && !confirm('Remove all stories from this browser?')) return; stories=[]; save(); render(); });
+  render();
+})();
+
+/* Freeze checklist */
+(function(){
+  var boxes=[].slice.call(document.querySelectorAll('#freezeList input')), key='ai410-project-freeze';
+  var saved=(store(key)||'').split(',');
+  boxes.forEach(function(b,i){ if(saved[i]==='1') b.checked=true; b.addEventListener('change',upd); });
+  function upd(){ boxes.forEach(function(b){ b.parentNode.classList.toggle('done',b.checked); });
+    document.getElementById('freezeProgress').textContent=boxes.filter(function(b){return b.checked;}).length+' / '+boxes.length+' done';
+    store(key,boxes.map(function(b){return b.checked?'1':'0';}).join(',')); }
+  upd();
+})();
+</script>
+</body>
+</html>

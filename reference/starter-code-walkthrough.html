@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 410 — Starter Code Walkthrough</title>
+    <link rel="stylesheet" href="../assets/course.css">
+    <style>
+        .rule-box { background:var(--accent-light); border-left:5px solid var(--accent); padding:13px 18px; margin:18px 0; border-radius:0 6px 6px 0; font-size:0.9rem; }
+        .rule-box strong { color:var(--accent2); }
+        .spoiler-box { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:18px 0; font-size:0.9rem; }
+        .spoiler-box strong { color:var(--amber); }
+        .intro-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:15px 18px; margin:18px 0; border-radius:0 6px 6px 0; font-size:0.92rem; }
+        .intro-box h4 { margin:0 0 6px; color:var(--blue); font-size:0.95rem; }
+        .jump-table { width:100%; border-collapse:collapse; margin:14px 0; font-size:0.86rem; }
+        .jump-table th, .jump-table td { border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top; }
+        .jump-table th { background:var(--surface2); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--muted); }
+        .jump-table td.hos { font-weight:700; color:var(--accent); white-space:nowrap; }
+        .hos-tag { display:inline-block; font-size:0.74rem; font-weight:700; padding:3px 10px; border-radius:999px; background:var(--accent-light); color:var(--accent2); margin-bottom:12px; }
+        .hos-tag.empty { background:var(--surface2); color:var(--muted); }
+        .have-list { margin:8px 0 14px; padding-left:20px; font-size:0.9rem; }
+        .have-list li { margin-bottom:4px; }
+        details.file-block { border:1px solid var(--border); border-radius:8px; margin:10px 0; background:var(--surface); }
+        details.file-block > summary { cursor:pointer; padding:11px 16px; font-weight:700; font-size:0.93rem; list-style:none; display:flex; flex-wrap:wrap; gap:6px 12px; align-items:baseline; }
+        details.file-block > summary::-webkit-details-marker { display:none; }
+        details.file-block > summary::before { content:"▸"; color:var(--accent); font-size:0.85rem; }
+        details.file-block[open] > summary::before { content:"▾"; }
+        details.file-block > summary .role { font-weight:400; color:var(--muted); font-size:0.85rem; }
+        .file-body { padding:2px 18px 16px; font-size:0.9rem; }
+        .file-body p { margin:8px 0; }
+        .file-body ul { margin:6px 0 8px; padding-left:20px; }
+        .file-body li { margin-bottom:5px; }
+        .watch { background:var(--amber-bg); border-left:4px solid var(--amber); padding:9px 14px; margin:10px 0; border-radius:0 4px 4px 0; font-size:0.86rem; }
+        .watch strong { color:var(--amber); }
+        .think { background:var(--blue-bg); border-left:4px solid var(--blue); padding:9px 14px; margin:10px 0; border-radius:0 4px 4px 0; font-size:0.86rem; }
+        .think strong { color:var(--violet); }
+        pre { background:var(--code-bg); color:var(--code-text); padding:13px 15px; border-radius:6px; overflow-x:auto; font-size:0.78rem; line-height:1.5; }
+        code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+        p code, li code, td code { background:var(--surface2); color:var(--rose); padding:1px 5px; border-radius:4px; font-size:0.88em; }
+        .diagram { border:1px solid var(--border); border-radius:8px; background:var(--surface2); padding:10px; margin:14px 0; overflow-x:auto; }
+        .diagram svg { display:block; min-width:640px; width:100%; height:auto; }
+        .diagram-cap { font-size:0.8rem; color:var(--muted); margin:6px 4px 0; }
+        .flow-list { font-size:0.9rem; padding-left:22px; }
+        .flow-list li { margin-bottom:6px; }
+        .guide-nav { display:flex; justify-content:space-between; margin-top:30px; padding-top:16px; border-top:1px solid var(--border); font-size:0.9rem; }
+        .guide-nav a { color:var(--link); text-decoration:none; font-weight:600; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Reference · Read as you start each HOS</div>
+    <h1>Starter Code Walkthrough</h1>
+    <p class="lede">What every file in each module's starter code does, and how a request moves through it. Read the section for the HOS you're starting, not the ones after it.</p>
+    <div class="chips"><span class="chip">Reference — read as you go, not up front</span><span class="chip">Runs in GitHub Codespaces</span><span class="chip">Free tiers only</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#overview">How to use</a>
+    <a href="#hos1">HOS 1</a>
+    <a href="#hos2">HOS 2</a>
+    <a href="#hos3">HOS 3</a>
+    <a href="#hos4">HOS 4</a>
+    <a href="#run">Run it</a>
+    <a href="#reading">Reading code</a>
+  </div>
+</nav>
+
+<section class="module card" id="overview">
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>How to use this page</h2></div></div>
+        <div class="rule-box">
+            <strong>Course rules this page follows:</strong> everything below runs in a GitHub Codespace and needs no credit card (Gemini, Upstash, Langfuse, and Expo all have free tiers).
+        </div>
+
+        <div class="intro-box">
+            <h4>What "starter code" means in this course</h4>
+            <p>Each HOS has a <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code" target="_blank" rel="noopener">starter-code folder</a> on GitHub, and each folder is a complete snapshot of the app <em>as it stands when that HOS begins</em>. HOS 1's folder is nearly empty on purpose — you scaffold the app yourself with an AI assistant. From HOS 2 on, the folder is a <strong>reference version of your previous HOS's finished result</strong>, carried forward, plus the blank spot where this HOS's new piece goes — so everyone starts from the same working code even if their own AI-scaffolded version differs. That means your first job in each HOS is reading working code you did not type out yourself. This page explains that code, one HOS at a time.</p>
+        </div>
+
+        <div class="spoiler-box">
+            <strong>Don't read ahead.</strong> The section for HOS 3 explains the retrieval code you <em>build</em> in HOS 2; the section for HOS 4 explains the guardrail and queue code you build in HOS 3. Each HOS grades you on explaining that code in your own words (the Analyze stage), so read a section only when you're <em>starting</em> that HOS — at which point it describes code you've already written and understood.
+        </div>
+
+        <div class="table-wrap" tabindex="0"><table class="jump-table">
+            <tr><th>You're starting…</th><th>The folder hands you</th><th>Jump</th></tr>
+            <tr><td class="hos">HOS 1</td><td>Almost nothing — a Codespace config and a <code>.env.example</code></td><td><a href="#hos1">Read →</a></td></tr>
+            <tr><td class="hos">HOS 2</td><td>Your HOS 1 chat app with a working tool-calling agent, plus five sample documents</td><td><a href="#hos2">Read →</a></td></tr>
+            <tr><td class="hos">HOS 3</td><td>+ retrieval: <code>ingest.py</code>, <code>retrieval.py</code>, a local vector database</td><td><a href="#hos3">Read →</a></td></tr>
+            <tr><td class="hos">HOS 4</td><td>+ guardrails and an async ingestion queue: <code>guardrails.py</code>, <code>jobs.py</code>, <code>queue_setup.py</code>, <code>worker.py</code></td><td><a href="#hos4">Read →</a></td></tr>
+            <tr><td class="hos">Any</td><td>Running it, and how to read code you didn't write</td><td><a href="#run">Run →</a> · <a href="#reading">Read →</a></td></tr>
+        </table></div>
+</section>
+
+<section class="module card" id="hos1">
+  <div class="module-head"><div class="module-icon">1️⃣</div><div><h2>Starting HOS 1</h2></div></div>
+            <span class="hos-tag empty">Almost empty on purpose</span>
+            <p>The folder contains exactly two useful things, and no application code at all:</p>
+            <details class="file-block">
+                <summary>.devcontainer/devcontainer.json <span class="role">— your Codespace, pre-configured</span></summary>
+                <div class="file-body">
+                    <p>When you open the folder as a Codespace, GitHub reads this file and builds a container for you: a Python 3.12 image, then a <code>postCreateCommand</code> that copies <code>.env.example</code> to <code>.env</code> (the <code>-n</code> flag means it never overwrites a <code>.env</code> you've already filled in). It also forwards ports <code>8000</code> and <code>8501</code>, which your backend and frontend will use once you build them. From HOS 2 on, this same file also installs the requirements for you.</p>
+                    <p>Why it matters: a brand-new container has nothing else installed, so a stray global package on your own laptop can't silently shadow the project's real dependencies — the most common setup bug in this course.</p>
+                    <div class="watch"><strong>Watch out:</strong> in HOS 1 there are no requirements files yet, so nothing is installed for you. You (or your AI assistant) create <code>requirements.txt</code> files and run <code>pip install -r</code> yourself. That's expected.</div>
+                </div>
+            </details>
+            <details class="file-block">
+                <summary>backend/.env.example <span class="role">— where your API key goes</span></summary>
+                <div class="file-body">
+<pre tabindex="0">GEMINI_API_KEY=your-key-here</pre>
+                    <p>A template, safe to commit. You put your real Gemini key (free, no credit card, from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>) in <code>backend/.env</code>, which is git-ignored so it never leaves your Codespace. Treat the key like a password — see the <a href="../start-here/accounts.html#google">Account &amp; Service Setup Guide</a>.</p>
+                </div>
+            </details>
+</section>
+
+<section class="module card" id="hos2">
+  <div class="module-head"><div class="module-icon">2️⃣</div><div><h2>Starting HOS 2</h2></div></div>
+            <span class="hos-tag">Reference HOS 1 result, carried forward</span>
+            <p>You're handed a working chat app with an agent that can call tools. Nothing here needs to change in HOS 2 — but you need to understand it, because everything you add in HOS 2 plugs into it.</p>
+
+            <ul class="have-list">
+                <li><code>backend/main.py</code>, <code>agent.py</code>, <code>tools.py</code>, <code>requirements.txt</code>, <code>.env.example</code></li>
+                <li><code>frontend/app.py</code>, <code>requirements.txt</code></li>
+                <li><code>backend/sample_docs/</code> — five markdown documents for a fictional outdoor-gear company (Northwind Outfitters): backpacks, tents, return policy, shipping, warranty. This is the raw material for HOS 2's retrieval work.</li>
+            </ul>
+
+            <h3 style="font-size:1rem;color:var(--text)">How one chat message travels</h3>
+            <div class="diagram" tabindex="0">
+<svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A chat message flows from the Streamlit frontend to the FastAPI backend, into the agent loop, out to Gemini, and back through tools">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--blue)"/></marker>
+  </defs>
+  <g font-family="Inter,system-ui,sans-serif" font-size="12" style="fill:var(--code-bg)">
+    <rect x="10" y="30" width="150" height="60" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="85" y="55" text-anchor="middle" font-weight="700">frontend/app.py</text>
+    <text x="85" y="74" text-anchor="middle" style="fill:var(--muted)" font-size="11">Streamlit · :8501</text>
+
+    <rect x="205" y="30" width="150" height="60" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="280" y="55" text-anchor="middle" font-weight="700">backend/main.py</text>
+    <text x="280" y="74" text-anchor="middle" style="fill:var(--muted)" font-size="11">POST /chat · :8000</text>
+
+    <rect x="400" y="30" width="150" height="60" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+    <text x="475" y="55" text-anchor="middle" font-weight="700">backend/agent.py</text>
+    <text x="475" y="74" text-anchor="middle" style="fill:var(--accent2)" font-size="11">run_agent() — the loop</text>
+
+    <rect x="595" y="30" width="150" height="60" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="670" y="55" text-anchor="middle" font-weight="700">Gemini API</text>
+    <text x="670" y="74" text-anchor="middle" style="fill:var(--muted)" font-size="11">free-tier key</text>
+
+    <rect x="400" y="140" width="150" height="56" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="475" y="164" text-anchor="middle" font-weight="700">backend/tools.py</text>
+    <text x="475" y="182" text-anchor="middle" style="fill:var(--muted)" font-size="11">calculate · word_count</text>
+
+    <line x1="160" y1="60" x2="205" y2="60" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah)"/>
+    <line x1="355" y1="60" x2="400" y2="60" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah)"/>
+    <line x1="550" y1="48" x2="595" y2="48" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah)"/>
+    <line x1="595" y1="72" x2="550" y2="72" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah)"/>
+    <line x1="462" y1="90" x2="462" y2="140" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah)"/>
+    <line x1="488" y1="140" x2="488" y2="90" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah)"/>
+    <text x="85" y="20" text-anchor="middle" style="fill:var(--muted)" font-size="11">you type here</text>
+    <text x="572" y="108" text-anchor="middle" style="fill:var(--muted)" font-size="11">ask / answer</text>
+    <text x="430" y="121" text-anchor="end" style="fill:var(--muted)" font-size="11">tool call</text>
+    <text x="500" y="121" text-anchor="start" style="fill:var(--muted)" font-size="11">result</text>
+  </g>
+</svg>
+                <p class="diagram-cap">The green box is the heart of the app. The loop between <code>agent.py</code> and Gemini repeats until Gemini replies with plain text instead of asking for a tool.</p>
+            </div>
+
+            <details class="file-block" open>
+                <summary>backend/agent.py <span class="role">— the agentic loop</span></summary>
+                <div class="file-body">
+                    <p>One function, <code>run_agent(user_message)</code>, does everything:</p>
+                    <ol class="flow-list">
+                        <li>Sends the user's message to Gemini along with the list of tools it's allowed to use (<code>client.interactions.create(..., tools=TOOLS)</code>).</li>
+                        <li>Looks through the reply's <code>steps</code> for any of type <code>"function_call"</code>. <strong>None?</strong> The model has a plain-text answer — return <code>interaction.output_text</code> and stop.</li>
+                        <li><strong>Some?</strong> For each one, look up the Python function by name in <code>TOOL_FUNCTIONS</code>, run it locally with the model's arguments, and wrap the output as a <code>"function_result"</code>.</li>
+                        <li>Send those results back with <code>previous_interaction_id</code> so Gemini continues the <em>same</em> conversation, and go around again.</li>
+                    </ol>
+<pre tabindex="0">for _ in range(MAX_TURNS):
+    function_calls = [s for s in interaction.steps if s.type == "function_call"]
+    if not function_calls:
+        return interaction.output_text      # done: plain answer
+    ...                                      # run each tool, build results
+    interaction = client.interactions.create(
+        model=MODEL, input=results, tools=TOOLS,
+        previous_interaction_id=interaction.id,
+    )</pre>
+                    <div class="watch"><strong>Two safety nets to notice:</strong> <code>MAX_TURNS = 5</code> is a hard ceiling so a model that keeps asking for tools can't loop forever, and an unknown tool name returns an error <em>string</em> to the model rather than crashing the request — so the model gets a chance to recover.</div>
+                    <p>The model never runs your code. It only <em>asks</em>; your code decides whether and how to run it.</p>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>backend/tools.py <span class="role">— what the model can ask for</span></summary>
+                <div class="file-body">
+                    <p>Every tool is two halves that share a name:</p>
+                    <ul>
+                        <li>A <strong>schema</strong> in the <code>TOOLS</code> list — the name, a description, and a JSON-schema for its parameters. This is all Gemini ever sees. The <em>description</em> is what it reads to decide <em>when</em> to call the tool, so a vague description makes it over- or under-eager.</li>
+                        <li>A <strong>Python function</strong> registered in <code>TOOL_FUNCTIONS</code> under the same name. This is what actually runs.</li>
+                    </ul>
+                    <p>Two tools ship: <code>calculate</code> (arithmetic) and <code>word_count</code> (a single string argument, deliberately a different shape so you can't adapt one from the other without understanding the registration pattern).</p>
+                    <div class="watch"><strong>Notice how <code>_calculate</code> is written.</strong> It does <em>not</em> call Python's <code>eval()</code> on the model's text. It parses the expression into a syntax tree with <code>ast</code> and only evaluates a whitelist of operators (<code>+ − × ÷ **</code> and unary minus). <code>eval()</code> on model output would let a prompt trick the agent into running arbitrary code — a real vulnerability, not a hypothetical one.</div>
+                    <p>Both functions accept <code>**kwargs</code>, which quietly absorbs any extra argument the model invents instead of crashing with a <code>TypeError</code>.</p>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>backend/main.py <span class="role">— the HTTP front door</span></summary>
+                <div class="file-body">
+                    <p>A small FastAPI app with two endpoints:</p>
+                    <ul>
+                        <li><code>POST /chat</code> — takes <code>{"message": "..."}</code>, calls <code>run_agent</code>, returns <code>{"reply": "..."}</code>.</li>
+                        <li><code>GET /health</code> — returns <code>{"status": "ok"}</code>; the quickest way to check the server is up.</li>
+                    </ul>
+                    <p>The <code>ChatRequest</code>/<code>ChatResponse</code> classes are Pydantic models: FastAPI uses them to validate incoming JSON (a request missing <code>message</code> is rejected with a 422 before your code runs) and to shape the response. There's no CORS setup on purpose — the Streamlit frontend calls this server from Python, not from browser JavaScript, so the browser's cross-origin rules never apply.</p>
+                    <p>Interactive docs for free: with the server running, open <code>/docs</code> to try endpoints from the browser.</p>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>frontend/app.py <span class="role">— the chat UI</span></summary>
+                <div class="file-body">
+                    <p>A Streamlit app, run as its own Python process. It keeps the conversation in <code>st.session_state.messages</code> (Streamlit reruns the whole script on every interaction, so anything not stored there would vanish), draws each past message, and on new input POSTs to <code>http://127.0.0.1:8000/chat</code> with a 30-second timeout. If the backend is down or slow, the <code>except</code> shows a readable error in the chat instead of a stack trace.</p>
+                    <div class="watch"><strong>Watch out:</strong> the backend and frontend are <em>two separate processes in two terminals</em>. <code>127.0.0.1</code> works in a Codespace because both run inside the same container.</div>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>requirements.txt · .env.example · devcontainer.json <span class="role">— setup files</span></summary>
+                <div class="file-body">
+                    <ul>
+                        <li><strong>backend/requirements.txt</strong> pins exact versions: <code>fastapi</code>, <code>uvicorn</code>, <code>google-genai</code>, <code>python-dotenv</code>, <code>pydantic</code>. Pinning means everyone in the class gets the same behavior.</li>
+                        <li><strong>frontend/requirements.txt</strong>: <code>streamlit</code> and <code>requests</code>.</li>
+                        <li><strong>devcontainer.json</strong> installs both requirement files and forwards port <code>8000</code> (the API) and <code>8501</code> (Streamlit, which opens as a preview automatically).</li>
+                    </ul>
+                </div>
+            </details>
+            <p style="font-size:0.85rem;color:var(--muted);margin-top:10px">A few header comments in this code still name the HOS it was first written in (for example, <code>main.py</code> may say "HOS 1"). The code is what counts.</p>
+</section>
+
+<section class="module card" id="hos3">
+  <div class="module-head"><div class="module-icon">3️⃣</div><div><h2>Starting HOS 3</h2></div></div>
+            <span class="hos-tag">Reference HOS 2 result, carried forward</span>
+            <p>Everything from HOS 2, plus retrieval. The agent can now answer questions about the Northwind documents instead of guessing. New this time: <code>backend/ingest.py</code>, <code>backend/retrieval.py</code>, a changed <code>agent.py</code>, and <code>chromadb</code> in <code>requirements.txt</code>.</p>
+
+            <h3 style="font-size:1rem;color:var(--text)">Two phases: prepare once, then look up per question</h3>
+            <div class="diagram" tabindex="0">
+<svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ingest reads sample docs, chunks and embeds them into Chroma. At question time, retrieval embeds the question and finds the closest chunks, which agent.py adds to the prompt.">
+  <defs>
+    <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--blue)"/></marker>
+  </defs>
+  <g font-family="Inter,system-ui,sans-serif" font-size="12" style="fill:var(--code-bg)">
+    <text x="10" y="18" font-weight="700" style="fill:var(--muted)">Once (and whenever docs change): python ingest.py</text>
+    <rect x="10" y="30" width="150" height="56" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="85" y="54" text-anchor="middle" font-weight="700">sample_docs/*.md</text>
+    <text x="85" y="72" text-anchor="middle" style="fill:var(--muted)" font-size="11">five Northwind docs</text>
+
+    <rect x="230" y="30" width="150" height="56" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+    <text x="305" y="54" text-anchor="middle" font-weight="700">ingest.py</text>
+    <text x="305" y="72" text-anchor="middle" style="fill:var(--accent2)" font-size="11">chunk → embed → store</text>
+
+    <rect x="470" y="30" width="150" height="56" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="545" y="54" text-anchor="middle" font-weight="700">chroma_db/</text>
+    <text x="545" y="72" text-anchor="middle" style="fill:var(--muted)" font-size="11">local vector database</text>
+
+    <line x1="160" y1="58" x2="230" y2="58" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah2)"/>
+    <line x1="380" y1="58" x2="470" y2="58" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah2)"/>
+
+    <text x="10" y="140" font-weight="700" style="fill:var(--muted)">Every question: agent.py → retrieval.py</text>
+    <rect x="10" y="152" width="150" height="56" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+    <text x="85" y="176" text-anchor="middle" font-weight="700">agent.py</text>
+    <text x="85" y="194" text-anchor="middle" style="fill:var(--accent2)" font-size="11">adds context to prompt</text>
+
+    <rect x="230" y="152" width="150" height="56" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+    <text x="305" y="176" text-anchor="middle" font-weight="700">retrieval.py</text>
+    <text x="305" y="194" text-anchor="middle" style="fill:var(--accent2)" font-size="11">retrieve(query, k=5)</text>
+
+    <line x1="160" y1="172" x2="230" y2="172" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah2)"/>
+    <line x1="230" y1="190" x2="160" y2="190" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah2)"/>
+    <line x1="380" y1="180" x2="545" y2="180" style="stroke:var(--border)" stroke-width="1.5"/>
+    <line x1="545" y1="180" x2="545" y2="88" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah2)" stroke-dasharray="4 3"/>
+    <text x="462" y="172" text-anchor="middle" style="fill:var(--muted)" font-size="11">closest chunks</text>
+    <text x="195" y="164" text-anchor="middle" style="fill:var(--muted)" font-size="11">question</text>
+    <text x="195" y="206" text-anchor="middle" style="fill:var(--muted)" font-size="11">5 chunks</text>
+  </g>
+</svg>
+                <p class="diagram-cap">Both phases use the same embedding model, which is why a few settings in <code>ingest.py</code> and <code>retrieval.py</code> have to match exactly.</p>
+            </div>
+
+            <details class="file-block" open>
+                <summary>backend/ingest.py <span class="role">— prepare the documents (run once)</span></summary>
+                <div class="file-body">
+                    <p>For every <code>.md</code> file in <code>sample_docs/</code>:</p>
+                    <ol class="flow-list">
+                        <li><strong>Chunk</strong> it with <code>chunk_text</code>: split into words, cut into chunks of 400 words, each starting 50 words before the previous one ended (<code>overlap=50</code>) so an idea that straddles a cut still appears whole in at least one chunk.</li>
+                        <li><strong>Embed</strong> all the chunks in one call to <code>gemini-embedding-001</code>, which turns each chunk into a list of 1,024 numbers (<code>output_dimensionality=1024</code>) that capture its meaning.</li>
+                        <li><strong>Store</strong> them in a local Chroma collection named <code>documents</code> (saved in <code>backend/chroma_db/</code>), with an id like <code>return-policy.md-0</code> and the source filename as metadata.</li>
+                    </ol>
+                    <p>It's a plain script (<code>python ingest.py</code>), not part of the web app — it prepares the database the app later reads.</p>
+                    <div class="watch"><strong>Watch out:</strong> <code>chroma_db/</code> is git-ignored, so each Codespace builds its own copy. New Codespace or new document means run <code>ingest.py</code> again.</div>
+                </div>
+            </details>
+
+            <details class="file-block" open>
+                <summary>backend/retrieval.py <span class="role">— find the relevant chunks per question</span></summary>
+                <div class="file-body">
+                    <p><code>retrieve(query, k=5)</code> embeds the incoming question the same way, then asks Chroma for the <code>k</code> stored chunks whose vectors are closest to the question's vector, and returns their text. "Closest" here means "most similar in meaning", which is why a question like "can I send back a tent?" can match a return-policy chunk that never uses those exact words.</p>
+                    <p>Note the constants at the top: <code>EMBED_MODEL</code>, <code>EMBED_DIM</code>, and <code>CHROMA_PATH</code> are repeated in <code>ingest.py</code>. They must match — vectors of different sizes can't be compared.</p>
+                    <p>It opens the Chroma database on each call. That's fine at this scale and keeps the function self-contained.</p>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>backend/agent.py — what changed <span class="role">— retrieved context joins the prompt</span></summary>
+                <div class="file-body">
+                    <p>At the top of <code>run_agent</code>, the new code calls <code>retrieve(user_message, k=5)</code>, joins the chunks into one block, and puts it in a <code>system_instruction</code> that's passed on <em>every</em> Gemini call in the loop. The instruction tells the model to answer Northwind questions from that context, to say it doesn't know rather than guess, and — importantly — that this restriction does <strong>not</strong> apply to its tools, so <code>calculate</code> still works on questions the documents don't cover.</p>
+                    <div class="think"><strong>Think about it:</strong> that last sentence exists because of a real bug pattern — tell a model "only use this context" and it may refuse to use tools at all. Prompts are part of your program's logic.</div>
+                    <p>The rest of the loop is unchanged from HOS 2.</p>
+                </div>
+            </details>
+</section>
+
+<section class="module card" id="hos4">
+  <div class="module-head"><div class="module-icon">4️⃣</div><div><h2>Starting HOS 4</h2></div></div>
+            <span class="hos-tag">Reference HOS 3 result, carried forward</span>
+            <p>Everything from HOS 3, plus two more layers: <strong>guardrails</strong> around tool arguments, and <strong>async document ingestion</strong> through a background queue. New files: <code>guardrails.py</code>, <code>jobs.py</code>, <code>queue_setup.py</code>, <code>worker.py</code>. Changed: <code>main.py</code> and <code>agent.py</code>. The <code>mobile/</code> folder is empty — that's yours to build this HOS.</p>
+
+            <details class="file-block" open>
+                <summary>backend/guardrails.py <span class="role">— validate what the model sends, retry if it's wrong</span></summary>
+                <div class="file-body">
+                    <p>Model output is non-deterministic: a tool call's arguments can arrive missing a field or the wrong type. <code>call_with_guardrail(fn, schema, ...)</code> wraps that risk:</p>
+                    <ol class="flow-list">
+                        <li>Call <code>fn</code> and validate what it returned against a Pydantic <code>schema</code>.</li>
+                        <li>On a <code>ValidationError</code>, log it and try again, up to <code>max_retries</code> (default 2) times.</li>
+                        <li>Return the validated object on success — or, if every attempt fails, a plain dict with an <code>"error"</code> key. <strong>It never raises</strong>, so the caller can always handle failure calmly.</li>
+                    </ol>
+                    <p>Two schemas live here: <code>CalculateArgs</code> (requires a string <code>expression</code>) and <code>WordCountArgs</code>, which adds a validator rejecting blank text — a case the tool itself would happily "count" as zero words rather than flag as a bad call.</p>
+                    <div class="think"><strong>Look closer:</strong> in <code>agent.py</code> the guardrail wraps <code>lambda: call.arguments</code> — a function that returns the <em>same</em> arguments on every attempt. So what does a retry actually change? Consider what value the guardrail provides as written, and what a retry would need in order to help (hint: the <code>correction_hint</code> parameter).</div>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>backend/agent.py — what changed <span class="role">— guardrails around both tools</span></summary>
+                <div class="file-body">
+                    <p>Inside the loop, before running a tool, <code>calculate</code> and <code>word_count</code> calls now go through <code>call_with_guardrail</code>. If validation succeeds, the tool runs with the validated arguments (<code>validated.model_dump()</code>); if not, the <code>{"error": ...}</code> dict goes back to the model as the tool's result, giving it a chance to correct itself instead of crashing the request.</p>
+                </div>
+            </details>
+
+            <h3 style="font-size:1rem;color:var(--text)">Why ingestion moved to a queue</h3>
+            <div class="diagram" tabindex="0">
+<svg viewBox="0 0 780 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A client posts a document to main.py, which enqueues a job in Redis and returns a job id at once. A separate worker process pulls the job from Redis and runs jobs.py, which embeds the document into Chroma. The client polls the job status.">
+  <defs>
+    <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--blue)"/></marker>
+  </defs>
+  <g font-family="Inter,system-ui,sans-serif" font-size="12" style="fill:var(--code-bg)">
+    <rect x="8" y="50" width="104" height="60" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="60" y="76" text-anchor="middle" font-weight="700">Client</text>
+    <text x="60" y="94" text-anchor="middle" style="fill:var(--muted)" font-size="11">app / curl</text>
+
+    <rect x="170" y="50" width="120" height="60" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+    <text x="230" y="72" text-anchor="middle" font-weight="700">main.py</text>
+    <text x="230" y="90" text-anchor="middle" style="fill:var(--accent2)" font-size="11">POST /documents</text>
+
+    <rect x="350" y="50" width="130" height="60" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="415" y="72" text-anchor="middle" font-weight="700">Redis queue</text>
+    <text x="415" y="90" text-anchor="middle" style="fill:var(--muted)" font-size="11">Upstash Redis</text>
+
+    <rect x="540" y="50" width="100" height="60" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+    <text x="590" y="72" text-anchor="middle" font-weight="700">worker.py</text>
+    <text x="590" y="90" text-anchor="middle" style="fill:var(--accent2)" font-size="11">own terminal</text>
+
+    <rect x="672" y="50" width="100" height="60" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+    <text x="722" y="72" text-anchor="middle" font-weight="700">jobs.py</text>
+    <text x="722" y="90" text-anchor="middle" style="fill:var(--accent2)" font-size="11">embed + store</text>
+
+    <rect x="672" y="160" width="100" height="50" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+    <text x="722" y="182" text-anchor="middle" font-weight="700">chroma_db/</text>
+    <text x="722" y="198" text-anchor="middle" style="fill:var(--muted)" font-size="11">vector DB</text>
+
+    <line x1="112" y1="72" x2="170" y2="72" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah3)"/>
+    <line x1="290" y1="72" x2="350" y2="72" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah3)"/>
+    <line x1="540" y1="72" x2="480" y2="72" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah3)"/>
+    <line x1="640" y1="80" x2="672" y2="80" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah3)"/>
+    <line x1="722" y1="110" x2="722" y2="160" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah3)"/>
+    <path d="M 230 110 C 230 190, 415 190, 415 112" fill="none" style="stroke:var(--border)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ah3)"/>
+    <line x1="170" y1="98" x2="112" y2="98" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#ah3)"/>
+
+    <text x="141" y="64" text-anchor="middle" style="fill:var(--muted)" font-size="11">upload</text>
+    <text x="141" y="114" text-anchor="middle" style="fill:var(--muted)" font-size="11">job_id</text>
+    <text x="320" y="64" text-anchor="middle" style="fill:var(--muted)" font-size="11">enqueue</text>
+    <text x="510" y="64" text-anchor="middle" style="fill:var(--muted)" font-size="11">pulls</text>
+    <text x="322" y="180" text-anchor="middle" style="fill:var(--muted)" font-size="11">GET /jobs/{id} reads status</text>
+  </g>
+</svg>
+                <p class="diagram-cap">Embedding a big document can take a while. Instead of making the request wait, <code>main.py</code> hands the work to a queue and answers immediately with a job id; a separate process does the slow part.</p>
+            </div>
+
+            <details class="file-block" open>
+                <summary>backend/main.py — what changed <span class="role">— two new endpoints</span></summary>
+                <div class="file-body">
+                    <ul>
+                        <li><code>POST /documents</code> — takes <code>{"doc_path": "..."}</code> (a file already on the server, for this exercise), calls <code>queue.enqueue(ingest_document_job, doc_path)</code>, and returns <code>{"job_id": ...}</code> right away.</li>
+                        <li><code>GET /jobs/{job_id}</code> — looks the job up in Redis (<code>Job.fetch</code>) and returns its <code>status</code> (<code>queued</code>, <code>started</code>, <code>finished</code>, <code>failed</code>) and <code>result</code>.</li>
+                    </ul>
+                    <p>The chat path is untouched.</p>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>backend/queue_setup.py <span class="role">— connect to Redis</span></summary>
+                <div class="file-body">
+                    <p>Two lines that matter: <code>Redis.from_url(os.environ["REDIS_URL"])</code> connects using the connection string from your free <a href="https://upstash.com" target="_blank" rel="noopener">Upstash</a> database, and <code>Queue("ai410-ingestion", ...)</code> creates a named queue on it. Both <code>main.py</code> (to add jobs) and <code>worker.py</code> (to take them) import the same objects from here.</p>
+                    <div class="watch"><strong>Watch out:</strong> it reads <code>REDIS_URL</code> with <code>os.environ[...]</code>, so a missing value crashes on import with a <code>KeyError</code> rather than failing later. The value must start with <code>rediss://</code> (two s's) — see the <a href="../start-here/accounts.html#redis">Redis section of the setup guide</a>.</div>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>backend/jobs.py <span class="role">— the work the worker does</span></summary>
+                <div class="file-body">
+                    <p><code>ingest_document_job(doc_path)</code> reads one document, chunks it, embeds it, and adds it to the same Chroma collection — the same recipe as <code>ingest.py</code>, returning <code>{"chunks_inserted": n}</code>, which RQ saves as the job's <code>result</code>.</p>
+                    <p>Why is the code duplicated instead of imported? The worker runs as a <strong>separate process</strong> with its own memory, so this file is deliberately self-contained — including its own <code>load_dotenv()</code>, because the environment variables loaded by <code>main.py</code> don't exist in the worker's process.</p>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>backend/worker.py <span class="role">— the process that does the queued jobs</span></summary>
+                <div class="file-body">
+                    <p>Create a <code>Worker</code> on the queue and call <code>.work()</code>: it waits for jobs and runs each one. <strong>Nothing starts it automatically</strong> — you run <code>python worker.py</code> in its own terminal alongside <code>uvicorn</code>.</p>
+                    <div class="watch"><strong>The #1 async bug:</strong> a job stuck on <code>queued</code> forever almost always means the worker isn't running.</div>
+                </div>
+            </details>
+
+            <details class="file-block">
+                <summary>Config that changed <span class="role">— .env.example, requirements, devcontainer</span></summary>
+                <div class="file-body">
+                    <ul>
+                        <li><strong>.env.example</strong> now also lists <code>REDIS_URL</code> (Upstash) and three Langfuse values: <code>LANGFUSE_PUBLIC_KEY</code>, <code>LANGFUSE_SECRET_KEY</code>, <code>LANGFUSE_HOST</code>. Langfuse is what you'll wire up for tracing this HOS — free tier, no credit card.</li>
+                        <li><strong>requirements.txt</strong> adds <code>redis</code> and <code>rq</code> (the queue library).</li>
+                        <li><strong>devcontainer.json</strong> adds Node 20 (for the Expo mobile app) and forwards port <code>8081</code>, the Expo dev server.</li>
+                    </ul>
+                </div>
+            </details>
+</section>
+
+<section class="module card" id="run">
+  <div class="module-head"><div class="module-icon">▶️</div><div><h2>Running it in a Codespace</h2></div></div>
+        <p>Open the HOS folder as a Codespace (Code → Codespaces → Create codespace on main). The devcontainer installs dependencies and creates <code>backend/.env</code> for you. Add your real keys to that file, then use one terminal per process:</p>
+<pre tabindex="0"># Terminal 1 — the API
+cd backend
+uvicorn main:app --reload
+
+# Terminal 2 — the chat UI
+cd frontend
+streamlit run app.py
+
+# HOS 2 onward, once (and after adding a document)
+cd backend
+python ingest.py
+
+# HOS 4 only — Terminal 3, the queue worker
+cd backend
+python worker.py</pre>
+        <p>No virtual environment needed — the Codespace is already an isolated container. Check the API is alive at <code>/health</code>; try endpoints at <code>/docs</code>. Stop your Codespace when you're done — free hours are limited.</p>
+</section>
+
+<section class="module card" id="reading">
+  <div class="module-head"><div class="module-icon">🔎</div><div><h2>How to read code you didn't write</h2></div></div>
+        <ol class="flow-list">
+            <li><strong>Start at the entry point.</strong> For this app, that's <code>main.py</code> — every request enters here.</li>
+            <li><strong>Follow one request end to end.</strong> Pick a single chat message and trace it file by file, like the diagrams above, before you read anything else.</li>
+            <li><strong>Run it before you change it.</strong> Send a message, ask a question the documents cover, ask one they don't. Watching real behavior beats guessing.</li>
+            <li><strong>Break it on purpose.</strong> Stop the worker, blank the API key, ask for something the tool can't do. Knowing how it fails is how you know you understand it.</li>
+        </ol>
+        <p>This is the same habit the Evaluate and Analyze stages of every HOS are training.</p>
+</section>
+
+<div class="guide-nav">
+            <a href="../index.html">← Course home</a>
+            <a href="../start-here/accounts.html">Account &amp; Service Setup Guide →</a>
+        </div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+<script>
+/* section nav highlight (scrolls only the nav row, never the page) */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

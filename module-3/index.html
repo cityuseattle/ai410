@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 Module 3 (Weeks 5-6): lecture, Muddiest Point, Concept Debate, CEAU stages, Application Challenge, knowledge check and a Team Project Phase 2 check-in for Guardrails & Async Processing.">
+<title>Module 3: Guardrails &amp; Async Processing</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.pipe-row { display:flex; align-items:stretch; gap:6px; flex-wrap:wrap; margin:6px 0; }
+.pipe-row .box { flex:1 1 120px; border:2px solid var(--border); border-radius:10px; padding:8px 10px; background:var(--surface2); font-size:.8rem; }
+.pipe-row .box b { display:block; font-size:.84rem; }
+.pipe-row .arrow { align-self:center; font-weight:900; color:var(--muted); }
+.pipe-label { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:10px; }
+.vec-demo { display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:.84rem; align-items:center; margin:8px 0 12px; }
+.vec-demo .s { font-weight:800; color:var(--accent2); }
+.review-code { counter-reset:ln; }
+
+.hos-tick { display:grid; grid-template-columns:auto 1fr; gap:6px 10px; align-items:start; border:1px solid var(--border); border-radius:8px; padding:8px 10px; margin-bottom:6px; background:var(--surface); }
+.hos-tick input[type=checkbox] { margin-top:5px; accent-color:var(--accent); width:16px; height:16px; }
+.hos-tick input[type=text] { grid-column:2; }
+.litmus li.ok { color:var(--ok); } .litmus li.no { color:var(--muted); }
+
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Module 3 · Weeks 5–6</div>
+    <h1>Guardrails &amp; Async Processing</h1>
+    <p class="lede">Make the HOS 2 app dependable under two kinds of unpredictability: a model that sometimes hands your code bad arguments, and slow work that freezes the app if it runs inside the request. Built in Week 5; explained and extended by hand in Week 6, with a quick Team Project check-in.</p>
+    <div class="chips"><span class="chip">Outcome O3</span><span class="chip">2 weeks</span><span class="chip">Lecture · Muddiest Point · Concept Debate</span><span class="chip">HOS 3 (Hands-On Skill): 4 stages</span><span class="chip">Application Challenge</span><span class="chip">Project checkpoint</span><span class="chip">Codespaces · free tier</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Lesson sections">
+  <div class="secnav-inner">
+    <a href="#overview">Overview</a>
+    <span class="sep">Week 5</span>
+    <a href="#lecture">Lecture</a>
+    <a href="#muddiest">Muddiest Point</a>
+    <a href="#debate">Concept Debate</a>
+    <a href="#create">HOS 3 · Create</a>
+    <a href="#evaluate">HOS 3 · Evaluate</a>
+    <span class="sep">Week 6</span>
+    <a href="#analyze">HOS 3 · Analyze</a>
+    <a href="#refine">HOS 3 · Understand &amp; Refine</a>
+    <a href="#challenge">Application Challenge</a>
+    <a href="#check">Knowledge Check</a>
+    <a href="#checkpoint">Project Checkpoint</a>
+  </div>
+</nav>
+
+<p class="small muted" style="margin-top:18px">Everything in this HOS runs in GitHub Codespaces on free tiers, with no credit card. Which accounts you need, and when: <a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a>.</p>
+
+<section class="module card" id="overview">
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O3</span><span class="tag blue">HOS 3: 10% of course</span><span class="tag">+ Muddiest Point · Concept Debate · Application Challenge · Knowledge Check</span><span class="tag amber">+ Team Project Phase 2 check-in</span></div></div></div>
+  <div class="callout blue">
+    <span class="label">What's the HOS?</span>
+    <p><strong>HOS 3 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 5, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 6. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 6. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
+  </div>
+  <p>Your HOS 2 app works — most of the time. That's the problem this HOS is about. A model that returns valid tool arguments 95% of the time will, across a few hundred requests a day, hand your code garbage several times a day. And a document upload that takes twenty seconds to chunk and embed will, if it runs inside the web request, freeze the app for everyone while it runs. Neither shows up in a quick demo. Both show up the first week real people use it.</p>
+  <p>This HOS adds the two reliability layers every production agent needs: a <strong>guardrail</strong> that checks model output before your code trusts it, and a <strong>queue with a background worker</strong> that moves slow work off the request path. Week 5 builds and tests both. Week 6 explains why they're designed the way they are, extends the guardrail by hand, and ends with a quick check-in on your Team Project.</p>
+  <div class="callout blue">
+    <span class="label">Anchoring analogy</span>
+    <p>A busy restaurant has two rules. First, the kitchen reads back every order ticket before cooking — "no onions, extra sauce?" — because a waiter who's right 95% of the time still ruins a dish every night. That's the guardrail. Second, the waiter doesn't stand at the counter while a 40-minute brisket cooks; they hand the kitchen a ticket, take a number, and go serve other tables. That's the queue: the ticket number is your <code>job_id</code>, and the cook working in the back is your worker process.</p>
+  </div>
+  <h3>Learning objectives</h3>
+  <p class="small muted">By the end of the two weeks you will be able to:</p>
+  <ol class="lo">
+    <li>Explain why nondeterministic model output must be validated before code acts on it. <span class="tag">O3</span></li>
+    <li>Implement a validate-and-retry guardrail that feeds the validation error back into the retry, and fails to data instead of crashing. <span class="tag">O3</span></li>
+    <li>Distinguish structural validation (a schema can check it) from semantic validation (it needs a lookup or a human). <span class="tag">O3</span></li>
+    <li>Analyze where an agent-driven app bottlenecks, and move long-running work to a queue and worker. <span class="tag">O3</span></li>
+    <li>Diagnose the common failures of a queue-based design, including a worker that isn't running. <span class="tag">O3</span></li>
+  </ol>
+  <h3>Your two weeks at a glance</h3>
+  <div class="flow">
+    <a href="#lecture"><span class="n">Wk 5 · Mon</span><span class="t">Lecture</span><span class="w">~40 min, 3 parts</span></a>
+    <a href="#muddiest"><span class="n">Wk 5 · by Wed</span><span class="t">Muddiest Point</span><span class="w">graded · 5% pool</span></a>
+    <a href="#debate"><span class="n">Wk 5 · Tue–Sat</span><span class="t">Concept Debate</span><span class="w">graded · 3 stages</span></a>
+    <a href="#create"><span class="n">Wk 5 · Wed–Thu</span><span class="t">HOS 3 · Create / Scaffold</span><span class="w">Engagement · 20% of HOS</span></a>
+    <a href="#evaluate"><span class="n">Wk 5 · Fri–Sun</span><span class="t">HOS 3 · Evaluate</span><span class="w">part of Skills (80%)</span></a>
+    <a href="#analyze"><span class="n">Wk 6 · Mon–Tue</span><span class="t">HOS 3 · Analyze</span><span class="w">part of Skills (80%)</span></a>
+    <a href="#refine"><span class="n">Wk 6 · Wed–Thu</span><span class="t">HOS 3 · Understand &amp; Refine</span><span class="w">part of Skills · no AI</span></a>
+    <a href="#challenge"><span class="n">Wk 6 · Fri–Sat</span><span class="t">Application Challenge</span><span class="w">5% of course</span></a>
+    <a href="#check"><span class="n">Wk 6 · any time</span><span class="t">Knowledge Check</span><span class="w">graded · 10% pool</span></a>
+    <a href="#checkpoint"><span class="n">Wk 6 · any time</span><span class="t">Project check-in</span><span class="w">self-check · Phase 2</span></a>
+  </div>
+  <p class="small muted" style="margin-top:10px">Days are a suggested pacing for an online term, not fixed deadlines — your instructor's Brightspace dates win.</p>
+</section>
+
+<!-- ========================= WEEK 5 ========================= -->
+<div class="week-tabs no-print" role="group" aria-label="Weeks"><button type="button" data-week="1" aria-controls="week-1">Week 5<span class="tab-sub"> · Build &amp; Judge</span></button><button type="button" data-week="2" aria-controls="week-2">Week 6<span class="tab-sub"> · Explain &amp; Master</span></button><button type="button" class="show-all">Show both weeks</button></div>
+<div class="week-panel" id="week-1" data-week="1">
+<div class="part-banner"><b>Week 5 · Build &amp; Judge</b><span>Lecture → Muddiest Point → Concept Debate → HOS 3: Create → Evaluate</span></div>
+<div class="due-card"><h3>Week 5: what's due</h3><label><input type="checkbox" data-k="l3-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#redis">free Upstash Redis database</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l3-w0-0"><span><a href="#muddiest">Muddiest Point</a></span><span class="when">by Wed</span></label><label><input type="checkbox" data-k="l3-w0-1"><span><a href="#debate">Concept Debate: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l3-w0-cc"><span><a href="../reference/concept-companion.html#module-3">Concept Companion, Module 3: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l3-w0-2"><span><a href="#create">HOS 3 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l3-w0-3"><span><a href="#evaluate">HOS 3 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+
+
+<section class="module card" id="lecture">
+  <div class="module-head"><div class="module-icon">🎓</div><div><h2>Lecture: making an unpredictable system dependable</h2><div class="module-meta"><span class="tag">≈ 40 min with videos</span><span class="tag blue">3 short parts</span><span class="tag">O3</span></div></div></div>
+  <p class="small muted">Three short segments: watch the video, read the notes, then try the quick check before moving on. The notes cover everything you need, so the videos are a second explanation rather than a requirement. Anything that stays fuzzy goes in your <a href="#muddiest">Muddiest Point</a>.</p>
+
+  <div class="lecture-part">
+    <h3>Part 1 — Nondeterminism reaches your code <small>≈ 15 min</small></h3>
+    <div class="watch">
+      <div class="watch-head"><span class="label">Watch first</span><span class="small muted">9:37 · IBM Technology</span></div>
+      <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/cfqtFvWOfg0" title="Why Large Language Models Hallucinate (IBM Technology)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+      <p class="watch-note">The video is about wrong <em>facts</em>; this part is about wrong <em>structure</em>, but the root cause is the same: the model produces likely output, not checked output. Watch for why fluent text says nothing about whether it's correct. <a href="https://www.youtube.com/watch?v=cfqtFvWOfg0" target="_blank" rel="noopener">Open on YouTube</a> (human captions).</p>
+    </div>
+    <p>In HOS 1 you saw that the same prompt can produce different outputs. Until now that mostly affected wording. But when the model produces <em>tool arguments</em>, its output goes straight into your code, and code is not forgiving. The model might send <code>{"expr": "25*4"}</code> instead of <code>{"expression": ...}</code>, an empty string, a number where a string belongs, or a perfectly formed <code>"sqrt(banana)"</code>.</p>
+    <p>The course description calls this "probabilistic logic for handling nondeterministic outputs." In practice it means one habit: <strong>treat model output like user input</strong>. You wouldn't pass a web form's text straight into a database; don't pass a model's arguments straight into a function. Check them against a <strong>schema</strong> first: in Python, a Pydantic model that says exactly what shape and values are allowed.</p>
+    <p>It helps to sort the ways model output goes wrong, because each needs a different defence:</p>
+    <div class="table-wrap" tabindex="0"><table class="t">
+      <tr><th>What goes wrong</th><th>Example</th><th>Caught by a schema?</th></tr>
+      <tr><td><b>Shape</b>: missing or misnamed field</td><td><code>{"expr": "25*4"}</code></td><td>Yes</td></tr>
+      <tr><td><b>Type</b>: wrong kind of value</td><td><code>{"expression": 25}</code></td><td>Yes</td></tr>
+      <tr><td><b>Rule</b>: right type, not allowed</td><td><code>{"text": "   "}</code> (blank)</td><td>Yes, with a validator</td></tr>
+      <tr><td><b>Meaning</b>: valid, but not what the user asked</td><td>User asked 25 + 4; model sent <code>"25*4"</code></td><td>No</td></tr>
+    </table></div>
+    <p>The HOS 3 build guards the <code>calculate</code> tool with the simplest possible schema, and the Understand &amp; Refine step adds a rule to a second tool:</p>
+<pre tabindex="0"><code>class CalculateArgs(BaseModel):
+    expression: str                  # must exist, must be a string
+
+class WordCountArgs(BaseModel):
+    text: str
+
+    @field_validator("text")
+    @classmethod
+    def not_blank(cls, v):
+        if not v.strip():
+            raise ValueError("text must not be empty")
+        return v</code></pre>
+    <div class="callout">
+      <span class="label">Worked example</span>
+      <p>A user types "calculate the square root of a banana." The HOS 2 app passes the model's arguments straight to <code>calculate()</code>, which raises an exception: HTTP 500, and the user sees a generic error. With a schema in front of the tool, a malformed argument is caught <em>before</em> the tool runs, and the app decides what happens next instead of crashing. A stricter schema could go further and allow only digits, operators and parentheses, so <code>"sqrt(banana)"</code> never reaches the tool at all.</p>
+    </div>
+    <div class="mistakes">
+      <h4>⚠ Common mistakes</h4>
+      <ul>
+        <li><b>"It worked when I tried it."</b> One success says little about a nondeterministic system. Evaluate with many runs and deliberately awkward inputs.</li>
+        <li><b>Validating inside the tool instead of before it.</b> By then the bad value is already in your code. Validate at the boundary.</li>
+        <li><b>Assuming a schema catches everything.</b> It checks shape, type and rules, never meaning.</li>
+      </ul>
+    </div>
+    <div class="callout violet">
+      <span class="label">Quick check</span>
+      <p>For each, say whether <code>CalculateArgs</code> rejects it: <code>{"expression": "2+2"}</code>, <code>{"expression": 4}</code>, <code>{}</code>, <code>{"expression": "2+2", "note": "hi"}</code>. (Pydantic ignores extra fields by default.)</p>
+    </div>
+  </div>
+
+  <div class="lecture-part">
+    <h3>Part 2 — Guardrails: validate, retry with feedback, fail to data <small>≈ 5 min</small></h3>
+    <div class="watch">
+      <div class="watch-head"><span class="label">Watch first</span><span class="small muted">1:27 · Red Hat</span></div>
+      <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/FLOXGvqdwbM" title="What are guardrails for LLMs? (Red Hat)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+      <p class="watch-note">A short overview of guardrails in general: checks placed around a model's input and output. This HOS builds one specific kind, an output check on tool arguments. <a href="https://www.youtube.com/watch?v=FLOXGvqdwbM" target="_blank" rel="noopener">Open on YouTube</a> (human captions).</p>
+    </div>
+    <p>A <strong>guardrail</strong> is code that stands between the model and the rest of your system and decides what gets through. The HOS 3 guardrail has three moves:</p>
+    <div class="pipe-row">
+      <div class="box"><b>model output</b>tool args</div><div class="arrow">→</div>
+      <div class="box"><b>validate</b>Pydantic schema</div><div class="arrow">→</div>
+      <div class="box"><b>valid?</b>run the tool</div>
+    </div>
+    <div class="pipe-row">
+      <div class="box" style="border-color:var(--amber)"><b>invalid</b>retry, adding the error message</div><div class="arrow">→</div>
+      <div class="box" style="border-color:var(--amber)"><b>up to 2 retries</b>each one sees the last error</div><div class="arrow">→</div>
+      <div class="box" style="border-color:var(--bad)"><b>still invalid</b>return <code>{"error": …}</code></div>
+    </div>
+<pre tabindex="0"><code>def call_with_guardrail(fn, schema, max_retries=2):
+    hint = None
+    for attempt in range(max_retries + 1):
+        raw = fn(correction_hint=hint)          # ask the model (again)
+        try:
+            return schema.model_validate(raw)   # valid → done
+        except ValidationError as e:
+            hint = str(e)                       # tell the next attempt what was wrong
+    return {"error": "could not get a valid response"}</code></pre>
+    <p class="small muted">Simplified. The version in <code>guardrails.py</code> also logs each failed attempt and returns the last error alongside the message.</p>
+    <p>Three design choices are doing the work. <strong>Retrying</strong> gives a nondeterministic system another roll. <strong>Feeding the error back</strong> makes the next roll better than the first; a blind retry tends to repeat the same mistake. And <strong>failing to data</strong> (<code>{"error": ...}</code>, not an exception) keeps the request alive so the model can explain the problem to the user, like HOS 1's try/except.</p>
+    <p>Retries aren't free, so it's worth doing the arithmetic. If a call fails validation 30% of the time and attempts are independent, then 70% of requests need one call, 21% need two (fail, then pass), and 9% need all three. That's about 1.4 model calls per request on average, and the share that still fails after three attempts is 0.3 × 0.3 × 0.3 ≈ 2.7%. Feeding the error back usually makes later attempts more likely to pass than the first, so the real numbers tend to be better.</p>
+    <p>One limit to keep in mind: a schema checks <em>shape</em>, not <em>meaning</em>. If the user asked for 25 + 4 and the model sends <code>"25*4"</code>, that passes every structural check. Some mistakes need a lookup, a confirmation step, or a human. You'll sort which is which in the Application Challenge.</p>
+    <div class="callout">
+      <span class="label">Worked example</span>
+      <p>The model calls <code>word_count</code> with <code>{"text": "  "}</code>. Attempt 1 fails <code>not_blank</code>. The guardrail retries and adds the error ("text must not be empty") to the request. Attempt 2 comes back with the user's actual sentence, passes, and the tool runs. Without the hint, attempt 2 sees exactly the same request as attempt 1 and is likely to make the same choice. Without the guardrail at all, the tool would happily report "0 words," a wrong answer with no error anywhere.</p>
+    </div>
+    <div class="mistakes">
+      <h4>⚠ Common mistakes</h4>
+      <ul>
+        <li><b>Retrying forever.</b> Always cap retries; an unbounded loop turns one bad request into a stuck server and a large bill.</li>
+        <li><b>Retrying blind.</b> Without the error message, a retry is just the same request again.</li>
+        <li><b>Raising instead of returning.</b> An exception after the last retry becomes an HTTP 500. Return a structured error the model can explain.</li>
+      </ul>
+    </div>
+    <div class="callout violet">
+      <span class="label">Quick check</span>
+      <p>Using the numbers above: if you raise <code>max_retries</code> from 2 to 4, what happens to the share of requests that still fail, and to the worst-case number of model calls per request? When would that trade be worth it?</p>
+    </div>
+  </div>
+
+  <div class="lecture-part">
+    <h3>Part 3 — Async: moving slow work off the request path <small>≈ 20 min</small></h3>
+    <div class="watch">
+      <div class="watch-head"><span class="label">Watch first</span><span class="small muted">15:37 · IBM Technology</span></div>
+      <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/xErwDaOc-Gs" title="What is a Message Queue? (IBM Technology)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+      <p class="watch-note">The longest video this term, covering more than this part needs. Watch for the three roles (producer, queue, consumer) and why the producer doesn't wait. In this HOS, the API is the producer, Redis holds the queue, and <code>worker.py</code> is the consumer. <a href="https://www.youtube.com/watch?v=xErwDaOc-Gs" target="_blank" rel="noopener">Open on YouTube</a> (human captions).</p>
+    </div>
+    <p>Ingesting a document means chunking it and embedding every chunk, easily many seconds for a long file. If <code>POST /documents</code> does that work inside the request, the user waits the whole time, and in a simple server so does everyone else. The fix is to split "accept the work" from "do the work."</p>
+    <div class="pipe-label">Request path: returns in milliseconds</div>
+    <div class="pipe-row">
+      <div class="box"><b>POST /documents</b></div><div class="arrow">→</div>
+      <div class="box"><b>enqueue job</b>Redis (Upstash)</div><div class="arrow">→</div>
+      <div class="box"><b>{"job_id": …}</b>immediately</div>
+    </div>
+    <div class="pipe-label">Background: a separate process, <code>python worker.py</code></div>
+    <div class="pipe-row">
+      <div class="box"><b>worker</b>takes the next job</div><div class="arrow">→</div>
+      <div class="box"><b>chunk + embed</b>into Chroma</div><div class="arrow">→</div>
+      <div class="box"><b>status</b>queued → started → finished / failed</div>
+    </div>
+    <p>The HOS 3 code uses <strong>RQ</strong> (Redis Queue), a small Python library. Enqueuing a job and checking on it are each a couple of lines:</p>
+<pre tabindex="0"><code>@app.post("/documents")
+def upload_document(body: UploadRequest):
+    job = queue.enqueue(ingest_document_job, body.doc_path)   # store the job, don't run it
+    return {"job_id": job.id}
+
+@app.get("/jobs/{job_id}")
+def job_status(job_id: str):
+    job = Job.fetch(job_id, connection=redis_conn)
+    return {"status": job.get_status(), "result": job.result}</code></pre>
+    <p>Notice that <code>upload_document</code> never calls <code>ingest_document_job</code>. It only records "someone should run this, with this argument" in Redis. The worker is a <em>separate operating-system process</em>, started in its own terminal, that waits for jobs and runs them. That's why the most common HOS 3 bug is jobs stuck on <code>queued</code> forever: nobody started the worker. Nothing errors. The queue just waits.</p>
+    <p>The client finds out what happened by <strong>polling</strong>: asking <code>GET /jobs/{id}</code> every second or two until the status is <code>finished</code> or <code>failed</code>. HOS 4 replaces polling with a push notification, so the user can close the app and still hear when the job is done.</p>
+    <div class="callout">
+      <span class="label">Worked example</span>
+      <p>Inline: a 40-page PDF takes 25 seconds to ingest, so <code>POST /documents</code> takes 25 seconds, and a student who sends "hi" to <code>/chat</code> meanwhile waits behind it. Queued: <code>POST /documents</code> answers in about 50 ms with a job ID, chat stays instant, and <code>GET /jobs/{id}</code> moves from <code>queued</code> to <code>started</code> to <code>finished</code> about 25 seconds later. The work takes just as long; it just no longer blocks anyone.</p>
+    </div>
+    <div class="mistakes">
+      <h4>⚠ Common mistakes</h4>
+      <ul>
+        <li><b>Not starting the worker.</b> Jobs sit on <code>queued</code> forever with no error. Run <code>python worker.py</code> in a second terminal.</li>
+        <li><b>Changing job code without restarting the worker.</b> The worker loaded the old code when it started; restart it after edits.</li>
+        <li><b>Sending large data through the queue.</b> Enqueue a path or an ID, not the whole file. The job looks the data up when it runs.</li>
+      </ul>
+    </div>
+    <div class="callout violet">
+      <span class="label">Quick check</span>
+      <p>You upload three documents and stop the worker after the first finishes. What status does each job show? What happens when you start the worker again?</p>
+    </div>
+    <p class="try-it">▶ <b>Rehearse before the build:</b> Open the <a href="simulator.html"><strong>Guardrails &amp; Queue Simulator</strong></a>. Send 20 requests with the guardrail off, then on. Then upload a document in inline mode and send "hi"; compare the wait with queue mode. Finally, set workers to 0.</p>
+  </div>
+
+  <details class="gloss-box"><summary>New words this week (4)</summary><dl class="gloss">
+    <dt>Nondeterministic output &amp; guardrail</dt><dd>Output that can differ on every run, and a check that validates it, retrying or failing safely when it's wrong.</dd>
+    <dt>Schema (Pydantic)</dt><dd>A precise definition of what data is allowed: field names, types, and rules like "not empty."</dd>
+    <dt>Queue, worker &amp; job</dt><dd>A waiting line of work (in Redis), a separate process that takes work from it, and one unit of that work with its own ID and status.</dd>
+    <dt>Request path</dt><dd>Everything that happens between a request arriving and its response being sent. Slow work on this path makes users wait.</dd>
+  </dl></details>
+</section>
+
+<section class="module card" id="muddiest">
+  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
+  <p>Four short fields, not a blank box. Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
+  <div class="two" style="margin-bottom:14px">
+    <div class="eg weak"><span class="label">Doesn't meet the bar</span>"The async part was confusing. Not sure how queues work."</div>
+    <div class="eg strong"><span class="label">Meets the bar</span>"Lecture Part 3: why does the worker have to be a separate process in its own terminal? Couldn't FastAPI just run the ingest function in a background thread? I read the RQ docs' intro and tried the simulator with 0 workers, but that shows <em>what</em> breaks, not why a thread isn't enough."</div>
+  </div>
+  <form onsubmit="return false">
+    <label class="field" for="mp1">1 · What were you doing right before you got confused?</label>
+    <input type="text" id="mp1" placeholder="e.g. Lecture Part 2, the retry loop — or a line in guardrails.py">
+    <label class="field" for="mp2">2 · The exact place you got stuck</label>
+    <textarea id="mp2" placeholder="Not 'I don't get async' — the specific thing that doesn't add up."></textarea>
+    <div class="counter" id="mp2count">0 words</div>
+    <label class="field" for="mp3">3 · What you already tried</label>
+    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator…"></textarea>
+    <label class="field" for="mp4">4 · Optional: your best guess at the answer</label>
+    <textarea id="mp4" placeholder="Even if you think it's wrong."></textarea>
+  </form>
+  <div class="spec-meter"><b>Specificity</b><div class="spec-track"><div class="spec-fill" id="specFill"></div></div><span id="specLabel">—</span></div>
+  <ul class="hints" id="specHints"></ul>
+  <div class="row"><button class="btn" id="mpCopy" type="button">Copy for submission</button><button class="btn secondary" id="mpClear" type="button">Clear draft</button><span class="small muted" id="mpStatus" aria-live="polite"></span></div>
+  <p class="small muted" style="margin-top:10px"><b>Grading:</b> Participation — on time, addresses a genuine confusion (80%) · Writing — clear, specific, not generic (20%). The meter above is a nudge, not your grade.</p>
+</section>
+
+<section class="module card" id="debate">
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span></div></div></div>
+  <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>When a model's output fails validation, should the system keep retrying for a better answer, or fail fast and tell the user?</strong></p></div>
+  <p>You'll argue the side your debate group is assigned, then argue the other one, then drop advocacy and synthesize.</p>
+  <div class="callout blue">
+    <span class="label">Your side this HOS</span>
+    <p>Sides rotate each HOS. <b>In HOS 3, Debate Group 1 argues Side A and Debate Group 2 argues Side B</b> — the same as HOS 1. Find your group under <b>Communication → Groups</b> in Brightspace. Not in a group? Before posting Stage 1, count the posts on each side and join the side with fewer; if they're tied, take Side A. <a href="../module-1/index.html#debate">How sides are assigned →</a></p>
+  </div>
+  <div class="row" style="margin-bottom:10px">
+    <label for="teamInput" class="small"><b>My Brightspace group:</b></label>
+    <select id="teamInput" style="width:auto"><option value="">—</option><option value="1">Debate Group 1</option><option value="2">Debate Group 2</option></select>
+    <span class="small" id="sideResult" aria-live="polite"></span>
+  </div>
+  <div class="two">
+    <div class="side a" id="sideA">
+      <h4><span>Side A — Retry until it's right (within a budget)</span><span class="tag blue">Group 1 this HOS</span></h4>
+      <p>Retry with the validation error fed back, up to a sensible limit, before giving up.</p>
+      <ul class="small">
+        <li>Most validation failures are one-off; a second roll with feedback usually succeeds.</li>
+        <li>The user asked for a result, not an error message.</li>
+        <li>A retry costs cents and a second or two; a failed task costs the user's trust.</li>
+      </ul>
+    </div>
+    <div class="side b" id="sideB">
+      <h4><span>Side B — Fail fast and tell the user</span><span class="tag rose">Group 2 this HOS</span></h4>
+      <p>Validate once; on failure, return a clear error and let the user rephrase or try again.</p>
+      <ul class="small">
+        <li>Every retry adds latency and model cost, and multiplies at scale.</li>
+        <li>A model that produced bad output once may be confused by the input — retrying hides that signal.</li>
+        <li>Fast, honest failure is predictable and easy to test.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="stages">
+    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a simulator run (try "Send 20" with different retry settings), a test from your build, a cost estimate.</div>
+    <div class="stage"><span class="day">Stage 2 · by Thu</span><h4>Argue the opposite</h4>Before replying to anyone, post the <em>strongest</em> version of the side you didn't hold.</div>
+    <div class="stage"><span class="day">Stage 3 · by Sat</span><h4>Synthesis</h4>Drop advocacy. State a real position, citing at least one specific point from a classmate's post.</div>
+  </div>
+  <details class="eg-toggle"><summary>See a weak vs. strong example</summary>
+  <div class="two">
+    <div class="eg weak"><span class="label">Weak synthesis</span>"Retrying is good but not too much. Balance is key."</div>
+    <div class="eg strong"><span class="label">Strong synthesis</span>"Jordan's simulator numbers convinced me: with the error fed back, 2 retries recovered almost every failure, but a third retry recovered almost nothing extra. So: retry exactly twice with feedback for read-only tools, and fail fast on the first failure for anything that changes data — Kai's point that a confused model is a signal matters most when the tool isn't reversible."</div>
+  </div>
+  </details>
+  <p class="small muted" style="margin-top:10px"><b>Grading:</b> Participation — initial position plus response to at least one peer (50%) · Writing — quality of argument and reasoning (50%). <a href="../reference/concept-debate-example.html">See a worked example: four students through one debate, with a timeline →</a></p>
+</section>
+
+<section class="module card" id="create">
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span></div></div></div>
+  <div class="callout violet">
+    <span class="label">Before you build</span>
+    <p>Try the self-check at the end of <a href="../reference/concept-companion.html#module-3">Concept Companion, Module 3</a>. If you can answer every question, start building. If one stumps you, read that module first (about 10 minutes); it's quicker than untangling the same idea in the middle of the build.</p>
+  </div>
+  <p>Add both reliability layers to your HOS 2 app with an AI coding assistant. As always, this is the starting point — no hand edits yet.</p>
+  <ol>
+    <li>Open <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-03-guardrails-async" target="_blank" rel="noopener">the HOS 3 starter-code folder</a> in GitHub Codespaces — your HOS 2 app, already working.</li>
+    <li>Create a free Upstash Redis instance and add its URL to <code>backend/.env</code> as <code>REDIS_URL</code>.</li>
+    <li>Split your terminal: one for <code>uvicorn</code>, one for <code>python worker.py</code>.</li>
+    <li>Give your assistant the prompt below.</li>
+  </ol>
+<pre tabindex="0"><code>Add reliability to this app:
+- backend/guardrails.py: a call_with_guardrail(fn, schema, ...) helper that calls
+  fn(), validates the result against a Pydantic schema, and retries (up to 2 times)
+  if validation fails — returning an {"error": ...} dict instead of raising if all
+  retries fail. Define a schema for the "calculate" tool's arguments and wrap that
+  tool's call in agent.py with the guardrail.
+- backend/queue_setup.py + worker.py: a Redis-backed queue (using rq and REDIS_URL
+  from .env) and a worker process that runs jobs from it.
+- backend/jobs.py: move the document-ingestion logic (chunk, embed, insert into
+  Chroma) into a job function the worker can run.
+- backend/main.py: change POST /documents to enqueue the job and return a job_id
+  immediately, and add GET /jobs/{id} to report status.</code></pre>
+  <p class="small">Details, the exact <code>curl</code> commands, and common snags are in the <a href="hos-guide.html">HOS 3 hands-on guide</a>. Unsure what a file does? <a href="../reference/starter-code-walkthrough.html#hos3">Starter code walkthrough →</a></p>
+  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>hos/NOTES.md</code>, add a screenshot of the scaffolded app running to <code>hos/screenshots/</code>, then commit and push to your Module 3 repo.</p>
+</section>
+
+<section class="module card" id="evaluate">
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 2 of 4</span></div></div></div>
+  <p>Test on purpose — including the failure cases. A guardrail you've never seen fire and a queue you've never seen stall haven't been tested.</p>
+  <div class="progress-line" id="evalProgress">0 / 4 tests run</div>
+  <div class="checklist" id="evalList">
+    <label><input type="checkbox"><span><b>Malformed tool call:</b> "Calculate the square root of a banana" — does the log show the guardrail catching it and retrying, or does the request crash?</span></label>
+    <label><input type="checkbox"><span><b>Responsive while ingesting:</b> <code>POST /documents</code> — does it return a <code>job_id</code> instantly? Poll <code>GET /jobs/{id}</code> through queued → started → finished while sending chat messages the whole time.</span></label>
+    <label><input type="checkbox"><span><b>No worker:</b> stop <code>worker.py</code> and upload again — does <code>/jobs/{id}</code> report <code>queued</code> without erroring or hanging?</span></label>
+    <label><input type="checkbox"><span><b>Your own test:</b> one input you chose because you suspect a gap — e.g. a request that passes the schema but is still wrong.</span></label>
+  </div>
+  <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
+  <textarea id="evalNote" placeholder="What I tested · what the logs showed · what the AI got wrong, missed, or handled surprisingly well"></textarea>
+  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>hos/NOTES.md</code>, add a screenshot of the working app to <code>hos/screenshots/</code>, then commit and push by the end of Week 5. Your commit history is your Week 5 checkpoint.</p>
+</section>
+
+<!-- ========================= WEEK 6 ========================= -->
+</div>
+
+<div class="week-panel" id="week-2" data-week="2">
+<div class="part-banner"><b>Week 6 · Explain &amp; Master</b><span>HOS 3: Analyze → Understand &amp; Refine → Application Challenge → Knowledge Check → Project Checkpoint</span></div>
+<div class="due-card"><h3>Week 6: what's due</h3><label><input type="checkbox" data-k="l3-w1-0"><span><a href="#analyze">HOS 3 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l3-w1-1"><span><a href="#refine">HOS 3 · Understand &amp; Refine: the second guardrail, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l3-w1-2"><span><a href="#challenge">Application Challenge 3</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l3-w1-3"><span><a href="#check">Knowledge Check quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l3-w1-4"><span><a href="#checkpoint">Team Project Phase 2 check-in (self-check, nothing to submit)</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l3-w1-5"><span><a href="#refine">HOS 3: push your repo and submit its link in Brightspace</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+
+
+<section class="module card" id="analyze">
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why is it designed this way?</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 3 of 4</span></div></div></div>
+  <p>Pick <strong>one</strong> design choice and explain the specific failure it prevents.</p>
+  <div class="pick" id="analyzePick">
+    <button type="button" aria-pressed="false" data-k="feed"><b>Feeding the error into the retry</b>Why <code>call_with_guardrail</code> doesn't just try again.</button>
+    <button type="button" aria-pressed="false" data-k="proc"><b>The worker as a separate process</b>Why not a function the API calls directly?</button>
+    <button type="button" aria-pressed="false" data-k="poll"><b>202 + job_id + polling</b>Why the API returns before the work is done.</button>
+  </div>
+  <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
+  <p class="small muted">Common trap: describing what the code does. Analyze asks <em>why</em> — name the failure that would happen without it.</p>
+  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>hos/NOTES.md</code>, then commit and push.</p>
+</section>
+
+<section class="module card" id="refine">
+  <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
+  <p>Extend the guardrail pattern to <strong>your second tool</strong> from HOS 1's Understand &amp; Refine.</p>
+  <div class="progress-line" id="refineProgress">0 / 5 done</div>
+  <div class="checklist" id="refineList">
+    <label><input type="checkbox"><span>Write a Pydantic schema for the second tool's arguments.</span></label>
+    <label><input type="checkbox"><span>Add at least one validation rule <em>beyond</em> "the field exists" — e.g. reject an empty string, restrict units to a known list, or require a valid timezone name.</span></label>
+    <label><input type="checkbox"><span>Wire it into the tool dispatch in <code>agent.py</code> the same way <code>calculate</code> is guarded.</span></label>
+    <label><input type="checkbox"><span>Trigger a bad call and screenshot the guardrail catching it; confirm a good call still works.</span></label>
+    <label><input type="checkbox"><span>Write 2–3 sentences: which rule you chose, and one bad input your schema still wouldn't catch.</span></label>
+  </div>
+  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in <code>hos/</code> and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>hos/NOTES.md</code>, with its screenshots in <code>hos/screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 3 assignment in Brightspace by the end of Week 6.</p>
+</section>
+
+<section class="module card" id="challenge">
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a guardrail for a refund tool</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span></div></div></div>
+  <p>Pacific Bean Coffee's support bot can issue refunds, and in testing the model filled in the refund tool's arguments wrong a dozen ways. Build the guardrail (a Pydantic schema, checks against the order data, and a human review queue), replay every recorded call through it, and decide what the bot may refund without a person. The spec, starter code, and rubric are in the <a href="application-challenge.html"><b>AC 3 guide</b></a>.</p>
+  <p class="small">Warm up first: the question of which layer catches what is the same one the challenge asks.</p>
+  <h3>Warm-up: what can a schema actually catch?</h3>
+  <p class="small">A clinic's agent has a tool <code>book_appointment(pet_id, service, start_time, notes)</code>. For each proposed check, decide: can a <b>schema</b> catch it, does it need a <b>lookup</b> (database or API), or does it need a <b>human</b>?</p>
+  <div id="sorter"></div>
+  <div class="row" style="margin:8px 0 16px"><button class="btn" id="sorterReveal" type="button">Reveal reasoning</button><span class="small" id="sorterScore" aria-live="polite"></span></div>
+  <div class="callout"><span class="label">What to submit</span>
+    <ul>
+      <li><code>refunds.py</code> and <code>tests/test_my_rules.py</code></li>
+      <li>The output of <code>pytest</code>, all tests passing (including yours)</li>
+      <li><code>REPORT.md</code>: the output of <code>python run_cases.py</code></li>
+      <li><code>DECISIONS.md</code>: your routing rules, and which layer stops each bad call</li>
+    </ul>
+  </div>
+  <p class="small muted"><b>Grading:</b> Application — genuinely applied to a new tool, not a restatement of <code>calculate</code> (10%) · Analysis — break the problem into its parts (20%) · Evaluation — justify your call against clear criteria (30%) · Design — your own original solution (40%).</p>
+</section>
+
+<section class="module card" id="check">
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span></div></div></div>
+  <p>Five quick questions, then the two open questions your instructor will ask in the Week 6 check-in.</p>
+  <div id="quiz"></div>
+  <p class="score" id="quizScore" aria-live="polite"></p>
+  <h3>Open questions</h3>
+  <ol>
+    <li>Why can't you trust every model response without checking it first?</li>
+    <li>Why move long-running work to a background job instead of making the user wait?</li>
+  </ol>
+</section>
+
+<section class="module card" id="checkpoint">
+  <div class="module-head"><div class="module-icon">🚀</div><div><h2>Team Project — Phase 2 check-in</h2><div class="module-meta"><span class="tag amber">Phase 2 due end of Week 8</span><span class="tag">Self-check · nothing to submit</span></div></div></div>
+  <p>Phase 2 (Weeks 4–8) ends with a rough working version that touches at least two of your combined HOS pieces end to end: System v0.8 and a 2–3 page progress report, due end of Week 8. Use this to check your plan against what you've now built. Draft it here (it stays in this browser) and share it with your team.</p>
+  <label class="field" for="cpTeam">Team members (three; four with instructor approval)</label>
+  <input type="text" id="cpTeam" placeholder="e.g. Priya S., Marcus L., Dana K.">
+  <label class="field" for="cpIdea">Your idea in one paragraph — who is it for, and what does it do for them?</label>
+  <textarea id="cpIdea" placeholder="e.g. A study assistant for community-college students that answers questions from their own syllabi and notes, makes flashcards, and notifies them when an upload is processed."></textarea>
+  <h3>Which HOS pieces does it combine?</h3>
+  <p class="small muted">Tick each one and say, in a few words, what it does <em>in your project</em>. All four is the goal by Week 10; by Week 8, at least two should work end to end.</p>
+  <div id="cpHos">
+    <label class="hos-tick"><input type="checkbox" data-h="1"><span><b>HOS 1 — agent &amp; tools</b></span><input type="text" aria-label="What HOS 1 does in your project" placeholder="e.g. tools: look_up_due_date, make_flashcard"></label>
+    <label class="hos-tick"><input type="checkbox" data-h="2"><span><b>HOS 2 — RAG over your documents</b></span><input type="text" aria-label="What HOS 2 does in your project" placeholder="e.g. answers from the student's uploaded notes"></label>
+    <label class="hos-tick"><input type="checkbox" data-h="3"><span><b>HOS 3 — guardrails &amp; background jobs</b></span><input type="text" aria-label="What HOS 3 does in your project" placeholder="e.g. validate flashcards; ingest PDFs as a job"></label>
+    <label class="hos-tick"><input type="checkbox" data-h="4"><span><b>HOS 4 — mobile, push &amp; observability</b></span><input type="text" aria-label="What HOS 4 does in your project" placeholder="e.g. push when flashcards are ready; trace every answer"></label>
+  </div>
+  <h3>Litmus test</h3>
+  <ul class="hints litmus" id="cpLitmus"></ul>
+  <div class="row"><button class="btn" id="cpCopy" type="button">Copy to share with your team</button><span class="small muted" id="cpStatus" aria-live="polite"></span></div>
+  <p class="small" style="margin-top:12px">Phases, deliverables and rubrics: the Team Project section of the syllabus (in Brightspace). Run your idea through the <a href="../index.html">four simulators</a> before Week 9.</p>
+</section>
+
+</div>
+
+<section class="card">
+  <h2>Resources</h2>
+  <ul>
+    <li><a href="hos-guide.html">HOS 3 hands-on guide</a> — the full build, stage by stage, plus common snags</li>
+    <li><a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a> — the free Upstash Redis instance</li>
+    <li><a href="../reference/concept-companion.html">Concept Companion</a></li>
+    <li><a href="simulator.html">Guardrails &amp; Queue Simulator</a></li>
+    <li>← <a href="../module-2/index.html">Module 2 lesson</a> · <a href="../index.html">All lessons &amp; simulators</a> · Next: <a href="../module-4/index.html">Module 4 lesson</a> →</li>
+  </ul>
+</section>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+var LESSON='l3';
+function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){ return null; } }
+
+/* section nav highlight */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a'));
+  var map={}; links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+
+/* Muddiest Point */
+(function(){
+  var els=['mp1','mp2','mp3','mp4'].map(function(i){return document.getElementById(i);});
+  els.forEach(function(el){ var v=store('ai410-'+LESSON+'-'+el.id); if(v) el.value=v; el.addEventListener('input',update); });
+  var vague=/\b(confus(ing|ed)|everything|all of it|the whole|in general|kind of|stuff)\b/i;
+  var concrete=/(`|\(|\)|\.py|\/|step \d|part \d|line|function|schema|pydantic|valid|retry|hint|error|queue|worker|job|redis|process|thread|async|status|202|poll|request)/i;
+  function words(s){ return (s.trim().match(/\S+/g)||[]).length; }
+  function update(){
+    els.forEach(function(el){ store('ai410-'+LESSON+'-'+el.id, el.value); });
+    var stuck=els[1].value, w=words(stuck);
+    document.getElementById('mp2count').textContent=w+' words';
+    var checks=[
+      [words(els[0].value)>=3,'Context names where you were (a part, step, or line)'],
+      [w>=15,'Stuck point is at least ~15 words'],
+      [concrete.test(stuck),'Stuck point mentions a concrete thing (a step, function, file, term)'],
+      [!vague.test(stuck)||w>=30,'Avoids vague catch-alls like "confusing" or "everything"'],
+      [words(els[2].value)>=5,'Says what you already tried']
+    ];
+    var n=checks.filter(function(c){return c[0];}).length, pct=n/checks.length*100;
+    var f=document.getElementById('specFill'); f.style.width=pct+'%';
+    f.style.background= pct>=80?'var(--ok)':pct>=40?'var(--amber)':'var(--bad)';
+    document.getElementById('specLabel').textContent= pct>=80?'Specific':pct>=40?'Getting there':'Too vague';
+    document.getElementById('specHints').innerHTML=checks.map(function(c){return '<li class="'+(c[0]?'ok':'no')+'">'+(c[0]?'✓ ':'○ ')+c[1]+'</li>';}).join('');
+  }
+  update();
+  document.getElementById('mpCopy').addEventListener('click',function(){
+    var t='MUDDIEST POINT — AI 410 HOS 3\n\n1. Right before I got confused: '+els[0].value+'\n\n2. Where I got stuck: '+els[1].value+'\n\n3. What I already tried: '+els[2].value+'\n\n4. My best guess: '+(els[3].value||'(none)');
+    var s=document.getElementById('mpStatus');
+    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ s.textContent='Copied — paste it into Brightspace.'; },function(){ s.textContent='Copy blocked — select the fields manually.'; }); }
+    else s.textContent='Copy not supported — select the fields manually.';
+  });
+  document.getElementById('mpClear').addEventListener('click',function(){ els.forEach(function(el){ el.value=''; }); update(); document.getElementById('mpStatus').textContent='Draft cleared.'; });
+})();
+
+/* Debate side: HOS 3 rotation — Group 1 = Side A, Group 2 = Side B */
+(function(){
+  var sel=document.getElementById('teamInput'), out=document.getElementById('sideResult');
+  var v=store('ai410-team'); if(v) sel.value=v;
+  function upd(){
+    var a=document.getElementById('sideA'), b=document.getElementById('sideB');
+    a.classList.remove('mine'); b.classList.remove('mine');
+    if(sel.value===''){ out.textContent=''; return; }
+    store('ai410-team',sel.value);
+    var sideA=sel.value==='1';
+    (sideA?a:b).classList.add('mine');
+    out.innerHTML='In HOS 3 you argue <b>'+(sideA?'Side A — Retry until it\'s right':'Side B — Fail fast')+'</b> in Stage 1.';
+  }
+  sel.addEventListener('change',upd); upd();
+})();
+
+/* checklists */
+function wireChecklist(listId, progId, suffix, key){
+  var boxes=[].slice.call(document.querySelectorAll('#'+listId+' input'));
+  var saved=(store(key)||'').split(',');
+  boxes.forEach(function(b,i){ if(saved[i]==='1') b.checked=true; b.addEventListener('change',upd); });
+  function upd(){
+    boxes.forEach(function(b){ b.parentNode.classList.toggle('done',b.checked); });
+    var n=boxes.filter(function(b){return b.checked;}).length;
+    document.getElementById(progId).textContent=n+' / '+boxes.length+' '+suffix;
+    store(key, boxes.map(function(b){return b.checked?'1':'0';}).join(','));
+  }
+  upd();
+}
+wireChecklist('evalList','evalProgress','tests run','ai410-'+LESSON+'-eval');
+wireChecklist('refineList','refineProgress','done','ai410-'+LESSON+'-refine');
+(function(){ var t=document.getElementById('evalNote'), k='ai410-'+LESSON+'-evalnote'; var v=store(k); if(v) t.value=v; t.addEventListener('input',function(){ store(k,t.value); }); })();
+
+/* Analyze frames */
+(function(){
+  var frames={
+    feed:['What information does the second attempt have that the first one didn\'t?','Why would a retry with the exact same prompt be likely to fail the same way? Use the simulator\'s "feed the error back" toggle as evidence.','What would happen to cost and latency if retries were unlimited?'],
+    proc:['What happens to the web server while a long job runs if the API calls the ingest function directly?','What does a separate process give you that a function call doesn\'t (crash isolation, scaling, restarts)?','Why does "worker not running" produce queued-forever instead of an error?'],
+    poll:['Why does POST /documents return a job_id instead of the ingestion result?','What does the client do with the job_id, and what states can it see?','What should the client do if a job reports failed?']
+  };
+  var btns=[].slice.call(document.querySelectorAll('#analyzePick button')), box=document.getElementById('analyzeFrame');
+  btns.forEach(function(b){ b.addEventListener('click',function(){
+    btns.forEach(function(x){x.setAttribute('aria-pressed','false');}); b.setAttribute('aria-pressed','true');
+    box.innerHTML='<span class="label">Explain-it frame</span><ul>'+frames[b.dataset.k].map(function(q){return '<li>'+q+'</li>';}).join('')+'</ul><p class="small">Aim for 250–400 words. Quote the line(s) you are explaining.</p>';
+  }); });
+})();
+
+/* Application Challenge: what can a schema catch? */
+(function(){
+  var OPTS=[['schema','Schema can check'],['lookup','Needs a lookup'],['human','Needs a human']];
+  var items=[
+    ['<code>service</code> is one of checkup, vaccine, grooming','schema','A fixed list of allowed values — a Literal type in Pydantic. The cheapest, most valuable first check.'],
+    ['<code>start_time</code> is a valid ISO 8601 datetime','schema','A type check: Pydantic parses it as a datetime or rejects it.'],
+    ['<code>start_time</code> is in the future','schema','Still a schema job — a field validator can compare against the current time without calling anything else.'],
+    ['<code>notes</code> is under 500 characters','schema','A length constraint; protects the database and stops a runaway model output.'],
+    ['The time slot is actually open','lookup','A schema can\'t know the calendar. This needs a query against the booking system — and can still change between check and booking.'],
+    ['<code>pet_id</code> belongs to the person asking','lookup','Authorization, not validation. Look it up server-side; never trust an ID the model produced.'],
+    ['The owner agreed to the $80 after-hours fee','human','Consent can\'t be validated by code. The agent should ask and the user should confirm — HOS 1\'s "confirm first" category.']
+  ];
+  var answers={}, host=document.getElementById('sorter'), score=document.getElementById('sorterScore');
+  host.innerHTML=items.map(function(t,i){
+    return '<div class="sorter-row" data-i="'+i+'"><span>'+t[0]+'</span><div class="opts">'+
+      OPTS.map(function(o){ var cls=o[0]==='schema'?'auto':o[0]==='lookup'?'confirm':'never'; return '<button type="button" class="'+cls+'" aria-pressed="false" data-o="'+o[0]+'">'+o[1]+'</button>'; }).join('')+
+      '</div><div class="why"></div></div>';
+  }).join('');
+  [].slice.call(host.querySelectorAll('.opts button')).forEach(function(b){ b.addEventListener('click',function(){
+    var row=b.closest('.sorter-row'); [].slice.call(row.querySelectorAll('button')).forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true'); answers[row.dataset.i]=b.dataset.o;
+  }); });
+  document.getElementById('sorterReveal').addEventListener('click',function(){
+    var right=0;
+    [].slice.call(host.querySelectorAll('.sorter-row')).forEach(function(row){
+      var t=items[row.dataset.i]; if(answers[row.dataset.i]===t[1]) right++;
+      var lbl=OPTS.filter(function(o){return o[0]===t[1];})[0][1];
+      row.querySelector('.why').innerHTML='<b>Suggested: '+lbl+'.</b> '+t[2];
+      row.classList.add('revealed');
+    });
+    score.textContent=right+' / '+items.length+' match the suggested call. Notice how much a schema can do — and the two things it never can.';
+  });
+})();
+
+/* Quiz */
+(function(){
+  var qs=[
+    ['A model returns {"expr": "25*4"} for a tool expecting {"expression": ...}. What should happen first?',['The tool runs and raises an error','The schema rejects it before the tool runs','Gemini is asked to switch to a different tool','The request is queued for later'],1,'Validate at the boundary — the tool should never see arguments that don\'t match its schema.'],
+    ['Why does call_with_guardrail pass the validation error into the next attempt?',['To log it for Langfuse','Because Pydantic requires it','So the retry has new information and a better chance of succeeding','To make the request take longer'],2,'A blind retry has the same odds as the first try. Feedback changes the input.'],
+    ['All retries fail. What does the guardrail return?',['An HTTP 500','Nothing — it retries forever','The last invalid arguments','An {"error": ...} dict the model can explain to the user'],3,'Failing to data keeps the request alive.'],
+    ['Uploads return a job_id, but every job stays "queued". Most likely cause?',['The worker process isn\'t running','Chroma is full','The schema rejected the document','Redis is too slow'],0,'The #1 HOS 3 snag. The worker runs in its own terminal.'],
+    ['Which check can a schema NOT do on its own?',['Service is one of three allowed values','The requested time slot is actually free','A datetime parses correctly','Notes are under 500 characters'],1,'Availability needs a lookup against real data.']
+  ];
+  var host=document.getElementById('quiz'), right=0, done=0;
+  host.innerHTML=qs.map(function(q,i){
+    return '<div class="q" data-i="'+i+'"><div class="stem">'+(i+1)+'. '+q[0]+'</div>'+q[1].map(function(o,j){return '<button type="button" class="opt" data-j="'+j+'">'+o+'</button>';}).join('')+'<div class="fb"></div></div>';
+  }).join('');
+  [].slice.call(host.querySelectorAll('.q')).forEach(function(card){
+    var q=qs[card.dataset.i];
+    [].slice.call(card.querySelectorAll('.opt')).forEach(function(b){ b.addEventListener('click',function(){
+      if(card.classList.contains('answered')) return;
+      card.classList.add('answered'); done++;
+      var ok=+b.dataset.j===q[2]; if(ok) right++;
+      b.classList.add(ok?'right':'wrong'); card.querySelectorAll('.opt')[q[2]].classList.add('right');
+      card.querySelector('.fb').innerHTML=(ok?'✓ ':'✗ ')+q[3];
+      document.getElementById('quizScore').textContent= done===qs.length ? 'Score: '+right+' / '+qs.length+(right===qs.length?' — ready for the Week 6 check-in.':' — revisit the lecture parts you missed.') : '';
+    }); });
+  });
+})();
+
+/* Project checkpoint drafter */
+(function(){
+  var team=document.getElementById('cpTeam'), idea=document.getElementById('cpIdea');
+  var rows=[].slice.call(document.querySelectorAll('#cpHos .hos-tick'));
+  function key(k){ return 'ai410-checkpoint-'+k; }
+  var v=store(key('team')); if(v) team.value=v; v=store(key('idea')); if(v) idea.value=v;
+  rows.forEach(function(r){ var cb=r.querySelector('input[type=checkbox]'), tx=r.querySelector('input[type=text]'), h=cb.dataset.h;
+    if(store(key('h'+h))==='1') cb.checked=true; var t=store(key('t'+h)); if(t) tx.value=t;
+    cb.addEventListener('change',upd); tx.addEventListener('input',function(){ if(tx.value && !cb.checked) cb.checked=true; upd(); }); });
+  team.addEventListener('input',upd); idea.addEventListener('input',upd);
+  function words(s){ return (s.trim().match(/\S+/g)||[]).length; }
+  function upd(){
+    store(key('team'),team.value); store(key('idea'),idea.value);
+    var ticked=0, described=0;
+    rows.forEach(function(r){ var cb=r.querySelector('input[type=checkbox]'), tx=r.querySelector('input[type=text]'), h=cb.dataset.h;
+      store(key('h'+h),cb.checked?'1':'0'); store(key('t'+h),tx.value); if(cb.checked){ ticked++; if(words(tx.value)>=3) described++; } });
+    var checks=[
+      [team.value.trim().length>0,'Team named (or "Solo")'],
+      [words(idea.value)>=30,'Idea is a real paragraph (~30+ words)'],
+      [/\bfor\b/i.test(idea.value),'Says who it\'s for'],
+      [ticked>=2,'Combines at least two HOS pieces (all four by Week 10)'],
+      [ticked>0 && described===ticked,'Each ticked HOS says what it does in your project — not just "uses RAG"']
+    ];
+    document.getElementById('cpLitmus').innerHTML=checks.map(function(c){return '<li class="'+(c[0]?'ok':'no')+'">'+(c[0]?'✓ ':'○ ')+c[1]+'</li>';}).join('');
+  }
+  upd();
+  document.getElementById('cpCopy').addEventListener('click',function(){
+    var names=['agent & tools','RAG over documents','guardrails & background jobs','mobile, push & observability'];
+    var parts=rows.filter(function(r){return r.querySelector('input[type=checkbox]').checked;}).map(function(r){ var h=+r.querySelector('input[type=checkbox]').dataset.h; return '- HOS '+h+' ('+names[h-1]+'): '+r.querySelector('input[type=text]').value; });
+    var t='TEAM/TERM PROJECT CHECKPOINT — AI 410 (Week 6)\n\nTeam: '+team.value+'\n\nIdea: '+idea.value+'\n\nHOS pieces it combines:\n'+(parts.join('\n')||'(none yet)');
+    var s=document.getElementById('cpStatus');
+    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ s.textContent='Copied — paste it into Brightspace.'; },function(){ s.textContent='Copy blocked — select the fields manually.'; }); }
+    else s.textContent='Copy not supported — select the fields manually.';
+  });
+})();
+
+/* week tabs: show one week at a time; links and #hash jumps switch tabs */
+(function(){
+  var panels=[].slice.call(document.querySelectorAll('.week-panel')); if(!panels.length) return;
+  var tabs=[].slice.call(document.querySelectorAll('.week-tabs [data-week]')), all=document.querySelector('.week-tabs .show-all');
+  var key='ai410-tab-'+location.pathname;
+  function save(v){ try{ localStorage.setItem(key,v); }catch(e){} }
+  function load(){ try{ return localStorage.getItem(key); }catch(e){ return null; } }
+  function show(w){
+    panels.forEach(function(p){ p.hidden = !(w==='all' || p.getAttribute('data-week')===w); });
+    tabs.forEach(function(t){ t.setAttribute('aria-pressed', String(t.getAttribute('data-week')===w)); });
+    if(all) all.textContent = w==='all' ? 'Show one week at a time' : 'Show both weeks';
+  }
+  function weekOf(id){ var el=id && document.getElementById(id); var p=el && el.closest('.week-panel'); return p ? p.getAttribute('data-week') : null; }
+  document.body.classList.add('tabs-on');
+  var start = weekOf(location.hash.slice(1)) || load() || panels[0].getAttribute('data-week');
+  show(start);
+  if(location.hash){ var tgt=document.getElementById(location.hash.slice(1)); if(tgt){ var go=function(){ tgt.scrollIntoView({block:'start', behavior:'instant'}); }; setTimeout(go,0); window.addEventListener('load',go); } }
+  tabs.forEach(function(t){ t.addEventListener('click',function(){ var w=t.getAttribute('data-week'); show(w); save(w); var p=document.querySelector('.week-panel[data-week="'+w+'"]'); if(p) p.scrollIntoView({block:'start'}); }); });
+  if(all) all.addEventListener('click',function(){ var cur=tabs.filter(function(t){return t.getAttribute('aria-pressed')==='true';})[0]; var w = cur ? 'all' : (load()&&load()!=='all'?load():panels[0].getAttribute('data-week')); show(w); save(w); });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+    var w=weekOf(a.getAttribute('href').slice(1)); if(!w) return;
+    var cur=panels.filter(function(p){return !p.hidden;}).map(function(p){return p.getAttribute('data-week');});
+    if(cur.indexOf(w)===-1){ show(w); save(w); }
+  }, true);
+  window.addEventListener('hashchange',function(){ var w=weekOf(location.hash.slice(1)); if(w && document.querySelector('.week-panel[data-week="'+w+'"]').hidden){ show(w); var el=document.getElementById(location.hash.slice(1)); if(el) el.scrollIntoView(); } });
+  /* due checklist ticks */
+  [].slice.call(document.querySelectorAll('.due-card input[data-k]')).forEach(function(cb){
+    var k='ai410-due-'+cb.getAttribute('data-k'); try{ cb.checked = localStorage.getItem(k)==='1'; }catch(e){}
+    cb.addEventListener('change',function(){ try{ localStorage.setItem(k, cb.checked?'1':'0'); }catch(e){} });
+  });
+})();
+</script>
+</body>
+</html>

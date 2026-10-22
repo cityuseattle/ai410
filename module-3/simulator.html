@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 HOS 3 simulator: validate-and-retry guardrails around tool calls, and inline vs. queued background document ingestion.">
+<title>Guardrails & Queue Simulator</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.sim-layout { display:grid; grid-template-columns:minmax(260px,340px) 1fr; gap:16px; align-items:start; }
+@media (max-width:860px){ .sim-layout { grid-template-columns:1fr; } }
+.panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow); margin-bottom:16px; min-width:0; }
+.panel h2 { font-size:1.02rem; margin-bottom:10px; }
+.panel h3 { font-size:.9rem; margin:14px 0 6px; }
+.presets { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px; }
+.presets button { font-family:inherit; font-size:.74rem; border:1px solid var(--border); background:var(--surface2); color:var(--text); border-radius:14px; padding:4px 10px; cursor:pointer; }
+.presets button:hover { border-color:var(--accent); }
+.toggle { display:flex; gap:8px; align-items:flex-start; font-size:.85rem; margin:6px 0; cursor:pointer; }
+.toggle input { accent-color:var(--accent); margin-top:4px; }
+.toggle small { display:block; color:var(--muted); font-size:.74rem; }
+.lanes { display:grid; grid-template-columns:repeat(var(--lanes,4),1fr); gap:8px; margin-bottom:12px; }
+.lane { border:2px solid var(--border); border-radius:10px; padding:10px; text-align:center; font-size:.8rem; background:var(--surface2); transition:all .2s; min-width:0; }
+.lane b { display:block; font-size:.86rem; }
+.lane .ic { font-size:1.3rem; display:block; }
+.lane.from { border-color:var(--blue); background:var(--blue-bg); }
+.lane.to { border-color:var(--accent); background:var(--accent-light); box-shadow:0 0 0 3px var(--accent-light); }
+.lane.err { border-color:var(--bad); background:var(--bad-bg); }
+@media (max-width:520px){ .lanes { grid-template-columns:repeat(2,1fr); } }
+.stepbox { border:1px solid var(--border); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; background:var(--surface2); margin-bottom:12px; min-height:84px; }
+.stepbox.err { border-left-color:var(--bad); } .stepbox.warn { border-left-color:var(--amber); }
+.stepbox .k { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.steps-list { list-style:none; margin:0; padding:0; font-size:.8rem; }
+.steps-list li { padding:5px 8px; border-radius:6px; color:var(--muted); display:flex; gap:8px; }
+.steps-list li.cur { background:var(--accent-light); color:var(--text); font-weight:700; }
+.steps-list li.past { color:var(--text); }
+.steps-list li .n { flex:none; width:20px; text-align:right; }
+.steps-list li.bad { color:var(--bad); }
+.verdict { border-radius:8px; padding:10px 14px; font-size:.86rem; margin-top:10px; }
+.verdict.ok { background:var(--ok-bg); color:var(--ok); } .verdict.bad { background:var(--bad-bg); color:var(--bad); } .verdict.warn { background:var(--amber-bg); color:var(--amber); }
+.kv { display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:.82rem; }
+.kv dt { color:var(--muted); } .kv dd { margin:0; font-weight:600; }
+.bar-row { display:grid; grid-template-columns:70px 1fr 48px; gap:8px; align-items:center; font-size:.78rem; margin-bottom:4px; }
+.bar-track { height:12px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; overflow:hidden; position:relative; }
+.bar-fill { height:100%; background:var(--accent); }
+.project-tip { border:1px dashed var(--accent); border-radius:var(--radius); padding:14px 18px; background:var(--accent-light); font-size:.88rem; }
+.project-tip b.h { display:block; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent2); margin-bottom:4px; }
+
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:10px 0; }
+@media (max-width:520px){ .stats { grid-template-columns:repeat(2,1fr); } }
+.stat { border:1px solid var(--border); border-radius:8px; padding:8px 10px; text-align:center; background:var(--surface2); }
+.stat b { display:block; font-size:1.3rem; }
+.stat span { font-size:.72rem; color:var(--muted); }
+.stat.ok b { color:var(--ok); } .stat.warn b { color:var(--amber); } .stat.bad b { color:var(--bad); }
+.pipeline { display:grid; grid-template-columns:1fr 1.3fr 1fr; gap:10px; margin-bottom:12px; }
+@media (max-width:620px){ .pipeline { grid-template-columns:1fr; } }
+.stage-col { border:2px solid var(--border); border-radius:10px; padding:10px; background:var(--surface2); min-height:150px; }
+.stage-col h4 { font-size:.82rem; display:flex; justify-content:space-between; }
+.stage-col.busy { border-color:var(--bad); }
+.job { font-size:.74rem; border:1px solid var(--border); border-radius:6px; padding:5px 8px; margin-top:6px; background:var(--surface); }
+.job .p { height:5px; background:var(--border); border-radius:3px; overflow:hidden; margin-top:4px; }
+.job .p i { display:block; height:100%; background:var(--accent); }
+.job.queued { border-left:4px solid var(--amber); } .job.started { border-left:4px solid var(--blue); } .job.finished { border-left:4px solid var(--ok); }
+.busybar { height:8px; border-radius:4px; background:var(--border); overflow:hidden; margin-top:6px; }
+.busybar i { display:block; height:100%; background:var(--bad); }
+.seg { display:inline-flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.seg button { font-family:inherit; font-size:.8rem; font-weight:700; padding:6px 12px; border:none; background:var(--surface2); color:var(--text); cursor:pointer; }
+.seg button[aria-pressed="true"] { background:var(--accent); color:var(--on-accent); }
+
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Simulator 3 · Pairs with HOS 3 (Weeks 5–6)</div>
+    <h1>Guardrails &amp; Queue Simulator</h1>
+    <p class="lede">Two kinds of unpredictability in one page: a model that sometimes calls a tool with bad arguments, and a slow document upload that can freeze the whole app. Tune the guardrail, then move ingestion to a background worker.</p>
+    <div class="chips"><span class="chip">Outcome O3</span><span class="chip">Validate &amp; retry</span><span class="chip">Nondeterminism</span><span class="chip">Redis queue &amp; worker</span><span class="chip">Async bottlenecks</span></div>
+  </div>
+</section>
+<main id="main">
+<div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><a class="tag blue" href="../module-1/simulator.html" style="text-decoration:none">1 · Agentic Loop</a><a class="tag blue" href="../module-2/simulator.html" style="text-decoration:none">2 · RAG Pipeline</a><span class="tag">3 · Guardrails &amp; Queue</span><a class="tag blue" href="../module-4/simulator.html" style="text-decoration:none">4 · Push &amp; Observability</a></div>
+<p class="sim-note">⚠ Simulation only — random "model" output, a Pydantic-style check in JavaScript, and an in-page queue standing in for Redis/RQ.</p>
+
+<div class="sim-layout">
+  <div>
+    <div class="panel">
+      <h2>A · Guardrail settings</h2>
+      <label class="toggle"><input type="checkbox" id="gOn" checked><span>Guardrail on (<code>call_with_guardrail</code>)<small>Off = malformed args go straight into the tool</small></span></label>
+      <label class="field" for="bad">Model produces malformed args: <span id="badV"></span>%</label>
+      <input type="range" id="bad" min="0" max="90" value="35">
+      <label class="field" for="retries">Max retries: <span id="retriesV"></span></label>
+      <input type="range" id="retries" min="0" max="3" value="2">
+      <label class="toggle"><input type="checkbox" id="feed" checked><span>Feed the validation error into the retry<small>Off = retry with the exact same prompt</small></span></label>
+      <div class="row" style="margin-top:10px"><button class="btn" id="one" type="button">Send 1 request</button><button class="btn secondary" id="twenty" type="button">Send 20</button><button class="btn secondary" id="gReset" type="button">Reset</button></div>
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <h2>Tool-call outcomes</h2>
+      <p class="small muted">Schema for <code>calculate</code>: <code>{ expression: str, non-empty, only digits / operators / parentheses }</code></p>
+      <div class="stats">
+        <div class="stat ok"><b id="sOk">0</b><span>valid first try</span></div>
+        <div class="stat ok"><b id="sRec">0</b><span>recovered by retry</span></div>
+        <div class="stat warn"><b id="sErr">0</b><span>returned {"error"}</span></div>
+        <div class="stat bad"><b id="sCrash">0</b><span>crashed (500)</span></div>
+      </div>
+      <div class="log" id="gLog">Send a request to see each attempt.</div><p class="sr-only" id="gLive" aria-live="polite"></p>
+    </div>
+  </div>
+</div>
+
+<div class="sim-layout">
+  <div>
+    <div class="panel">
+      <h2>B · Document ingestion mode</h2>
+      <div class="seg" role="group" aria-label="Ingestion mode"><button type="button" id="mInline" aria-pressed="false">Inline (in the request)</button><button type="button" id="mQueue" aria-pressed="true">Queue + worker</button></div>
+      <label class="field" for="workers">Workers running (<code>python worker.py</code>): <span id="workersV"></span></label>
+      <input type="range" id="workers" min="0" max="3" value="1">
+      <label class="field" for="dur">Ingest time per document: <span id="durV"></span> s</label>
+      <input type="range" id="dur" min="2" max="12" value="6">
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="upload" type="button">POST /documents</button>
+        <button class="btn secondary" id="chat" type="button">POST /chat "hi"</button>
+        <button class="btn secondary" id="poll" type="button">GET /jobs/{id}</button>
+      </div>
+      <p class="small muted" style="margin-top:8px">Upload a document, then immediately send chat messages. Compare how long "hi" takes in each mode.</p>
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <h2>What's running</h2>
+      <div class="pipeline">
+        <div class="stage-col" id="apiCol"><h4><span>⚙️ API (uvicorn)</span><span id="apiState" class="tag ok">idle</span></h4><div class="small muted" id="apiDetail">Handles one request at a time in this simplified model.</div><div class="busybar"><i id="apiBusy" style="width:0"></i></div></div>
+        <div class="stage-col"><h4><span>🧺 Queue (Redis)</span><span class="tag amber" id="qCount">0</span></h4><div id="queueJobs"></div></div>
+        <div class="stage-col"><h4><span>👷 Workers</span><span class="tag blue" id="wCount">1</span></h4><div id="workerJobs"></div></div>
+      </div>
+      <div class="log" id="qLog">—</div><p class="sr-only" id="qLive" aria-live="polite"></p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>What this teaches</h2>
+  <ul>
+    <li><b>Nondeterminism means "usually right" isn't "right."</b> Send 20 with the guardrail off: some fraction crash, and you can't predict which.</li>
+    <li><b>Retrying blindly helps less than you'd think.</b> Turn off "feed the error back" — the model repeats the same mistake. The Analyze stage asks why the error goes into the next attempt.</li>
+    <li><b>Failing to <code>{"error": …}</code> is a success.</b> It keeps the request alive so the model can explain, like HOS 1's try/except.</li>
+    <li><b>Inline ingestion blocks everyone.</b> In inline mode, "hi" waits behind the whole document. With a queue, the upload returns a <code>job_id</code> instantly.</li>
+    <li><b>A queue with no worker is a silent bug.</b> Set workers to 0: uploads "succeed" and jobs stay <code>queued</code> forever. It's the #1 HOS 3 snag — the worker runs in its own terminal.</li>
+  </ul>
+</div>
+<div class="project-tip">
+  <b class="h">For your Team Project</b>
+  Name the one AI output in your project you'd validate first (a flashcard, a booking, a summary) and write its schema in one line. Then list anything that takes more than ~2 seconds — that's your background job. The Week 6 checkpoint asks which HOS pieces you'll combine; this is HOS 3's answer.
+</div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+var $=function(id){return document.getElementById(id);};
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sync(){ $('badV').textContent=$('bad').value; $('retriesV').textContent=$('retries').value; $('workersV').textContent=$('workers').value; $('durV').textContent=$('dur').value; $('wCount').textContent=$('workers').value; }
+['bad','retries','workers','dur'].forEach(function(id){ $(id).addEventListener('input',sync); }); sync();
+
+/* ---------- A: guardrail ---------- */
+var stats={ok:0,rec:0,err:0,crash:0}, reqN=0, logLines=[];
+var GOOD=['{"expression": "25*4"}','{"expression": "(12+8)/5"}','{"expression": "342*87"}'];
+var BAD=[
+  ['{"expr": "25*4"}','expression: Field required'],
+  ['{"expression": ""}','expression: String should have at least 1 character'],
+  ['{"expression": "sqrt(banana)"}','expression: String should match pattern ^[0-9+\\-*/(). ]+$'],
+  ['{"expression": 25}','expression: Input should be a valid string']
+];
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function sendOne(){
+  reqN++; var rate=+$('bad').value/100, maxR=+$('retries').value, gOn=$('gOn').checked, feed=$('feed').checked;
+  var lines=['— request #'+reqN+' —'], p=rate, lastBad=null;
+  for(var attempt=0; attempt<=(gOn?maxR:0); attempt++){
+    var isBad=Math.random()<p;
+    var out= isBad ? (feed||!lastBad ? pick(BAD) : lastBad) : [pick(GOOD),null];
+    lines.push('  attempt '+(attempt+1)+': model → '+out[0]);
+    if(!isBad){
+      lines.push('    ✓ valid → calculate() runs');
+      attempt===0?stats.ok++:stats.rec++; return finish(lines);
+    }
+    if(!gOn){ lines.push('    ✗ no validation → tool raises on bad input → HTTP 500'); stats.crash++; return finish(lines); }
+    lines.push('    ✗ ValidationError: '+out[1]);
+    lastBad=out;
+    if(attempt<maxR) lines.push(feed? '    ↻ retry, adding: "Your last call failed: '+out[1]+'. Fix it."' : '    ↻ retry with the same prompt');
+    p = feed ? rate*0.3 : rate;
+  }
+  lines.push('    → all retries failed → return {"error": "could not produce valid arguments"}'); stats.err++; finish(lines);
+}
+function finish(lines){
+  logLines=lines.concat(logLines).slice(0,120);
+  $('gLog').textContent=logLines.join('\n'); $('gLive').textContent=lines[lines.length-1].trim();
+  $('sOk').textContent=stats.ok; $('sRec').textContent=stats.rec; $('sErr').textContent=stats.err; $('sCrash').textContent=stats.crash;
+}
+$('one').addEventListener('click',sendOne);
+$('twenty').addEventListener('click',function(){ for(var i=0;i<20;i++) sendOne(); });
+$('gReset').addEventListener('click',function(){ stats={ok:0,rec:0,err:0,crash:0}; reqN=0; logLines=[]; finish(['Reset.']); logLines=[]; });
+
+/* ---------- B: queue ---------- */
+var mode='queue', jobs=[], jobN=0, apiBusyUntil=0, apiBusyStart=0, apiBusyWhat='', pending=[], qlog=[], t0=performance.now();
+function now(){ return (performance.now()-t0)/1000; }
+function log(s){ qlog.unshift('['+now().toFixed(1)+'s] '+s); qlog=qlog.slice(0,60); $('qLog').textContent=qlog.join('\n'); $('qLive').textContent=s; }
+function setMode(m){ mode=m; $('mInline').setAttribute('aria-pressed',m==='inline'); $('mQueue').setAttribute('aria-pressed',m==='queue'); log('Mode → '+(m==='inline'?'inline ingestion (inside the request)':'queue + worker')); }
+$('mInline').addEventListener('click',function(){ setMode('inline'); });
+$('mQueue').addEventListener('click',function(){ setMode('queue'); });
+function apiRequest(label,dur,done){
+  var start=Math.max(now(),apiBusyUntil), wait=start-now();
+  pending.push({label:label,start:start,end:start+dur,sent:now(),done:done});
+  apiBusyUntil=start+dur;
+  if(wait>0.05) log(label+' waiting '+wait.toFixed(1)+'s for the API to be free…');
+}
+$('upload').addEventListener('click',function(){
+  var id='job-'+(++jobN), dur=+$('dur').value;
+  if(mode==='inline'){
+    apiRequest('POST /documents ('+id+')',dur,function(r){ log('POST /documents → 200 after '+r.toFixed(1)+'s (ingested inline, user waited the whole time)'); });
+  } else {
+    apiRequest('POST /documents ('+id+')',0.1,function(r){
+      jobs.push({id:id,status:'queued',dur:dur,prog:0,worker:null});
+      log('POST /documents → 202 {"job_id": "'+id+'"} in '+r.toFixed(2)+'s');
+    });
+  }
+});
+$('chat').addEventListener('click',function(){
+  apiRequest('POST /chat',0.6,function(r){ log('POST /chat "hi" → reply in '+r.toFixed(1)+'s'+(r>2?'  ⚠ user stared at a spinner':'')); });
+});
+$('poll').addEventListener('click',function(){
+  if(!jobs.length){ log('GET /jobs/{id} → no jobs yet'+(mode==='inline'?' (inline mode never creates jobs)':'')); return; }
+  var j=jobs[jobs.length-1];
+  apiRequest('GET /jobs/'+j.id,0.05,function(){ log('GET /jobs/'+j.id+' → {"status": "'+j.status+'"'+(j.status==='started'?', "progress": '+Math.round(j.prog*100)+'%':'')+'}'+(j.status==='queued'&&+$('workers').value===0?'  ⚠ no worker running!':'')); });
+});
+var last=now();
+setInterval(function(){
+  var t=now(), dt=t-last; last=t;
+  pending=pending.filter(function(p){ if(t>=p.end){ p.done(p.end-p.sent); return false; } return true; });
+  var cur=pending.filter(function(p){return t>=p.start;})[0];
+  var busy=cur && (cur.end-cur.start)>0.5;
+  $('apiState').textContent= busy?'busy':'idle'; $('apiState').className='tag '+(busy?'bad':'ok');
+  $('apiCol').classList.toggle('busy',!!busy);
+  $('apiDetail').textContent= cur? 'Handling '+cur.label : 'Handles one request at a time in this simplified model.';
+  $('apiBusy').style.width= cur? Math.min(100,(t-cur.start)/(cur.end-cur.start)*100)+'%' : '0';
+  var W=+$('workers').value, active=jobs.filter(function(j){return j.status==='started';});
+  active.forEach(function(j){ if(j.worker>W){ j.status='queued'; j.worker=null; log(j.id+' returned to queue (worker stopped)'); } });
+  active=jobs.filter(function(j){return j.status==='started';});
+  for(var w=1; w<=W; w++){
+    if(active.some(function(j){return j.worker===w;})) continue;
+    var nxt=jobs.filter(function(j){return j.status==='queued';})[0];
+    if(nxt){ nxt.status='started'; nxt.worker=w; active.push(nxt); log('worker '+w+' picked up '+nxt.id); }
+  }
+  active.forEach(function(j){ j.prog+=dt/j.dur; if(j.prog>=1){ j.prog=1; j.status='finished'; log(j.id+' finished ✓ (chunks embedded into Chroma)'); j.worker=null; } });
+  var q=jobs.filter(function(j){return j.status==='queued';});
+  $('qCount').textContent=q.length;
+  $('queueJobs').innerHTML=q.map(function(j){return '<div class="job queued">'+j.id+' · queued</div>';}).join('') + jobs.filter(function(j){return j.status==='finished';}).slice(-3).map(function(j){return '<div class="job finished">'+j.id+' · finished</div>';}).join('');
+  $('workerJobs').innerHTML= W===0 ? '<div class="small" style="color:var(--bad)">No worker running — jobs will wait forever.</div>' :
+    Array.from({length:W},function(_,i){ var j=jobs.filter(function(x){return x.status==='started'&&x.worker===i+1;})[0];
+      return '<div class="job '+(j?'started':'')+'">worker '+(i+1)+': '+(j? j.id+'<div class="p"><i style="width:'+(j.prog*100)+'%"></i></div>':'<span class="muted">idle</span>')+'</div>'; }).join('');
+},100);
+log('Ready — queue mode, 1 worker.');
+</script>
+</body>
+</html>

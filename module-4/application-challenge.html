@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 410 — Application Challenge 4: Puget Pantry Substitution Observability</title>
+    <link rel="stylesheet" href="../assets/course.css">
+    <style>
+        .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
+        .draft-banner strong { color:var(--amber); }
+        .draft-banner p { margin:6px 0 0; }
+        .rules-box { background:var(--surface2); border-left:3px solid var(--border); padding:8px 14px; margin:0 0 18px; font-size:0.85rem; border-radius:0 4px 4px 0; color:var(--muted); }
+        .goal-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:15px 18px; margin:18px 0; border-radius:4px; }
+        .goal-box h4 { margin:0 0 6px; color:var(--blue); font-size:0.95rem; }
+        .goal-box p { margin:0; }
+        .scenario { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 20px; margin:12px 0; }
+        .scenario p:last-child { margin-bottom:0; }
+        .decision-box { background:var(--violet-bg); border:1px solid var(--border); border-left:5px solid var(--violet); padding:15px 18px; margin:14px 0; border-radius:4px; }
+        .decision-box h4 { margin:0 0 6px; color:var(--violet); }
+        .stage-block { border:1px solid var(--border); border-radius:8px; padding:18px 22px; margin-bottom:14px; }
+        .stage-block h3 { margin:0 0 6px; font-size:1.02rem; }
+        .stage-num { display:inline-block; width:26px; height:26px; border-radius:50%; background:var(--accent-light); color:var(--accent2); font-weight:700; font-size:0.85rem; text-align:center; line-height:26px; margin-right:8px; }
+        pre { background:var(--code-bg); color:var(--code-text); padding:14px 16px; border-radius:6px; overflow-x:auto; font-size:0.8rem; line-height:1.5; }
+        code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+        p code, li code, td code { background:var(--surface2); color:var(--rose); padding:1px 5px; border-radius:4px; font-size:0.88em; }
+        p code, li code, td code { overflow-wrap:anywhere; }
+        table.mini { width:100%; border-collapse:collapse; font-size:0.86rem; margin:10px 0; }
+        table.mini th, table.mini td { border:1px solid var(--border); padding:8px 10px; text-align:left; vertical-align:top; }
+        table.mini th { background:var(--surface2); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--muted); }
+        table.mini td.wt { white-space:nowrap; font-weight:700; color:var(--accent); }
+        .table-scroll { overflow-x:auto; }
+        table.rubric { min-width:760px; }
+        table.rubric td:nth-child(n+4) { width:22%; }
+        .submit-box { background:var(--accent-light); border-left:5px solid var(--accent); padding:14px 18px; margin:14px 0 0; border-radius:0 4px 4px 0; font-size:0.9rem; }
+        .submit-box h5 { margin:0 0 8px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
+        .submit-box ul, .submit-box ol { margin:0; padding-left:20px; }
+        .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:20px 0; border-radius:4px; }
+        .snag-box h4 { margin:0 0 8px; color:var(--amber); }
+        details.faculty { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin:22px 0; }
+        details.faculty summary { cursor:pointer; font-weight:700; color:var(--text); }
+        details.faculty h4 { margin:16px 0 6px; font-size:0.92rem; color:var(--text); }
+        details.faculty p, details.faculty li { font-size:0.88rem; }
+        .guide-nav { display:flex; justify-content:space-between; gap:12px; margin-top:30px; padding-top:16px; border-top:1px solid var(--border); font-size:0.9rem; }
+        .guide-nav a { color:var(--link); text-decoration:none; font-weight:600; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Module 4 · Application Challenge</div>
+    <h1>Application Challenge 4: Puget Pantry Substitution Observability</h1>
+    <p class="lede">Take the tracing and scoring skills from HOS 4 to someone else's AI feature: instrument it so every order shows what happened at each step, score each AI decision, and decide what's worth waking the on-call engineer for.</p>
+    <div class="chips"><span class="chip">Est. 60–90 min</span><span class="chip">Outcomes 4 &amp; 5</span><span class="chip">Module 4 · end of Week 8</span><span class="chip">Individual</span><span class="chip">AI assistant allowed — disclose it</span><span class="chip">5% of final grade</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#rules">Ground rules</a>
+    <a href="#scenario">Scenario</a>
+    <a href="#spec">Spec</a>
+    <a href="#trace">The trace</a>
+    <a href="#steps">Steps</a>
+    <a href="#grading">Grading</a>
+    <a href="#snags">Common snags</a>
+  </div>
+</nav>
+
+<section class="module card" id="rules">
+  <div class="module-head"><div class="module-icon">📏</div><div><h2>Ground rules</h2></div></div>
+        <div class="rules-box">Everything here runs in GitHub Codespaces on free tiers, with no credit card. Everything runs offline: no API key, Langfuse project, or phone needed.</div>
+</section>
+
+<section class="module card" id="scenario">
+  <div class="module-head"><div class="module-icon">🏢</div><div><h2>The scenario</h2></div></div>
+        <div class="scenario">
+            <p><strong>Puget Pantry</strong> (fictional) delivers groceries. When an item in an order is out of stock, an AI feature picks a replacement from the same category and pushes the change to the customer's phone. It's been in production for a month. It works, and nobody can see inside it.</p>
+            <p>You get the feature (four steps: look up stock, find candidates, ask the model, notify), the catalog, the customers and their allergies, and one day of orders.</p>
+            <ul>
+                <li><strong>The model is recorded.</strong> <code>fake_model.py</code> replays what the model chose in a test run, so everyone's traces match. Like the real model, it isn't told about allergies or price.</li>
+                <li><strong>The tracer is shaped like Langfuse</strong> (HOS 4): traces, spans inside them, and scores attached. It records in memory instead of sending anywhere.</li>
+            </ul>
+        </div>
+</section>
+
+<section class="module card" id="spec">
+  <div class="module-head"><div class="module-icon">📐</div><div><h2>The spec</h2></div></div>
+        <p>Every requirement below is checked by a provided test in <code>tests/test_instrumented.py</code>. Your code goes in <code>instrumented.py</code>.</p>
+        <div class="table-scroll">
+        <div class="table-wrap" tabindex="0"><table class="mini">
+            <tr><th>Function</th><th>Must do</th></tr>
+            <tr><td><code>score_substitution(original, substitute, customer)</code></td><td>0.0 for no substitute, or one with an allergen the customer listed; 0.5 if it costs more than 20% above the original; otherwise 1.0.</td></tr>
+            <tr><td><code>run_order(order)</code></td><td>One trace per order. A <code>lookup_stock</code> span, one <code>choose_substitute</code> span per out-of-stock item (the item, how many candidates, what was chosen, how long the model took), and a <code>notify</code> span with the message, when anything was swapped. One quality score per swap. The customer gets exactly what the untraced feature would send.</td></tr>
+            <tr><td><code>should_page(trace)</code></td><td>True or False for every order. An order with nothing out of stock never pages.</td></tr>
+        </table></div>
+        </div>
+
+        <div class="decision-box">
+            <h4>The open decision: what pages the on-call engineer</h4>
+            <p>The operations lead: <em>"Page us if substitutions go wrong. But if the pager goes off for nothing, people start ignoring it, and then it's useless."</em> Nobody said what "go wrong" means.</p>
+            <p style="margin-bottom:0">Write <code>should_page</code>. Everything that doesn't page belongs on a dashboard. Prove your rule with your own tests and defend it in <code>DECISIONS.md</code>.</p>
+        </div>
+</section>
+
+<section class="module card" id="trace">
+  <div class="module-head"><div class="module-icon">💡</div><div><h2>What the trace lets you see</h2></div></div>
+        <p>In your memo, break the feature into its four steps. For each problem in the day's report (a quality 0.0, a quality 0.5, the slow model call), say which span shows it, and what you'd have known from one "order processed" log line instead. Then name one thing the feature gets wrong that your trace still can't show.</p>
+</section>
+
+<section class="module card" id="steps">
+  <div class="module-head"><div class="module-icon">🪜</div><div><h2>Steps &amp; what to submit</h2></div></div>
+        <div class="stage-block">
+            <h3><span class="stage-num">1</span>Open it and run the tests</h3>
+            <p>Open <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/ac-04-substitution-observability" target="_blank" rel="noopener">the AC 4 starter-code folder</a> in GitHub Codespaces. It installs everything for you. Then run:</p>
+<pre tabindex="0">pytest</pre>
+            <p>Almost everything fails. That's your to-do list.</p>
+        </div>
+        <div class="stage-block">
+            <h3><span class="stage-num">2</span>Score a substitution</h3>
+            <p>Write <code>score_substitution</code> from the spec. You may use an AI assistant; read what it writes, because you'll defend it.</p>
+        </div>
+        <div class="stage-block">
+            <h3><span class="stage-num">3</span>Trace an order</h3>
+            <p>Write <code>run_order</code>: call the feature's four steps yourself, each inside its span, and attach the scores. Don't change what the customer gets: <code>test_tracing_does_not_change_what_customers_get</code> checks.</p>
+        </div>
+        <div class="stage-block">
+            <h3><span class="stage-num">4</span>Make the paging call</h3>
+            <p>Write <code>should_page</code> and at least two tests in <code>tests/test_my_rules.py</code>: an order from the day that must page and one that must not, plus the case closest to your rule. You can build a trace by hand for a case the day doesn't contain.</p>
+        </div>
+        <div class="stage-block">
+            <h3><span class="stage-num">5</span>Run the day</h3>
+            <p>Run every order through your instrumented feature:</p>
+<pre tabindex="0">python run_day.py</pre>
+            <p>Paste the output into <code>REPORT.md</code> and fill in <code>DECISIONS.md</code>.</p>
+        </div>
+
+        <div class="submit-box">
+            <h5>Submit (via Brightspace)</h5>
+            <ul>
+                <li><code>instrumented.py</code> and <code>tests/test_my_rules.py</code></li>
+                <li>The output of <code>pytest</code>, pasted as text (all tests passing, including yours)</li>
+                <li><code>REPORT.md</code></li>
+                <li><code>DECISIONS.md</code></li>
+            </ul>
+        </div>
+</section>
+
+<section class="module card" id="grading">
+  <div class="module-head"><div class="module-icon">📊</div><div><h2>How it's graded</h2></div></div>
+        <p>Each criterion is graded on one part of your submission, at one of three levels.</p>
+        <div class="table-scroll">
+        <div class="table-wrap" tabindex="0"><table class="mini rubric">
+            <tr><th>Criterion</th><th>Weight</th><th>Graded on</th><th>Full</th><th>Partial</th><th>Missing</th></tr>
+            <tr><td><strong>Application</strong></td><td class="wt">10%</td><td><code>REPORT.md</code></td><td>Every order is traced and scored, and the pages match your rule.</td><td>It runs, but an order is paged (or not) in a way you don't explain.</td><td>It restates the HOS build, or doesn't run.</td></tr>
+            <tr><td><strong>Analysis</strong></td><td class="wt">20%</td><td><code>DECISIONS.md</code>, section 2 (what the trace lets you see)</td><td>Each problem in the report is tied to the span that shows it, compared with a single log line, plus one thing the trace still can't show.</td><td>Spans are listed, but not tied to the day's problems.</td><td>No breakdown.</td></tr>
+            <tr><td><strong>Evaluation</strong></td><td class="wt">30%</td><td><code>DECISIONS.md</code>, section 1</td><td>A clear paging rule, judged against stated criteria (how rare, how harmful, can someone act now), with a condition you put on the dashboard instead and why.</td><td>A rule with a reason, but no criteria or no dashboard alternative.</td><td>No rule, or no justification.</td></tr>
+            <tr><td><strong>Design</strong></td><td class="wt">40%</td><td><code>instrumented.py</code>, your tests, and the <code>pytest</code> output</td><td>All provided tests pass, and your own tests check your rule, including a hand-built edge case.</td><td>Most provided tests pass, or your own tests cover only the day's obvious orders.</td><td>It doesn't run, or you wrote no tests of your own.</td></tr>
+        </table></div>
+        </div>
+
+        <p style="font-size:0.88rem;color:var(--muted)">How this differs from HOS 4's Understand &amp; Refine: there you wrote a faithfulness score for your own app, by hand. Here the feature, its failures, and the paging call are someone else's, AI help is allowed, and half the grade (Analysis and Evaluation) is for the calls you make.</p>
+</section>
+
+<section class="module card" id="snags">
+  <div class="module-head"><div class="module-icon">🧯</div><div><h2>Common snags</h2></div></div>
+        <div class="snag-box">
+            <ul>
+                <li><strong>The span order is wrong.</strong> Open each span with <code>with trace.span(...)</code> right before the step it measures. Don't create them all at the end.</li>
+                <li><strong><code>test_tracing_does_not_change_what_customers_get</code> fails.</strong> You're calling <code>notify</code> once per item, or calling <code>run_order_plain</code> as well. Collect the swaps, then notify once.</li>
+                <li><strong>Oat milk scores 1.0.</strong> 4.29 against 3.49 is 23% more, so it's a 0.5. Compare against the original price times 1.2.</li>
+                <li><strong>Everything pages.</strong> That's the failure the operations lead warned about. Re-read the open decision.</li>
+            </ul>
+        </div>
+</section>
+
+<div class="guide-nav">
+            <a href="hos-guide.html">← HOS 4 guide</a>
+            <a href="index.html">Module 4 lesson →</a>
+        </div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+<script>
+/* section nav highlight (scrolls only the nav row, never the page) */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

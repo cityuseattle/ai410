@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 HOS 2 simulator: chunk and embed documents, retrieve top-k by similarity, and see whether the model's answer is grounded.">
+<title>RAG Pipeline Simulator</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.sim-layout { display:grid; grid-template-columns:minmax(260px,340px) 1fr; gap:16px; align-items:start; }
+@media (max-width:860px){ .sim-layout { grid-template-columns:1fr; } }
+.panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow); margin-bottom:16px; min-width:0; }
+.panel h2 { font-size:1.02rem; margin-bottom:10px; }
+.panel h3 { font-size:.9rem; margin:14px 0 6px; }
+.presets { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px; }
+.presets button { font-family:inherit; font-size:.74rem; border:1px solid var(--border); background:var(--surface2); color:var(--text); border-radius:14px; padding:4px 10px; cursor:pointer; }
+.presets button:hover { border-color:var(--accent); }
+.toggle { display:flex; gap:8px; align-items:flex-start; font-size:.85rem; margin:6px 0; cursor:pointer; }
+.toggle input { accent-color:var(--accent); margin-top:4px; }
+.toggle small { display:block; color:var(--muted); font-size:.74rem; }
+.lanes { display:grid; grid-template-columns:repeat(var(--lanes,4),1fr); gap:8px; margin-bottom:12px; }
+.lane { border:2px solid var(--border); border-radius:10px; padding:10px; text-align:center; font-size:.8rem; background:var(--surface2); transition:all .2s; min-width:0; }
+.lane b { display:block; font-size:.86rem; }
+.lane .ic { font-size:1.3rem; display:block; }
+.lane.from { border-color:var(--blue); background:var(--blue-bg); }
+.lane.to { border-color:var(--accent); background:var(--accent-light); box-shadow:0 0 0 3px var(--accent-light); }
+.lane.err { border-color:var(--bad); background:var(--bad-bg); }
+@media (max-width:520px){ .lanes { grid-template-columns:repeat(2,1fr); } }
+.stepbox { border:1px solid var(--border); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; background:var(--surface2); margin-bottom:12px; min-height:84px; }
+.stepbox.err { border-left-color:var(--bad); } .stepbox.warn { border-left-color:var(--amber); }
+.stepbox .k { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.steps-list { list-style:none; margin:0; padding:0; font-size:.8rem; }
+.steps-list li { padding:5px 8px; border-radius:6px; color:var(--muted); display:flex; gap:8px; }
+.steps-list li.cur { background:var(--accent-light); color:var(--text); font-weight:700; }
+.steps-list li.past { color:var(--text); }
+.steps-list li .n { flex:none; width:20px; text-align:right; }
+.steps-list li.bad { color:var(--bad); }
+.verdict { border-radius:8px; padding:10px 14px; font-size:.86rem; margin-top:10px; }
+.verdict.ok { background:var(--ok-bg); color:var(--ok); } .verdict.bad { background:var(--bad-bg); color:var(--bad); } .verdict.warn { background:var(--amber-bg); color:var(--amber); }
+.kv { display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:.82rem; }
+.kv dt { color:var(--muted); } .kv dd { margin:0; font-weight:600; }
+.bar-row { display:grid; grid-template-columns:70px 1fr 48px; gap:8px; align-items:center; font-size:.78rem; margin-bottom:4px; }
+.bar-track { height:12px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; overflow:hidden; position:relative; }
+.bar-fill { height:100%; background:var(--accent); }
+.project-tip { border:1px dashed var(--accent); border-radius:var(--radius); padding:14px 18px; background:var(--accent-light); font-size:.88rem; }
+.project-tip b.h { display:block; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent2); margin-bottom:4px; }
+
+.chunks { display:flex; flex-wrap:wrap; gap:6px; max-height:220px; overflow:auto; }
+.chunk { font-size:.72rem; border:1px solid var(--border); border-left:4px solid var(--c,var(--accent)); border-radius:6px; padding:4px 8px; background:var(--surface2); max-width:100%; }
+.chunk.hit { box-shadow:0 0 0 2px var(--accent); background:var(--accent-light); }
+.rank-row { display:grid; grid-template-columns:28px 1fr 56px; gap:8px; align-items:center; font-size:.78rem; margin-bottom:5px; }
+.rank-row .txt { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rank-row .bar-track { grid-column:2/3; }
+.rank-row.hit .txt { font-weight:700; }
+.rank-row.below { opacity:.55; }
+.thr { position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--bad); }
+
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Simulator 2 · Pairs with HOS 2 (Weeks 3–4)</div>
+    <h1>RAG Pipeline Simulator</h1>
+    <p class="lede">Chunk Northwind Outfitters' five sample documents (the same ones in the HOS 2 starter code), score every chunk against a question, and see exactly what the model receives — and whether the answer it can give is grounded, a guess, or an honest "I don't know."</p>
+    <div class="chips"><span class="chip">Outcome O2</span><span class="chip">Chunking</span><span class="chip">Top-k &amp; threshold</span><span class="chip">Grounding</span><span class="chip">RAG vs tool calling</span></div>
+  </div>
+</section>
+<main id="main">
+<div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><a class="tag blue" href="../module-1/simulator.html" style="text-decoration:none">1 · Agentic Loop</a><span class="tag">2 · RAG Pipeline</span><a class="tag blue" href="../module-3/simulator.html" style="text-decoration:none">3 · Guardrails &amp; Queue</a><a class="tag blue" href="../module-4/simulator.html" style="text-decoration:none">4 · Push &amp; Observability</a></div>
+<p class="sim-note">⚠ Simulation only — a word-overlap "embedding" stands in for Gemini's embedding model, and an in-page array stands in for Chroma.</p>
+<div class="sim-layout">
+  <div>
+    <div class="panel">
+      <h2>1 · Ingest (chunk + embed)</h2>
+      <label class="field" for="docs">Sample documents <span class="muted small">(<code>## Title</code> starts a new doc — add a sixth one!)</span></label>
+      <textarea id="docs" style="min-height:220px;font-size:.78rem"></textarea>
+      <label class="field" for="csize">Chunk size: <span id="csizeV"></span> words</label>
+      <input type="range" id="csize" min="10" max="80" value="30">
+      <label class="field" for="overlap">Overlap: <span id="overlapV"></span> words</label>
+      <input type="range" id="overlap" min="0" max="15" value="5">
+      <div class="row" style="margin-top:10px"><button class="btn" id="ingest" type="button">Run ingest.py</button><span class="small muted" id="ingestInfo"></span></div>
+    </div>
+    <div class="panel">
+      <h2>2 · Ask</h2>
+      <label class="field" for="q">Question</label>
+      <input type="text" id="q" value="How long do I have to return an item?">
+      <div class="presets" id="presets">
+        <button type="button">How long do I have to return an item?</button>
+        <button type="button">Do you offer gift wrapping?</button>
+        <button type="button">How much is expedited shipping?</button>
+        <button type="button">How heavy is the Ridgeline tent?</button>
+        <button type="button">What's 25 times 4?</button>
+      </div>
+      <label class="field" for="topk">Top-k: <span id="topkV"></span></label>
+      <input type="range" id="topk" min="1" max="5" value="3">
+      <label class="field" for="thr">Similarity threshold: <span id="thrV"></span></label>
+      <input type="range" id="thr" min="0" max="60" value="15">
+      <label class="toggle"><input type="checkbox" id="ragOn" checked><span>Retrieval on<small>Off = the model answers from its own memory</small></span></label>
+      <label class="toggle"><input type="checkbox" id="ragSwallow"><span>Buggy prompt: "Only answer from the documents"<small>The HOS 2 bug that silently suppresses tool calls</small></span></label>
+      <div class="row" style="margin-top:10px"><button class="btn" id="ask" type="button">Ask</button></div>
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <h2>Chunks in the vector store <span class="tag" id="nChunks">0</span></h2>
+      <div class="chunks" id="chunks" tabindex="0" role="region" aria-label="Document chunks"></div>
+    </div>
+    <div class="panel">
+      <h2>Retrieval — similarity of every chunk to the query</h2>
+      <p class="small muted">Red line = threshold. Highlighted rows are the top-k that clear it and get sent to the model.</p>
+      <div id="ranking"><p class="small muted">Ingest, then ask a question.</p></div>
+    </div>
+    <div class="panel">
+      <h2>What the model receives</h2>
+      <div class="log" id="prompt">—</div>
+      <div id="answer"></div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <h2>What this teaches</h2>
+  <ul>
+    <li><b>Chunk size is a trade-off.</b> Set chunk size to 10 and top-k to 1, then ask the return question: the best-scoring chunk mentions returns, but "30 days" landed in the chunk next to it. Push chunk size to 80 instead and it's found — but every chunk now drags ~80 words of mostly irrelevant text into the prompt. Watch the "What the model receives" box grow.</li>
+    <li><b>The threshold decides whether the model can say "I don't know."</b> Ask the gift-wrapping question: the "Gift cards are non-refundable" chunk scores just high enough to get through, because the two share a <em>word</em>, not a meaning, and the model is tempted to stretch it into a policy. Raise the threshold to 0.20 and nothing gets through, so the model can say so honestly.</li>
+    <li><b>RAG can break tool calling.</b> Turn on the buggy prompt and ask the math question — the model obeys "only the documents" and refuses to calculate. Evaluate should always include one tool question.</li>
+    <li><b>Real embeddings compare meaning, not words.</b> This toy only matches shared words (plus a few synonyms). In HOS 2, Gemini's embeddings use <code>task_type="RETRIEVAL_DOCUMENT"</code> at ingest and <code>"RETRIEVAL_QUERY"</code> at question time — the Analyze stage asks you why.</li>
+  </ul>
+</div>
+<div class="project-tip">
+  <b class="h">For your Team Project</b>
+  Paste a few paragraphs of <em>your</em> project's documents into the box and ask the three questions your users would ask first. If the key fact doesn't land in the top-k, that's a chunking decision to make before Week 9 — not during the demo.
+</div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+var $=function(id){return document.getElementById(id);};
+var DOCS="## Return Policy\nNorthwind Outfitters accepts returns within 30 days of delivery for a full refund, provided the item is unused and in its original packaging. Worn or washed items cannot be returned unless defective.\nTo start a return, use the return portal on our website with your order number. We provide a prepaid shipping label for domestic returns. Refunds are issued to the original payment method within 5-7 business days of us receiving the item.\nSale items marked final sale cannot be returned or exchanged. Gift cards are non-refundable.\n\n## Shipping Information\nStandard shipping takes 5-7 business days and is free on orders over $75. Expedited shipping (2-3 business days) is available for a flat $15 fee. We do not currently ship internationally outside the US and Canada.\nOrders placed before 1pm PT ship the same business day. You'll receive a tracking number by email once your order ships.\nCanadian orders may be subject to customs fees collected by the carrier on delivery; Northwind Outfitters does not cover these fees.\n\n## Warranty Overview\nMost Northwind Outfitters hardgoods (tents, packs, sleeping bags) carry a warranty against manufacturing defects. See each product guide for the exact term, since it varies by category. Warranty claims require proof of purchase and photos of the defect.\n\n## Product Guide: Tents\nThe Ridgeline 2P is our best-selling backpacking tent, weighing 3.2 lbs with a freestanding double-wall design rated for 3-season use. It sets up in under 5 minutes with color-coded poles.\nThe Basecamp 4P is a heavier, more spacious option for car camping, with a full-coverage rainfly. It is not recommended for backpacking due to its 8.5 lb weight.\nBoth tents include a 2-year manufacturer warranty covering material defects.\n\n## Product Guide: Backpacks\nThe Traverse 55L is designed for multi-day backpacking trips, with an adjustable torso length, a ventilated back panel, and a rain cover included. Recommended load range is 30-45 lbs.\nThe Daytrekker 22L is a lighter option for single-day hikes, with a hydration bladder sleeve and hip belt pockets. It is not designed to carry loads over 20 lbs comfortably.\nBoth packs include a lifetime warranty against manufacturing defects in stitching and zippers.";
+$('docs').value=DOCS;
+var COLORS=['#1e8449','#1d4ed8','#b45309','#7e22ce','#be185d','#0e7490','#6b7280'];
+var STOP='a an the and or of to in on for with by at is are be can do does you your we our i it this that from how much what when where who which as if not no any most have has get over per'.split(' ');
+var SYN={refund:'return',returns:'return',returned:'return',refunds:'return',deliver:'ship',delivery:'ship',shipping:'ship',ships:'ship',shipped:'ship',price:'cost',fee:'cost',costs:'cost',members:'member',membership:'member',days:'day',items:'item',warranties:'warranty',wrap:'wrapping',gift:'gift'};
+function toks(s){ return (s.toLowerCase().match(/[a-z0-9$]+/g)||[]).filter(function(w){return STOP.indexOf(w)<0;}).map(function(w){ w=SYN[w]||w; if(w.length>4 && /s$/.test(w)) w=w.slice(0,-1); return SYN[w]||w; }); }
+function vec(s){ var v={}; toks(s).forEach(function(t){ v[t]=(v[t]||0)+1; }); return v; }
+function cos(a,b){ var d=0,na=0,nb=0,k; for(k in a){ na+=a[k]*a[k]; if(b[k]) d+=a[k]*b[k]; } for(k in b) nb+=b[k]*b[k]; return na&&nb? d/Math.sqrt(na*nb):0; }
+var store=[];
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sync(){ $('csizeV').textContent=$('csize').value; $('overlapV').textContent=$('overlap').value; $('topkV').textContent=$('topk').value; $('thrV').textContent=(+$('thr').value/100).toFixed(2); }
+['csize','overlap','topk','thr'].forEach(function(id){ $(id).addEventListener('input',function(){ sync(); if(id==='csize'||id==='overlap') ingest(); if(store.length && lastQ) ask(); }); });
+sync();
+function ingest(){
+  store=[]; var size=+$('csize').value, ov=Math.min(+$('overlap').value,size-1);
+  var docs=$('docs').value.split(/^##\s*/m).filter(function(s){return s.trim();});
+  docs.forEach(function(d,di){
+    var lines=d.split('\n'), title=lines.shift().trim(), words=lines.join(' ').split(/\s+/).filter(Boolean);
+    for(var i=0;i<words.length;i+=size-ov){
+      var text=words.slice(i,i+size).join(' ');
+      store.push({doc:title,di:di,text:text,v:vec(title+' '+text)});
+      if(i+size>=words.length) break;
+    }
+  });
+  $('nChunks').textContent=store.length;
+  $('ingestInfo').textContent=docs.length+' docs → '+store.length+' chunks';
+  renderChunks([]);
+}
+function renderChunks(hits){
+  $('chunks').innerHTML=store.map(function(c,i){ return '<span class="chunk'+(hits.indexOf(i)>=0?' hit':'')+'" style="--c:'+COLORS[c.di%COLORS.length]+'" title="'+esc(c.text)+'"><b>'+esc(c.doc)+'</b> · '+esc(c.text.slice(0,48))+'…</span>'; }).join('');
+}
+var FACTS=[[/return/i,/30 days/],[/expedited/i,/\$15/],[/ridgeline|tent/i,/3\.2 lbs/],[/gift/i,null]];
+var lastQ='';
+function ask(){
+  if(!store.length) ingest();
+  var q=$('q').value.trim(); lastQ=q; if(!q) return;
+  var k=+$('topk').value, thr=+$('thr').value/100, qv=vec(q);
+  var ranked=store.map(function(c,i){ return {i:i,s:cos(qv,c.v)}; }).sort(function(a,b){return b.s-a.s;});
+  var hits=ranked.filter(function(r){return r.s>=thr;}).slice(0,k);
+  var hitIdx=hits.map(function(h){return h.i;});
+  var ragOn=$('ragOn').checked;
+  renderChunks(ragOn?hitIdx:[]);
+  var max=Math.max(ranked[0]?ranked[0].s:0,0.01);
+  $('ranking').innerHTML=ranked.slice(0,Math.min(10,ranked.length)).map(function(r,n){
+    var c=store[r.i], hit=ragOn&&hitIdx.indexOf(r.i)>=0;
+    return '<div class="rank-row'+(hit?' hit':'')+(r.s<thr?' below':'')+'"><span>#'+(n+1)+'</span><span class="txt" title="'+esc(c.text)+'"><b style="color:'+COLORS[c.di%COLORS.length]+'">'+esc(c.doc)+'</b> — '+esc(c.text)+'</span><span style="text-align:right">'+r.s.toFixed(2)+'</span>'+
+      '<span></span><div class="bar-track"><div class="bar-fill" style="width:'+(r.s*100)+'%;background:'+(hit?'var(--accent)':'var(--muted)')+'"></div><div class="thr" style="left:'+(thr*100)+'%"></div></div><span></span></div>';
+  }).join('') + (store.length>10?'<p class="small muted">…'+(store.length-10)+' more chunks below.</p>':'');
+  var isMath=/\d+\s*(times|\*|x|plus|minus|\+|\/)\s*\d+/i.test(q);
+  var sys= $('ragSwallow').checked ? 'Only answer using the documents below. If the answer is not in them, say you don\'t know.' : 'Use the documents below when they are relevant. You may also call tools. If the documents don\'t cover a policy question, say so instead of guessing.';
+  var ctx=ragOn? hits.map(function(h,n){ return '['+(n+1)+'] ('+store[h.i].doc+') '+store[h.i].text; }).join('\n') : '(retrieval disabled — no documents attached)';
+  $('prompt').textContent='SYSTEM: '+(ragOn?sys:'You are a helpful store assistant.')+'\n\nDOCUMENTS:\n'+(ctx||'(no chunk cleared the threshold)')+'\n\nTOOLS: calculate(expression)\n\nUSER: '+q;
+  var joined=ragOn? hits.map(function(h){return store[h.i].text;}).join(' ') : '';
+  var fact=null; FACTS.forEach(function(f){ if(f[0].test(q) && fact===null) fact=f; });
+  var kind, text;
+  if(isMath){
+    if(ragOn && $('ragSwallow').checked){ kind='bad'; text='Model: "I don\'t know — that isn\'t in the documents." <br><b>Bug:</b> the retrieval instruction swallowed the calculator. No error was raised; the tool just stopped being used.'; }
+    else { kind='ok'; text='Model calls <code>calculate("25*4")</code> → 100. Retrieval ran too, but the model correctly ignored irrelevant chunks and used the tool.'; }
+  } else if(!ragOn){
+    kind='bad'; text='Model (from memory): "Most outdoor retailers allow returns within 60 days, and shipping is usually free." <br><b>Ungrounded:</b> plausible, confident, and not this store\'s policy.';
+  } else if(!hits.length){
+    kind='ok'; text='Model: "I don\'t see that in Northwind\'s policies — please contact support." <br>Nothing cleared the threshold, so the model had no context and said so. That\'s the correct behavior for an uncovered question.';
+  } else if(fact && fact[1]){
+    if(fact[1].test(joined)){ kind='ok'; text='Grounded ✓ — the key fact (<code>'+joined.match(fact[1])[0]+'</code>) is in the retrieved context, so the model can cite it.'; }
+    else { kind='warn'; text='Key fact missing ✗ — the chunk containing the answer didn\'t make the top-'+k+'. The model will either hedge or guess. Try a different chunk size, overlap, or top-k.'; }
+  } else if(fact && !fact[1]){
+    kind='bad'; text='Weakly related chunks got through (best score '+ranked[0].s.toFixed(2)+'), so the model is tempted to stretch them into an answer that isn\'t in the docs. Raise the threshold and ask again.';
+  } else { kind='warn'; text='Retrieved '+hits.length+' chunk(s). Read them — would you trust an answer built only from these?'; }
+  $('answer').innerHTML='<div class="verdict '+kind+'">'+text+'</div>';
+}
+$('ingest').addEventListener('click',ingest);
+$('ask').addEventListener('click',ask);
+$('q').addEventListener('keydown',function(e){ if(e.key==='Enter') ask(); });
+['ragOn','ragSwallow'].forEach(function(id){ $(id).addEventListener('change',function(){ if(lastQ) ask(); }); });
+[].slice.call(document.querySelectorAll('#presets button')).forEach(function(b){ b.addEventListener('click',function(){ $('q').value=b.textContent; ask(); }); });
+ingest();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 410 — HOS 4 Hands-On Guide: Mobile Client, Push &amp; Observability</title>
+    <link rel="stylesheet" href="../assets/course.css">
+    <style>
+        .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
+        .draft-banner strong { color:var(--amber); }
+        .goal-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:15px 18px; margin:18px 0; border-radius:4px; }
+        .goal-box h4 { margin:0 0 6px; color:var(--blue); font-size:0.95rem; }
+        .needs-list li { margin-bottom:6px; }
+        .stage-block { border:1px solid var(--border); border-radius:8px; padding:20px 22px; margin-bottom:18px; }
+        .stage-block h2 { margin:0 0 4px; font-size:1.15rem; }
+        .stage-num { display:inline-block; width:26px; height:26px; border-radius:50%; background:var(--accent-light); color:var(--accent2); font-weight:700; font-size:0.85rem; text-align:center; line-height:26px; margin-right:8px; }
+        .stage-tagline { color:var(--muted); font-size:0.85rem; margin:0 0 14px 34px; }
+        pre { background:var(--code-bg); color:var(--code-text); padding:14px 16px; border-radius:6px; overflow-x:auto; font-size:0.8rem; line-height:1.5; }
+        code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+        p code, li code { background:var(--surface2); color:var(--rose); padding:1px 5px; border-radius:4px; font-size:0.88em; }
+        p code, li code { overflow-wrap:anywhere; }
+        .not-graded { background:var(--surface2); border-left:3px solid var(--border); padding:8px 14px; margin:10px 0; font-size:0.85rem; border-radius:0 4px 4px 0; color:var(--muted); }
+        .submit-box { background:var(--accent-light); border-left:5px solid var(--accent); padding:14px 18px; margin:14px 0 0; border-radius:0 4px 4px 0; font-size:0.9rem; }
+        .submit-box h5 { margin:0 0 8px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
+        .submit-box ul { margin:0; padding-left:20px; }
+        .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:20px 0; border-radius:4px; }
+        .snag-box h4 { margin:0 0 8px; color:var(--amber); }
+        .guide-nav { display:flex; justify-content:space-between; margin-top:30px; padding-top:16px; border-top:1px solid var(--border); font-size:0.9rem; }
+        .guide-nav a { color:var(--link); text-decoration:none; font-weight:600; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Module 4 · Hands-On Skill (HOS) guide</div>
+    <h1>HOS 4: Mobile Client, Push &amp; Observability</h1>
+    <p class="lede">Take HOS 3's app all the way to production shape: a real mobile client that gets notified when work finishes, and full visibility into what the agent is actually doing on every request.</p>
+    <div class="chips"><span class="chip">Est. 2.5–3 hrs</span><span class="chip">Outcomes 4 &amp; 5</span><span class="chip">Module 4 · Weeks 7–8</span><span class="chip">10% of final grade</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#before">Before you start</a>
+    <a href="#create">Create</a>
+    <a href="#evaluate">Evaluate</a>
+    <a href="#analyze">Analyze</a>
+    <a href="#refine">Understand &amp; Refine</a>
+    <a href="#snags">Common snags</a>
+  </div>
+</nav>
+
+<section class="module card" id="before">
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Before you start</h2></div></div>
+        <div class="before-box">
+            <ol>
+                <li><b>Check your account setup.</b> This module needs a <a href="../start-here/accounts.html#expo">free Expo account and EAS project ID</a> and <a href="../start-here/accounts.html#langfuse">free Langfuse project</a>. Set it up first; the build won't run without it.</li>
+                <li><b>Know the concepts.</b> Read <a href="../reference/concept-companion.html#module-4">Concept Companion → Module 4</a> before you open the starter code.</li>
+            </ol>
+        </div>
+
+        <h4>What you'll need</h4>
+        <ul class="needs-list">
+            <li><strong>Starter code:</strong> <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-04-mobile-observability" target="_blank" rel="noopener">this HOS's starter-code folder</a> — your HOS 3 app, already working. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos4">starter code walkthrough for this HOS</a>.</li>
+            <li>A free <a href="https://cloud.langfuse.com" target="_blank" rel="noopener">Langfuse</a> project (no credit card)</li>
+            <li>The <strong>Expo Go</strong> app on your phone, or an emulator — no Xcode/Android Studio required</li>
+            <li>A free <a href="https://expo.dev/signup" target="_blank" rel="noopener">Expo account</a>, logged in on <strong>both</strong> your terminal (<code>npx expo login</code>) and the Expo Go app on your phone (tap the avatar icon → sign in) — on iOS, current Expo Go won't load the project at all without this. See the <a href="../start-here/accounts.html#expo">Account &amp; Service Setup Guide</a> for the exact steps.</li>
+            <li>An AI coding assistant available in your environment</li>
+        </ul>
+
+        <p>This HOS is graded across four stages instead of on code correctness alone: <strong>Engagement</strong> (Create/Scaffold) is 20% of the HOS grade, and <strong>Skills</strong> is 80%: Evaluate, Analyze, Apply (the change you make by hand in Understand &amp; Refine) and Understand (your own explanation of it), 20% each. Each stage below says exactly what to submit. Everything goes in your Module 4 GitHub Classroom repo: written work under the matching heading in <code>hos/NOTES.md</code>, screenshots in <code>hos/screenshots/</code>. Commit and push as you go, then submit the repo link to the HOS 4 assignment in Brightspace by the end of Week 8.</p>
+</section>
+
+<section class="module card" id="create">
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
+            <p class="stage-tagline">Graded as Engagement: 20% of this HOS. The AI-assisted starting point, not the deliverable.</p>
+            <p>Prompt your AI assistant to add both pieces:</p>
+<pre tabindex="0">Add a mobile client and observability to this app:
+- mobile/: an Expo (React Native) chat screen that calls this
+  backend's /chat endpoint, requests push-notification permission,
+  and registers the device's push token with the backend once granted.
+- backend/main.py: add POST /register-device (device_id, push_token)
+  storing the token.
+- backend/jobs.py: after a document finishes ingesting, send a push
+  notification to that job's device, if one was provided.
+- backend/agent.py and retrieval.py: add Langfuse tracing (@observe())
+  so each request produces a trace with retrieval and generation as
+  separate spans.</pre>
+            <p>Run <code>npx expo start --tunnel</code> in <code>mobile/</code> and scan the QR code with Expo Go to test on your own phone. <strong>In Codespaces, always use <code>--tunnel</code></strong> — the plain command uses LAN mode, which can't work since your phone and the Codespace aren't on the same network (it'll look like it's hanging, not actually connect). The very first time you run <code>--tunnel</code>, Expo installs a small tunneling package on the spot, which takes a minute or two — after that, it starts fast. (Note: <code>--tunnel</code> itself doesn't need any login — but current Expo Go on iOS separately requires the same Expo account logged in on both your terminal and the phone app just to load the project at all; see the <a href="../start-here/accounts.html#expo">Account &amp; Service Setup Guide</a>.)</p>
+            <p>No phone handy yet, or want to sanity-check the chat screen fastest? Run <code>npx expo start --web</code> instead — opens the app in a browser tab, no Expo Go or login needed at all. Push notifications don't exist on web (the app already skips that step cleanly there), so switch to a real phone once you get to the push-notification stages.</p>
+            <div class="submit-box">
+                <h5>Submit (Engagement)</h5>
+                <ul><li>The prompt you gave your AI assistant, and a screenshot of the scaffolded app running.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="evaluate">
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>2 · Evaluate</h2></div></div>
+            <p class="stage-tagline">The critical gate — is the AI-produced result actually correct?</p>
+            <p>Test it on purpose. At minimum, try:</p>
+            <ul>
+                <li>Upload a document with your device registered — does a push notification actually arrive on your phone, not just does the API call return success?</li>
+                <li>Open a trace in the Langfuse dashboard for a real chat request — can you see retrieval and generation as two separate spans, with their own latency and token numbers?</li>
+                <li>Ask something the docs don't cover — does the model say it doesn't know, or hallucinate? Check the logged faithfulness score against what actually happened.</li>
+            </ul>
+            <p style="font-size:0.85rem;color:var(--muted)">What you're looking for, illustrated below: the trace view shows <code>retrieve</code> nested under <code>run_agent</code> as its own span with its own latency, plus the faithfulness score attached to that run. The Scores table is where every run's score accumulates over time, so you can see whether faithfulness is trending up or down, not just what one run happened to score.</p>
+            <img src="../assets/files/assets/ai410-langfuse-broll/01-trace-detail.svg" width="760" height="400" loading="lazy" alt="Illustrative mockup of a Langfuse trace: run_agent span (0.30s) with a nested retrieve span and a faithfulness score of 0.83, plus the Input/Output panel showing the retrieved return-policy answer" style="width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--border);margin:14px 0"/>
+            <img src="../assets/files/assets/ai410-langfuse-broll/02-scores-table.svg" width="760" height="340" loading="lazy" alt="Illustrative mockup of a Langfuse Scores table, listing five faithfulness score runs by timestamp and value" style="width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--border);margin:0 0 14px"/>
+            <div class="submit-box">
+                <h5>Submit</h5>
+                <ul><li>A short written note: what you tested, what you found, and anything the AI got wrong, missed, or handled surprisingly well.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="analyze">
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>3 · Analyze</h2></div></div>
+            <p class="stage-tagline">Why does this work, mechanically?</p>
+            <p>Pick <strong>one</strong> specific piece — either why push notifications are addressed to a device token rather than a user ID, or why retrieval and generation end up as two nested spans in a trace instead of one flat one, and what that split actually lets you see that a single number wouldn't.</p>
+            <div class="submit-box">
+                <h5>Submit</h5>
+                <ul><li>A short written walkthrough of the one piece you chose, in your own words.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="refine">
+  <div class="module-head"><div class="module-icon">✋</div><div><h2>4 · Understand &amp; Refine</h2></div></div>
+            <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
+            <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
+            <p>Write a <code>score_faithfulness(answer, context)</code> function yourself — a heuristic or cheap check for whether the agent's answer is actually grounded in what was retrieved, not just plausible-sounding. Call it from <code>run_agent()</code> and log the score against the current trace.</p>
+            <div class="submit-box">
+                <h5>Submit</h5>
+                <ul>
+                    <li>The function you wrote, and how you decided to score faithfulness.</li>
+                    <li>Two example scores: one from an answer you'd call faithful, one from an answer you'd call unfaithful — and why the scores make sense.</li>
+                </ul>
+            </div>
+</section>
+
+<section class="module card" id="snags">
+  <div class="module-head"><div class="module-icon">🧯</div><div><h2>Common snags</h2></div></div>
+        <div class="snag-box">
+            <ul>
+                <li><strong><code>npm: command not found</code></strong> — this HOS's <code>.devcontainer/devcontainer.json</code> installs Node.js automatically, but only when the container is <em>built</em>. If this Codespace was created earlier (e.g. carried over from an earlier HOS that never needed Node), it won't have picked up that change. Command Palette (<code>Cmd/Ctrl+Shift+P</code>) → <strong>"Codespaces: Rebuild Container"</strong> — your files are untouched, only the container's installed tools get reapplied from the config.</li>
+                <li><strong>"Project is incompatible with this version of Expo Go"</strong> — Expo Go on your phone only ever supports the newest Expo SDK, and it updates itself, so this project's pinned version can fall behind. Fix inside <code>mobile/</code>: <code>npx expo install expo@latest</code>, then <code>npx expo install --fix</code> to realign every other package, then restart <code>npx expo start --tunnel</code>. This will happen again after any future Expo SDK release — same two commands fix it.</li>
+                <li><strong>Project won't load in Expo Go at all — stuck on a loading/login screen</strong> — unlike the push-token issue below, this blocks everything, chat included. Current Expo Go on iOS requires the same Expo account logged in on <em>both</em> your terminal (<code>npx expo login</code>) and the Expo Go app on your phone (tap the avatar icon on its home screen → sign in). Logged in as different accounts, or only on one side, and the project won't open.</li>
+                <li><strong>App crashes (or a red error screen) the moment it asks for a push token</strong> — <code>getExpoPushTokenAsync()</code> requires an EAS project ID as of SDK 49+, and a fresh project doesn't have one yet. Run <code>npx eas init</code> once inside <code>mobile/</code> (free — sign in with the Expo account above; no credit card) and it writes the ID into <code>app.json</code> for you. Chat works fine without this; only push notifications need it.</li>
+                <li><strong>On Android, no push notification ever arrives — not even a failed one</strong> — this isn't a bug in this course's code. Expo removed push-notification support from Expo Go on Android entirely as of SDK 53 (iOS Expo Go still supports it). Chat still works fine on Android either way; for the actual push-notification proof step, test on an iPhone if you have access to one, or build a free Expo development client via <code>eas build --profile development</code> instead of using Expo Go (no local Android Studio needed — EAS builds it in the cloud).</li>
+                <li><strong>Push notification API call succeeds but nothing arrives on your phone</strong> — Expo's push service returns <code>200 OK</code> even for a stale or invalid token, with the actual error inside the response body. Checking only the HTTP status isn't enough to confirm delivery.</li>
+                <li><strong>No Langfuse keys set yet, app still works</strong> — that's expected, not a bug. The SDK disables tracing and logs a line about it instead of crashing. You just won't see anything in the dashboard until keys are configured.</li>
+                <li><strong>Physical device can't reach a Codespaces-hosted backend</strong> — make the API port public in the Ports tab, use that forwarded URL as your mobile app's API base (ideally via an <code>EXPO_PUBLIC_API_BASE</code> variable in <code>mobile/.env</code>, reloading the app after editing it), and start Expo with <code>--tunnel</code> instead of the default LAN mode.</li>
+                <li><strong>Testing with <code>npx expo start --web</code>: "Failed to fetch" / server log shows <code>OPTIONS /chat ... 405 Method Not Allowed</code></strong> — unlike Streamlit or Expo Go on a real device, Expo <em>web</em> runs inside an actual browser, and browsers block cross-origin requests until the server explicitly allows them (a "CORS preflight" — the browser's own <code>OPTIONS</code> check before the real request). If your AI-scaffolded backend doesn't already have this, add it to <code>backend/main.py</code>:
+<pre tabindex="0">from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)</pre>
+                Restart <code>uvicorn</code> afterward — like any code change, it isn't picked up until the server restarts (or reloads, if you're running with <code>--reload</code>).</li>
+                <li><strong>Replies feel slower on the phone than they did testing with <code>curl</code></strong> — expected, not a bug. A <code>curl</code> test from inside the Codespace terminal is a loopback call; your phone's request travels over the real internet through GitHub's port-forwarding proxy to reach the Codespace and back, on top of whatever the agentic loop itself takes (a Gemini call, sometimes two if a tool fires, plus retrieval and guardrail validation). A couple of seconds is normal for this setup.</li>
+            </ul>
+            <p class="small" style="margin:10px 0 0">Most snags trace back to a concept. If one doesn't make sense, see <a href="../reference/concept-companion.html#module-4">Concept Companion → Module 4</a>.</p>
+        </div>
+</section>
+
+<div class="guide-nav">
+            <a href="../module-3/hos-guide.html">← HOS 3</a>
+            <a href="index.html">Module 4 lesson →</a>
+        </div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+<script>
+/* section nav highlight (scrolls only the nav row, never the page) */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

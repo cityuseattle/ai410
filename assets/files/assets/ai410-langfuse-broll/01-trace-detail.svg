@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" role="img" aria-labelledby="t1">
+  <title id="t1">Illustrative mockup: a Langfuse trace, showing a run_agent span with a nested retrieve span, a faithfulness score, and the Input/Output panel</title>
+  <rect width="100%" height="100%" fill="#e2e8f0"/>
+  <rect x="16" y="16" width="728" height="368" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- left: trace tree -->
+  <rect x="16" y="16" width="230" height="368" rx="10" fill="#f8fafc"/>
+  <line x1="246" y1="16" x2="246" y2="384" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="34" y="44" font-family="ui-monospace,Menlo,monospace" font-size="12" font-weight="700" fill="#0f172a">run_agent</text>
+  <text x="34" y="60" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#dc2626">0.30s</text>
+  <rect x="34" y="70" width="150" height="20" rx="10" fill="#e2e8f0"/>
+  <text x="44" y="84" font-family="ui-monospace,Menlo,monospace" font-size="10.5" fill="#334155">faithfulness: 0.83</text>
+  <text x="54" y="118" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#0f172a">retrieve</text>
+  <text x="54" y="134" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#dc2626">0.30s</text>
+  <path d="M40 100 v18 h10" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- right: trace detail -->
+  <text x="270" y="42" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700" fill="#0f172a">run_agent</text>
+  <text x="270" y="62" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#94a3b8">2026-09-15 15:56:09</text>
+  <rect x="270" y="72" width="86" height="20" rx="10" fill="#f1f5f9"/>
+  <text x="280" y="86" font-family="Inter,system-ui,sans-serif" font-size="10" fill="#475569">Latency: 0.30s</text>
+  <rect x="364" y="72" width="76" height="20" rx="10" fill="#f1f5f9"/>
+  <text x="374" y="86" font-family="Inter,system-ui,sans-serif" font-size="10" fill="#475569">Env: default</text>
+
+  <line x1="270" y1="104" x2="730" y2="104" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="270" y="122" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Preview</text>
+  <text x="330" y="122" font-family="Inter,system-ui,sans-serif" font-size="11" fill="#94a3b8">Scores</text>
+  <text x="378" y="122" font-family="Inter,system-ui,sans-serif" font-size="11" fill="#94a3b8">Log View</text>
+  <line x1="270" y1="128" x2="308" y2="128" stroke="#1d4ed8" stroke-width="2"/>
+
+  <text x="270" y="152" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="700" fill="#334155">Input</text>
+  <rect x="270" y="160" width="460" height="46" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="280" y="176" font-family="ui-monospace,Menlo,monospace" font-size="10.5" fill="#64748b">args</text>
+  <text x="330" y="176" font-family="ui-monospace,Menlo,monospace" font-size="10.5" fill="#0f172a">["return polic"]</text>
+  <text x="280" y="196" font-family="ui-monospace,Menlo,monospace" font-size="10.5" fill="#64748b">kwargs</text>
+  <text x="330" y="196" font-family="ui-monospace,Menlo,monospace" font-size="10.5" fill="#0f172a">{"k": 5}</text>
+
+  <text x="270" y="228" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="700" fill="#334155">Output</text>
+  <rect x="270" y="236" width="460" height="140" rx="6" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <text x="282" y="256" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#15803d">Here is the store's Return Policy:</text>
+  <text x="282" y="274" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#166534">• Window: 30 days, full refund</text>
+  <text x="282" y="292" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#166534">• Condition: unused, original packaging</text>
+  <text x="282" y="310" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#166534">• Exceptions: final-sale &amp; gift cards</text>
+  <text x="282" y="328" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#166534">• Refunds: 5–7 business days</text>
+  <text x="282" y="352" font-family="ui-monospace,Menlo,monospace" font-size="9.5" fill="#4d7c0f" font-style="italic">(Note: an Exchange window also exists —</text>
+  <text x="282" y="366" font-family="ui-monospace,Menlo,monospace" font-size="9.5" fill="#4d7c0f" font-style="italic">grounded in the retrieved chunk, not guessed.)</text>
+</svg>

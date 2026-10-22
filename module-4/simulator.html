@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 HOS 4 simulator: trace the push-notification delivery chain and read request traces with retrieval/generation spans and faithfulness scores.">
+<title>Push & Observability Simulator</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.sim-layout { display:grid; grid-template-columns:minmax(260px,340px) 1fr; gap:16px; align-items:start; }
+@media (max-width:860px){ .sim-layout { grid-template-columns:1fr; } }
+.panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow); margin-bottom:16px; min-width:0; }
+.panel h2 { font-size:1.02rem; margin-bottom:10px; }
+.panel h3 { font-size:.9rem; margin:14px 0 6px; }
+.presets { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px; }
+.presets button { font-family:inherit; font-size:.74rem; border:1px solid var(--border); background:var(--surface2); color:var(--text); border-radius:14px; padding:4px 10px; cursor:pointer; }
+.presets button:hover { border-color:var(--accent); }
+.toggle { display:flex; gap:8px; align-items:flex-start; font-size:.85rem; margin:6px 0; cursor:pointer; }
+.toggle input { accent-color:var(--accent); margin-top:4px; }
+.toggle small { display:block; color:var(--muted); font-size:.74rem; }
+.lanes { display:grid; grid-template-columns:repeat(var(--lanes,4),1fr); gap:8px; margin-bottom:12px; }
+.lane { border:2px solid var(--border); border-radius:10px; padding:10px; text-align:center; font-size:.8rem; background:var(--surface2); transition:all .2s; min-width:0; }
+.lane b { display:block; font-size:.86rem; }
+.lane .ic { font-size:1.3rem; display:block; }
+.lane.from { border-color:var(--blue); background:var(--blue-bg); }
+.lane.to { border-color:var(--accent); background:var(--accent-light); box-shadow:0 0 0 3px var(--accent-light); }
+.lane.err { border-color:var(--bad); background:var(--bad-bg); }
+@media (max-width:520px){ .lanes { grid-template-columns:repeat(2,1fr); } }
+.stepbox { border:1px solid var(--border); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; background:var(--surface2); margin-bottom:12px; min-height:84px; }
+.stepbox.err { border-left-color:var(--bad); } .stepbox.warn { border-left-color:var(--amber); }
+.stepbox .k { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.steps-list { list-style:none; margin:0; padding:0; font-size:.8rem; }
+.steps-list li { padding:5px 8px; border-radius:6px; color:var(--muted); display:flex; gap:8px; }
+.steps-list li.cur { background:var(--accent-light); color:var(--text); font-weight:700; }
+.steps-list li.past { color:var(--text); }
+.steps-list li .n { flex:none; width:20px; text-align:right; }
+.steps-list li.bad { color:var(--bad); }
+.verdict { border-radius:8px; padding:10px 14px; font-size:.86rem; margin-top:10px; }
+.verdict.ok { background:var(--ok-bg); color:var(--ok); } .verdict.bad { background:var(--bad-bg); color:var(--bad); } .verdict.warn { background:var(--amber-bg); color:var(--amber); }
+.kv { display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:.82rem; }
+.kv dt { color:var(--muted); } .kv dd { margin:0; font-weight:600; }
+.bar-row { display:grid; grid-template-columns:70px 1fr 48px; gap:8px; align-items:center; font-size:.78rem; margin-bottom:4px; }
+.bar-track { height:12px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; overflow:hidden; position:relative; }
+.bar-fill { height:100%; background:var(--accent); }
+.project-tip { border:1px dashed var(--accent); border-radius:var(--radius); padding:14px 18px; background:var(--accent-light); font-size:.88rem; }
+.project-tip b.h { display:block; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent2); margin-bottom:4px; }
+
+.chain { list-style:none; margin:0; padding:0; }
+.chain li { display:grid; grid-template-columns:28px 1fr; gap:8px; padding:8px 10px; border:1px solid var(--border); border-radius:8px; margin-bottom:6px; font-size:.84rem; background:var(--surface); transition:all .2s; }
+.chain li .ic { font-weight:900; text-align:center; }
+.chain li.ok { background:var(--ok-bg); border-color:var(--ok); }
+.chain li.fail { background:var(--bad-bg); border-color:var(--bad); }
+.chain li.skip { opacity:.45; }
+.chain li small { display:block; color:var(--muted); font-size:.76rem; }
+.chain li.fail small { color:var(--bad); }
+.phone { width:170px; margin:0 auto 12px; border:3px solid var(--text); border-radius:22px; padding:14px 10px 18px; background:var(--surface2); min-height:120px; }
+.notif { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:8px 10px; font-size:.74rem; box-shadow:var(--shadow); opacity:0; transform:translateY(-8px); transition:all .35s; }
+.notif.show { opacity:1; transform:none; }
+.wf { font-size:.78rem; }
+.wf-row { display:grid; grid-template-columns:minmax(120px,190px) 1fr 60px; gap:8px; align-items:center; margin-bottom:5px; }
+.wf-row .nm { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.wf-track { position:relative; height:16px; background:var(--surface2); border-radius:4px; }
+.wf-bar { position:absolute; top:2px; bottom:2px; border-radius:3px; background:var(--accent); }
+.wf-bar.gen { background:var(--violet); } .wf-bar.tool { background:var(--amber); } .wf-bar.root { background:var(--muted); } .wf-bar.slow { background:var(--bad); }
+.sent { font-size:.82rem; padding:6px 10px; border-radius:6px; margin-bottom:4px; }
+.sent.ok { background:var(--ok-bg); } .sent.bad { background:var(--bad-bg); }
+.alerts { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0; }
+
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Simulator 4 · Pairs with HOS 4 (Weeks 7–8)</div>
+    <h1>Push &amp; Observability Simulator</h1>
+    <p class="lede">Find the broken link when a push notification never arrives, then read request traces the way you will in Langfuse — nested spans, latency, a faithfulness score, and the question every on-call engineer asks: what do I check first?</p>
+    <div class="chips"><span class="chip">Outcomes O4 &amp; O5</span><span class="chip">Expo push chain</span><span class="chip">Traces &amp; spans</span><span class="chip">Faithfulness</span><span class="chip">Alert thresholds</span></div>
+  </div>
+</section>
+<main id="main">
+<div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><a class="tag blue" href="../module-1/simulator.html" style="text-decoration:none">1 · Agentic Loop</a><a class="tag blue" href="../module-2/simulator.html" style="text-decoration:none">2 · RAG Pipeline</a><a class="tag blue" href="../module-3/simulator.html" style="text-decoration:none">3 · Guardrails &amp; Queue</a><span class="tag">4 · Push &amp; Observability</span></div>
+<p class="sim-note">⚠ Simulation only — no Expo push service, no Langfuse project, no phone required.</p>
+
+<div class="sim-layout">
+  <div>
+    <div class="panel">
+      <h2>A · Push setup</h2>
+      <label class="field" for="dev">Running the app on</label>
+      <select id="dev"><option value="phone">iPhone, via Expo Go</option><option value="android">Android phone, via Expo Go</option><option value="sim">iOS Simulator / Android emulator</option><option value="web">Web browser (expo start --web)</option></select>
+      <label class="field" for="net">Expo start mode (from a Codespace)</label>
+      <select id="net"><option value="tunnel">npx expo start --tunnel</option><option value="lan">npx expo start (LAN)</option></select>
+      <label class="field" for="perm">Notification permission</label>
+      <select id="perm"><option value="granted">Granted</option><option value="denied">Denied</option><option value="never">Never requested</option></select>
+      <label class="toggle"><input type="checkbox" id="login" checked><span>Logged in to Expo Go (iOS)<small>Current Expo Go on iOS won't load the project without it</small></span></label>
+      <label class="toggle"><input type="checkbox" id="eas" checked><span>Ran <code>npx eas init</code> once<small>Push tokens need an EAS project ID (free, no card)</small></span></label>
+      <label class="toggle"><input type="checkbox" id="reg" checked><span>App calls <code>POST /register-device</code><small>Sends device_id + push token to the backend</small></span></label>
+      <label class="toggle"><input type="checkbox" id="jobDev" checked><span>Upload includes <code>device_id</code><small>So the job knows whom to notify</small></span></label>
+      <div class="row" style="margin-top:10px"><button class="btn" id="pushGo" type="button">Upload doc &amp; finish job</button></div>
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <h2>Delivery chain</h2>
+      <div class="phone"><div class="small muted" style="text-align:center;margin-bottom:8px">📱 lock screen</div><div class="notif" id="notif"><b>Study Assistant</b><br>Your document "syllabus.pdf" is ready to search.</div></div>
+      <ol class="chain" id="chain"></ol>
+      <div id="pushVerdict"></div>
+    </div>
+  </div>
+</div>
+
+<div class="sim-layout">
+  <div>
+    <div class="panel">
+      <h2>B · Send a traced request</h2>
+      <div class="pick" id="scen" style="display:grid;gap:8px">
+        <button class="btn secondary" type="button" data-s="healthy" style="text-align:left">✅ Covered question — "How long is the return window?"</button>
+        <button class="btn secondary" type="button" data-s="halluc" style="text-align:left">🌀 Uncovered — "Do you offer gift wrapping?"</button>
+        <button class="btn secondary" type="button" data-s="slow" style="text-align:left">🐢 Slow — retrieval over a cold vector store</button>
+        <button class="btn secondary" type="button" data-s="tool" style="text-align:left">🔧 Tool + RAG — "Expedited shipping on 3 orders?"</button>
+      </div>
+      <h3>Alert rules</h3>
+      <label class="field" for="latA">Alert if total latency &gt; <span id="latAV"></span> s</label>
+      <input type="range" id="latA" min="1" max="8" value="3" step="0.5">
+      <label class="field" for="faithA">Alert if faithfulness &lt; <span id="faithAV"></span></label>
+      <input type="range" id="faithA" min="0" max="100" value="70" step="5">
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <h2>Trace <span class="tag" id="traceId">—</span></h2>
+      <div class="alerts" id="alerts"></div>
+      <div class="wf" id="wf"><p class="small muted">Pick a scenario to generate a trace.</p></div>
+      <h3>Faithfulness — is each answer sentence supported by the retrieved chunks?</h3>
+      <div id="faith"></div>
+      <h3>A user reports this answer is wrong. What do you check first?</h3>
+      <div id="diag"></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>What this teaches</h2>
+  <ul>
+    <li><b>Push is a chain, and it fails silently.</b> Every link has to hold — the app loads, permission is granted, a real device yields a token, the backend stores it, and the job knows which device to notify. Break any one and nothing errors; the notification just never comes.</li>
+    <li><b>A trace turns "it's slow" or "it's wrong" into a specific span.</b> Retrieval and generation are separate spans on purpose — that's the HOS 4 Analyze question.</li>
+    <li><b>Faithfulness is measurable.</b> The score here is a word-overlap version of what your hand-written <code>score_faithfulness()</code> does in Understand &amp; Refine.</li>
+    <li><b>Alerts are a judgment call.</b> Drag the thresholds: too tight and every request pages you (noise); too loose and the hallucination sails through. That's the HOS 4 Application Challenge.</li>
+  </ul>
+</div>
+<div class="project-tip">
+  <b class="h">For your Team Project</b>
+  Write down the one event in your project that deserves a push notification (not five), and the one number you'd put on a dashboard. For the demo, have a real trace open — "here's retrieval, here's generation, here's the faithfulness score" is a strong Week 10 moment.
+</div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+var $=function(id){return document.getElementById(id);};
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ---------- A: push chain ---------- */
+var LINKS=[
+  ['App loads on the device', function(c){ if((c.dev==='phone'||c.dev==='android')&&c.net==='lan') return 'LAN mode can\'t reach a Codespace from your phone — it looks like it\'s hanging. Use --tunnel.'; if(c.dev==='phone'&&!c.login) return 'Expo Go on iOS requires you to be signed in to your Expo account before it will load the project.'; }],
+  ['Permission granted', function(c){ if(c.perm==='denied') return 'User said no. The app must handle this gracefully — and you can\'t re-prompt; they have to change it in Settings.'; if(c.perm==='never') return 'The app never called requestPermissionsAsync(), so the OS never asked.'; }],
+  ['Expo push token obtained', function(c){ if(c.dev==='sim') return 'Simulators/emulators generally can\'t get a real push token — test push on a physical phone.'; if(c.dev==='android') return 'Expo Go on Android no longer supports push notifications (SDK 53+). Chat still works; to prove push, use an iPhone or a free development build (eas build --profile development).'; if(!c.eas) return 'The app crashes when it asks for a token: getExpoPushTokenAsync() needs an EAS project ID. Run npx eas init once inside mobile/.'; if(c.dev==='web') return 'Expo push tokens are for native iOS/Android; the web build doesn\'t get one.'; }],
+  ['Backend stores token (POST /register-device)', function(c){ if(!c.reg) return 'The token exists on the phone, but the backend never received it — it has nobody to send to.'; }],
+  ['Job knows which device to notify', function(c){ if(!c.jobDev) return 'The upload didn\'t include device_id, so when the job finishes it has no token to look up.'; }],
+  ['Backend sends to Expo Push API', function(){ }],
+  ['Notification arrives', function(){ }]
+];
+$('pushGo').addEventListener('click',function(){
+  var c={eas:$('eas').checked,dev:$('dev').value,net:$('net').value,perm:$('perm').value,login:$('login').checked,reg:$('reg').checked,jobDev:$('jobDev').checked};
+  $('notif').classList.remove('show'); $('pushVerdict').innerHTML='';
+  var failAt=-1, reason='';
+  LINKS.forEach(function(l,i){ if(failAt<0){ var r=l[1](c); if(r){ failAt=i; reason=r; } } });
+  $('chain').innerHTML=LINKS.map(function(l,i){ return '<li id="lk'+i+'"><span class="ic">'+(i+1)+'</span><span>'+l[0]+'<small></small></span></li>'; }).join('');
+  var i=0;
+  (function next(){
+    if(i>=LINKS.length){ $('notif').classList.add('show'); $('pushVerdict').innerHTML='<div class="verdict ok">Delivered. Every link held — this is the screenshot your HOS 4 Evaluate asks for.</div>'; return; }
+    var li=$('lk'+i);
+    if(i===failAt){
+      li.className='fail'; li.querySelector('.ic').textContent='✗'; li.querySelector('small').textContent=reason;
+      for(var j=i+1;j<LINKS.length;j++) $('lk'+j).className='skip';
+      $('pushVerdict').innerHTML='<div class="verdict bad">No notification — and no error anywhere in the backend log. The job still shows <code>finished</code>.</div>';
+      return;
+    }
+    li.className='ok'; li.querySelector('.ic').textContent='✓'; i++; setTimeout(next,280);
+  })();
+});
+
+/* ---------- B: traces ---------- */
+var S={
+  healthy:{q:'How long is the return window?',spans:[['retrieve',0.05,0.35,'ret'],['  embed_query',0.06,0.18,'ret'],['  chroma.query',0.19,0.33,'ret'],['generation (gemini)',0.38,1.6,'gen']],
+    ctx:'Northwind Outfitters accepts returns within 30 days of delivery for a full refund, provided the item is unused and in its original packaging.',
+    ans:['Northwind accepts returns within 30 days of delivery for a full refund.','The item must be unused and in its original packaging.'],
+    diag:[['The generation span\'s input — did the right chunks reach the model?',1],['Restart the worker',0],['Lower the temperature',0]],
+    diagFb:'The trace shows the right chunks and a faithful answer — if a user still calls this wrong, compare the retrieved chunk to the source doc: the policy itself may be out of date.'},
+  halluc:{q:'Do you offer gift wrapping?',spans:[['retrieve',0.05,0.4,'ret'],['  embed_query',0.06,0.2,'ret'],['  chroma.query',0.21,0.38,'ret'],['generation (gemini)',0.43,1.9,'gen']],
+    ctx:'Provided the item is unused and in its original packaging. Standard shipping takes 5-7 business days and is free on orders over $75.',
+    ans:['Yes, we offer gift wrapping for a small fee.','Items are wrapped in original packaging.','Standard shipping is free on orders over $75.'],
+    diag:[['The retrieval span — what did it actually return, and how similar was it?',1],['The mobile client\'s network logs',0],['The Redis queue length',0]],
+    diagFb:'Retrieval returned weakly related chunks about packaging, and generation stretched them into a made-up policy. The fix is upstream: a similarity threshold, or an instruction to say "I don\'t know."'},
+  slow:{q:'What does the warranty cover?',spans:[['retrieve',0.05,4.3,'slow'],['  embed_query',0.06,0.22,'ret'],['  chroma.query',0.25,4.25,'slow'],['generation (gemini)',4.35,5.6,'gen']],
+    ctx:'Most Northwind Outfitters hardgoods carry a warranty against manufacturing defects. Warranty claims require proof of purchase and photos of the defect.',
+    ans:['Northwind hardgoods carry a warranty against manufacturing defects.','Claims need proof of purchase and photos of the defect.'],
+    diag:[['The chroma.query span — why is one child span 4 seconds?',1],['Switch to a bigger model',0],['Rewrite the prompt',0]],
+    diagFb:'Generation was normal. The time went to chroma.query — without nested spans you\'d have blamed the LLM. This is exactly why retrieval and generation are separate spans.'},
+  tool:{q:'What would expedited shipping cost on 3 orders?',spans:[['retrieve',0.05,0.36,'ret'],['  embed_query',0.06,0.17,'ret'],['  chroma.query',0.18,0.34,'ret'],['generation #1 (→ function call)',0.4,1.3,'gen'],['tool: calculate("3*15")',1.32,1.36,'tool'],['generation #2',1.4,2.3,'gen']],
+    ctx:'Expedited shipping (2-3 business days) is available for a flat $15 fee.',
+    ans:['Expedited shipping is a flat $15 fee per order, so 3 orders cost $45.','You also get priority phone support.'],
+    diag:[['The generation #2 span\'s output vs. the retrieved context',1],['The calculate tool\'s code',0],['The push token table',0]],
+    diagFb:'The tool call and the first sentence are fine. The last sentence (phone support) isn\'t in the context or in any Northwind document. Faithfulness flags it; the output of generation #2 is where it entered.'}
+};
+var STOP='a an the and or of to in on for with by at is are be can do does you your we our i it this that from how much what when where who which as if not no any most have has get per'.split(' ');
+function toks(s){ return (s.toLowerCase().match(/[a-z0-9$]+/g)||[]).filter(function(w){return STOP.indexOf(w)<0;}); }
+function supported(sent,ctx){ var t=toks(sent), c=toks(ctx); if(!t.length) return true; var hit=t.filter(function(w){return c.indexOf(w)>=0;}).length; return hit/t.length>=0.5; }
+function sync(){ $('latAV').textContent=$('latA').value; $('faithAV').textContent=(+$('faithA').value/100).toFixed(2); }
+['latA','faithA'].forEach(function(id){ $(id).addEventListener('input',function(){ sync(); if(cur) render(cur); }); }); sync();
+var cur=null;
+function render(key){
+  cur=key; var s=S[key], total=s.spans[s.spans.length-1][2]+0.05;
+  $('traceId').textContent='trace '+Math.random().toString(16).slice(2,8);
+  var rows=[['POST /chat',0,total,'root']].concat(s.spans);
+  $('wf').innerHTML='<p class="small muted" style="margin-bottom:6px">Q: "'+esc(s.q)+'" · total '+total.toFixed(2)+'s</p>'+rows.map(function(r){
+    var cls=r[3]==='gen'?'gen':r[3]==='tool'?'tool':r[3]==='root'?'root':r[3]==='slow'?'slow':'';
+    return '<div class="wf-row"><span class="nm">'+esc(r[0])+'</span><div class="wf-track"><div class="wf-bar '+cls+'" style="left:'+(r[1]/total*100)+'%;width:'+Math.max(1,(r[2]-r[1])/total*100)+'%"></div></div><span>'+((r[2]-r[1])*1000).toFixed(0)+' ms</span></div>';
+  }).join('');
+  var sup=s.ans.map(function(a){return supported(a,s.ctx);}), score=sup.filter(Boolean).length/sup.length;
+  $('faith').innerHTML='<p class="small muted">Retrieved context: "'+esc(s.ctx)+'"</p>'+s.ans.map(function(a,i){ return '<div class="sent '+(sup[i]?'ok':'bad')+'">'+(sup[i]?'✓ ':'✗ ')+esc(a)+'</div>'; }).join('')+'<p style="margin-top:6px"><b>faithfulness = '+sup.filter(Boolean).length+' / '+sup.length+' = '+score.toFixed(2)+'</b></p>';
+  var al=[];
+  if(total>+$('latA').value) al.push('<span class="tag bad">🔔 latency '+total.toFixed(1)+'s &gt; '+$('latA').value+'s</span>');
+  if(score<+$('faithA').value/100) al.push('<span class="tag bad">🔔 faithfulness '+score.toFixed(2)+' &lt; '+(+$('faithA').value/100).toFixed(2)+'</span>');
+  $('alerts').innerHTML= al.length? al.join('') : '<span class="tag ok">No alerts fired</span>';
+  $('diag').innerHTML=s.diag.map(function(d,i){ return '<button type="button" class="btn secondary" data-i="'+i+'" style="display:block;width:100%;text-align:left;margin-bottom:6px">'+esc(d[0])+'</button>'; }).join('')+'<div id="diagFb"></div>';
+  [].slice.call(document.querySelectorAll('#diag button')).forEach(function(b){ b.addEventListener('click',function(){
+    var ok=s.diag[+b.dataset.i][1]===1;
+    $('diagFb').innerHTML='<div class="verdict '+(ok?'ok':'warn')+'">'+(ok?'Good call. ':'Not first — the trace already points elsewhere. ')+s.diagFb+'</div>';
+  }); });
+}
+[].slice.call(document.querySelectorAll('#scen button')).forEach(function(b){ b.addEventListener('click',function(){ render(b.dataset.s); }); });
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 course home: five modules over ten weeks, with each module's lesson, hands-on guide, simulator and Application Challenge, plus setup and reference pages.">
+<title>AI 410: AI Engineering — Course Home</title>
+<link rel="stylesheet" href="assets/course.css">
+<style>
+.sec-label { font-size:.74rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border); padding-bottom:6px; margin:28px 0 14px; }
+.tile { display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; text-decoration:none; color:inherit; box-shadow:var(--shadow); transition:transform .15s, box-shadow .15s; }
+a.tile:hover { transform:translateY(-2px); box-shadow:var(--shadow-hover); border-color:var(--accent); }
+.tile .ic { font-size:1.5rem; }
+.tile h3 { margin:6px 0 4px; font-size:1rem; }
+.tile p { font-size:.85rem; color:var(--muted); margin-bottom:10px; flex:1; }
+.tile .foot { display:flex; gap:6px; flex-wrap:wrap; }
+.tile.soon { opacity:.75; box-shadow:none; background:var(--surface2); }
+.cycle { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; }
+.cycle div { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; font-size:.84rem; }
+.cycle b { display:block; font-size:.9rem; }
+.cycle .wk { font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--accent2); }
+
+
+
+.module-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:14px; box-shadow:var(--shadow); }
+.module-card .mh { display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline; margin-bottom:6px; }
+.module-card .mnum { font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--accent2); }
+.module-card h3 { margin:0; font-size:1.15rem; }
+.module-card .wks { font-size:.78rem; color:var(--muted); margin-left:auto; }
+.module-card p { color:var(--muted); font-size:.9rem; margin-bottom:12px; }
+.mlinks { display:flex; flex-wrap:wrap; gap:8px; }
+.mlinks a { text-decoration:none; font-size:.84rem; font-weight:600; padding:6px 12px; border-radius:999px; border:1px solid var(--border); background:var(--surface2); color:var(--text); }
+.mlinks a.primary { background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.mlinks a:hover { border-color:var(--accent); }
+.module-card .due { font-size:.8rem; color:var(--muted); margin:10px 0 0; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410: AI Engineering · Course home</div>
+    <h1>Build a full-stack AI app, one module at a time</h1>
+    <p class="lede">Ten weeks, five modules. In Modules 1–4 you build one app that gets smarter each time: an agent that calls tools, answers from your documents, survives bad model output, and runs on your phone. In Module 5 your team combines all four into a project of your own.</p>
+    <div class="chips"><span class="chip">5 modules · 10 weeks</span><span class="chip">GitHub Codespaces</span><span class="chip">Free tiers only</span></div>
+  </div>
+</section>
+<main id="main">
+
+<div class="sec-label">Start here: do these first, in order</div>
+<div class="before-box">
+  <h4>Before Week 1</h4>
+  <p>Do steps 1 and 2 before you open Module 1. Your first build won't run without the accounts.</p>
+</div>
+<div class="grid">
+  <a class="tile" href="start-here/accounts.html"><span class="ic">🔑</span><h3>Step 1 · Set up your accounts</h3><p>GitHub and a free Gemini key now; the guide says which other free accounts each module needs, and when. No credit card.</p><div class="foot"><span class="tag bad">Required before Week 1</span></div></a>
+  <a class="tile" href="start-here/tools.html"><span class="ic">🧰</span><h3>Step 2 · Tools you'll use all term</h3><p>Codespaces, the terminal, and git: the basics every module assumes.</p><div class="foot"><span class="tag">Before Week 1</span></div></a>
+  <a class="tile" href="#how"><span class="ic">🧭</span><h3>Step 3 · How each module runs</h3><p>Two weeks per module. Each one centres on a HOS (Hands-On Skill): build and judge in the first week, explain and extend in the second.</p><div class="foot"><span class="tag">2 minutes</span></div></a>
+</div>
+<p class="small muted" style="margin-top:10px">Then, at the start of every module, open its hands-on guide: it begins with the accounts and concepts that module needs.</p>
+
+<div class="sec-label">Modules</div>
+<div class="module-card" id="module-1">
+  <div class="mh"><span class="mnum">Module 1</span><h3>Foundations &amp; the Agentic Loop</h3><span class="wks">Weeks 1–2</span></div>
+  <p>Build a chat app whose agent can call a real tool, and see exactly where the model stops and your code starts.</p>
+  <div class="mlinks"><a class="primary" href="module-1/index.html">Lesson</a><a href="module-1/hos-guide.html">HOS 1 guide (Hands-On Skill)</a><a href="module-1/simulator.html">Simulator</a><a href="module-1/application-challenge.html">Application Challenge 1</a></div>
+  <p class="due">Team Project Phase 1 starts: form your team.</p>
+</div>
+<div class="module-card" id="module-2">
+  <div class="mh"><span class="mnum">Module 2</span><h3>Embeddings, Chunking &amp; RAG</h3><span class="wks">Weeks 3–4</span></div>
+  <p>Ground your agent's answers in your own documents with a retrieval pipeline over a vector database.</p>
+  <div class="mlinks"><a class="primary" href="module-2/index.html">Lesson</a><a href="module-2/hos-guide.html">HOS 2 guide (Hands-On Skill)</a><a href="module-2/simulator.html">Simulator</a><a href="module-2/application-challenge.html">Application Challenge 2</a></div>
+  <p class="due">Team Project Phase 1 due end of Week 3: System v0.3 and a one-page proposal.</p>
+</div>
+<div class="module-card" id="module-3">
+  <div class="mh"><span class="mnum">Module 3</span><h3>Guardrails &amp; Async Processing</h3><span class="wks">Weeks 5–6</span></div>
+  <p>Catch bad model output before your code trusts it, and move slow work into a background job.</p>
+  <div class="mlinks"><a class="primary" href="module-3/index.html">Lesson</a><a href="module-3/hos-guide.html">HOS 3 guide (Hands-On Skill)</a><a href="module-3/simulator.html">Simulator</a><a href="module-3/application-challenge.html">Application Challenge 3</a></div>
+  <p class="due">Team Project Phase 2 is underway.</p>
+</div>
+<div class="module-card" id="module-4">
+  <div class="mh"><span class="mnum">Module 4</span><h3>Mobile, Push &amp; Observability</h3><span class="wks">Weeks 7–8</span></div>
+  <p>Put the app on your phone, get notified when work finishes, and trace what the agent does on every request.</p>
+  <div class="mlinks"><a class="primary" href="module-4/index.html">Lesson</a><a href="module-4/hos-guide.html">HOS 4 guide (Hands-On Skill)</a><a href="module-4/simulator.html">Simulator</a><a href="module-4/application-challenge.html">Application Challenge 4</a></div>
+  <p class="due">Team Project Phase 2 due end of Week 8: System v0.8 and a progress report.</p>
+</div>
+<div class="module-card" id="module-5">
+  <div class="mh"><span class="mnum">Module 5</span><h3>Team Project</h3><span class="wks">Weeks 9–10</span></div>
+  <p>No new build: review the architecture across all four modules, then finish, polish and present the app your team has been building since Week 1.</p>
+  <div class="mlinks"><a class="primary" href="module-5/index.html">Project guide</a></div>
+  <p class="due">Phase 3 due end of Week 10: System v1.0, final report, presentation and demo video.</p>
+</div>
+
+<div class="sec-label" id="how">How each module runs: two weeks</div>
+<p>Each module centres on a <strong>HOS (Hands-On Skill)</strong>: one build, worth 10% of your grade, done in four stages across the two weeks and submitted once as a GitHub repo link in Brightspace. The other activities are graded separately.</p>
+<div class="cycle">
+  <div><span class="wk">Week 1 · Build &amp; judge</span><b>Lecture</b>Three short parts, each paired with a quick check.</div>
+  <div><span class="wk">Week 1</span><b>Muddiest Point</b>Four-field structured reflection, due before the build. Graded.</div>
+  <div><span class="wk">Week 1</span><b>Concept Debate</b>Assigned side → argue the opposite → synthesis. Graded.</div>
+  <div><span class="wk">Week 1</span><b>HOS: Create → Evaluate</b>Stages 1–2: AI-assisted scaffold, then deliberate testing.</div>
+  <div><span class="wk">Week 2 · Explain &amp; master</span><b>HOS: Analyze → Understand &amp; Refine</b>Stages 3–4: explain one mechanism; extend it by hand, no AI.</div>
+  <div><span class="wk">Week 2</span><b>Application Challenge</b>Build to a spec in a new scenario; defend one decision.</div>
+  <div><span class="wk">Week 2</span><b>Knowledge Check</b>Graded quiz in Brightspace; practice questions in each lesson.</div>
+</div>
+<p class="small muted" style="margin-top:10px">Due dates, submissions, the syllabus and grades are in Brightspace.</p>
+<p class="small muted"><b>Accessibility:</b> these pages are built to WCAG 2.2 AA and work with a keyboard, screen readers, zoom and dark mode. If anything here doesn't work for you, tell your instructor, or contact Disability Support Services at <a href="mailto:accommodations@cityu.edu">accommodations@cityu.edu</a> or 206.239.4752 to request accommodations.</p>
+
+<div class="sec-label">Reference</div>
+<ul>
+  <li><a href="reference/concept-companion.html">Concept Companion</a>: every concept you should know before starting a module, in one place.</li>
+  <li><a href="start-here/tools.html">Tools you'll use all term</a>: Codespaces, the terminal, and git.</li>
+  <li><a href="reference/starter-code-walkthrough.html">Starter Code Walkthrough</a>: what every file in each module's starter code does.</li>
+  <li><a href="start-here/accounts.html">Account &amp; Service Setup Guide</a></li>
+  <li><a href="reference/concept-debate-example.html">How a Concept Debate works</a>: four students through one debate, with grading.</li>
+</ul>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script></script>
+</body>
+</html>

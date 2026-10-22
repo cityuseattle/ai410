@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 410 — Concept Companion</title>
+    <link rel="stylesheet" href="../assets/course.css">
+    <style>
+        .intro-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:15px 18px; margin:18px 0; border-radius:0 6px 6px 0; font-size:0.92rem; }
+        .intro-box h4 { margin:0 0 6px; color:var(--blue); font-size:0.95rem; }
+
+        /* Map table — the "modular" jump nav */
+        table.map-table { width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:0.85rem; }
+        table.map-table th, table.map-table td { border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top; }
+        table.map-table th { background:var(--surface2); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--muted); }
+        table.map-table td.mod-name { font-weight:700; color:var(--accent); white-space:nowrap; }
+        table.map-table a.jump { font-weight:600; text-decoration:none; color:var(--blue); }
+        table.map-table a.jump:hover { text-decoration:underline; }
+
+        /* Module blocks */
+        .module-pills { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+        .mod-pill { font-size:0.74rem; font-weight:700; padding:3px 10px; border-radius:999px; }
+        .mod-pill.hos { background:var(--blue-bg); color:var(--violet); }
+        .mod-pill.wk { background:var(--blue-bg); color:var(--blue); }
+        .mod-pill.outcome { background:var(--accent-light); color:var(--accent2); }
+        .why-line { font-size:0.92rem; color:var(--text); margin:0 0 18px; }
+        .why-line strong { color:var(--text); }
+
+        /* Concept cards */
+        .concept-grid { display:grid; grid-template-columns:1fr; gap:12px; margin:14px 0; }
+        .concept-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:13px 16px; }
+        .concept-card h4 { margin:0 0 5px; font-size:0.95rem; color:var(--text); }
+        .concept-card p { margin:0; font-size:0.88rem; color:var(--text); }
+        .concept-card .why { margin-top:6px; font-size:0.82rem; color:var(--muted); }
+        .concept-card .why strong { color:var(--muted); }
+
+        /* Diagrams */
+        .diagram-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; margin:18px 0; text-align:center; }
+        .diagram-box svg { max-width:100%; height:auto; }
+        .diagram-caption { font-size:0.8rem; color:var(--muted); margin-top:6px; }
+        .flow-line { stroke-dasharray:6 4; animation:flowdash 1s linear infinite; }
+        .flow-line.slow { animation-duration:1.8s; }
+        @keyframes flowdash { to { stroke-dashoffset:-20; } }
+        .flow-dot { animation:dotmove linear infinite; }
+        .pulse-box { animation:pulsebox 2.2s ease-in-out infinite; }
+        @keyframes pulsebox { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+        @media (prefers-reduced-motion: reduce) {
+            .flow-line, .flow-dot, .pulse-box { animation:none !important; }
+        }
+
+        /* Glossary / self-check boxes — matching AI-410.html's vocabulary */
+        .glossary-box { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:14px 0; font-size:0.85rem; }
+        .glossary-box h5 { margin:0 0 6px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--muted); }
+        .glossary-box dl { margin:0; }
+        .glossary-box dt { font-weight:700; color:var(--text); display:inline; }
+        .glossary-box dd { display:inline; margin:0 0 0 4px; color:var(--muted); }
+        .glossary-box dd::after { content:""; display:block; margin-bottom:4px; }
+        .check-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:12px 16px; margin:16px 0 0; border-radius:0 4px 4px 0; font-size:0.85rem; }
+        .check-box h5 { margin:0 0 6px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--blue); }
+        .check-box ul { margin:0; padding-left:18px; }
+        .check-box li { margin-bottom:4px; }
+
+        .module-nav { text-align:right; margin-top:16px; font-size:0.82rem; }
+        .module-nav a { color:var(--link); text-decoration:none; font-weight:600; }
+        .back-to-top { display:inline-block; margin-top:34px; font-size:0.85rem; color:var(--link); text-decoration:none; font-weight:600; }
+
+        .tabs-hint { display:none; margin:6px 0 4px; }
+        [id^="module-"] { scroll-margin-top:calc(var(--header-h,62px) + 16px); }
+        .tabs-on .tabs-hint { display:block; }
+        .module-tabs { margin-top:26px; }
+        @media (max-width:640px) { .module-tabs .tab-sub { display:none; } .module-tabs button[data-mod] { flex:1 1 calc(50% - 8px); padding:9px 6px; } .module-tabs .show-all { flex-basis:100%; text-align:right; margin-left:0; } }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Reference · Read before each module</div>
+    <h1>Concept Companion</h1>
+    <p class="lede">Every concept and piece of vocabulary you should understand before you open a module's hands-on guide, gathered in one place. Read the module you're about to start, not the whole page.</p>
+    <div class="chips"><span class="chip">Read before you start, not while debugging</span><span class="chip">One module per HOS</span><span class="chip">Modules 1–4</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#find">Find your module</a>
+    <a href="#module-1">Module 1</a>
+    <a href="#module-2">Module 2</a>
+    <a href="#module-3">Module 3</a>
+    <a href="#module-4">Module 4</a>
+  </div>
+</nav>
+
+<section class="module card" id="find">
+  <div class="module-head"><div class="module-icon">🗺️</div><div><h2>Find your module</h2></div></div>
+        <div class="intro-box">
+            <h4>What this page is</h4>
+            <p>The Hands-On Guides tell you <em>what to build, step by step</em>. This page is different: it's every concept and piece of vocabulary you should already understand <strong>before</strong> you open one of those guides, gathered in one place instead of scattered across the term. Read the module for what you're about to start, not the whole page at once — each module is written to stand on its own.</p>
+            <p style="margin-bottom:0"><strong>Modular by design:</strong> Its four modules match the <a href="../index.html">course's Modules 1–4</a>, one per HOS. (Module 5, the Team Project, adds no new concepts.) The tools you'll use all term (Codespaces, the terminal, git) are on their own page: <a href="../start-here/tools.html">Tools you'll use all term</a>. Use the table below to find your module.</p>
+            <p style="margin:10px 0 0"><strong>Want to see a concept in motion?</strong> Each HOS has a browser simulator: <a href="../module-1/simulator.html">agentic loop</a>, <a href="../module-2/simulator.html">RAG pipeline</a>, <a href="../module-3/simulator.html">guardrails &amp; queue</a>, <a href="../module-4/simulator.html">push &amp; observability</a>. See all of them, plus the interactive lessons, on the <a href="../index.html">interactive index</a>.</p>
+        </div>
+        <div style="overflow-x:auto" tabindex="0"><table class="map-table">
+            <tr><th>Module</th><th>When</th><th>Outcome(s)</th><th>Jump</th></tr>
+            <tr>
+                <td class="mod-name">1 — Foundations &amp; the Agentic Loop</td>
+                <td>Before Module 1</td>
+                <td>O1</td>
+                <td><a class="jump" href="#module-1">Read →</a></td>
+            </tr>
+            <tr>
+                <td class="mod-name">2 — Embeddings, Chunking &amp; RAG</td>
+                <td>Before Module 2</td>
+                <td>O1, O2</td>
+                <td><a class="jump" href="#module-2">Read →</a></td>
+            </tr>
+            <tr>
+                <td class="mod-name">3 — Guardrails &amp; Async Processing</td>
+                <td>Before Module 3</td>
+                <td>O3</td>
+                <td><a class="jump" href="#module-3">Read →</a></td>
+            </tr>
+            <tr>
+                <td class="mod-name">4 — Mobile, Push &amp; Observability</td>
+                <td>Before Module 4</td>
+                <td>O4, O5</td>
+                <td><a class="jump" href="#module-4">Read →</a></td>
+            </tr>
+        </table></div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-top:6px">Skipped a module and got confused later? That's the signal to come back and read it — every "common snag" box in the Hands-On Guides traces back to one of the concepts below.</p>
+</section>
+
+        <div class="week-tabs no-print module-tabs" role="group" aria-label="Modules">
+            <button type="button" data-mod="1" aria-controls="module-1">Module 1<span class="tab-sub"> · Agentic loop</span></button>
+            <button type="button" data-mod="2" aria-controls="module-2">Module 2<span class="tab-sub"> · RAG</span></button>
+            <button type="button" data-mod="3" aria-controls="module-3">Module 3<span class="tab-sub"> · Guardrails</span></button>
+            <button type="button" data-mod="4" aria-controls="module-4">Module 4<span class="tab-sub"> · Mobile &amp; observability</span></button>
+            <button type="button" class="show-all">Show all modules</button>
+        </div>
+        <p class="small muted tabs-hint">Pick your module. Searching the page (Ctrl/Cmd+F) only looks in the open tab; use "Show all modules" to search everything.</p>
+
+<section class="module card" id="module-1">
+  <div class="module-head"><div class="module-icon">1️⃣</div><div><h2>Module 1: Foundations &amp; the Agentic Loop</h2><div class="module-meta"><span class="tag blue">HOS 1</span><span class="tag">Outcome 1</span></div></div></div>
+            <p class="why-line"><strong>Why before you start:</strong> almost everything you build for the rest of the term is an extension of one request/response call and one decision loop. Get these two shapes solid now and every later HOS is "the same thing, plus one more piece."</p>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Request and response: the frontend, which the user sees, sends a request to your backend, which holds the API key. The backend calls the Gemini API on Google's servers and returns the reply to the frontend as JSON. The frontend never talks to Gemini directly.">
+                    <defs><marker id="maarrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
+                    <rect x="10" y="55" width="180" height="60" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="100" y="80" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">Frontend</text>
+                    <text x="100" y="98" text-anchor="middle" font-size="11" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">what the user sees</text>
+
+                    <rect x="270" y="55" width="180" height="60" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                    <text x="360" y="80" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">Your Backend</text>
+                    <text x="360" y="98" text-anchor="middle" font-size="11" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">holds the API key</text>
+
+                    <rect x="530" y="55" width="180" height="60" rx="8" style="fill:var(--amber-bg);stroke:var(--amber)"/>
+                    <text x="620" y="80" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--amber)" font-family="Inter,system-ui,sans-serif">Gemini API</text>
+                    <text x="620" y="98" text-anchor="middle" font-size="11" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">Google's servers</text>
+
+                    <line x1="190" y1="70" x2="266" y2="70" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow)"/>
+                    <text x="228" y="60" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">request</text>
+                    <line x1="450" y1="70" x2="526" y2="70" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow)"/>
+                    <text x="488" y="60" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">model call</text>
+                    <line x1="526" y1="105" x2="450" y2="105" class="flow-line slow" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow)"/>
+                    <text x="488" y="122" text-anchor="middle" font-size="10" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">reply</text>
+                    <line x1="266" y1="105" x2="190" y2="105" class="flow-line slow" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow)"/>
+                    <text x="228" y="122" text-anchor="middle" font-size="10" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">JSON</text>
+
+                    <text x="360" y="155" text-anchor="middle" font-size="11" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">The frontend never talks to Gemini directly — only your backend ever holds the API key.</text>
+                </svg>
+                <div class="diagram-caption">The request/response shape underneath every HOS of this course.</div>
+            </div>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>Frontend vs. backend, and why the split exists</h4>
+                    <p>The <strong>frontend</strong> is what a user sees and clicks (a Streamlit page, later a mobile app). The <strong>backend</strong> is a server that holds your API key and does the real work — the frontend only ever talks to your own backend, never directly to Gemini.</p>
+                    <div class="why"><strong>Why it matters:</strong> if the frontend held the API key, anyone who opened the app in a browser could extract it. Keeping the key server-side is the whole reason the "full-stack" split exists.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>An LLM API call</h4>
+                    <p>A request to a model provider (here, Gemini) containing a <code>model</code> name and some <code>input</code> text; the response is an object containing the model's answer (<code>output_text</code>) plus metadata like token usage. It's a normal network request under the hood — nothing magic about it.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Tokens &amp; context window</h4>
+                    <p>A <strong>token</strong> is roughly a chunk of a word — models read and write text as sequences of tokens, not characters. Every request has a <strong>context window</strong>: a hard ceiling on how much text (your input + the model's reply, combined) one request can contain.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Tool calling / function calling</h4>
+                    <p>A <strong>tool</strong> is a piece of <em>your own</em> code the model can ask to run — a calculator, a lookup, anything. The model can't execute code itself: it replies with a <code>function_call</code> step naming which tool it wants and with what arguments; your backend actually runs it and sends the result back.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Two separate things, one shared name</h4>
+                    <p>A tool's <strong>schema</strong> (what the model sees — a JSON description, no real code) and its <strong>function</strong> (what your backend runs) are linked only by a shared string, like <code>"calculate"</code>. Get the name mismatched between the two and the lookup silently fails.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>The description field decides everything</h4>
+                    <p>The tool schema's <code>description</code> is the <em>only</em> thing the model reads to decide when to use a tool. A vague description gets called at the wrong times or ignored entirely; a specific one with an example gets used correctly.</p>
+                </div>
+            </div>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The agentic loop: send the message and the tools list. The model decides whether to call a tool. If no, return the final answer. If yes, your code runs the real function and the result goes back to the model, looping until a max-turns limit.">
+                    <defs><marker id="maarrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
+                    <rect x="170" y="10" width="280" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="310" y="40" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">Send message + tools list</text>
+
+                    <line x1="310" y1="60" x2="310" y2="90" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow2)"/>
+
+                    <rect x="150" y="90" width="320" height="50" rx="8" style="fill:var(--amber-bg);stroke:var(--amber)" class="pulse-box"/>
+                    <text x="310" y="120" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--amber)" font-family="Inter,system-ui,sans-serif">Model decides: call a tool, or answer?</text>
+
+                    <line x1="150" y1="115" x2="40" y2="115" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow2)"/>
+                    <text x="95" y="105" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">No</text>
+                    <rect x="10" y="140" width="180" height="45" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                    <text x="100" y="167" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">Return final answer</text>
+
+                    <line x1="310" y1="140" x2="310" y2="175" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow2)"/>
+                    <text x="345" y="160" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">Yes</text>
+
+                    <rect x="150" y="175" width="320" height="50" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                    <text x="310" y="205" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">Your code runs the real function</text>
+
+                    <line x1="310" y1="225" x2="310" y2="255" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow2)"/>
+
+                    <rect x="150" y="255" width="320" height="40" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                    <text x="310" y="279" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">Result goes back to the model</text>
+
+                    <path d="M 480 275 C 560 275, 560 35, 452 35" fill="none" class="flow-line slow" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#maarrow2)"/>
+                    <text x="575" y="155" text-anchor="middle" font-size="9" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif" transform="rotate(90 575 155)">loops back — capped by a max-turns limit</text>
+                </svg>
+                <div class="diagram-caption">The agentic loop: only your backend ever runs real code — the model only ever names which tool it wants.</div>
+            </div>
+
+            <div class="glossary-box">
+                <h5>Vocabulary check</h5>
+                <dl>
+                    <dt>Agentic loop</dt><dd>the send → decide → (maybe call tool) → send result → final-answer cycle.</dd>
+                    <dt>MAX_TURNS guard</dt><dd>a hard cap on how many times the loop can repeat, so a model (or a bug) that keeps calling tools can't loop forever.</dd>
+                    <dt>previous_interaction_id</dt><dd>tells the model "continue that same conversation," so it can use a tool's result to write its final answer.</dd>
+                </dl>
+            </div>
+
+            <div class="check-box">
+                <h5>Quick self-check before you continue</h5>
+                <ul>
+                    <li>Can you explain why the frontend never holds the API key?</li>
+                    <li>Do you know the difference between a tool's schema and its function — and what links them?</li>
+                    <li>If you saw a model calling a tool when it clearly shouldn't have, what's the first thing you'd check?</li>
+                </ul>
+            </div>
+            <p class="module-nav"><a href="#module-2">Next: Module 2 — Embeddings, Chunking &amp; RAG →</a></p>
+</section>
+
+<section class="module card" id="module-2">
+  <div class="module-head"><div class="module-icon">2️⃣</div><div><h2>Module 2: Embeddings, Chunking &amp; RAG</h2><div class="module-meta"><span class="tag blue">HOS 2</span><span class="tag">Outcomes 1–2</span></div></div></div>
+            <p class="why-line"><strong>Why before you start:</strong> Retrieval-Augmented Generation (RAG) is the single most common pattern for making a model answer accurately about specific data instead of guessing. Every concept here builds toward that one pipeline.</p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>Embeddings</h4>
+                    <p>A list of a few thousand numbers (a "vector") representing the <em>meaning</em> of a piece of text. Text with similar meaning gets vectors that point in similar directions; unrelated text points in very different directions — pure math, no human labeling needed.</p>
+                    <div class="why"><strong>Why not keyword search?</strong> A keyword search for "return policy" misses a document about "sending an item back within 30 days" that never uses the word "return." Embeddings capture meaning, not exact wording.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>Chunking</h4>
+                    <p>Splitting a long document into smaller pieces <em>before</em> embedding them. Embedding an entire multi-page document into one vector blurs together everything it discusses; focused, single-topic chunks produce vectors that represent one clear idea.</p>
+                    <div class="why"><strong>The tradeoff:</strong> chunks too large and everything looks similarly related; too small and they lose the surrounding context needed to make sense on their own. Overlap between consecutive chunks avoids cutting a sentence in half at a boundary.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>Cosine similarity</h4>
+                    <p>The standard way to compare two embeddings — it measures the <em>angle</em> between them, ignoring length, returning a number from -1 (opposite meaning) to 1 (identical meaning), with 0 meaning unrelated.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Vector database</h4>
+                    <p>A database built to search by "closest vector" instead of exact match. A <strong>collection</strong> is its equivalent of a table — every chunk you add needs an embedding of the same length as the first one ever added to that collection.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Document vs. query embeddings</h4>
+                    <p>The same embedding model is told which side of the search a piece of text is on (<code>RETRIEVAL_DOCUMENT</code> vs. <code>RETRIEVAL_QUERY</code>), which changes how it optimizes the resulting vector slightly. Embed both sides with mismatched settings and similarity scores become meaningless.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>RAG — Retrieval-Augmented Generation</h4>
+                    <p>Retrieve the most relevant chunks for a user's question first, then hand them to the model as background context (typically via a <code>system_instruction</code>) before it answers — grounding the reply in your actual documents instead of the model's general knowledge alone.</p>
+                </div>
+            </div>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Retrieval pipeline: documents are split into chunks, each chunk is embedded and stored in a vector database, one vector per chunk. A user's question is embedded the same way and searched against it, and the top chunks go into the system instruction so the model answers grounded in them.">
+                    <defs><marker id="mbarrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
+                    <rect x="10" y="20" width="150" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="85" y="49" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">Documents</text>
+                    <line x1="160" y1="45" x2="216" y2="45" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mbarrow)"/>
+                    <text x="188" y="35" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">chunk</text>
+                    <rect x="220" y="20" width="150" height="50" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                    <text x="295" y="49" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">Chunks</text>
+                    <line x1="370" y1="45" x2="426" y2="45" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mbarrow)"/>
+                    <text x="398" y="35" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">embed</text>
+                    <rect x="430" y="20" width="180" height="50" rx="8" style="fill:var(--amber-bg);stroke:var(--amber)"/>
+                    <text x="520" y="42" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--amber)" font-family="Inter,system-ui,sans-serif">Vector database</text>
+                    <text x="520" y="58" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">one vector per chunk</text>
+
+                    <rect x="10" y="130" width="150" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="85" y="159" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">User's question</text>
+                    <line x1="160" y1="155" x2="426" y2="155" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mbarrow)"/>
+                    <text x="293" y="145" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">embed query → search</text>
+
+                    <rect x="330" y="205" width="270" height="45" rx="8" style="fill:var(--blue-bg);stroke:var(--violet)"/>
+                    <text x="465" y="223" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--violet)" font-family="Inter,system-ui,sans-serif">Top chunks → system_instruction</text>
+                    <text x="465" y="239" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">→ model answers grounded in them</text>
+
+                    <path d="M 500 70 L 500 205" fill="none" class="flow-line slow" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mbarrow)"/>
+                    <path d="M 500 180 L 440 180 L 440 205" fill="none" class="flow-line slow" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mbarrow)"/>
+                </svg>
+                <div class="diagram-caption">Documents are embedded once, up front; the query is embedded the same way at search time, then compared to every chunk.</div>
+            </div>
+
+            <div class="glossary-box">
+                <h5>Vocabulary check</h5>
+                <dl>
+                    <dt>Grounding</dt><dd>an answer that's traceable to specific retrieved text, not the model's general knowledge.</dd>
+                    <dt>Hallucination</dt><dd>a confident-sounding answer that isn't actually supported by any real source — what retrieval is meant to reduce.</dd>
+                    <dt>The on/off contrast test</dt><dd>asking the same document-specific question with retrieval on vs. off — the clearest proof RAG is doing something.</dd>
+                </dl>
+            </div>
+
+            <div class="check-box">
+                <h5>Quick self-check before you continue</h5>
+                <ul>
+                    <li>Can you explain, in one sentence, why chunking happens before embedding rather than after?</li>
+                    <li>Do you know what would go wrong if you embedded a query with <code>RETRIEVAL_DOCUMENT</code> instead of <code>RETRIEVAL_QUERY</code>?</li>
+                    <li>What's the simplest experiment that proves retrieval is actually changing the model's answer?</li>
+                </ul>
+            </div>
+            <p class="module-nav"><a href="#module-3">Next: Module 3 — Guardrails &amp; Async Processing →</a></p>
+</section>
+
+<section class="module card" id="module-3">
+  <div class="module-head"><div class="module-icon">3️⃣</div><div><h2>Module 3: Guardrails &amp; Asynchronous Processing</h2><div class="module-meta"><span class="tag blue">HOS 3</span><span class="tag">Outcome 3</span></div></div></div>
+            <p class="why-line"><strong>Why before you start:</strong> once your app is doing real retrieval and tool calls, two new risks show up — the model can produce malformed output, and slow work can freeze the app for everyone using it. This module is about naming those risks on purpose, then handling both.</p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>Architecture / failure-point thinking</h4>
+                    <p>Before fixing anything, draw your app's actual request path — box per step, arrow per call — and ask two questions of every arrow: <em>what happens if this step is slow?</em> and <em>what happens if it returns something malformed?</em> "The API could go down" isn't specific enough; "if the embeddings API is down, <code>retrieve()</code> throws and the whole request fails instead of just skipping context" is.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Probabilistic vs. deterministic output</h4>
+                    <p>A model's output isn't guaranteed to be well-formed — the same tool call can come back with the right shape most of the time and a missing or malformed field occasionally. Treat model output the way you'd treat unreliable user input: never trust it blindly.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Guardrails: schema validation + retry + safe fallback</h4>
+                    <p>Define the exact shape you expect (a schema), validate the model's output against it, retry a limited number of times on failure, and return a clear, safe error if every attempt fails — never a raw crash.</p>
+                    <div class="why"><strong>Why it matters:</strong> a retry that resends the identical request rarely fixes a structural problem; a fixed retry limit prevents an unrecoverable case from looping forever.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>Synchronous vs. asynchronous processing</h4>
+                    <p><strong>Synchronous:</strong> the requester waits until the work finishes. <strong>Asynchronous:</strong> the work is handed off to run separately, and the requester gets an immediate acknowledgment instead of waiting.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Message queue &amp; worker</h4>
+                    <p>A queue is a to-do list one process (your API) adds tasks to; a <strong>worker</strong> is a separate, independently-running program that pulls tasks off the queue and executes them, one at a time.</p>
+                    <div class="why"><strong>Why it matters:</strong> slow work (like ingesting a large document) no longer blocks fast work (like answering a chat message) — they run as genuinely separate processes, connected only through the queue.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>Job status polling</h4>
+                    <p>Enqueuing work returns a job ID immediately; a separate status endpoint looks that job up by ID and reports where it is: <code>queued</code> → <code>started</code> → <code>finished</code> (or <code>failed</code>), plus the result once it's done.</p>
+                </div>
+            </div>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Guardrail: the model returns tool arguments, which are validated against a schema. If valid, the tool runs. If invalid, the call is retried up to a limit, or a safe error is returned once retries run out.">
+                    <defs><marker id="mcarrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
+                    <rect x="220" y="10" width="200" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="320" y="40" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">Model returns tool arguments</text>
+                    <line x1="320" y1="60" x2="320" y2="95" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mcarrow)"/>
+                    <rect x="200" y="95" width="240" height="50" rx="8" style="fill:var(--amber-bg);stroke:var(--amber)"/>
+                    <text x="320" y="125" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--amber)" font-family="Inter,system-ui,sans-serif">Validate against schema</text>
+                    <line x1="200" y1="120" x2="70" y2="120" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mcarrow)"/>
+                    <text x="130" y="110" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">valid</text>
+                    <rect x="10" y="145" width="120" height="45" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                    <text x="70" y="172" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">Run the tool</text>
+                    <line x1="320" y1="145" x2="320" y2="180" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mcarrow)"/>
+                    <text x="355" y="165" text-anchor="middle" font-size="10" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">invalid</text>
+                    <rect x="220" y="180" width="200" height="50" rx="8" style="fill:var(--bad-bg);stroke:var(--bad)"/>
+                    <text x="320" y="200" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--bad)" font-family="Inter,system-ui,sans-serif">Retry (up to a limit)</text>
+                    <text x="320" y="215" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">or return a safe error if exhausted</text>
+                    <path d="M 420 205 C 480 205, 480 120, 442 120" fill="none" class="flow-line slow" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mcarrow)"/>
+                </svg>
+                <div class="diagram-caption">A guardrail wraps every tool call: validate first, and only run the tool if the shape is right.</div>
+            </div>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Background jobs: your API enqueues a job and stays responsive. The queue is a to-do list. A separate worker process pulls jobs from it and does the slow work, while fast requests keep flowing through the API.">
+                    <defs><marker id="mcarrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
+                    <rect x="10" y="20" width="130" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="75" y="42" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">Your API</text>
+                    <text x="75" y="58" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">stays responsive</text>
+                    <line x1="140" y1="45" x2="196" y2="45" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mcarrow2)"/>
+                    <text x="168" y="35" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">enqueue()</text>
+                    <rect x="200" y="20" width="130" height="50" rx="8" style="fill:var(--amber-bg);stroke:var(--amber)"/>
+                    <text x="265" y="42" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--amber)" font-family="Inter,system-ui,sans-serif">Queue</text>
+                    <text x="265" y="58" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">a to-do list</text>
+                    <line x1="330" y1="45" x2="386" y2="45" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mcarrow2)"/>
+                    <text x="358" y="35" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">pulls jobs</text>
+                    <rect x="390" y="20" width="150" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--violet)"/>
+                    <text x="465" y="42" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--violet)" font-family="Inter,system-ui,sans-serif">Worker</text>
+                    <text x="465" y="58" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">a SEPARATE process</text>
+                    <line x1="465" y1="70" x2="465" y2="100" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mcarrow2)"/>
+                    <rect x="390" y="100" width="150" height="45" rx="8" style="fill:var(--bad-bg);stroke:var(--bad)"/>
+                    <text x="465" y="127" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--bad)" font-family="Inter,system-ui,sans-serif">Does the slow work</text>
+                    <text x="320" y="170" text-anchor="middle" font-size="11" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">Meanwhile, fast requests keep flowing through the API — the slow work runs somewhere else entirely.</text>
+                </svg>
+                <div class="diagram-caption">The API and the worker are two separate running programs, connected only through the queue.</div>
+            </div>
+
+            <div class="check-box">
+                <h5>Quick self-check before you continue</h5>
+                <ul>
+                    <li>Can you name one specific failure point in your own app — not a generic "the API could fail"?</li>
+                    <li>Do you know why a guardrail returns a safe error dict instead of raising an exception?</li>
+                    <li>Can you explain why the worker needs its own copy of your environment variables?</li>
+                </ul>
+            </div>
+            <p class="module-nav"><a href="#module-4">Next: Module 4 — Mobile, Push &amp; Observability →</a></p>
+</section>
+
+<section class="module card" id="module-4">
+  <div class="module-head"><div class="module-icon">4️⃣</div><div><h2>Module 4: Mobile, Push &amp; Observability</h2><div class="module-meta"><span class="tag blue">HOS 4</span><span class="tag">Outcomes 4–5</span></div></div></div>
+            <p class="why-line"><strong>Why before you start:</strong> the last stretch puts the same backend you've been building in front of a real device, and makes what's happening inside it visible instead of a black box you have to guess about.</p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>Mobile dev-server model (Expo / React Native)</h4>
+                    <p>A local dev server streams your app's actual code to a real phone via a QR code, using an app like Expo Go — no app-store submission or build step needed for development. It's the same idea as a web dev server, just for a native-feeling mobile app.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Same backend, different client</h4>
+                    <p>The mobile app is just another caller of the exact same API you've been building since HOS 1 — it doesn't talk to Gemini directly either, and it doesn't require rebuilding anything on the backend.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Push notifications &amp; push tokens</h4>
+                    <p>A <strong>push token</strong> uniquely identifies one specific phone running one specific app install. Your backend never talks to the phone directly — it hands the token and a message to a third-party push service (Expo's, here), which actually delivers the notification, even when the app is closed or backgrounded.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Device registration</h4>
+                    <p>Before your backend can push to a phone, that phone has to send its token to the backend once, so the backend can store it (keyed by a device ID) and look it up later when it needs to notify that device.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Observability: tracing &amp; spans</h4>
+                    <p>Recording what actually happened on a real request — timing, inputs, outputs, cost — automatically, instead of guessing or scattering <code>print()</code> statements. A <strong>trace</strong> is the full record of one request; a <strong>span</strong> is one meaningful step nested inside it (e.g. retrieval, or one model call).</p>
+                    <div class="why"><strong>Why trace individual steps, not the whole request as one block?</strong> Nesting meaningful steps (retrieval vs. generation vs. tool calls) as separate spans is what lets you answer "which part was actually slow?" — wrapping everything as one giant span just tells you the total was slow.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>Evaluation</h4>
+                    <p>A way to score output quality with a number instead of a vibe — even a rough heuristic (like how much of the retrieved context's words show up in the final answer) is enough to spot when a model is clearly ignoring what it was given.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Deployment</h4>
+                    <p>The gap between "runs on my laptop" and "a real, reachable product." Code nobody else can access isn't a product yet — this is what turns a term's worth of builds into something you can hand someone a link to.</p>
+                </div>
+            </div>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Push notifications: your phone gets a push token and registers it with your backend, which stores it by device. When a document upload's job finishes, the backend sends a push through a third-party push service, and the notification appears even if the app is in the background.">
+                    <defs><marker id="mdarrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
+                    <rect x="10" y="15" width="140" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="80" y="37" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">Your phone</text>
+                    <text x="80" y="53" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">gets a push token</text>
+                    <line x1="150" y1="40" x2="206" y2="40" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mdarrow)"/>
+                    <text x="178" y="30" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">register</text>
+                    <rect x="210" y="15" width="150" height="50" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                    <text x="285" y="37" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">Your backend</text>
+                    <text x="285" y="53" text-anchor="middle" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">stores token by device</text>
+                    <line x1="80" y1="65" x2="80" y2="95" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mdarrow)"/>
+                    <text x="118" y="83" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">upload doc</text>
+                    <rect x="10" y="95" width="140" height="45" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                    <text x="80" y="122" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">POST /documents</text>
+                    <line x1="150" y1="118" x2="206" y2="118" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mdarrow)"/>
+                    <rect x="210" y="95" width="150" height="45" rx="8" style="fill:var(--amber-bg);stroke:var(--amber)"/>
+                    <text x="285" y="122" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--amber)" font-family="Inter,system-ui,sans-serif">enqueue job</text>
+                    <line x1="360" y1="118" x2="416" y2="118" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mdarrow)"/>
+                    <rect x="420" y="95" width="150" height="45" rx="8" style="fill:var(--blue-bg);stroke:var(--violet)"/>
+                    <text x="495" y="122" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--violet)" font-family="Inter,system-ui,sans-serif">worker finishes</text>
+                    <line x1="495" y1="140" x2="495" y2="170" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mdarrow)"/>
+                    <text x="530" y="158" font-size="9" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">send push</text>
+                    <rect x="420" y="170" width="150" height="45" rx="8" style="fill:var(--bad-bg);stroke:var(--bad)"/>
+                    <text x="495" y="192" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--bad)" font-family="Inter,system-ui,sans-serif">Push service</text>
+                    <text x="495" y="205" text-anchor="middle" font-size="8" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">a third party, not your backend</text>
+                    <path d="M 420 192 C 250 192, 100 192, 80 145" fill="none" class="flow-line slow" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#mdarrow)"/>
+                    <text x="220" y="207" text-anchor="middle" font-size="9" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">notification appears — even if the app is backgrounded</text>
+                </svg>
+                <div class="diagram-caption">Push flows through a third-party service — your backend never talks to the phone directly.</div>
+            </div>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A trace is one full request: run_agent takes 1.8 seconds in total, with nested spans for retrieve at 0.4 seconds and the model call at 1.3 seconds, each timed separately.">
+                    <rect x="20" y="15" width="600" height="170" rx="8" style="fill:var(--surface2);stroke:var(--border)" stroke-dasharray="3,3"/>
+                    <text x="40" y="37" font-size="11" font-weight="700" style="fill:var(--text)" font-family="Inter,system-ui,sans-serif">One trace = one full request</text>
+                    <rect x="40" y="50" width="560" height="34" rx="6" style="fill:var(--blue-bg);stroke:var(--blue)" class="pulse-box"/>
+                    <text x="55" y="71" font-size="10" font-weight="700" style="fill:var(--blue)" font-family="Inter,system-ui,sans-serif">run_agent() — the whole request</text>
+                    <text x="580" y="71" text-anchor="end" font-size="9" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">total: 1.8s</text>
+                    <rect x="60" y="94" width="260" height="32" rx="6" style="fill:var(--accent-light);stroke:var(--accent)" class="pulse-box" style="animation-delay:0.7s"/>
+                    <text x="75" y="114" font-size="10" font-weight="700" style="fill:var(--accent2)" font-family="Inter,system-ui,sans-serif">↳ retrieve() span</text>
+                    <text x="305" y="114" text-anchor="end" font-size="9" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">0.4s</text>
+                    <rect x="60" y="134" width="260" height="32" rx="6" style="fill:var(--amber-bg);stroke:var(--amber)" class="pulse-box" style="animation-delay:1.4s"/>
+                    <text x="75" y="154" font-size="10" font-weight="700" style="fill:var(--amber)" font-family="Inter,system-ui,sans-serif">↳ model call span</text>
+                    <text x="305" y="154" text-anchor="end" font-size="9" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">1.3s</text>
+                    <text x="340" y="114" font-size="9" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">← nested spans, timed separately</text>
+                </svg>
+                <div class="diagram-caption">Nested spans are what let you answer "which specific step was slow?" instead of only "the whole thing was slow."</div>
+            </div>
+
+            <div class="check-box">
+                <h5>Quick self-check before you continue</h5>
+                <ul>
+                    <li>Can you explain why push notifications go through a third-party service instead of your backend calling the phone directly?</li>
+                    <li>Do you know the difference between a trace and a span?</li>
+                    <li>Can you name one thing your app does that would be worth measuring with a number, not just "it feels fine"?</li>
+                </ul>
+            </div>
+</section>
+
+        <p style="font-size:0.85rem;color:var(--muted);margin-top:8px">Missed something after all this? Every Hands-On Guide's "Common snags" box is written for exactly that moment — go back to the relevant HOS guide and re-read its <code>explain</code> boxes alongside this page.</p>
+        <a class="back-to-top" href="#find">↑ Back to the module map</a>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+<script>
+/* module tabs: one module at a time; #module-N links open the right tab */
+(function(){
+  var panels=[1,2,3,4].map(function(n){ return document.getElementById('module-'+n); }).filter(Boolean); if(!panels.length) return;
+  var tabs=[].slice.call(document.querySelectorAll('.module-tabs [data-mod]')), all=document.querySelector('.module-tabs .show-all');
+  var key='ai410-cc-tab-'+location.pathname, last='1';
+  function save(v){ try{ localStorage.setItem(key,v); }catch(e){} }
+  function load(){ try{ return localStorage.getItem(key); }catch(e){ return null; } }
+  function show(m){
+    if(m!=='all') last=m;
+    panels.forEach(function(p){ p.hidden = !(m==='all' || p.id==='module-'+m); });
+    tabs.forEach(function(t){ t.setAttribute('aria-pressed', String(t.getAttribute('data-mod')===m)); });
+    if(all) all.textContent = m==='all' ? 'Show one module at a time' : 'Show all modules';
+  }
+  function modOf(id){ var el=id && document.getElementById(id); var p=el && el.closest('[id^="module-"]'); return p ? p.id.replace('module-','') : null; }
+  document.body.classList.add('tabs-on');
+  var start = modOf(location.hash.slice(1)) || load() || '1';
+  show(start);
+  if(location.hash){ var tgt=document.getElementById(location.hash.slice(1)); if(tgt){ var go=function(){ tgt.scrollIntoView({block:'start', behavior:'instant'}); }; setTimeout(go,0); window.addEventListener('load',go); } }
+  tabs.forEach(function(t){ t.addEventListener('click',function(){ var m=t.getAttribute('data-mod'); show(m); save(m); }); });
+  if(all) all.addEventListener('click',function(){ var cur=tabs.filter(function(t){return t.getAttribute('aria-pressed')==='true';})[0]; var m = cur ? 'all' : last; show(m); save(m); });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+    var m=modOf(a.getAttribute('href').slice(1)); if(!m) return;
+    var p=document.getElementById('module-'+m); if(p && p.hidden){ show(m); save(m); }
+  }, true);
+  window.addEventListener('hashchange',function(){ var m=modOf(location.hash.slice(1)); if(m){ var p=document.getElementById('module-'+m); if(p.hidden){ show(m); var el=document.getElementById(location.hash.slice(1)); if(el) el.scrollIntoView(); } } });
+})();
+</script>
+<script>
+/* section nav highlight (scrolls only the nav row, never the page) */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

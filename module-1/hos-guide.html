@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 410 — HOS 1 Hands-On Guide: Foundations &amp; the Agentic Loop</title>
+    <link rel="stylesheet" href="../assets/course.css">
+    <style>
+        .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
+        .draft-banner strong { color:var(--amber); }
+        .goal-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:15px 18px; margin:18px 0; border-radius:4px; }
+        .goal-box h4 { margin:0 0 6px; color:var(--blue); font-size:0.95rem; }
+        .needs-list li { margin-bottom:6px; }
+        .stage-block { border:1px solid var(--border); border-radius:8px; padding:20px 22px; margin-bottom:18px; }
+        .stage-block h2 { margin:0 0 4px; font-size:1.15rem; }
+        .stage-num { display:inline-block; width:26px; height:26px; border-radius:50%; background:var(--accent-light); color:var(--accent2); font-weight:700; font-size:0.85rem; text-align:center; line-height:26px; margin-right:8px; }
+        .stage-tagline { color:var(--muted); font-size:0.85rem; margin:0 0 14px 34px; }
+        pre { background:var(--code-bg); color:var(--code-text); padding:14px 16px; border-radius:6px; overflow-x:auto; font-size:0.8rem; line-height:1.5; }
+        code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+        p code, li code { background:var(--surface2); color:var(--rose); padding:1px 5px; border-radius:4px; font-size:0.88em; }
+        .not-graded { background:var(--surface2); border-left:3px solid var(--border); padding:8px 14px; margin:10px 0; font-size:0.85rem; border-radius:0 4px 4px 0; color:var(--muted); }
+        .submit-box { background:var(--accent-light); border-left:5px solid var(--accent); padding:14px 18px; margin:14px 0 0; border-radius:0 4px 4px 0; font-size:0.9rem; }
+        .submit-box h5 { margin:0 0 8px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
+        .submit-box ul { margin:0; padding-left:20px; }
+        .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:20px 0; border-radius:4px; }
+        .snag-box h4 { margin:0 0 8px; color:var(--amber); }
+        .shot { margin:14px 0; }
+        .shot img { max-width:100%; height:auto; border:1px solid var(--border); border-radius:6px; display:block; }
+        .shot figcaption { font-size:0.84rem; color:var(--muted); margin-top:6px; }
+        .shot-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap:14px; align-items:start; }
+        .shot-grid .shot { margin:0; }
+        details.sample-run { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin:16px 0; }
+        details.sample-run summary { cursor:pointer; font-weight:600; color:var(--text); }
+        details.sample-run > p { font-size:0.88rem; }
+        .guide-nav { display:flex; justify-content:space-between; margin-top:30px; padding-top:16px; border-top:1px solid var(--border); font-size:0.9rem; }
+        .guide-nav a { color:var(--link); text-decoration:none; font-weight:600; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Module 1 · Hands-On Skill (HOS) guide</div>
+    <h1>HOS 1: Foundations &amp; the Agentic Loop</h1>
+    <p class="lede">Build a full-stack chat app that can call a real tool — using an AI coding assistant to scaffold it fast, then proving, in writing and by hand, that you actually understand what it built.</p>
+    <div class="chips"><span class="chip">Est. 2–2.5 hrs</span><span class="chip">Outcome 1</span><span class="chip">Module 1 · Weeks 1–2</span><span class="chip">10% of final grade</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#before">Before you start</a>
+    <a href="#create">Create</a>
+    <a href="#evaluate">Evaluate</a>
+    <a href="#analyze">Analyze</a>
+    <a href="#refine">Understand &amp; Refine</a>
+    <a href="#snags">Common snags</a>
+  </div>
+</nav>
+
+<section class="module card" id="before">
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Before you start</h2></div></div>
+        <div class="before-box">
+            <ol>
+                <li><b>Check your account setup.</b> This module needs a <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a>. Set it up first; the build won't run without it.</li>
+                <li><b>Know the concepts.</b> Read <a href="../reference/concept-companion.html#module-1">Concept Companion → Module 1</a> before you open the starter code.</li>
+            </ol>
+        </div>
+
+        <h4>What you'll need</h4>
+        <ul class="needs-list">
+            <li><strong>Starter code:</strong> <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-01-foundations-agentic-loop" target="_blank" rel="noopener">this HOS's starter-code folder</a> — deliberately close to empty; see its README for why. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos1">starter code walkthrough for this HOS</a>.</li>
+            <li>Python 3.11+ and a terminal (or GitHub Codespaces — recommended, see the folder's <code>.devcontainer</code>)</li>
+            <li>An AI coding assistant available in your environment — GitHub Copilot Chat (built into Codespaces, use <strong>Agent</strong> mode), Claude Code, or equivalent</li>
+            <li>A free Gemini API key (no credit card required) from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a></li>
+        </ul>
+
+        <p>This HOS is graded across four stages instead of on code correctness alone: <strong>Engagement</strong> (Create/Scaffold) is 20% of the HOS grade, and <strong>Skills</strong> is 80%: Evaluate, Analyze, Apply (the change you make by hand in Understand &amp; Refine) and Understand (your own explanation of it), 20% each. Each stage below says exactly what to submit. Everything goes in your Module 1 GitHub Classroom repo: written work under the matching heading in <code>hos/NOTES.md</code>, screenshots in <code>hos/screenshots/</code>. Commit and push as you go, then submit the repo link to the HOS 1 assignment in Brightspace by the end of Week 2.</p>
+</section>
+
+<section class="module card" id="create">
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
+            <p class="stage-tagline">Graded as Engagement: 20% of this HOS. The AI-assisted starting point, not the deliverable.</p>
+            <p>Open your starter-code folder in Codespaces (or locally) and prompt your AI assistant to build the app. A reasonable starting prompt:</p>
+<pre tabindex="0">Build a full-stack chat app in THIS existing workspace (the starter-code
+folder that's already open) — edit files here; do not create a new
+workspace or project:
+- backend/: a FastAPI server with a POST /chat endpoint that calls the
+  Gemini API (google-genai) with model "gemini-3.8-flash" (kept in one
+  MODEL constant), reading GEMINI_API_KEY from backend/.env.
+  Give it an agentic loop: the model should be able to call a real
+  tool (e.g. a calculator) via function calling, and the tool's result
+  should go back to the model before it replies.
+- frontend/: a Streamlit chat app that calls the backend's /chat
+  endpoint over HTTP.
+- requirements.txt files for both.</pre>
+            <p><strong>Two things the prompt pins down on purpose</strong> (both caught in testing — see Common snags): <em>where</em> the files go, and <em>which</em> Gemini model to call. Keep both lines if you rewrite the prompt.</p>
+            <details class="sample-run">
+                <summary>Sample run: Stage 1 in a faculty test Codespace (GitHub Copilot Chat, Agent mode)</summary>
+                <p>One run, start to finish, so you know what to expect. Your assistant will produce different code. Click a screenshot to open it full size.</p>
+                <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/01-codespace-agent-mode-prompt.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/01-codespace-agent-mode-prompt.webp" alt="A fresh Codespace with the starter folder open in Explorer and the starter prompt pasted into the Copilot Chat panel, with Agent mode selected" loading="lazy"></a><figcaption><strong>Start here.</strong> The starter folder is open as the workspace (Explorer shows <code>.devcontainer</code>, <code>backend</code>, <code>README.md</code>). The prompt goes into the Chat panel with <strong>Agent</strong> mode selected at the bottom. This test used the earlier prompt (“in this folder”), which is how the new-workspace snag showed up. Use the current prompt above.</figcaption></figure>
+                <div class="shot-grid">
+                <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/02-copilot-create-file-allow.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/02-copilot-create-file-allow.webp" alt="Copilot dialog: Create file? Create app.py, 1 file created, +43 -0, with an Allow button" loading="lazy"></a><figcaption><strong>Copilot asks before it writes files.</strong> Click <strong>Allow</strong>, but first check the file is going into <em>this</em> workspace (<code>backend/</code> or <code>frontend/</code>), not a new folder.</figcaption></figure>
+                <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/03-python-environment-picker.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/03-python-environment-picker.webp" alt="VS Code prompt: Configure a Python Environment, with Create Virtual Environment (Recommended) and Select an existing Python Environment" loading="lazy"></a><figcaption><strong>Python environment prompt.</strong> If VS Code asks, pick <strong>Create Virtual Environment</strong>. That is the <code>.venv</code> folder you will see in Explorer next.</figcaption></figure>
+                </div>
+                <div class="shot-grid">
+                <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/05-scaffold-in-existing-workspace.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/05-scaffold-in-existing-workspace.webp" alt="Explorer shows backend/main.py, backend/requirements.txt, frontend/app.py, frontend/requirements.txt inside the starter workspace; the editor shows a calculator function and its CALCULATOR_TOOL declaration" loading="lazy"></a><figcaption><strong>The right result: files in the starter workspace.</strong> <code>backend/</code> and <code>frontend/</code> sit next to <code>.devcontainer</code>. Note the tool description, “Evaluate a basic arithmetic expression.” Is that specific enough? (See Common snags.)</figcaption></figure>
+                <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/04-copilot-run-instructions.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/04-copilot-run-instructions.webp" alt="Copilot Chat summary: run commands for backend and frontend, and a note that live Gemini integration was not exercised because no API key was available" loading="lazy"></a><figcaption><strong>Copilot finishes with run commands.</strong> Read the last line: it checked syntax only and <em>never called Gemini</em>. “It compiles” is not “it works.” That is what Stage 2 is for.</figcaption></figure>
+                </div>
+                <div class="shot-grid">
+                <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/06-streamlit-running.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/06-streamlit-running.webp" alt="Terminal: streamlit run frontend/app.py, showing Local URL http://localhost:8501" loading="lazy"></a><figcaption><strong>Second terminal: Streamlit running.</strong> Open the forwarded port 8501 (Ports tab) to see the app. The backend (<code>uvicorn backend.main:app --reload</code>) must be running in the first terminal.</figcaption></figure>
+                <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/07-working-chat.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/07-working-chat.webp" alt="Gemini Chat app: hi, do you have a calculator?, and what is 342 times 87 answered 29,754" loading="lazy"></a><figcaption><strong>Working.</strong> After switching to <code>gemini-3.8-flash</code>, the chat answers. But did “342 times 87” actually call the calculator, or did the model just know the answer? The screen can’t tell you. Check the backend log. That is your first Evaluate test.</figcaption></figure>
+                </div>
+            </details>
+            <p>Iterate with it until you have a working chat app that can call at least one tool. Don't hand-edit anything yet — this stage is entirely AI-driven.</p>
+            <div class="submit-box">
+                <h5>Submit (Engagement)</h5>
+                <ul><li>The prompt you gave your AI assistant, and a screenshot of the scaffolded app running.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="evaluate">
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>2 · Evaluate</h2></div></div>
+            <p class="stage-tagline">The critical gate — is the AI-produced result actually correct?</p>
+            <p>Test it on purpose. At minimum, try:</p>
+            <ul>
+                <li>A message that clearly needs the tool (e.g. "what's 342 times 87?") — did it actually call the tool, or guess the answer in text?</li>
+                <li>A message that doesn't need the tool at all — did it answer directly instead of forcing a tool call?</li>
+                <li>An input that could break the tool (e.g. an incomplete expression) — does it fail gracefully, or crash the whole request?</li>
+            </ul>
+            <div class="submit-box">
+                <h5>Submit</h5>
+                <ul><li>A short written note: what you tested, what you found, and anything the AI got wrong, missed, or handled surprisingly well.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="analyze">
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>3 · Analyze</h2></div></div>
+            <p class="stage-tagline">Why does this work, mechanically?</p>
+            <p>Pick <strong>one</strong> specific piece of the AI-generated backend code — most naturally, the part of the agentic loop that decides whether the model wants to call a tool — and explain, in your own words, exactly how it works. Don't summarize the whole file; go deep on one mechanism.</p>
+            <div class="submit-box">
+                <h5>Submit</h5>
+                <ul><li>A short written walkthrough of the one piece you chose, in your own words.</li></ul>
+            </div>
+</section>
+
+<section class="module card" id="refine">
+  <div class="module-head"><div class="module-icon">✋</div><div><h2>4 · Understand &amp; Refine</h2></div></div>
+            <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
+            <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
+            <p>Add a <strong>second</strong> tool to the agent yourself — something different from whatever your AI assistant built in Stage 1 (a word counter, a unit converter, a date lookup — anything with a clear, testable behavior). Register it correctly alongside the first tool, and confirm the agent calls the right tool for the right question.</p>
+            <div class="submit-box">
+                <h5>Submit</h5>
+                <ul>
+                    <li>A screenshot of the working app, showing both tools firing correctly on different messages.</li>
+                    <li>The code for the tool you wrote by hand.</li>
+                </ul>
+            </div>
+</section>
+
+<section class="module card" id="snags">
+  <div class="module-head"><div class="module-icon">🧯</div><div><h2>Common snags</h2></div></div>
+        <div class="snag-box">
+            <ul>
+                <li><strong>Copilot Chat builds the app somewhere other than your starter folder</strong> — in Codespaces, the default Copilot Chat agent tends to scaffold a brand-new workspace/folder of its own (and may offer to open it) instead of editing the starter-code workspace that's already open — so your <code>.devcontainer</code> and <code>backend/.env.example</code> get left behind. Use <strong>Agent</strong> mode with the starter folder open, and say explicitly “in this existing workspace, don't create a new one” (the starter prompt above does). If it already happened, delete the stray folder and re-prompt; don't try to merge the two.</li>
+                <li><strong><code>502 Bad Gateway</code> (or a 404 / “model not found”) from <code>/chat</code></strong> — almost always the model name. AI assistants default to whatever model was current in their training data — e.g. <code>gemini-2.5-flash</code>, which is no longer available to new API keys. The backend's Gemini call fails, and the frontend reports it as a 502. Set the model to <code>gemini-3.8-flash</code> (tested working in Codespaces with a fresh free key), restart <code>uvicorn</code>, and try again. If that ever stops working too, check the current list at <a href="https://ai.google.dev/gemini-api/docs/models" target="_blank" rel="noopener">ai.google.dev/gemini-api/docs/models</a> and use the current Flash model — this is exactly why the model name belongs in one constant.
+                    <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/08-chat-502-bad-gateway.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/08-chat-502-bad-gateway.webp" alt="uvicorn log: POST /chat returns 502 Bad Gateway three times while GET /health returns 200 OK" loading="lazy"></a><figcaption>What it looks like in the <code>uvicorn</code> terminal: <code>/health</code> is <code>200 OK</code>, so the server is up, but every <code>POST /chat</code> is <code>502 Bad Gateway</code>, because the call to Gemini is failing. (The <code>404</code>s for <code>/</code> and <code>/favicon.ico</code> are harmless. The backend has no home page.)</figcaption></figure></li>
+                <li><strong>The AI assistant adds CORS middleware</strong> — you don't need it. The Streamlit frontend calls the backend server-side (Python to Python), not from JavaScript in a browser, so CORS is irrelevant here. Fine to remove if you notice it.</li>
+                <li><strong>The agent always calls the tool, even when it shouldn't</strong> — check the tool's description in its schema. A vague description ("does math") makes the model over-eager; a specific one narrows it down.</li>
+                <li><strong>Two terminals, easy to forget</strong> — the backend (<code>uvicorn</code>) and frontend (<code>streamlit run</code>) are separate processes. If the frontend can't reach the backend, check both are actually running.</li>
+            </ul>
+            <p class="small" style="margin:10px 0 0">Most snags trace back to a concept. If one doesn't make sense, see <a href="../reference/concept-companion.html#module-1">Concept Companion → Module 1</a>.</p>
+        </div>
+</section>
+
+<div class="guide-nav">
+            <span></span>
+            <a href="index.html">Module 1 lesson →</a>
+        </div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+<script>
+/* section nav highlight (scrolls only the nav row, never the page) */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 410 — Tools You'll Use All Term</title>
+    <link rel="stylesheet" href="../assets/course.css">
+    <style>
+        .intro-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:15px 18px; margin:18px 0; border-radius:0 6px 6px 0; font-size:0.92rem; }
+        .intro-box h4 { margin:0 0 6px; color:var(--blue); font-size:0.95rem; }
+
+        /* Map table — the "modular" jump nav */
+        table.map-table { width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:0.85rem; }
+        table.map-table th, table.map-table td { border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top; }
+        table.map-table th { background:var(--surface2); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--muted); }
+        table.map-table td.mod-name { font-weight:700; color:var(--accent); white-space:nowrap; }
+        table.map-table a.jump { font-weight:600; text-decoration:none; color:var(--blue); }
+        table.map-table a.jump:hover { text-decoration:underline; }
+
+        /* Module blocks */
+        .module-pills { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+        .mod-pill { font-size:0.74rem; font-weight:700; padding:3px 10px; border-radius:999px; }
+        .mod-pill.hos { background:var(--blue-bg); color:var(--violet); }
+        .mod-pill.wk { background:var(--blue-bg); color:var(--blue); }
+        .mod-pill.outcome { background:var(--accent-light); color:var(--accent2); }
+        .why-line { font-size:0.92rem; color:var(--text); margin:0 0 18px; }
+        .why-line strong { color:var(--text); }
+
+        /* Concept cards */
+        .concept-grid { display:grid; grid-template-columns:1fr; gap:12px; margin:14px 0; }
+        .concept-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:13px 16px; }
+        .concept-card h4 { margin:0 0 5px; font-size:0.95rem; color:var(--text); }
+        .concept-card p { margin:0; font-size:0.88rem; color:var(--text); }
+        .concept-card .why { margin-top:6px; font-size:0.82rem; color:var(--muted); }
+        .concept-card .why strong { color:var(--muted); }
+
+        /* Diagrams */
+        .diagram-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; margin:18px 0; text-align:center; }
+        .diagram-box svg { max-width:100%; height:auto; }
+        .diagram-caption { font-size:0.8rem; color:var(--muted); margin-top:6px; }
+        .flow-line { stroke-dasharray:6 4; animation:flowdash 1s linear infinite; }
+        .flow-line.slow { animation-duration:1.8s; }
+        @keyframes flowdash { to { stroke-dashoffset:-20; } }
+        .flow-dot { animation:dotmove linear infinite; }
+        .pulse-box { animation:pulsebox 2.2s ease-in-out infinite; }
+        @keyframes pulsebox { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+        @media (prefers-reduced-motion: reduce) {
+            .flow-line, .flow-dot, .pulse-box { animation:none !important; }
+        }
+
+        /* Glossary / self-check boxes — matching AI-410.html's vocabulary */
+        .glossary-box { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:12px 16px; margin:14px 0; font-size:0.85rem; }
+        .glossary-box h5 { margin:0 0 6px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--muted); }
+        .glossary-box dl { margin:0; }
+        .glossary-box dt { font-weight:700; color:var(--text); display:inline; }
+        .glossary-box dd { display:inline; margin:0 0 0 4px; color:var(--muted); }
+        .glossary-box dd::after { content:""; display:block; margin-bottom:4px; }
+        .check-box { background:var(--blue-bg); border-left:5px solid var(--blue); padding:12px 16px; margin:16px 0 0; border-radius:0 4px 4px 0; font-size:0.85rem; }
+        .check-box h5 { margin:0 0 6px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--blue); }
+        .check-box ul { margin:0; padding-left:18px; }
+        .check-box li { margin-bottom:4px; }
+
+        .module-nav { text-align:right; margin-top:16px; font-size:0.82rem; }
+        .module-nav a { color:var(--link); text-decoration:none; font-weight:600; }
+        .back-to-top { display:inline-block; margin-top:34px; font-size:0.85rem; color:var(--link); text-decoration:none; font-weight:600; }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Start here · Read before Week 1</div>
+    <h1>Tools You'll Use All Term</h1>
+    <p class="lede">Codespaces, the terminal, virtual environments, packages, keys and git: the tools every module uses. Learn them once here instead of under deadline pressure in HOS 1.</p>
+    <div class="chips"><span class="chip">Read before Week 1</span><span class="chip">Runs in GitHub Codespaces</span><span class="chip">Free tiers only</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#start">Start here</a>
+    <a href="#module-0">Universal tooling</a>
+  </div>
+</nav>
+
+<section class="module card" id="start">
+  <div class="module-head"><div class="module-icon">🚦</div><div><h2>Start here, in this order</h2></div></div>
+        <div class="before-box">
+            <h4>Start here, in this order</h4>
+            <ol>
+                <li><b>Set up your accounts</b> with the <a href="accounts.html">Account &amp; Service Setup Guide</a>. Week 1 needs a GitHub account and a free Gemini API key.</li>
+                <li><b>Read this page.</b> These are the tools every module uses: Codespaces, the terminal, and git.</li>
+                <li>Then open <a href="../module-1/index.html">Module 1</a>.</li>
+            </ol>
+        </div>
+</section>
+
+<section class="module card" id="module-0">
+  <div class="module-head"><div class="module-icon">🧰</div><div><h2>Universal tooling</h2><div class="module-meta"><span class="tag blue">Read before Week 1</span></div></div></div>
+            <p class="why-line">These tools show up in <strong>every single HOS</strong> of this course, not just one. Get comfortable with them once, here, instead of relearning them under deadline pressure in HOS 1.</p>
+
+            <div class="diagram-box">
+                <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The setup path: open a terminal, create a venv, pip install the requirements, add your keys to .env, and you are ready to code. Every HOS starts with some version of it.">
+                    <defs><marker id="m0arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
+                    <g font-family="Inter,system-ui,sans-serif">
+                        <rect x="0" y="35" width="120" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
+                        <text x="60" y="65" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--blue)">Terminal</text>
+                        <line x1="120" y1="60" x2="148" y2="60" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#m0arrow)"/>
+                        <rect x="152" y="35" width="120" height="50" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                        <text x="212" y="65" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--accent2)">venv</text>
+                        <line x1="272" y1="60" x2="300" y2="60" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#m0arrow)"/>
+                        <rect x="304" y="35" width="120" height="50" rx="8" style="fill:var(--amber-bg);stroke:var(--amber)"/>
+                        <text x="364" y="65" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--amber)">pip install</text>
+                        <line x1="424" y1="60" x2="452" y2="60" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#m0arrow)"/>
+                        <rect x="456" y="35" width="120" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--violet)"/>
+                        <text x="516" y="65" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--violet)">.env</text>
+                        <line x1="576" y1="60" x2="604" y2="60" class="flow-line" style="stroke:var(--border)" stroke-width="1.5" marker-end="url(#m0arrow)"/>
+                        <rect x="608" y="35" width="90" height="50" rx="8" style="fill:var(--accent-light);stroke:var(--accent)"/>
+                        <text x="653" y="60" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--accent2)">Ready</text>
+                        <text x="653" y="73" text-anchor="middle" font-size="9" style="fill:var(--accent2)">to code</text>
+                    </g>
+                    <text x="350" y="115" text-anchor="middle" font-size="11" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">Every HOS's "What you'll need" starts with some version of this same setup path.</text>
+                </svg>
+                <div class="diagram-caption">The setup pipeline you'll repeat, in some form, at the start of nearly every HOS.</div>
+            </div>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>Terminal / command line</h4>
+                    <p>A text-based way to run programs and commands, instead of clicking icons. This course uses it constantly — starting servers, installing packages, running scripts — because that's how real backend and AI-engineering work actually happens; almost nothing here has a GUI.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Python virtual environment (<code>venv</code>)</h4>
+                    <p>A private, self-contained copy of Python and its installed packages, scoped to one project folder. <code>python3 -m venv venv</code> creates it; <code>source venv/bin/activate</code> switches your terminal to use it.</p>
+                    <div class="why"><strong>Why it matters:</strong> different HOS units (and different projects entirely) can need different, sometimes conflicting, package versions. Without a venv, installing one project's dependencies can silently break another's.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>Package managers — <code>pip</code> and <code>npm</code></h4>
+                    <p><code>pip</code> installs Python packages from a <code>requirements.txt</code> list; <code>npm</code> does the same job for JavaScript packages from a <code>package.json</code> file (you'll meet <code>npm</code> specifically in the mobile module). Same underlying idea in two different languages: a plain-text list of exactly what the project needs, and a tool that reads it and installs everything.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Environment variables &amp; <code>.env</code> files</h4>
+                    <p>A <code>.env</code> file holds project settings and secrets (like <code>GEMINI_API_KEY=...</code>) as plain <code>NAME=value</code> lines, kept <strong>out</strong> of your actual code. A small library (<code>python-dotenv</code>) reads that file at startup and makes those values available to your program.</p>
+                    <div class="why"><strong>Why it matters:</strong> this keeps secrets out of source code you might share or commit, and this project's <code>.gitignore</code> already excludes <code>.env</code> from Git — so it's hard to leak a key by accident.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>API keys</h4>
+                    <p>A long string that identifies you (or your app) to a service like Gemini, so it can apply your usage limits and know who's making a request. Treat it exactly like a password — never commit it, paste it into a chat, or put it in a screenshot.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>GitHub Codespaces &amp; devcontainers</h4>
+                    <p>A <code>.devcontainer/devcontainer.json</code> file describes a ready-made development environment — the right language versions, tools, and settings — that GitHub can spin up for you in the browser with one click (<strong>Code → Codespaces → Create codespace on main</strong>), dependencies and <code>.env</code> setup included.</p>
+                    <div class="why"><strong>Why it matters:</strong> the most common bug in this course is a local machine with an old package already installed globally that silently shadows the project's own version. A fresh Codespace sidesteps that entirely — every HOS's starter code is built to support it.</div>
+                    <div class="why"><strong>Changes to <code>devcontainer.json</code> only apply on rebuild.</strong> If a Codespace already exists and its config changes later (e.g. you carry the same Codespace forward from an earlier HOS into one that needs Node.js for the first time), it won't have the new tools — a command like <code>npm</code> will say "not found" even though the config says it should be there. Fix: Command Palette (<code>Cmd/Ctrl+Shift+P</code>) → "Codespaces: Rebuild Container." Your files are untouched; only the container's installed tools get reapplied.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>A new terminal tab starts back at the repo root</h4>
+                    <p>Every HOS from HOS 3 onward asks you to run two or three processes at once (the API, the worker, the mobile dev server) in separate terminal tabs. In Codespaces, opening a <strong>new</strong> tab always starts you back at the repo's top-level folder — it does not remember that an earlier tab was sitting inside <code>backend/</code>.</p>
+                    <div class="why"><strong>Why it matters:</strong> if you copy just the run command (e.g. <code>./venv/bin/python worker.py</code>) into a fresh tab without <code>cd backend</code> first, it fails — that script only exists inside <code>backend/</code>. Get in the habit of typing <code>cd backend</code> (or <code>cd mobile</code>) as the very first thing in every new terminal tab, every time, even if you already did it in a different tab a minute ago.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>Working with an AI coding assistant</h4>
+                    <p>The first stage of each HOS (<strong>Create/Scaffold</strong>) is deliberately AI-driven — you prompt an assistant to build the app, then spend the rest of the HOS proving, in writing and by hand, that you actually understand what it built.</p>
+                    <div class="why"><strong>Why it matters:</strong> getting the AI-built app running is only 20% of each HOS grade (Create). The other 80% is whether <em>you</em> can evaluate it, explain one piece of it mechanistically, and extend it correctly without AI help. Treat Stage 1 as a starting point, not the deliverable.</div>
+                </div>
+            </div>
+
+            <div class="check-box">
+                <h5>Quick self-check before you continue</h5>
+                <ul>
+                    <li>Could you explain to someone else why a venv exists, in one sentence?</li>
+                    <li>Do you know where your Gemini API key is stored, and why it's not inside a <code>.py</code> file?</li>
+                    <li>Do you know which part of each HOS is done with an AI assistant, and which parts you must do and explain yourself?</li>
+                </ul>
+            </div>
+            <p class="module-nav"><a href="../reference/concept-companion.html#module-1">Next: Module 1 — Foundations &amp; the Agentic Loop →</a></p>
+</section>
+
+<div class="guide-nav" style="display:flex;justify-content:space-between;gap:12px;margin-top:30px;padding-top:16px;border-top:1px solid var(--border)">
+            <a href="../index.html">← Course home</a>
+            <a href="../module-1/index.html">Module 1 →</a>
+        </div>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+<script>
+/* section nav highlight (scrolls only the nav row, never the page) */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft += (ar.left+ar.width/2)-(cr.left+cr.width/2); } } }); },{rootMargin:'-45% 0px -50% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>
