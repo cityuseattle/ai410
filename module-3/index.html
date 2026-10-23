@@ -381,6 +381,17 @@ def job_status(job_id: str):
   <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 5. Your commit history is your Week 5 checkpoint.</p>
 </section>
 
+<section class="module card" id="week5-done">
+  <div class="module-head"><div class="module-icon">🏁</div><div><h2>End of Week 5</h2><div class="module-meta"><span class="tag">Before you stop for the week</span></div></div></div>
+  <ul>
+    <li><b>HOS 3</b>: Create and Evaluate are in <code>NOTES.md</code>, with screenshots, committed and pushed.</li>
+    <li>Muddiest Point posted.</li>
+    <li>Concept Debate: Stage 3 posted by Saturday.</li>
+  </ul>
+  <p><strong>Week 6 starts Monday with HOS 3 · Analyze.</strong> Take the weekend: explaining the code goes better after a break from it. Ahead of schedule? You can start now; your Brightspace dates are what count.</p>
+  <p><a class="btn" href="#analyze">Go to Week 6: Analyze →</a></p>
+</section>
+
 <!-- ========================= WEEK 6 ========================= -->
 </div>
 
@@ -419,6 +430,7 @@ def job_status(job_id: str):
 <section class="module card" id="challenge">
   <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a guardrail for a refund tool</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span></div></div></div>
   <p>Pacific Bean Coffee's support bot can issue refunds, and in testing the model filled in the refund tool's arguments wrong a dozen ways. Build the guardrail (a Pydantic schema, checks against the order data, and a human review queue), replay every recorded call through it, and decide what the bot may refund without a person. The spec, starter code, and rubric are in the <a href="application-challenge.html"><b>AC 3 guide</b></a>.</p>
+  <p class="small"><b>Starter code:</b> accept the AC 3 invite linked in Brightspace under <b>AC03</b>. It creates your own repo, which you open in GitHub Codespaces.</p>
   <p class="small">Warm up first: the question of which layer catches what is the same one the challenge asks.</p>
   <h3>Warm-up: what can a schema actually catch?</h3>
   <p class="small">A clinic's agent has a tool <code>book_appointment(pet_id, service, start_time, notes)</code>. For each proposed check, decide: can a <b>schema</b> catch it, does it need a <b>lookup</b> (database or API), or does it need a <b>human</b>?</p>
