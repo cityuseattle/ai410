@@ -345,7 +345,7 @@ def job_status(job_id: str):
   </div>
   <p>Add both reliability layers to your HOS 2 app with an AI coding assistant. As always, this is the starting point — no hand edits yet.</p>
   <ol>
-    <li>Open your own <b>HOS 3</b> repo (accept the invite linked in Brightspace under <b>HOS03</b>) in GitHub Codespaces — your HOS 2 app, already working.</li>
+    <li>Open your own <b>HOS 3</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/hos03/accept?k=ai410" target="_blank" rel="noopener">accept the HOS 3 invite</a>) in GitHub Codespaces — your HOS 2 app, already working.</li>
     <li>Create a free Upstash Redis instance and add its URL to <code>backend/.env</code> as <code>REDIS_URL</code>.</li>
     <li>Split your terminal: one for <code>uvicorn</code>, one for <code>python worker.py</code>.</li>
     <li>Give your assistant the prompt below.</li>
@@ -430,7 +430,7 @@ def job_status(job_id: str):
 <section class="module card" id="challenge">
   <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a guardrail for a refund tool</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span></div></div></div>
   <p>Pacific Bean Coffee's support bot can issue refunds, and in testing the model filled in the refund tool's arguments wrong a dozen ways. Build the guardrail (a Pydantic schema, checks against the order data, and a human review queue), replay every recorded call through it, and decide what the bot may refund without a person. The spec, starter code, and rubric are in the <a href="application-challenge.html"><b>AC 3 guide</b></a>.</p>
-  <p class="small"><b>Starter code:</b> accept the AC 3 invite linked in Brightspace under <b>AC03</b>. It creates your own repo, which you open in GitHub Codespaces.</p>
+  <p class="small"><b>Starter code:</b> <a href="https://classroom50.org/cityuseattle/ai410/assignments/ac03/accept?k=ai410" target="_blank" rel="noopener">accept the AC 3 invite</a>. It creates your own repo, which you open in GitHub Codespaces.</p>
   <p class="small">Warm up first: the question of which layer catches what is the same one the challenge asks.</p>
   <h3>Warm-up: what can a schema actually catch?</h3>
   <p class="small">A clinic's agent has a tool <code>book_appointment(pet_id, service, start_time, notes)</code>. For each proposed check, decide: can a <b>schema</b> catch it, does it need a <b>lookup</b> (database or API), or does it need a <b>human</b>?</p>

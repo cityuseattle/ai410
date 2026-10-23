@@ -333,7 +333,7 @@ q_vec = result.embeddings[0].values      # the list of 1,024 numbers</code></pre
   </div>
   <p>Add retrieval to your working HOS 1 app with an AI coding assistant. As before, this is the starting point — no hand edits yet.</p>
   <ol>
-    <li>Open your own <b>HOS 2</b> repo (accept the invite linked in Brightspace under <b>HOS02</b>) in GitHub Codespaces. It's your HOS 1 app plus five Northwind Outfitters sample documents in <code>backend/sample_docs/</code>.</li>
+    <li>Open your own <b>HOS 2</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/hos02/accept?k=ai410" target="_blank" rel="noopener">accept the HOS 2 invite</a>) in GitHub Codespaces. It's your HOS 1 app plus five Northwind Outfitters sample documents in <code>backend/sample_docs/</code>.</li>
     <li>Keep the same <code>GEMINI_API_KEY</code> in <code>backend/.env</code> — embeddings use the same free key.</li>
     <li>Give your assistant the prompt below, then run <code>python ingest.py</code> once and test in the chat app.</li>
   </ol>
@@ -417,7 +417,7 @@ instruction suppress tool use.</code></pre>
 <section class="module card" id="challenge">
   <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — measure someone else's RAG pipeline</h2><div class="module-meta"><span class="tag blue">Measure &amp; improve · 60–90 min</span></div></div></div>
   <p>A campus IT help-desk team built the pipeline below to answer student questions from their knowledge base. It runs without errors, and nobody knows how often it answers from the wrong passage. In the challenge you get a runnable copy, six articles, and 20 questions with known answers: measure how often it finds the answer, beat it with your own chunking, and decide when the bot should say "I don't know". The spec, starter code, and rubric are in the <a href="application-challenge.html"><b>AC 2 guide</b></a>.</p>
-  <p class="small"><b>Starter code:</b> accept the AC 2 invite linked in Brightspace under <b>AC02</b>. It creates your own repo, which you open in GitHub Codespaces.</p>
+  <p class="small"><b>Starter code:</b> <a href="https://classroom50.org/cityuseattle/ai410/assignments/ac02/accept?k=ai410" target="_blank" rel="noopener">accept the AC 2 invite</a>. It creates your own repo, which you open in GitHub Codespaces.</p>
   <p class="small">Warm up first: read the production code and predict what will go wrong. The challenge then measures it.</p>
 <pre tabindex="0"><code># helpdesk_rag.py  (someone else's code)
 kb = chromadb.PersistentClient(path="./kb_db")
