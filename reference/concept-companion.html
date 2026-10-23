@@ -59,6 +59,11 @@
         .check-box h5 { margin:0 0 6px; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--blue); }
         .check-box ul { margin:0; padding-left:18px; }
         .check-box li { margin-bottom:4px; }
+        .check-answers { margin-top:10px; border-top:1px solid var(--border); padding-top:8px; }
+        .check-answers summary { cursor:pointer; font-weight:700; color:var(--link); }
+        .check-answers ol { margin:8px 0 0; padding-left:20px; }
+        .check-answers li { margin-bottom:6px; color:var(--text); }
+        .layer-table td:first-child { width:44%; }
 
         .module-nav { text-align:right; margin-top:16px; font-size:0.82rem; }
         .module-nav a { color:var(--link); text-decoration:none; font-weight:600; }
@@ -84,7 +89,7 @@
     <div class="eyebrow">AI 410 · Reference · Read before each module</div>
     <h1>Concept Companion</h1>
     <p class="lede">Every concept and piece of vocabulary you should understand before you open a module's hands-on guide, gathered in one place. Read the module you're about to start, not the whole page.</p>
-    <div class="chips"><span class="chip">Read before you start, not while debugging</span><span class="chip">One module per HOS</span><span class="chip">Modules 1–4</span></div>
+    <div class="chips"><span class="chip">Read before you start, not while debugging</span><span class="chip">One module per HOS</span><span class="chip">Modules 1–4, then putting it together</span></div>
   </div>
 </section>
 <main id="main">
@@ -96,6 +101,7 @@
     <a href="#module-2">Module 2</a>
     <a href="#module-3">Module 3</a>
     <a href="#module-4">Module 4</a>
+    <a href="#module-5">Putting it together</a>
   </div>
 </nav>
 
@@ -104,7 +110,7 @@
         <div class="intro-box">
             <h4>What this page is</h4>
             <p>The Hands-On Guides tell you <em>what to build, step by step</em>. This page is different: it's every concept and piece of vocabulary you should already understand <strong>before</strong> you open one of those guides, gathered in one place instead of scattered across the term. Read the module for what you're about to start, not the whole page at once — each module is written to stand on its own.</p>
-            <p style="margin-bottom:0"><strong>Modular by design:</strong> Its four modules match the <a href="../index.html">course's Modules 1–4</a>, one per HOS. (Module 5, the Term Project, adds no new concepts.) The tools you'll use all term (Codespaces, the terminal, git) are on their own page: <a href="../start-here/tools.html">Tools you'll use all term</a>. Use the table below to find your module.</p>
+            <p style="margin-bottom:0"><strong>Modular by design:</strong> Its four modules match the <a href="../index.html">course's Modules 1–4</a>, one per HOS. Module 5, the Term Project, adds no new concepts, so the last section, <a href="#module-5">Putting it together</a>, connects the four HOS instead: read it before the Week 8 architecture review. The tools you'll use all term (Codespaces, the terminal, git) are on their own page: <a href="../start-here/tools.html">Tools you'll use all term</a>. Use the table below to find your module.</p>
             <p style="margin:10px 0 0"><strong>Want to see a concept in motion?</strong> Each HOS has a browser simulator: <a href="../module-1/simulator.html">agentic loop</a>, <a href="../module-2/simulator.html">RAG pipeline</a>, <a href="../module-3/simulator.html">guardrails &amp; queue</a>, <a href="../module-4/simulator.html">push &amp; observability</a>. See all of them, plus the interactive lessons, on the <a href="../index.html">interactive index</a>.</p>
         </div>
         <div style="overflow-x:auto" tabindex="0"><table class="map-table">
@@ -133,6 +139,12 @@
                 <td>O4, O5</td>
                 <td><a class="jump" href="#module-4">Read →</a></td>
             </tr>
+            <tr>
+                <td class="mod-name">Putting it together — all 4 HOS</td>
+                <td>Before the Week 8 review and the Term Project</td>
+                <td>O3, O5</td>
+                <td><a class="jump" href="#module-5">Read →</a></td>
+            </tr>
         </table></div>
         <p style="font-size:0.85rem;color:var(--muted);margin-top:6px">Skipped a module and got confused later? That's the signal to come back and read it — every "common snag" box in the Hands-On Guides traces back to one of the concepts below.</p>
 </section>
@@ -142,6 +154,7 @@
             <button type="button" data-mod="2" aria-controls="module-2">Module 2<span class="tab-sub"> · RAG</span></button>
             <button type="button" data-mod="3" aria-controls="module-3">Module 3<span class="tab-sub"> · Guardrails</span></button>
             <button type="button" data-mod="4" aria-controls="module-4">Module 4<span class="tab-sub"> · Mobile &amp; observability</span></button>
+            <button type="button" data-mod="5" aria-controls="module-5">Putting it together<span class="tab-sub"> · all 4 HOS</span></button>
             <button type="button" class="show-all">Show all modules</button>
         </div>
         <p class="small muted tabs-hint">Pick your module. Searching the page (Ctrl/Cmd+F) only looks in the open tab; use "Show all modules" to search everything.</p>
@@ -205,6 +218,19 @@
                     <h4>The description field decides everything</h4>
                     <p>The tool schema's <code>description</code> is the <em>only</em> thing the model reads to decide when to use a tool. A vague description gets called at the wrong times or ignored entirely; a specific one with an example gets used correctly.</p>
                 </div>
+                <div class="concept-card">
+                    <h4>Same input, different output</h4>
+                    <p>The model writes its reply one token at a time, <strong>sampling</strong> each one from a set of probabilities. So the same request can come back worded differently, or occasionally with a different decision about calling a tool.</p>
+                    <div class="why"><strong>Why it matters:</strong> one successful run proves little. Run important checks several times. This is also why HOS 3 adds guardrails.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>The model doesn't remember you</h4>
+                    <p>Each request stands alone. The model sees only what your backend sends in <em>that</em> request: the instruction, any earlier turns you choose to resend, and the new message. The chat history on the screen is not something the model sees unless your backend sends it.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Prompt engineering vs. context engineering</h4>
+                    <p><strong>Prompt engineering</strong> is how you word the request ("answer in two sentences"). <strong>Context engineering</strong> is deciding what information reaches the model at all: which earlier turns, which documents, which tools. Most of this course is context engineering, done by your backend code.</p>
+                </div>
             </div>
 
             <div class="diagram-box">
@@ -256,6 +282,14 @@
                     <li>Do you know the difference between a tool's schema and its function — and what links them?</li>
                     <li>If you saw a model calling a tool when it clearly shouldn't have, what's the first thing you'd check?</li>
                 </ul>
+                <details class="check-answers">
+                    <summary>Check your thinking</summary>
+                    <ol>
+                        <li>Anything shipped to the frontend can be read by the user, in the browser's developer tools or the app bundle. The key stays in the backend's <code>.env</code>, so only your server can use it.</li>
+                        <li>The schema is what the model reads (name, description, parameters); the function is the code your backend runs. Only the name string links them, so a mismatch means the tool never runs.</li>
+                        <li>The tool's description. A vague one makes the model call the tool at the wrong times, or never.</li>
+                    </ol>
+                </details>
             </div>
             <p class="module-nav"><a href="#module-2">Next: Module 2 — Embeddings, Chunking &amp; RAG →</a></p>
 </section>
@@ -267,7 +301,7 @@
             <div class="concept-grid">
                 <div class="concept-card">
                     <h4>Embeddings</h4>
-                    <p>A list of a few thousand numbers (a "vector") representing the <em>meaning</em> of a piece of text. Text with similar meaning gets vectors that point in similar directions; unrelated text points in very different directions — pure math, no human labeling needed.</p>
+                    <p>A list of numbers (a "vector"; the HOS 2 code asks for 1,024) representing the <em>meaning</em> of a piece of text. Text with similar meaning gets vectors that point in similar directions; unrelated text points in very different directions — pure math, no human labeling needed.</p>
                     <div class="why"><strong>Why not keyword search?</strong> A keyword search for "return policy" misses a document about "sending an item back within 30 days" that never uses the word "return." Embeddings capture meaning, not exact wording.</div>
                 </div>
                 <div class="concept-card">
@@ -285,11 +319,19 @@
                 </div>
                 <div class="concept-card">
                     <h4>Document vs. query embeddings</h4>
-                    <p>The same embedding model is told which side of the search a piece of text is on (<code>RETRIEVAL_DOCUMENT</code> vs. <code>RETRIEVAL_QUERY</code>), which changes how it optimizes the resulting vector slightly. Embed both sides with mismatched settings and similarity scores become meaningless.</p>
+                    <p>The same embedding model is told which side of the search a piece of text is on (<code>RETRIEVAL_DOCUMENT</code> vs. <code>RETRIEVAL_QUERY</code>), which changes how it optimizes the resulting vector slightly. Swap or mismatch the settings and nothing errors: results just get quietly worse, which is why the mistake is easy to miss.</p>
                 </div>
                 <div class="concept-card">
                     <h4>RAG — Retrieval-Augmented Generation</h4>
                     <p>Retrieve the most relevant chunks for a user's question first, then hand them to the model as background context (typically via a <code>system_instruction</code>) before it answers — grounding the reply in your actual documents instead of the model's general knowledge alone.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Top-k</h4>
+                    <p>How many chunks you retrieve per question. Too few and the answer may be missing from what the model sees; too many and you're back to pasting everything, with more cost and a vaguer answer.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>Ingest once, retrieve every time</h4>
+                    <p>Ingestion (chunk, embed, store) runs once; retrieval runs on every question. Edit a document or change the chunk settings and you must re-run ingest, or the app keeps answering from the old chunks with no error. Settings that shape vectors (the embedding model and size) must match in both scripts.</p>
                 </div>
             </div>
 
@@ -339,6 +381,14 @@
                     <li>Do you know what would go wrong if you embedded a query with <code>RETRIEVAL_DOCUMENT</code> instead of <code>RETRIEVAL_QUERY</code>?</li>
                     <li>What's the simplest experiment that proves retrieval is actually changing the model's answer?</li>
                 </ul>
+                <details class="check-answers">
+                    <summary>Check your thinking</summary>
+                    <ol>
+                        <li>One vector for a whole document blurs all its topics together. Chunking first gives each vector one focused idea to match against.</li>
+                        <li>Nothing crashes. Retrieval just gets quietly worse, because the two sides of the comparison were embedded for different jobs.</li>
+                        <li>Ask a question only your documents can answer, once with retrieval on and once with it off. If the answers don't differ, retrieval isn't doing anything.</li>
+                    </ol>
+                </details>
             </div>
             <p class="module-nav"><a href="#module-3">Next: Module 3 — Guardrails &amp; Async Processing →</a></p>
 </section>
@@ -357,9 +407,14 @@
                     <p>A model's output isn't guaranteed to be well-formed — the same tool call can come back with the right shape most of the time and a missing or malformed field occasionally. Treat model output the way you'd treat unreliable user input: never trust it blindly.</p>
                 </div>
                 <div class="concept-card">
+                    <h4>Four ways model output goes wrong</h4>
+                    <p><strong>Shape:</strong> a missing or misnamed field. <strong>Type:</strong> the wrong kind of value. <strong>Rule:</strong> the right type, but not allowed (a blank string). <strong>Meaning:</strong> valid in every way, but not what the user asked (they said 25 + 4, the model sent <code>"25*4"</code>).</p>
+                    <div class="why"><strong>Why it matters:</strong> a schema catches the first three. Meaning needs something else: a lookup against real data, a confirmation step, or a person.</div>
+                </div>
+                <div class="concept-card">
                     <h4>Guardrails: schema validation + retry + safe fallback</h4>
                     <p>Define the exact shape you expect (a schema), validate the model's output against it, retry a limited number of times on failure, and return a clear, safe error if every attempt fails — never a raw crash.</p>
-                    <div class="why"><strong>Why it matters:</strong> a retry that resends the identical request rarely fixes a structural problem; a fixed retry limit prevents an unrecoverable case from looping forever.</div>
+                    <div class="why"><strong>Why it matters:</strong> a retry only helps if it carries new information, so feed the validation error into the next attempt. Cap the retries, and when they run out, <strong>fail to data</strong>: return an <code>{"error": ...}</code> the model can explain, instead of raising an exception that becomes an HTTP 500.</div>
                 </div>
                 <div class="concept-card">
                     <h4>Synchronous vs. asynchronous processing</h4>
@@ -429,6 +484,14 @@
                     <li>Do you know why a guardrail returns a safe error dict instead of raising an exception?</li>
                     <li>Can you explain why the worker needs its own copy of your environment variables?</li>
                 </ul>
+                <details class="check-answers">
+                    <summary>Check your thinking</summary>
+                    <ol>
+                        <li>For example: "if the worker isn't running, uploads stay on <code>queued</code> forever and nothing errors." A good answer names a specific step and a specific effect.</li>
+                        <li>An exception after the last retry becomes an HTTP 500 and a generic error for the user. A returned error keeps the request alive, so the model can explain what went wrong.</li>
+                        <li>The worker is a separate process. It doesn't share the API's memory, so it reads the API key and <code>REDIS_URL</code> from its own environment to call Gemini and reach the queue.</li>
+                    </ol>
+                </details>
             </div>
             <p class="module-nav"><a href="#module-4">Next: Module 4 — Mobile, Push &amp; Observability →</a></p>
 </section>
@@ -455,17 +518,23 @@
                     <p>Before your backend can push to a phone, that phone has to send its token to the backend once, so the backend can store it (keyed by a device ID) and look it up later when it needs to notify that device.</p>
                 </div>
                 <div class="concept-card">
+                    <h4>A 200 isn't a delivery</h4>
+                    <p>Expo's push service returns <code>200 OK</code> even when the token is stale or invalid. The real outcome is in the response body, for example <code>DeviceNotRegistered</code> after an app reinstall issued a new token.</p>
+                    <div class="why"><strong>Why it matters:</strong> push fails silently. When a notification doesn't arrive, walk the chain in order (permission, token, registration, <code>device_id</code> on the upload, Expo's response body) and read the evidence at each link.</div>
+                </div>
+                <div class="concept-card">
                     <h4>Observability: tracing &amp; spans</h4>
                     <p>Recording what actually happened on a real request — timing, inputs, outputs, cost — automatically, instead of guessing or scattering <code>print()</code> statements. A <strong>trace</strong> is the full record of one request; a <strong>span</strong> is one meaningful step nested inside it (e.g. retrieval, or one model call).</p>
                     <div class="why"><strong>Why trace individual steps, not the whole request as one block?</strong> Nesting meaningful steps (retrieval vs. generation vs. tool calls) as separate spans is what lets you answer "which part was actually slow?" — wrapping everything as one giant span just tells you the total was slow.</div>
                 </div>
                 <div class="concept-card">
-                    <h4>Evaluation</h4>
-                    <p>A way to score output quality with a number instead of a vibe — even a rough heuristic (like how much of the retrieved context's words show up in the final answer) is enough to spot when a model is clearly ignoring what it was given.</p>
+                    <h4>Evaluation &amp; the faithfulness score</h4>
+                    <p>A way to score output quality with a number instead of a vibe. In HOS 4 you write <code>score_faithfulness</code>: is the answer supported by the retrieved context? Even a rough heuristic (how many of the answer's sentences have support in the chunks) is enough to spot a model ignoring what it was given.</p>
+                    <div class="why"><strong>Read the trend, not one score:</strong> a single heuristic score is noisy. The trend across runs tells you whether a change helped, and a surprising score is a cue to open its trace.</div>
                 </div>
                 <div class="concept-card">
-                    <h4>Deployment</h4>
-                    <p>The gap between "runs on my laptop" and "a real, reachable product." Code nobody else can access isn't a product yet — this is what turns a term's worth of builds into something you can hand someone a link to.</p>
+                    <h4>Deployment (a Term Project question)</h4>
+                    <p>No HOS deploys to a public host: Codespaces and Expo's tunnel are development setups. Turning your system into something anyone can reach is a Term Project decision: where the API, the worker, Redis and the vector store would run, and how the secrets get there without being committed.</p>
                 </div>
             </div>
 
@@ -526,6 +595,61 @@
                     <li>Do you know the difference between a trace and a span?</li>
                     <li>Can you name one thing your app does that would be worth measuring with a number, not just "it feels fine"?</li>
                 </ul>
+                <details class="check-answers">
+                    <summary>Check your thinking</summary>
+                    <ol>
+                        <li>Phones only accept pushes from their platform's service (Apple's or Google's). Expo's push service sits in front of both, so your backend sends one request to Expo, addressed by the device's push token.</li>
+                        <li>A trace is the full record of one request. A span is one timed step inside it, such as <code>retrieve()</code> or the model call. Spans nest, which is what shows you where the time went.</li>
+                        <li>For example: how faithful answers are to the retrieved chunks, how long retrieval takes, or how often the guardrail has to retry.</li>
+                    </ol>
+                </details>
+            </div>
+            <p class="module-nav"><a href="#module-5">Next: Putting it together →</a></p>
+</section>
+
+<section class="module card" id="module-5">
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Putting it together: all 4 HOS</h2><div class="module-meta"><span class="tag blue">Week 8 review</span><span class="tag">Term Project</span><span class="tag">Outcomes 3 &amp; 5</span></div></div></div>
+            <p class="why-line"><strong>Why before you start:</strong> by Week 8 you've built every piece once. The Week 8 architecture review and your Term Project ask a different question: how the pieces connect, and which one catches which problem. Nothing here is new; it's the four modules, joined up.</p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>The path of a chat question</h4>
+                    <p>Client (Streamlit or the Expo app) → <code>POST /chat</code> → your backend → retrieve the top-k chunks (HOS 2) → the model, with tools in the loop and a guardrail checking every tool call (HOS 1, HOS 3) → reply → client. The whole request is one trace, with a span per step (HOS 4).</p>
+                </div>
+                <div class="concept-card">
+                    <h4>The path of a document upload</h4>
+                    <p>Client → <code>POST /documents</code> → a job is queued and a <code>job_id</code> comes straight back (HOS 3) → the worker chunks and embeds the document into Chroma (HOS 2) → the backend sends a push through Expo to that device (HOS 4). It never touches the agent loop.</p>
+                </div>
+            </div>
+
+            <h3 style="margin:18px 0 8px;font-size:1rem">Which layer catches what</h3>
+            <div class="table-wrap" tabindex="0"><table class="t layer-table">
+                <tr><th>Problem</th><th>What catches it</th></tr>
+                <tr><td>A tool call with a missing, misnamed or wrong-type argument</td><td>The Pydantic schema in the guardrail, before the tool runs (HOS 3)</td></tr>
+                <tr><td>The right type, but not allowed (a blank string)</td><td>A validator rule on the schema (HOS 3)</td></tr>
+                <tr><td>Valid arguments that are still wrong: over a limit, not what the user asked</td><td>A rule or lookup in your code, or a person who confirms (the Application Challenges)</td></tr>
+                <tr><td>An answer the documents don't support</td><td>Reduced by retrieval and an honest "I don't know" (HOS 2); spotted afterwards by the faithfulness score and its trace (HOS 4)</td></tr>
+                <tr><td>A slow request</td><td>The trace: which span took the time (HOS 4)</td></tr>
+                <tr><td>Uploads that never finish</td><td>Job status stuck on <code>queued</code>: the worker isn't running (HOS 3)</td></tr>
+                <tr><td>A notification that never arrives</td><td>Expo's response body, then the push chain link by link (HOS 4)</td></tr>
+                <tr><td>An API key someone could copy</td><td>Nothing catches it later. Prevent it: the key lives only in the backend's <code>.env</code> (HOS 1)</td></tr>
+            </table></div>
+
+            <div class="check-box">
+                <h5>Quick self-check before the Week 8 review</h5>
+                <ul>
+                    <li>Can you draw both paths above from memory, labelling each arrow with the HOS it came from?</li>
+                    <li>Which two HOS pieces does a chat question never touch?</li>
+                    <li>Name one problem no schema can catch, and what catches it instead.</li>
+                </ul>
+                <details class="check-answers">
+                    <summary>Check your thinking</summary>
+                    <ol>
+                        <li>Check your drawing against the two cards above. If you're unsure of a step, the <a href="../module-4/index.html#review">architecture review</a> in the Module 4 lesson rebuilds both paths step by step.</li>
+                        <li>The queue and worker, and push notifications. Both belong to uploads.</li>
+                        <li>Arguments that are valid but wrong, like a refund over the allowed limit. A rule or lookup in your code, or a person, has to catch it.</li>
+                    </ol>
+                </details>
             </div>
 </section>
 
@@ -538,7 +662,7 @@
 <script>
 /* module tabs: one module at a time; #module-N links open the right tab */
 (function(){
-  var panels=[1,2,3,4].map(function(n){ return document.getElementById('module-'+n); }).filter(Boolean); if(!panels.length) return;
+  var panels=[1,2,3,4,5].map(function(n){ return document.getElementById('module-'+n); }).filter(Boolean); if(!panels.length) return;
   var tabs=[].slice.call(document.querySelectorAll('.module-tabs [data-mod]')), all=document.querySelector('.module-tabs .show-all');
   var key='ai410-cc-tab-'+location.pathname, last='1';
   function save(v){ try{ localStorage.setItem(key,v); }catch(e){} }
