@@ -17,12 +17,12 @@ Students reach these pages from Brightspace. All graded work is submitted in Bri
 | `module-N/hos-guide.html` | HOS N (Hands-On Skill) guide |
 | `module-N/simulator.html` | Module N simulator |
 | `module-N/application-challenge.html` | Application Challenge N |
-| `module-5/index.html` | Team Project |
+| `module-5/index.html` | Term Project |
 | `reference/` | Concept Companion, starter-code walkthrough, Concept Debate example |
 | `assets/` | Shared `course.css` and `course.js`, images |
 | `tools/check_site.py` | Pre-push checker |
 
-Starter code lives in the private template repositories `cityuseattle/ai410-module-1` … `-4`. Instructor material (teaching guide, answer keys, example answers) is not in this repository.
+Starter code lives in the private template repositories `cityuseattle/AI410-HOS01`–`04` and `AI410-AC01`–`04`; students copy them through the Classroom50 invites linked from each lesson. Instructor material (teaching guide, answer keys, example answers) is not in this repository.
 
 ## Editing
 

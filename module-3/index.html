@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI 410 Module 3 (Weeks 5-6): lecture, Muddiest Point, Concept Debate, CEAU stages, Application Challenge, knowledge check and a Team Project Phase 2 check-in for Guardrails & Async Processing.">
+<meta name="description" content="AI 410 Module 3 (Weeks 5-6): lecture, Muddiest Point, Concept Debate, CEAU stages, Application Challenge, knowledge check and a Term Project Phase 2 check-in for Guardrails & Async Processing.">
 <title>Module 3: Guardrails &amp; Async Processing</title>
 <link rel="stylesheet" href="../assets/course.css">
 <style>
@@ -36,7 +36,7 @@
   <div class="hero-inner">
     <div class="eyebrow">AI 410 · Module 3 · Weeks 5–6</div>
     <h1>Guardrails &amp; Async Processing</h1>
-    <p class="lede">Make the HOS 2 app dependable under two kinds of unpredictability: a model that sometimes hands your code bad arguments, and slow work that freezes the app if it runs inside the request. Built in Week 5; explained and extended by hand in Week 6, with a quick Team Project check-in.</p>
+    <p class="lede">Make the HOS 2 app dependable under two kinds of unpredictability: a model that sometimes hands your code bad arguments, and slow work that freezes the app if it runs inside the request. Built in Week 5; explained and extended by hand in Week 6, with a quick Term Project check-in.</p>
     <div class="chips"><span class="chip">Outcome O3</span><span class="chip">2 weeks</span><span class="chip">Lecture · Muddiest Point · Concept Debate</span><span class="chip">HOS 3 (Hands-On Skill): 4 stages</span><span class="chip">Application Challenge</span><span class="chip">Project checkpoint</span><span class="chip">Codespaces · free tier</span></div>
   </div>
 </section>
@@ -63,13 +63,13 @@
 <p class="small muted" style="margin-top:18px">Everything in this HOS runs in GitHub Codespaces on free tiers, with no credit card. Which accounts you need, and when: <a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a>.</p>
 
 <section class="module card" id="overview">
-  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O3</span><span class="tag blue">HOS 3: 10% of course</span><span class="tag">+ Muddiest Point · Concept Debate · Application Challenge · Knowledge Check</span><span class="tag amber">+ Team Project Phase 2 check-in</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O3</span><span class="tag blue">HOS 3: 10% of course</span><span class="tag">+ Muddiest Point · Concept Debate · Application Challenge · Knowledge Check</span><span class="tag amber">+ Term Project Phase 2 check-in</span></div></div></div>
   <div class="callout blue">
     <span class="label">What's the HOS?</span>
     <p><strong>HOS 3 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 5, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 6. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 6. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
   </div>
   <p>Your HOS 2 app works — most of the time. That's the problem this HOS is about. A model that returns valid tool arguments 95% of the time will, across a few hundred requests a day, hand your code garbage several times a day. And a document upload that takes twenty seconds to chunk and embed will, if it runs inside the web request, freeze the app for everyone while it runs. Neither shows up in a quick demo. Both show up the first week real people use it.</p>
-  <p>This HOS adds the two reliability layers every production agent needs: a <strong>guardrail</strong> that checks model output before your code trusts it, and a <strong>queue with a background worker</strong> that moves slow work off the request path. Week 5 builds and tests both. Week 6 explains why they're designed the way they are, extends the guardrail by hand, and ends with a quick check-in on your Team Project.</p>
+  <p>This HOS adds the two reliability layers every production agent needs: a <strong>guardrail</strong> that checks model output before your code trusts it, and a <strong>queue with a background worker</strong> that moves slow work off the request path. Week 5 builds and tests both. Week 6 explains why they're designed the way they are, extends the guardrail by hand, and ends with a quick check-in on your Term Project.</p>
   <div class="callout blue">
     <span class="label">Anchoring analogy</span>
     <p>A busy restaurant has two rules. First, the kitchen reads back every order ticket before cooking — "no onions, extra sauce?" — because a waiter who's right 95% of the time still ruins a dish every night. That's the guardrail. Second, the waiter doesn't stand at the counter while a 40-minute brisket cooks; they hand the kitchen a ticket, take a number, and go serve other tables. That's the queue: the ticket number is your <code>job_id</code>, and the cook working in the back is your worker process.</p>
@@ -397,7 +397,7 @@ def job_status(job_id: str):
 
 <div class="week-panel" id="week-2" data-week="2">
 <div class="part-banner"><b>Week 6 · Explain &amp; Master</b><span>HOS 3: Analyze → Understand &amp; Refine → Application Challenge → Knowledge Check → Project Checkpoint</span></div>
-<div class="due-card"><h3>Week 6: what's due</h3><label><input type="checkbox" data-k="l3-w1-0"><span><a href="#analyze">HOS 3 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l3-w1-1"><span><a href="#refine">HOS 3 · Understand &amp; Refine: the second guardrail, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l3-w1-2"><span><a href="#challenge">Application Challenge 3</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l3-w1-3"><span><a href="#check">Knowledge Check quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l3-w1-4"><span><a href="#checkpoint">Team Project Phase 2 check-in (self-check, nothing to submit)</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l3-w1-5"><span><a href="#refine">HOS 3: push your repo and submit its link in Brightspace</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+<div class="due-card"><h3>Week 6: what's due</h3><label><input type="checkbox" data-k="l3-w1-0"><span><a href="#analyze">HOS 3 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l3-w1-1"><span><a href="#refine">HOS 3 · Understand &amp; Refine: the second guardrail, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l3-w1-2"><span><a href="#challenge">Application Challenge 3</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l3-w1-3"><span><a href="#check">Knowledge Check quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l3-w1-4"><span><a href="#checkpoint">Term Project Phase 2 check-in (self-check, nothing to submit)</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l3-w1-5"><span><a href="#refine">HOS 3: push your repo and submit its link in Brightspace</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
 
 
 <section class="module card" id="analyze">
@@ -460,7 +460,7 @@ def job_status(job_id: str):
 </section>
 
 <section class="module card" id="checkpoint">
-  <div class="module-head"><div class="module-icon">🚀</div><div><h2>Team Project — Phase 2 check-in</h2><div class="module-meta"><span class="tag amber">Phase 2 due end of Week 8</span><span class="tag">Self-check · nothing to submit</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🚀</div><div><h2>Term Project — Phase 2 check-in</h2><div class="module-meta"><span class="tag amber">Phase 2 due end of Week 8</span><span class="tag">Self-check · nothing to submit</span></div></div></div>
   <p>Phase 2 (Weeks 4–8) ends with a rough working version that touches at least two of your combined HOS pieces end to end: System v0.8 and a 2–3 page progress report, due end of Week 8. Use this to check your plan against what you've now built. Draft it here (it stays in this browser) and share it with your team.</p>
   <label class="field" for="cpTeam">Team members (three; four with instructor approval)</label>
   <input type="text" id="cpTeam" placeholder="e.g. Priya S., Marcus L., Dana K.">
@@ -477,7 +477,7 @@ def job_status(job_id: str):
   <h3>Litmus test</h3>
   <ul class="hints litmus" id="cpLitmus"></ul>
   <div class="row"><button class="btn" id="cpCopy" type="button">Copy to share with your team</button><span class="small muted" id="cpStatus" aria-live="polite"></span></div>
-  <p class="small" style="margin-top:12px">Phases, deliverables and rubrics: the Team Project section of the syllabus (in Brightspace). Run your idea through the <a href="../index.html">four simulators</a> before Week 9.</p>
+  <p class="small" style="margin-top:12px">Phases, deliverables and rubrics: the Term Project section of the syllabus (in Brightspace). Run your idea through the <a href="../index.html">four simulators</a> before Week 9.</p>
 </section>
 
 </div>
@@ -696,7 +696,7 @@ wireChecklist('refineList','refineProgress','done','ai410-'+LESSON+'-refine');
   document.getElementById('cpCopy').addEventListener('click',function(){
     var names=['agent & tools','RAG over documents','guardrails & background jobs','mobile, push & observability'];
     var parts=rows.filter(function(r){return r.querySelector('input[type=checkbox]').checked;}).map(function(r){ var h=+r.querySelector('input[type=checkbox]').dataset.h; return '- HOS '+h+' ('+names[h-1]+'): '+r.querySelector('input[type=text]').value; });
-    var t='TEAM/TERM PROJECT CHECKPOINT — AI 410 (Week 6)\n\nTeam: '+team.value+'\n\nIdea: '+idea.value+'\n\nHOS pieces it combines:\n'+(parts.join('\n')||'(none yet)');
+    var t='TERM PROJECT CHECKPOINT — AI 410 (Week 6)\n\nTeam: '+team.value+'\n\nIdea: '+idea.value+'\n\nHOS pieces it combines:\n'+(parts.join('\n')||'(none yet)');
     var s=document.getElementById('cpStatus');
     if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ s.textContent='Copied — paste it into Brightspace.'; },function(){ s.textContent='Copy blocked — select the fields manually.'; }); }
     else s.textContent='Copy not supported — select the fields manually.';
