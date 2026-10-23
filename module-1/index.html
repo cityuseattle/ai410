@@ -300,7 +300,7 @@ calculate_tool = {
   </div>
   <p>Get a working app running fast with an AI coding assistant. This is the starting point, not the deliverable — you don't hand-edit anything yet.</p>
   <ol>
-    <li>Open <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-01-foundations-agentic-loop" target="_blank" rel="noopener">the HOS 1 starter-code folder</a> in GitHub Codespaces (its <code>.devcontainer</code> sets up Python for you).</li>
+    <li>Open your own <b>HOS 1</b> repo (accept the invite linked in Brightspace under <b>HOS01</b>) in GitHub Codespaces (its <code>.devcontainer</code> sets up Python for you).</li>
     <li>Put your free Gemini key in <code>backend/.env</code> as <code>GEMINI_API_KEY=…</code> — never in the frontend.</li>
     <li>Give your assistant the starting prompt below, and iterate until the chat app calls at least one tool.</li>
   </ol>
@@ -315,7 +315,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 - requirements.txt files for both.</code></pre>
   <p class="small"><b>Two gotchas caught in testing:</b> (1) Codespaces' default Copilot Chat agent likes to build in a <em>new</em> workspace instead of your starter folder — use Agent mode and say “this existing workspace” (the prompt does). (2) A <code>502 Bad Gateway</code> usually means the assistant picked a retired model like <code>gemini-2.5-flash</code>, which new keys can't use — set it to <code>gemini-3.8-flash</code> and restart the backend.</p>
   <p class="small">Full step-by-step instructions, troubleshooting, and the exact submission list are in the <a href="hos-guide.html">HOS 1 hands-on guide</a>. Unsure what a generated file does? <a href="../reference/starter-code-walkthrough.html#hos1">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>hos/NOTES.md</code>, add a screenshot of the scaffolded app running to <code>hos/screenshots/</code>, then commit and push to your Module 1 repo.</p>
+  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 1 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -330,7 +330,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what I found · what the AI got wrong, missed, or handled surprisingly well"></textarea>
-  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>hos/NOTES.md</code>, add a screenshot of the working app to <code>hos/screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
+  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
 </section>
 
 <!-- ========================= WEEK 2 ========================= -->
@@ -351,7 +351,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
   <p class="small muted">Common trap: pasting the AI's own explanation of the code. Your instructor will ask a follow-up about one line — write it so you could answer.</p>
-  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>hos/NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -366,7 +366,7 @@ that's already open) — edit files here; do not create a new workspace or proje
     <label><input type="checkbox"><span>Write 2–3 sentences: what you changed, and one thing that surprised you.</span></label>
   </div>
   <p class="small muted">This is the mastery check: can you change the system correctly without the assistant doing it for you? Rehearse first in the <a href="simulator.html">simulator</a> — toggle a second tool on and watch the routing change.</p>
-  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in <code>hos/</code> and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>hos/NOTES.md</code>, with its screenshots in <code>hos/screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 1 assignment in Brightspace by the end of Week 2.</p>
+  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 1 assignment in Brightspace by the end of Week 2.</p>
 </section>
 
 <section class="module card" id="challenge">

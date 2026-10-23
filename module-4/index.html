@@ -333,7 +333,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   </div>
   <p>Add the mobile client, push, and tracing to your HOS 3 app with an AI coding assistant.</p>
   <ol>
-    <li>Open <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-04-mobile-observability" target="_blank" rel="noopener">the HOS 4 starter-code folder</a> in GitHub Codespaces — your HOS 3 app, already working. If <code>npm</code> is missing, rebuild the container.</li>
+    <li>Open your own <b>HOS 4</b> repo (accept the invite linked in Brightspace under <b>HOS04</b>) in GitHub Codespaces — your HOS 3 app, already working. If <code>npm</code> is missing, rebuild the container.</li>
     <li>Set up the free accounts: Expo (signed in on the terminal <em>and</em> in Expo Go) and Langfuse (keys in <code>backend/.env</code>).</li>
     <li>Give your assistant the prompt below, then run <code>npx expo start --tunnel</code> in <code>mobile/</code> and scan the QR code.</li>
   </ol>
@@ -347,7 +347,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 - backend/agent.py and retrieval.py: add Langfuse tracing (@observe()) so each request
   produces a trace with retrieval and generation as separate spans.</code></pre>
   <p class="small">Every snag this week has a documented fix in the <a href="hos-guide.html">HOS 4 hands-on guide</a>. Unsure what a file does? <a href="../reference/starter-code-walkthrough.html#hos4">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>hos/NOTES.md</code>, add a screenshot of the scaffolded app running to <code>hos/screenshots/</code>, then commit and push to your Module 4 repo.</p>
+  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 4 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -362,7 +362,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what the phone and the traces showed · what the AI got wrong, missed, or handled surprisingly well"></textarea>
-  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>hos/NOTES.md</code>, add screenshots (the notification on the phone, a trace) to <code>hos/screenshots/</code>, then commit and push by the end of Week 7. Your commit history is your Week 7 checkpoint.</p>
+  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add screenshots (the notification on the phone, a trace) to <code>screenshots/</code>, then commit and push by the end of Week 7. Your commit history is your Week 7 checkpoint.</p>
 </section>
 
 <!-- ========================= WEEK 8 ========================= -->
@@ -382,7 +382,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
     <button type="button" aria-pressed="false" data-k="status"><b>Why 200 OK isn't delivery</b>What the push response body tells you.</button>
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
-  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>hos/NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -406,7 +406,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   <input type="range" id="fThr" min="20" max="90" value="50" step="5">
   <div class="faith-out" id="fOut"></div>
   <p class="small muted">Notice the third sentence: half its meaningful words appear in the context, so it passes at the default threshold — and it says the opposite of the policy. That's the "one case where your heuristic would be fooled" — word overlap can't see negation.</p>
-  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in <code>hos/</code> and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>hos/NOTES.md</code>, with its screenshots in <code>hos/screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 4 assignment in Brightspace by the end of Week 8.</p>
+  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 4 assignment in Brightspace by the end of Week 8.</p>
 </section>
 
 <section class="module card" id="challenge">

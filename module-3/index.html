@@ -345,7 +345,7 @@ def job_status(job_id: str):
   </div>
   <p>Add both reliability layers to your HOS 2 app with an AI coding assistant. As always, this is the starting point — no hand edits yet.</p>
   <ol>
-    <li>Open <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-03-guardrails-async" target="_blank" rel="noopener">the HOS 3 starter-code folder</a> in GitHub Codespaces — your HOS 2 app, already working.</li>
+    <li>Open your own <b>HOS 3</b> repo (accept the invite linked in Brightspace under <b>HOS03</b>) in GitHub Codespaces — your HOS 2 app, already working.</li>
     <li>Create a free Upstash Redis instance and add its URL to <code>backend/.env</code> as <code>REDIS_URL</code>.</li>
     <li>Split your terminal: one for <code>uvicorn</code>, one for <code>python worker.py</code>.</li>
     <li>Give your assistant the prompt below.</li>
@@ -363,7 +363,7 @@ def job_status(job_id: str):
 - backend/main.py: change POST /documents to enqueue the job and return a job_id
   immediately, and add GET /jobs/{id} to report status.</code></pre>
   <p class="small">Details, the exact <code>curl</code> commands, and common snags are in the <a href="hos-guide.html">HOS 3 hands-on guide</a>. Unsure what a file does? <a href="../reference/starter-code-walkthrough.html#hos3">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>hos/NOTES.md</code>, add a screenshot of the scaffolded app running to <code>hos/screenshots/</code>, then commit and push to your Module 3 repo.</p>
+  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 3 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -378,7 +378,7 @@ def job_status(job_id: str):
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what the logs showed · what the AI got wrong, missed, or handled surprisingly well"></textarea>
-  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>hos/NOTES.md</code>, add a screenshot of the working app to <code>hos/screenshots/</code>, then commit and push by the end of Week 5. Your commit history is your Week 5 checkpoint.</p>
+  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 5. Your commit history is your Week 5 checkpoint.</p>
 </section>
 
 <!-- ========================= WEEK 6 ========================= -->
@@ -399,7 +399,7 @@ def job_status(job_id: str):
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
   <p class="small muted">Common trap: describing what the code does. Analyze asks <em>why</em> — name the failure that would happen without it.</p>
-  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>hos/NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -413,7 +413,7 @@ def job_status(job_id: str):
     <label><input type="checkbox"><span>Trigger a bad call and screenshot the guardrail catching it; confirm a good call still works.</span></label>
     <label><input type="checkbox"><span>Write 2–3 sentences: which rule you chose, and one bad input your schema still wouldn't catch.</span></label>
   </div>
-  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in <code>hos/</code> and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>hos/NOTES.md</code>, with its screenshots in <code>hos/screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 3 assignment in Brightspace by the end of Week 6.</p>
+  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 3 assignment in Brightspace by the end of Week 6.</p>
 </section>
 
 <section class="module card" id="challenge">

@@ -333,7 +333,7 @@ q_vec = result.embeddings[0].values      # the list of 1,024 numbers</code></pre
   </div>
   <p>Add retrieval to your working HOS 1 app with an AI coding assistant. As before, this is the starting point — no hand edits yet.</p>
   <ol>
-    <li>Open <a href="https://github.com/clarkngo/stc-transformation/tree/main/courses/ai-410-guides/starter-code/hos-02-embeddings-rag" target="_blank" rel="noopener">the HOS 2 starter-code folder</a> in GitHub Codespaces. It's your HOS 1 app plus five Northwind Outfitters sample documents in <code>backend/sample_docs/</code>.</li>
+    <li>Open your own <b>HOS 2</b> repo (accept the invite linked in Brightspace under <b>HOS02</b>) in GitHub Codespaces. It's your HOS 1 app plus five Northwind Outfitters sample documents in <code>backend/sample_docs/</code>.</li>
     <li>Keep the same <code>GEMINI_API_KEY</code> in <code>backend/.env</code> — embeddings use the same free key.</li>
     <li>Give your assistant the prompt below, then run <code>python ingest.py</code> once and test in the chat app.</li>
   </ol>
@@ -348,7 +348,7 @@ q_vec = result.embeddings[0].values      # the list of 1,024 numbers</code></pre
 Keep the existing tool-calling loop working alongside this — don't let the new
 instruction suppress tool use.</code></pre>
   <p class="small">Step-by-step details and common snags (the <code>EMBED_DIM</code> mismatch, forgetting to re-run ingest) are in the <a href="hos-guide.html">HOS 2 hands-on guide</a>. Unsure what a file does? <a href="../reference/starter-code-walkthrough.html#hos2">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>hos/NOTES.md</code>, add a screenshot of the scaffolded app running to <code>hos/screenshots/</code>, then commit and push to your Module 2 repo.</p>
+  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 2 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -363,7 +363,7 @@ instruction suppress tool use.</code></pre>
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · which chunks came back · what the AI got wrong, missed, or handled surprisingly well"></textarea>
-  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>hos/NOTES.md</code>, add a screenshot of the working app to <code>hos/screenshots/</code>, then commit and push by the end of Week 3. Your commit history is your Week 3 checkpoint.</p>
+  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 3. Your commit history is your Week 3 checkpoint.</p>
 </section>
 
 <!-- ========================= WEEK 4 ========================= -->
@@ -384,7 +384,7 @@ instruction suppress tool use.</code></pre>
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
   <p class="small muted">Common trap: "it makes the search better." Say <em>how</em>, and what would get quietly worse — not crash — if it were changed.</p>
-  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>hos/NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -399,7 +399,7 @@ instruction suppress tool use.</code></pre>
     <label><input type="checkbox"><span>Write 2–3 sentences: what you changed, and one thing about retrieval that surprised you.</span></label>
   </div>
   <p class="small muted">Rehearse first in the <a href="simulator.html">simulator</a>: add a <code>## Title</code> section to its document box and ask about it.</p>
-  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in <code>hos/</code> and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>hos/NOTES.md</code>, with its screenshots in <code>hos/screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 2 assignment in Brightspace by the end of Week 4.</p>
+  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 2 assignment in Brightspace by the end of Week 4.</p>
 </section>
 
 <section class="module card" id="challenge">
