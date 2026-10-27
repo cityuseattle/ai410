@@ -18,6 +18,7 @@ Students reach these pages from Brightspace. All graded work is submitted in Bri
 | `module-N/simulator.html` | Module N simulator |
 | `module-N/application-challenge.html` | Application Challenge N |
 | `module-5/index.html` | Term Project |
+| `module-5/example-project.html` | Example Term Project (Flashcard Coach): interactive demo |
 | `reference/` | Concept Companion, starter-code walkthrough, Concept Debate example |
 | `assets/` | Shared `course.css` and `course.js`, images |
 | `tools/check_site.py` | Pre-push checker |
