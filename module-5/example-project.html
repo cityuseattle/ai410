@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 example Term Project: Flashcard Coach, a fictional finished project you can click through. An interactive demo of all 4 HOS working together, its three releases, and a demo video storyboard.">
+<title>Example Term Project: Flashcard Coach</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.demo-layout { display:grid; grid-template-columns:minmax(250px,320px) 1fr; gap:16px; align-items:start; }
+@media (max-width:860px){ .demo-layout { grid-template-columns:1fr; } }
+.panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow); margin-bottom:16px; min-width:0; }
+.panel h3 { font-size:.95rem; margin:0 0 8px; }
+
+.steps-pick { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px; margin:10px 0 14px; }
+.steps-pick button { font-family:inherit; text-align:left; border:1px solid var(--border); background:var(--surface2); color:var(--text); border-radius:10px; padding:8px 10px; cursor:pointer; font-size:.8rem; }
+.steps-pick button .tm { display:block; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--accent2); }
+.steps-pick button b { display:block; font-size:.84rem; }
+.steps-pick button[aria-pressed="true"] { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-light); }
+.steps-pick button.seen .tm::after { content:" ✓"; }
+
+.phone { border:10px solid #1f2937; border-radius:30px; background:var(--surface2); max-width:300px; margin:0 auto; position:relative; overflow:hidden; }
+.phone .bar { background:#1f2937; color:#e5e7eb; font-size:.68rem; text-align:center; padding:2px 0 6px; }
+.phone .app-head { background:var(--accent); color:var(--on-accent); padding:8px 12px; font-weight:800; font-size:.86rem; display:flex; justify-content:space-between; align-items:center; }
+.phone .screen { height:380px; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:8px; }
+.bub { max-width:85%; padding:7px 10px; border-radius:12px; font-size:.8rem; line-height:1.4; }
+.bub.user { align-self:flex-end; background:var(--blue-bg); color:var(--text); border:1px solid var(--blue); border-bottom-right-radius:4px; }
+.bub.bot { align-self:flex-start; background:var(--surface); border:1px solid var(--border); border-bottom-left-radius:4px; }
+.bub.sys { align-self:center; background:none; color:var(--muted); font-size:.72rem; text-align:center; }
+.bub .cite { display:block; font-size:.68rem; color:var(--muted); margin-top:4px; }
+.fc { border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:5px 8px; margin-top:5px; background:var(--surface2); font-size:.74rem; }
+.notif { position:absolute; left:8px; right:8px; top:26px; background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:8px 10px; font-size:.76rem; transform:translateY(-140%); transition:transform .35s; }
+.notif.show { transform:translateY(0); }
+.phone-empty { margin:auto; text-align:center; color:var(--muted); font-size:.8rem; }
+
+.lanes { display:grid; grid-template-columns:repeat(auto-fit,minmax(88px,1fr)); gap:6px; margin-bottom:12px; }
+.lane { border:2px solid var(--border); border-radius:10px; padding:6px; text-align:center; font-size:.72rem; background:var(--surface2); transition:all .2s; min-width:0; }
+.lane b { display:block; font-size:.76rem; }
+.lane .ic { font-size:1.1rem; display:block; }
+.lane.from { border-color:var(--blue); background:var(--blue-bg); }
+.lane.to { border-color:var(--accent); background:var(--accent-light); box-shadow:0 0 0 3px var(--accent-light); }
+.lane.err { border-color:var(--bad); background:var(--bad-bg); }
+.stepbox { border:1px solid var(--border); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; background:var(--surface2); margin-bottom:12px; min-height:84px; }
+.stepbox.warn { border-left-color:var(--amber); }
+.stepbox .k { font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.steps-list { list-style:none; margin:0; padding:0; font-size:.8rem; }
+.steps-list li { padding:5px 8px; border-radius:6px; color:var(--muted); display:flex; gap:8px; align-items:baseline; }
+.steps-list li.cur { background:var(--accent-light); color:var(--text); font-weight:700; }
+.steps-list li.past { color:var(--text); }
+.steps-list li .n { flex:none; width:20px; text-align:right; }
+.hos1 { background:var(--blue-bg); color:var(--blue); } .hos2 { background:var(--violet-bg); color:var(--violet); }
+.hos3 { background:var(--amber-bg); color:var(--amber); } .hos4 { background:var(--rose-bg); color:var(--rose); }
+.say { border-left:5px solid var(--violet); background:var(--violet-bg); border-radius:0 8px 8px 0; padding:10px 14px; font-size:.88rem; margin:0 0 12px; }
+.say .label { display:block; font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--violet); margin-bottom:2px; }
+
+.wf-row { display:grid; grid-template-columns:150px 1fr 60px; gap:8px; align-items:center; font-size:.76rem; margin-bottom:4px; }
+.wf-row .nm { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wf-track { height:12px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; position:relative; }
+.wf-fill { position:absolute; top:0; bottom:0; border-radius:5px; background:var(--accent); }
+@media (max-width:520px){ .wf-row { grid-template-columns:100px 1fr 50px; } }
+
+.rel { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.rel .card { margin:0; }
+.rel h3 { margin:0 0 2px; font-size:1rem; }
+.rel ul { padding-left:18px; margin:6px 0 0; font-size:.86rem; }
+.shot { display:grid; grid-template-columns:86px 1fr; gap:10px; border-bottom:1px dashed var(--border); padding:8px 0; font-size:.86rem; }
+.shot .tm { font-weight:800; color:var(--accent2); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course home</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Module 5 · Example Term Project</div>
+    <h1>Example Term Project: Flashcard Coach</h1>
+    <p class="lede">A fictional, finished Term Project you can click through. See all four HOS working together in one app, play its live demo step by step with what the presenter says, and see what each of its three releases contained.</p>
+    <div class="chips"><span class="chip">Outcomes O1–O5</span><span class="chip">Interactive demo</span><span class="chip">3 releases: v0.3 · v0.7 · v1.0</span><span class="chip">Demo video storyboard</span></div>
+  </div>
+</section>
+<main id="main">
+
+<nav class="secnav no-print" aria-label="Page sections">
+  <div class="secnav-inner">
+    <a href="#overview">The project</a>
+    <a href="#demo">Live demo</a>
+    <a href="#releases">Three releases</a>
+    <a href="#video">Demo video</a>
+    <a href="#strong">What makes it strong</a>
+  </div>
+</nav>
+
+<p class="sim-note" style="margin-top:18px">⚠ Illustrative example only. Flashcard Coach, its team and its numbers are made up, and the demo is a scripted HTML model: no real model, database or network calls. Your project doesn't have to look like this. It has to combine all four HOS in an app a real user would want.</p>
+
+<section class="module card" id="overview">
+  <div class="module-head"><div class="module-icon">🗂️</div><div><h2>The project at a glance</h2><div class="module-meta"><span class="tag">Group of three</span><span class="tag blue">All 4 HOS</span></div></div></div>
+  <p><strong>The user and the problem.</strong> Students in a large intro biology course have a hundred pages of their own lecture notes and no time to turn them into study material. Flashcard Coach is a phone app: upload your notes, ask questions about them, and get flashcards made from <em>your</em> notes, not the internet.</p>
+  <div class="table-wrap" tabindex="0"><table>
+    <thead><tr><th>HOS</th><th>What it is in Flashcard Coach</th><th>Litmus test: why it's really that HOS</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag hos1">HOS 1 · tools</span></td><td><code>make_flashcards(topic, count)</code> and <code>schedule_review(date)</code>, called by the model when the user asks.</td><td>The model decides when to make cards. The backend runs the function and sends the cards back.</td></tr>
+      <tr><td><span class="tag hos2">HOS 2 · RAG</span></td><td>Notes the user uploads are chunked, embedded and stored in Chroma. Every answer and every card is built from retrieved chunks.</td><td>Retrieval over documents users upload, not a hardcoded FAQ. Answers cite the note they came from.</td></tr>
+      <tr><td><span class="tag hos3">HOS 3 · guardrails &amp; jobs</span></td><td>A schema check on tool arguments (<code>count</code> must be 1–20), and note uploads processed by a background worker.</td><td>Bad arguments get validated and retried, not crashed on. A 40-page upload never blocks the chat.</td></tr>
+      <tr><td><span class="tag hos4">HOS 4 · mobile, push, traces</span></td><td>An Expo app, a push notification when uploaded notes are ready, and a Langfuse trace with a faithfulness score on every answer.</td><td>The team can show a trace for any answer and point at the retrieval span.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>The team and who owned what</h3>
+  <p class="small">One owner per area, not per week, as the <a href="index.html#roles">Roles section</a> suggests. With three people, one person takes two areas.</p>
+  <div class="table-wrap" tabindex="0"><table>
+    <thead><tr><th>Member (fictional)</th><th>Owned</th></tr></thead>
+    <tbody>
+      <tr><td>Member A</td><td>Agent &amp; tools (HOS 1) and the guardrail (HOS 3)</td></tr>
+      <tr><td>Member B</td><td>Data &amp; retrieval (HOS 2) and the ingestion worker (HOS 3)</td></tr>
+      <tr><td>Member C</td><td>Mobile &amp; push (HOS 4), observability, and the demo script</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="module card" id="demo">
+  <div class="module-head"><div class="module-icon">🎬</div><div><h2>Live demo: play it step by step</h2><div class="module-meta"><span class="tag">Follows the Demo plan</span><span class="tag blue">≈ 4 min live</span></div></div></div>
+  <p>This is the live-demo part of Flashcard Coach's 15-minute presentation, in the order the <a href="index.html#demo">Demo plan</a> suggests. Pick a step, then press <b>Next ▸</b> to play it one event at a time. The phone shows what the audience sees; <b>Behind the scenes</b> shows what the presenter points at, with the HOS each event belongs to.</p>
+
+  <div class="steps-pick" id="pick" role="group" aria-label="Demo steps"></div>
+
+  <div class="say" id="say"><span class="label">The presenter says</span><span id="sayText"></span></div>
+
+  <div class="demo-layout">
+    <div>
+      <div class="phone" aria-label="Phone screen of Flashcard Coach">
+        <div class="bar">9:41 · 📶 🔋</div>
+        <div class="notif" id="notif"><b>Flashcard Coach</b><br><span id="notifText"></span></div>
+        <div class="app-head"><span>🃏 Flashcard Coach</span><span style="font-weight:600;font-size:.72rem">Bio 101</span></div>
+        <div class="screen" id="screen" tabindex="0" role="log" aria-label="Chat"></div>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:12px">
+        <button class="btn" id="next" type="button">Next ▸</button>
+        <button class="btn secondary" id="toEnd" type="button">Play to end</button>
+        <button class="btn secondary" id="replay" type="button">Replay step</button>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Behind the scenes</h3>
+        <div class="lanes">
+          <div class="lane" id="L-phone"><span class="ic">📱</span><b>Phone</b>Expo</div>
+          <div class="lane" id="L-api"><span class="ic">⚙️</span><b>Backend</b>FastAPI</div>
+          <div class="lane" id="L-llm"><span class="ic">🧠</span><b>LLM</b>Gemini</div>
+          <div class="lane" id="L-tool"><span class="ic">🔧</span><b>Tools</b>Python</div>
+          <div class="lane" id="L-db"><span class="ic">🗄️</span><b>Vectors</b>Chroma</div>
+          <div class="lane" id="L-queue"><span class="ic">🧺</span><b>Queue</b>Redis + worker</div>
+          <div class="lane" id="L-trace"><span class="ic">🔭</span><b>Traces</b>Langfuse</div>
+        </div>
+        <div class="stepbox" id="stepbox"><span class="k">Ready</span><p style="margin:0">Pick a demo step above, then press <b>Next ▸</b>.</p></div>
+        <ol class="steps-list" id="events"></ol>
+        <div id="extra"></div>
+        <p class="sr-only" id="live" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="module card" id="releases">
+  <div class="module-head"><div class="module-icon">🚀</div><div><h2>Three releases: what was in each</h2><div class="module-meta"><span class="tag amber">Phase 1 · 2 · 3</span></div></div></div>
+  <p>Flashcard Coach didn't appear in Week 10. Each phase released a working system version and a report, the same as yours will.</p>
+  <div class="rel">
+    <div class="card"><span class="tag">End of Week 3 · Phase 1</span><h3>System v0.3</h3>
+      <ul><li>Repo with a README, a <code>.gitignore</code> and no keys committed</li><li>The HOS 1 chat app running in a Codespace, renamed and restyled</li><li>A one-page proposal with 3 references: the user, the problem, which HOS goes where, and who owns what</li></ul></div>
+    <div class="card"><span class="tag">End of Week 7 · Phase 2</span><h3>System v0.7</h3>
+      <ul><li>Upload notes, ask questions, get cited answers (HOS 1 + HOS 2 end to end)</li><li><code>make_flashcards</code> working, but no guardrail yet</li><li>Uploads still processed inline, so a big upload freezes the chat. Listed honestly as a known issue.</li><li>A 3–4 page progress report with 12+ references</li></ul></div>
+    <div class="card"><span class="tag ok">End of Week 10 · Phase 3</span><h3>System v1.0</h3>
+      <ul><li>Guardrail with retry on every tool call; uploads moved to a queue and worker</li><li>Expo app with push when notes are ready; Langfuse traces with a faithfulness score</li><li>One-click Codespace launch and a README execution guide with an AI tool disclosure</li><li>Final report, presentation and demo video</li></ul></div>
+  </div>
+  <div class="callout blue" style="margin-top:14px">
+    <span class="label">What they cut, and said so</span>
+    <p>Spaced-repetition scheduling (<code>schedule_review</code> only saves a date; it never reminds anyone) and Android push (the team demoed on an iPhone). Both are on the "what didn't make it" slide. That's the Integration Debate in practice: they cut a feature, not observability.</p>
+  </div>
+</section>
+
+<section class="module card" id="video">
+  <div class="module-head"><div class="module-icon">📹</div><div><h2>The demo video: a storyboard</h2><div class="module-meta"><span class="tag">1–2 minutes</span><span class="tag">Public YouTube link</span></div></div></div>
+  <p>The video is separate from the live demo. It needs the problem, how the system works, and a title card naming who built what. Here is Flashcard Coach's shot list, about 1:45 in all.</p>
+  <div class="shot"><span class="tm">0:00–0:08</span><span><b>Title card.</b> "Flashcard Coach · AI 410 Term Project · Member A: agent, tools and guardrails · Member B: retrieval and worker · Member C: mobile, push and traces".</span></div>
+  <div class="shot"><span class="tm">0:08–0:25</span><span><b>The problem.</b> A stack of notes and a voice-over: "Intro bio students have a hundred pages of notes and no time to study from them."</span></div>
+  <div class="shot"><span class="tm">0:25–0:55</span><span><b>Ask and make cards.</b> A screen recording of the phone: a question about photosynthesis, a cited answer, then five flashcards from the notes.</span></div>
+  <div class="shot"><span class="tm">0:55–1:15</span><span><b>Upload, keep chatting, push.</b> Upload Chapter 4, keep asking questions while it processes, and the notification arrives.</span></div>
+  <div class="shot"><span class="tm">1:15–1:35</span><span><b>How it works.</b> The architecture slide, then the Langfuse trace with the retrieval span and faithfulness score highlighted.</span></div>
+  <div class="shot" style="border-bottom:none"><span class="tm">1:35–1:45</span><span><b>Close.</b> The repo link and one sentence on what's next.</span></div>
+</section>
+
+<section class="module card" id="strong">
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>What makes this a strong example</h2><div class="module-meta"><span class="tag">Use it as a checklist</span></div></div></div>
+  <ul>
+    <li><b>Every HOS is real, not a token mention.</b> For each one the team can point to a specific part of the app and say why it's that HOS (the litmus test in the first table).</li>
+    <li><b>One live path shows all four.</b> The demo doesn't tour features one by one. A single story moves through tools, retrieval, the guardrail, the queue, push and the trace.</li>
+    <li><b>It shows a failure on purpose.</b> The "500 flashcards" request proves the guardrail works, which is more convincing than a demo where nothing goes wrong.</li>
+    <li><b>The trace is ready before anyone asks.</b> "Show me where HOS 2 is" gets an answer in one click.</li>
+    <li><b>It's honest about what's missing.</b> The cut features are named, with what the team would do next.</li>
+    <li><b>Every member is visible.</b> Owners per area, commits from all three, everyone speaks, and the title card names who built what.</li>
+  </ul>
+  <p>Now plan yours: <a href="index.html#backlog">write your backlog</a>, then use the <a href="index.html#freeze">freeze checklist</a> and the <a href="index.html#demo">Demo plan</a>.</p>
+</section>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo · Simulators are illustrative HTML models — no real LLM, database, or network calls. <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  try { var saved=localStorage.getItem('ai410-theme'); if(saved) root.setAttribute('data-theme',saved); } catch(e){}
+  function isDark(){ var t=root.getAttribute('data-theme'); return t ? t==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function label(){ if(btn) btn.textContent = isDark() ? '☀️ Light' : '🌙 Dark'; }
+  label();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',label); } catch(e){}
+  var hdr=document.querySelector('header.top');
+  function hh(){ if(hdr) root.style.setProperty('--header-h',hdr.offsetHeight+'px'); }
+  hh(); window.addEventListener('resize',hh);
+  if(btn) btn.addEventListener('click',function(){
+    var next=isDark()?'light':'dark'; root.setAttribute('data-theme',next);
+    try { localStorage.setItem('ai410-theme',next); } catch(e){}
+    label();
+  });
+})();
+</script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var HOS={1:'HOS 1 · tools',2:'HOS 2 · RAG',3:'HOS 3 · guardrails & jobs',4:'HOS 4 · mobile, push, traces'};
+  var CARDS='<div class="fc"><b>Q:</b> Where do the light reactions happen?<br><b>A:</b> In the thylakoid membranes.</div><div class="fc"><b>Q:</b> What does the Calvin cycle produce?<br><b>A:</b> G3P, used to build glucose.</div><div class="fc"><b>Q:</b> What are the inputs of photosynthesis?<br><b>A:</b> CO₂, water and light.</div><div class="fc"><b>Q:</b> Why is chlorophyll green?<br><b>A:</b> It reflects green light.</div><div class="fc"><b>Q:</b> What gas is released?<br><b>A:</b> Oxygen, from splitting water.</div>';
+  var TRACE='<h3 style="margin-top:14px">Langfuse trace · "Make me 5 flashcards on photosynthesis"</h3>'+
+    [['POST /chat',0,100,'2.41 s'],['retrieve (Chroma, top-4)',2,14,'0.31 s'],['generation 1 → function call',16,30,'0.74 s'],['make_flashcards · guardrail ✓',47,4,'0.06 s'],['generation 2 → cards',52,46,'1.12 s']]
+    .map(function(r){ return '<div class="wf-row"><span class="nm">'+r[0]+'</span><div class="wf-track"><div class="wf-fill" style="left:'+r[1]+'%;width:'+r[2]+'%"></div></div><span>'+r[3]+'</span></div>'; }).join('')+
+    '<p class="small" style="margin-top:8px"><span class="tag ok">faithfulness 0.94</span> <span class="tag">alert rules: latency &gt; 3 s · faithfulness &lt; 0.70</span> <span class="tag ok">no alerts</span></p>';
+  var STEPS=[
+    {time:'~0:30', title:'The user and the problem', say:'"This is for intro bio students. They have a hundred pages of their own notes and no time to turn them into study material. Flashcard Coach turns your notes into answers and flashcards, on your phone."',
+     ev:[{from:'phone',to:'phone',t:'The app opens on the phone',d:'Start on the real device, running from the Codespace through <code>npx expo start --tunnel</code>. The audience should see a phone, not a laptop.',hos:4,phone:{sys:'Chapter 3 notes · 18 pages · ready'}}]},
+    {time:'~1:00', title:'Ask, retrieve, call a tool', say:'"I\'ll ask for flashcards on photosynthesis. Watch: it searches my notes first, and then the model asks our code to make the cards. It never makes them up from the internet."',
+     ev:[{from:'phone',to:'api',t:'POST /chat',d:'<code>{"message": "Make me 5 flashcards on photosynthesis"}</code>',hos:4,phone:{user:'Make me 5 flashcards on photosynthesis'}},
+         {from:'api',to:'db',t:'Retrieve the top 4 chunks from the notes',d:'The query is embedded and compared with every chunk of the uploaded notes. Four chunks from "Chapter 3, pp. 4–6" clear the threshold.',hos:2},
+         {from:'api',to:'llm',t:'Call Gemini with the chunks and the declared tools',d:'The prompt holds the retrieved notes plus <code>make_flashcards</code> and <code>schedule_review</code>.',hos:2},
+         {from:'llm',to:'api',t:'The model returns a function call',d:'No text, just <code>make_flashcards({"topic": "photosynthesis", "count": 5})</code>.',hos:1},
+         {from:'api',to:'tool',t:'Guardrail ✓, then the backend runs the tool',d:'The arguments pass the schema check (count 1–20). The function builds 5 cards from the retrieved chunks.',hos:3},
+         {from:'api',to:'llm',t:'Send the function result back',d:'The cards go back to the model as a <code>function_response</code>, and it writes the reply.',hos:1},
+         {from:'api',to:'phone',t:'Reply with cited cards',d:'Each card comes from the student\'s own notes, and the reply says where.',hos:2,phone:{bot:'Here are 5 cards from your notes:'+CARDS+'<span class="cite">From: Chapter 3 notes, pp. 4–6</span>'}}]},
+    {time:'~0:30', title:'A bad input, handled', say:'"Now a request that would break a naive app. 500 cards is more than our tool allows. The guardrail catches it, retries once with the error, and the app explains instead of crashing."',
+     ev:[{from:'phone',to:'api',t:'POST /chat',d:'<code>{"message": "Make 500 flashcards on everything"}</code>',hos:4,phone:{user:'Make 500 flashcards on everything'}},
+         {from:'llm',to:'api',t:'The model asks for count = 500',d:'<code>make_flashcards({"topic": "everything", "count": 500})</code>',hos:1},
+         {from:'api',to:'api',t:'Guardrail ✗: count must be 1–20',d:'Validation fails <em>before</em> the tool runs. The error goes into the retry, as in HOS 3.',hos:3,warn:true},
+         {from:'api',to:'llm',t:'Retry with the validation error',d:'"count must be between 1 and 20". This time the model doesn\'t guess. It asks the user.',hos:3},
+         {from:'api',to:'phone',t:'A helpful reply, not a 500 error',d:'The request stays alive and the user gets a choice.',hos:3,phone:{bot:'I can make up to 20 cards at a time. Want 20 on Chapter 3, or should I split them by topic?'}}]},
+    {time:'~1:00', title:'Upload, keep chatting, push', say:'"I\'ll upload my Chapter 4 notes, 40 pages. The app answers straight away because a background worker does the processing. I can keep asking questions, and when the notes are ready, my phone tells me."',
+     ev:[{from:'phone',to:'api',t:'POST /documents (Chapter 4, 40 pages)',d:'The upload includes the <code>device_id</code>, so the job knows whom to notify.',hos:4,phone:{user:'📎 Chapter 4 notes.pdf'}},
+         {from:'api',to:'queue',t:'202 Accepted, job queued',d:'Returns <code>{"job_id": "job-17"}</code> in 0.1 s instead of making the user wait.',hos:3,phone:{sys:'Uploading Chapter 4… you can keep chatting'}},
+         {from:'phone',to:'api',t:'Keep chatting while it processes',d:'A new question is answered from Chapter 3 at normal speed. The API isn\'t blocked.',hos:3,phone:{user:'What does the Calvin cycle produce?'}},
+         {from:'api',to:'phone',t:'Answered in about 2 seconds',d:'Same retrieval path as before.',hos:2,phone:{bot:'G3P, which the plant uses to build glucose.<span class="cite">From: Chapter 3 notes, p. 6</span>'}},
+         {from:'queue',to:'db',t:'The worker chunks and embeds Chapter 4',d:'<code>python worker.py</code>, running in its own terminal, picks up job-17 and writes 112 chunks to Chroma.',hos:3},
+         {from:'api',to:'phone',t:'Push: "Chapter 4 notes are ready"',d:'When the job finishes, the backend sends the push through the Expo Push API to the registered device.',hos:4,phone:{notif:'Your Chapter 4 notes are ready to study.'}}]},
+    {time:'~0:30', title:'Open the trace', say:'"Here\'s the trace for the flashcard request. Retrieval is its own span, so you can see exactly which notes were used. Generation is separate, and every answer gets a faithfulness score. This one is 0.94."',
+     ev:[{from:'trace',to:'trace',t:'Open the saved trace in Langfuse',d:'Have it open in a tab before the demo starts. Don\'t search for it live.',hos:4,extra:TRACE},
+         {from:'trace',to:'db',t:'Point at the retrieval span',d:'"This is HOS 2": the four chunks, their similarity scores and their source pages.',hos:2},
+         {from:'trace',to:'llm',t:'Point at the two generations and the score',d:'Two model calls around one tool call (the HOS 1 loop), and the faithfulness score from your HOS 4 Refine work.',hos:4}]},
+    {time:'~0:45', title:'What didn\'t make it, and next', say:'"Two things didn\'t make it: real spaced-repetition reminders and Android push. We cut features rather than observability, because without traces we couldn\'t have debugged demo week. Next, we\'d add reminders using the push we already have."',
+     ev:[{from:'phone',to:'phone',t:'Close on an honest slide',d:'A sprint review, not a sales pitch. Name the corner you cut. It\'s your Integration Debate synthesis in practice.',hos:4,phone:{sys:'Not yet: review reminders · Android push'}}]}
+  ];
+  var cur=0, idx=-1, seen={};
+
+  function laneReset(){ ['phone','api','llm','tool','db','queue','trace'].forEach(function(l){ $('L-'+l).className='lane'; }); }
+  function bubble(cls,html){ var d=document.createElement('div'); d.className='bub '+cls; d.innerHTML=html; $('screen').appendChild(d); $('screen').scrollTop=$('screen').scrollHeight; }
+  function phoneFor(e){
+    var p=e.phone; if(!p) return;
+    if(p.user) bubble('user',p.user); if(p.bot) bubble('bot',p.bot); if(p.sys) bubble('sys',p.sys);
+    if(p.notif){ $('notifText').textContent=p.notif; $('notif').classList.add('show'); }
+  }
+  function pickHtml(){
+    $('pick').innerHTML=STEPS.map(function(s,i){ return '<button type="button" aria-pressed="'+(i===cur)+'" class="'+(seen[i]?'seen':'')+'" data-i="'+i+'"><span class="tm">Step '+(i+1)+' · '+s.time+'</span><b>'+s.title+'</b></button>'; }).join('');
+    [].slice.call($('pick').querySelectorAll('button')).forEach(function(b){ b.addEventListener('click',function(){ load(+b.dataset.i); }); });
+  }
+  function load(i){
+    cur=i; idx=-1; $('screen').innerHTML=''; $('notif').classList.remove('show'); $('extra').innerHTML='';
+    // replay the phone history of earlier steps so the chat reads as one conversation
+    for(var k=0;k<i;k++) STEPS[k].ev.forEach(function(e){ if(e.phone && !e.phone.notif) phoneFor(e); });
+    if(!$('screen').children.length) $('screen').innerHTML='<p class="phone-empty">Press Next ▸ to start the demo.</p>';
+    $('sayText').textContent=STEPS[i].say; pickHtml(); render();
+  }
+  function render(){
+    var s=STEPS[cur]; laneReset();
+    $('events').innerHTML=s.ev.map(function(e,i){ return '<li class="'+(i===idx?'cur':i<idx?'past':'')+'"><span class="n">'+(i+1)+'</span><span>'+e.t+' <span class="tag hos'+e.hos+'">'+HOS[e.hos]+'</span></span></li>'; }).join('');
+    var done=idx===s.ev.length-1;
+    $('next').textContent= done ? (cur<STEPS.length-1 ? 'Next demo step ▸' : 'Start over ▸') : 'Next ▸';
+    $('toEnd').disabled=done;
+    if(idx<0){ $('stepbox').className='stepbox'; $('stepbox').innerHTML='<span class="k">Step '+(cur+1)+' of '+STEPS.length+' · '+s.time+'</span><p style="margin:2px 0 0"><b>'+s.title+'</b></p><p class="small" style="margin:4px 0 0">Press <b>Next ▸</b> to play the first event.</p>'; return; }
+    var e=s.ev[idx];
+    $('L-'+e.from).classList.add('from'); if(e.to!==e.from) $('L-'+e.to).classList.add(e.warn?'err':'to'); else if(e.warn) $('L-'+e.to).classList.add('err');
+    $('stepbox').className='stepbox'+(e.warn?' warn':'');
+    $('stepbox').innerHTML='<span class="k">Event '+(idx+1)+' of '+s.ev.length+' · <span class="tag hos'+e.hos+'">'+HOS[e.hos]+'</span></span><p style="margin:4px 0 0"><b>'+e.t+'</b></p><p class="small" style="margin:4px 0 0">'+e.d+'</p>';
+    $('live').textContent='Event '+(idx+1)+' of '+s.ev.length+': '+e.t.replace(/<[^>]+>/g,'');
+    if(done){ seen[cur]=true; pickHtml(); }
+  }
+  function step(){
+    var s=STEPS[cur];
+    if(idx>=s.ev.length-1){ load(cur<STEPS.length-1?cur+1:0); return; }
+    if(idx<0 && $('screen').querySelector('.phone-empty')) $('screen').innerHTML='';
+    idx++; var e=s.ev[idx]; phoneFor(e); if(e.extra) $('extra').innerHTML=e.extra; render();
+  }
+  $('next').addEventListener('click',step);
+  $('toEnd').addEventListener('click',function(){ var s=STEPS[cur]; while(idx<s.ev.length-1) step(); });
+  $('replay').addEventListener('click',function(){ load(cur); });
+  load(0);
+})();
+
+/* section nav highlight */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.secnav a')); var map={};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  if(!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){l.classList.remove('active');}); var a=map[e.target.id]; if(a){ a.classList.add('active'); var c=a.parentElement, ar=a.getBoundingClientRect(), cr=c.getBoundingClientRect(); c.scrollLeft+=ar.left-cr.left-cr.width/2+ar.width/2; } } }); },{rootMargin:'-30% 0px -60% 0px'});
+  Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
+})();
+</script>
+</body>
+</html>
