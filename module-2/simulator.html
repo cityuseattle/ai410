@@ -77,6 +77,7 @@
 <main id="main">
 <div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><a class="tag blue" href="../module-1/simulator.html" style="text-decoration:none">1 · Agentic Loop</a><span class="tag">2 · RAG Pipeline</span><a class="tag blue" href="../module-3/simulator.html" style="text-decoration:none">3 · Guardrails &amp; Queue</a><a class="tag blue" href="../module-4/simulator.html" style="text-decoration:none">4 · Push &amp; Observability</a></div>
 <p class="sim-note">⚠ Simulation only — a word-overlap "embedding" stands in for Gemini's embedding model, and an in-page array stands in for Chroma.</p>
+<section class="card tour" id="tour" aria-label="Guided tour"><p class="small muted" style="margin:0">Guided tour loading…</p></section>
 <div class="sim-layout">
   <div>
     <div class="panel">
@@ -239,5 +240,42 @@ $('q').addEventListener('keydown',function(e){ if(e.key==='Enter') ask(); });
 [].slice.call(document.querySelectorAll('#presets button')).forEach(function(b){ b.addEventListener('click',function(){ $('q').value=b.textContent; ask(); }); });
 ingest();
 </script>
+<script>window.SIM_TOUR=[
+ {title:'1 · Ingest: split the documents into chunks',
+  'do':'Press <b>Set this up for me</b>. It runs <code>ingest.py</code> with chunk size 30 and overlap 5.',
+  watch:'The <b>Chunks in the vector store</b> panel on the right. Each colored block is one chunk, tagged with the document it came from.',
+  expect:'Five store policies split into about 15 chunks of roughly 30 words each.',
+  why:'This is <code>ingest.py</code> in HOS 2 Create: chunk, embed, and store in Chroma before anyone asks a question.',
+  setup:function(h){ h.set('csize',30); h.set('overlap',5); h.set('topk',3); h.set('thr',15); h.set('ragOn',true); h.set('ragSwallow',false); h.click('ingest'); }},
+ {title:'2 · Ask a question the documents cover',
+  'do':'Press <b>Set this up for me</b>. It asks "How long do I have to return an item?".',
+  watch:'The <b>Retrieval</b> bars (every chunk scored against the question, with a red threshold line), then <b>What the model receives</b>.',
+  expect:'The top 3 chunks that clear the threshold are highlighted and pasted into the prompt, and the answer cites the 30-day window.',
+  why:'Retrieval decides what the model sees. That\'s context engineering, the idea behind all of HOS 2.',
+  setup:function(h){ h.set('csize',30); h.set('overlap',5); h.set('topk',3); h.set('thr',15); h.set('ragOn',true); h.set('ragSwallow',false); h.click('ingest'); h.set('q','How long do I have to return an item?'); h.click('ask'); }},
+ {title:'3 · Chunk size is a trade-off',
+  'do':'Press <b>Set this up for me</b> (chunk size 10, top-k 1). Then drag chunk size up to 80 and watch the prompt box.',
+  watch:'Whether "30 days" makes it into <b>What the model receives</b>.',
+  expect:'At size 10 the best chunk mentions returns, but "30 days" landed in the next chunk. At 80 it\'s found, but the prompt fills with unrelated text.',
+  why:'Choosing a chunk size is one of the decisions you defend in HOS 2 Analyze.',
+  setup:function(h){ h.set('csize',10); h.set('overlap',0); h.set('topk',1); h.set('thr',15); h.set('ragOn',true); h.set('ragSwallow',false); h.click('ingest'); h.set('q','How long do I have to return an item?'); h.click('ask'); }},
+ {title:'4 · The threshold lets the model say "I don\'t know"',
+  'do':'Press <b>Set this up for me</b>. It asks about gift wrapping, which no document covers. Then drag the threshold to 0.20.',
+  watch:'The verdict under the prompt box.',
+  expect:'At 0.15 a "gift cards" chunk sneaks through because it shares a <em>word</em>, and the verdict warns of a made-up policy. At 0.20 nothing clears the bar and the model says it doesn\'t know.',
+  why:'This is Concept Debate 2: refuse, or answer from general knowledge? Now you\'ve seen both.',
+  setup:function(h){ h.set('csize',30); h.set('overlap',5); h.set('topk',3); h.set('thr',15); h.set('ragOn',true); h.set('ragSwallow',false); h.click('ingest'); h.set('q','Do you offer gift wrapping?'); h.click('ask'); }},
+ {title:'5 · A RAG prompt can break tool calling',
+  'do':'Press <b>Set this up for me</b>. It turns on the buggy "Only answer from the documents" prompt and asks a math question.',
+  watch:'The answer.',
+  expect:'The model obeys "only the documents" and refuses to calculate, even though the tool is available.',
+  why:'This is the HOS 2 bug to catch in Evaluate. Always include one tool question in your tests.',
+  setup:function(h){ h.set('csize',30); h.set('overlap',5); h.set('topk',3); h.set('thr',15); h.set('ragOn',true); h.set('ragSwallow',true); h.click('ingest'); h.set('q',"What's 25 times 4?"); h.click('ask'); }},
+ {title:'Your turn',
+  'do':'Add a sixth document to the box (start it with <code>## Title</code>) and ask a question only it can answer.',
+  expect:'You can explain what chunk size, top-k and the threshold each control, and what goes wrong when each is set badly.',
+  why:'That\'s the core of HOS 2 Analyze. Now go back to the <a href="index.html#lecture">lesson</a>.'}
+];</script>
+<script src="../assets/sim-tour.js"></script>
 </body>
 </html>

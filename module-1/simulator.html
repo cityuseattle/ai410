@@ -67,6 +67,7 @@
 <main id="main">
 <div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><span class="tag">1 · Agentic Loop</span><a class="tag blue" href="../module-2/simulator.html" style="text-decoration:none">2 · RAG Pipeline</a><a class="tag blue" href="../module-3/simulator.html" style="text-decoration:none">3 · Guardrails &amp; Queue</a><a class="tag blue" href="../module-4/simulator.html" style="text-decoration:none">4 · Push &amp; Observability</a></div>
 <p class="sim-note">⚠ Simulation only — a rule-based stand-in for Gemini. No API key, no network calls.</p>
+<section class="card tour" id="tour" aria-label="Guided tour"><p class="small muted" style="margin:0">Guided tour loading…</p></section>
 <div class="sim-layout">
   <div>
     <div class="panel">
@@ -291,5 +292,36 @@ $('send').addEventListener('click',function(){ verdict=null; build(); idx=0; $('
 $('step').addEventListener('click',function(){ if(idx<steps.length-1){ idx++; render(); } });
 $('runAll').addEventListener('click',function(){ idx=steps.length-1; render(); });
 </script>
+<script>window.SIM_TOUR=[
+ {title:'1 · A question that needs a tool',
+  'do':'Press <b>Set this up for me</b>, then press <b>Next step ▸</b> in panel 2 until the loop ends.',
+  watch:'The four lanes light up in turn. Every tool call goes <b>Model → Backend → Tool</b> and back. The model never touches the Python function itself.',
+  expect:'The model returns a <em>function call</em> instead of text, the backend runs <code>calculate("342*87")</code>, and the final answer is 29,754. Panel 3 shows the history growing with each hop.',
+  why:'This is the loop you build in HOS 1 Create. Your <code>/chat</code> endpoint does exactly what the Backend lane does.',
+  setup:function(h){ h.set('msg',"What's 342 times 87?"); h.set('tCalc',true); h.set('tTime',false); h.set('tConv',false); h.set('tTry',true); h.set('tKeyFront',false); h.set('maxIt',3); h.click('send'); }},
+ {title:'2 · Take the tool away: a confident guess',
+  'do':'Press <b>Set this up for me</b> (it unticks <code>calculate</code>), then <b>Run to end</b>.',
+  watch:'The verdict at the bottom of panel 2, and the number in the final answer.',
+  expect:'No error anywhere, and a <b>wrong</b> number stated confidently. The red verdict explains why.',
+  why:'A missing tool causes a guess, not a crash. That\'s why HOS 1 Evaluate asks you to test on purpose instead of trusting a reply that looks right.',
+  setup:function(h){ h.set('msg',"What's 342 times 87?"); h.set('tCalc',false); h.set('tTime',false); h.set('tConv',false); h.set('tTry',true); h.set('tKeyFront',false); h.set('maxIt',3); h.click('send'); h.click('runAll'); }},
+ {title:'3 · A broken input: failure as data, or a crash',
+  'do':'Press <b>Set this up for me</b> and <b>Run to end</b>. Then untick <b>Wrap tool calls in try/except</b>, press <b>Send</b> and <b>Run to end</b> again.',
+  watch:'What reaches the Frontend lane in each run.',
+  expect:'With try/except on, the error goes back to the model as data and the user gets a helpful reply (green). With it off, the request dies with HTTP 500 (red).',
+  why:'Your backend should turn tool errors into data the model can explain. It\'s one of the things you check in HOS 1 Evaluate.',
+  setup:function(h){ h.set('msg','Calculate 12 / (3 -'); h.set('tCalc',true); h.set('tTry',true); h.set('tKeyFront',false); h.set('maxIt',3); h.click('send'); h.click('runAll'); }},
+ {title:'4 · Two tools, and a loop that repeats',
+  'do':'Press <b>Set this up for me</b> (it turns on <code>get_current_time</code>) and step through. Then drag <b>Max tool calls</b> to 1 and send again.',
+  watch:'How many times the Backend calls the model before the final answer.',
+  expect:'Two function calls, then text. With the limit at 1, the backend stops the loop and returns a fallback reply (amber).',
+  why:'Adding a second tool is the HOS 1 Understand &amp; Refine task, and the loop limit is your safety net against a model that keeps calling tools.',
+  setup:function(h){ h.set('msg',"What's 15 times 4, and what time is it in London?"); h.set('tCalc',true); h.set('tTime',true); h.set('tConv',false); h.set('tTry',true); h.set('tKeyFront',false); h.set('maxIt',3); h.click('send'); }},
+ {title:'Your turn',
+  'do':'Try the API-key toggle, or invent a message of your own. The <b>What this teaches</b> box below lists more experiments.',
+  expect:'You can explain, in one sentence each: who runs the tool, why a missing tool causes a guess, and why the history is resent every time.',
+  why:'Those three sentences are most of the HOS 1 Analyze stage. Now go back to the <a href="index.html#lecture">lesson</a>.'}
+];</script>
+<script src="../assets/sim-tour.js"></script>
 </body>
 </html>

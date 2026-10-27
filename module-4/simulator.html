@@ -88,6 +88,7 @@
 <main id="main">
 <div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><a class="tag blue" href="../module-1/simulator.html" style="text-decoration:none">1 · Agentic Loop</a><a class="tag blue" href="../module-2/simulator.html" style="text-decoration:none">2 · RAG Pipeline</a><a class="tag blue" href="../module-3/simulator.html" style="text-decoration:none">3 · Guardrails &amp; Queue</a><span class="tag">4 · Push &amp; Observability</span></div>
 <p class="sim-note">⚠ Simulation only — no Expo push service, no Langfuse project, no phone required.</p>
+<section class="card tour" id="tour" aria-label="Guided tour"><p class="small muted" style="margin:0">Guided tour loading…</p></section>
 
 <div class="sim-layout">
   <div>
@@ -265,5 +266,41 @@ function render(key){
 }
 [].slice.call(document.querySelectorAll('#scen button')).forEach(function(b){ b.addEventListener('click',function(){ render(b.dataset.s); }); });
 </script>
+<script>window.SIM_TOUR=[
+ {title:'1 · Push notifications: the whole chain working',
+  'do':'Press <b>Set this up for me</b>. It sets a phone with Expo Go over a tunnel, with permission granted, and finishes a job.',
+  watch:'The <b>Delivery chain</b> list and the lock screen.',
+  expect:'Every link is green and the notification appears on the phone.',
+  why:'This is the HOS 4 Create path: app → register the device → job finishes → backend sends the push.',
+  setup:function(h){ h.set('dev','phone'); h.set('net','tunnel'); h.set('perm','granted'); h.set('login',true); h.set('eas',true); h.set('reg',true); h.set('jobDev',true); h.click('pushGo'); }},
+ {title:'2 · Break one link: nothing errors',
+  'do':'Press <b>Set this up for me</b>. It sets notification permission to "Never requested".',
+  watch:'Which link turns red, and whether anything shows an error.',
+  expect:'The notification never arrives, and no error appears anywhere except at that one link.',
+  why:'Push fails silently. In HOS 4 Evaluate you check each link on purpose. Try the other settings to break different links.',
+  setup:function(h){ h.set('dev','phone'); h.set('net','tunnel'); h.set('perm','never'); h.set('login',true); h.set('eas',true); h.set('reg',true); h.set('jobDev',true); h.click('pushGo'); }},
+ {title:'3 · Read a healthy trace',
+  'do':'Press <b>Set this up for me</b>. It sends a covered question through Langfuse-style tracing.',
+  watch:'The waterfall: separate spans for retrieval and generation, each with its time.',
+  expect:'A fast trace with a high faithfulness score and no alerts.',
+  why:'Retrieval and generation are separate spans on purpose. That\'s the HOS 4 Analyze question.',
+  setup:function(h){ h.set('latA',3); h.set('faithA',70); h.click(h.q('#scen [data-s="healthy"]')); }},
+ {title:'4 · Catch a hallucination with a score',
+  'do':'Press <b>Set this up for me</b>. It asks about gift wrapping, which the documents don\'t cover.',
+  watch:'The faithfulness list (is each sentence supported?) and the alert box.',
+  expect:'Low faithfulness and an alert. Answer the "What do you check first?" question under the trace.',
+  why:'You write a version of this score by hand in HOS 4 Understand &amp; Refine.',
+  setup:function(h){ h.set('latA',3); h.set('faithA',70); h.click(h.q('#scen [data-s="halluc"]')); }},
+ {title:'5 · Alerts are a judgment call',
+  'do':'With the hallucination trace still showing, drag <b>Alert if faithfulness &lt;</b> down to 40, then try the slow scenario with a 1 s latency alert.',
+  watch:'When the alerts appear and disappear.',
+  expect:'Too loose and the hallucination gets through. Too tight and every request raises an alert.',
+  why:'Choosing those thresholds is the HOS 4 Application Challenge.'},
+ {title:'Your turn',
+  'do':'Try the slow and tool + RAG scenarios, or switch the device to a web browser.',
+  expect:'You can explain where push breaks silently, and how a trace turns "it\'s wrong" into a specific span.',
+  why:'That\'s HOS 4 Analyze. Now go back to the <a href="index.html#lecture">lesson</a>.'}
+];</script>
+<script src="../assets/sim-tour.js"></script>
 </body>
 </html>
