@@ -41,6 +41,7 @@
   <div class="secnav-inner">
     <a href="#overview">Overview</a>
     <span class="sep">Week 3</span>
+    <a href="#preview">Preview</a>
     <a href="#lecture">Lecture</a>
     <a href="#muddiest">Muddiest Point</a>
     <a href="#debate">Concept Debate</a>
@@ -80,6 +81,7 @@
   </ol>
   <h3>Your two weeks at a glance</h3>
   <div class="flow">
+    <a href="#preview"><span class="n">Wk 3 · Mon</span><span class="t">Preview the build</span><span class="w">simulator tour · ungraded</span></a>
     <a href="#lecture"><span class="n">Wk 3 · Mon</span><span class="t">Lecture</span><span class="w">~40 min, 3 parts</span></a>
     <a href="#muddiest"><span class="n">Wk 3 · by Wed</span><span class="t">Muddiest Point</span><span class="w">graded · 5% pool</span></a>
     <a href="#debate"><span class="n">Wk 3 · Tue–Sat</span><span class="t">Concept Debate</span><span class="w">graded · 3 stages</span></a>
@@ -97,8 +99,29 @@
 <div class="week-tabs no-print" role="group" aria-label="Weeks"><button type="button" data-week="1" aria-controls="week-1">Week 3<span class="tab-sub"> · Build &amp; Judge</span></button><button type="button" data-week="2" aria-controls="week-2">Week 4<span class="tab-sub"> · Explain &amp; Master</span></button><button type="button" class="show-all">Show both weeks</button></div>
 <div class="week-panel" id="week-1" data-week="1">
 <div class="part-banner"><b>Week 3 · Build &amp; Judge</b><span>Lecture → Muddiest Point → Concept Debate → HOS 2: Create → Evaluate</span></div>
-<div class="due-card"><h3>Week 3: what's due</h3><label><input type="checkbox" data-k="l2-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#google">the same Gemini API key from Module 1</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l2-w0-0"><span><a href="#muddiest">Muddiest Point</a></span><span class="when">by Wed</span></label><label><input type="checkbox" data-k="l2-w0-1"><span><a href="#debate">Concept Debate: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l2-w0-cc"><span><a href="../reference/concept-companion.html#module-2">Concept Companion, Module 2: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l2-w0-2"><span><a href="#create">HOS 2 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l2-w0-3"><span><a href="#evaluate">HOS 2 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l2-w0-4"><span><a href="#project">Term Project Phase 1: System v0.3 + one-page proposal</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+<div class="due-card"><h3>Week 3: what's due</h3><label><input type="checkbox" data-k="l2-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#google">the same Gemini API key from Module 1</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l2-w0-prev"><span><a href="#preview">Preview the build: the RAG Pipeline Simulator guided tour</a> <span class="muted">(ungraded, about 15 min)</span></span><span class="when">before the lecture</span></label><label><input type="checkbox" data-k="l2-w0-0"><span><a href="#muddiest">Muddiest Point</a></span><span class="when">by Wed</span></label><label><input type="checkbox" data-k="l2-w0-1"><span><a href="#debate">Concept Debate: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l2-w0-cc"><span><a href="../reference/concept-companion.html#module-2">Concept Companion, Module 2: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l2-w0-2"><span><a href="#create">HOS 2 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l2-w0-3"><span><a href="#evaluate">HOS 2 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l2-w0-4"><span><a href="#project">Term Project Phase 1: System v0.3 + one-page proposal</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
 
+
+<section class="module card" id="preview">
+  <div class="module-head"><div class="module-icon">🗺️</div><div><h2>Preview the build</h2><div class="module-meta"><span class="tag">Before the lecture</span><span class="tag">about 15 min · ungraded</span><span class="tag blue">Guided simulator tour</span></div></div></div>
+  <p>Before the lecture, see what HOS 2 builds and watch it run. The RAG Pipeline Simulator is a browser model of the finished HOS 2 app: no account, no API key and no code. A guided tour sets it up for you one scenario at a time, so you know what to look for in the lecture and in your own build.</p>
+  <h3>What you'll build in HOS 2</h3>
+  <p>Your HOS 1 app learns to answer from <em>your</em> documents. An <code>ingest.py</code> script splits documents into chunks, turns each chunk into an embedding and stores it in <strong>Chroma</strong>. At question time, <code>/chat</code> finds the most similar chunks and pastes them into the prompt before calling Gemini.</p>
+  <div class="table-wrap" tabindex="0"><table>
+    <thead><tr><th>Piece</th><th>What it does</th><th>Where you see it in the simulator</th></tr></thead>
+    <tbody><tr><td>Chunking</td><td>Splits each document into small, overlapping pieces.</td><td>Step 1: the chunks panel fills up.</td></tr><tr><td>Embeddings + Chroma</td><td>Turns each chunk into numbers and stores them for search.</td><td>The "vector store" the chunks land in.</td></tr><tr><td>Retrieval (top-k, threshold)</td><td>Scores every chunk against the question and keeps the best few.</td><td>The bars with the red threshold line.</td></tr><tr><td>Prompt assembly</td><td>Pastes the kept chunks into what the model sees.</td><td>"What the model receives".</td></tr></tbody>
+  </table></div>
+  <h3>Take the guided tour</h3>
+  <p>Each tour step has a <b>Set this up for me</b> button, and then tells you what to do, what to watch and what you should see. The tour covers:</p>
+  <ol><li>Ingesting documents into chunks</li><li>A covered question, grounded in the right chunk</li><li>Why chunk size is a trade-off</li><li>How the threshold lets the model say "I don't know"</li><li>How a RAG prompt can silently break tool calling</li></ol>
+  <p><a class="btn" href="simulator.html#tour" style="display:inline-block;text-decoration:none">Start the guided tour ▸</a></p>
+  <div class="callout blue">
+    <span class="label">After the tour, you should be able to answer</span>
+    <ul><li>What do chunk size, top-k and the threshold each control?</li><li>Why might the model invent a policy when retrieval finds a weakly related chunk?</li><li>Why should your HOS 2 tests always include one tool question?</li></ul>
+    <p>If one of these still doesn't make sense, it's a good start for your <a href="#muddiest">Muddiest Point</a>.</p>
+  </div>
+  <p class="small muted">The simulator is a simplified model, not the real app: no real model, database or network calls. Your HOS 2 build in Codespaces is the real thing.</p>
+</section>
 
 <section class="module card" id="lecture">
   <div class="module-head"><div class="module-icon">🎓</div><div><h2>Lecture: grounding answers in your own documents</h2><div class="module-meta"><span class="tag">≈ 40 min with videos</span><span class="tag blue">3 short parts</span><span class="tag">O2</span></div></div></div>

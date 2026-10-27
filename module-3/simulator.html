@@ -88,6 +88,7 @@
 <main id="main">
 <div class="row no-print" style="margin-bottom:16px"><span class="small muted"><b>Simulators:</b></span><a class="tag blue" href="../module-1/simulator.html" style="text-decoration:none">1 · Agentic Loop</a><a class="tag blue" href="../module-2/simulator.html" style="text-decoration:none">2 · RAG Pipeline</a><span class="tag">3 · Guardrails &amp; Queue</span><a class="tag blue" href="../module-4/simulator.html" style="text-decoration:none">4 · Push &amp; Observability</a></div>
 <p class="sim-note">⚠ Simulation only — random "model" output, a Pydantic-style check in JavaScript, and an in-page queue standing in for Redis/RQ.</p>
+<section class="card tour" id="tour" aria-label="Guided tour"><p class="small muted" style="margin:0">Guided tour loading…</p></section>
 
 <div class="sim-layout">
   <div>
@@ -286,5 +287,42 @@ setInterval(function(){
 },100);
 log('Ready — queue mode, 1 worker.');
 </script>
+<script>window.SIM_TOUR=[
+ {title:'1 · No guardrail: nondeterministic crashes',
+  'do':'Press <b>Set this up for me</b>. It turns the guardrail off and sends 20 requests.',
+  watch:'The four counters under <b>Tool-call outcomes</b>, and the log.',
+  expect:'Some of the 20 requests crash with HTTP 500. Press it again: the number changes every time, and you can\'t predict which ones.',
+  why:'"Usually right" isn\'t "right". This is the problem HOS 3 solves.',
+  setup:function(h){ h.click('gReset'); h.set('gOn',false); h.set('bad',35); h.set('retries',2); h.set('feed',true); h.click('twenty'); }},
+ {title:'2 · Guardrail on: validate, retry, fall back',
+  'do':'Press <b>Set this up for me</b>. Same 20 requests, with the guardrail on.',
+  watch:'The <b>recovered by retry</b> and <b>returned {"error"}</b> counters.',
+  expect:'No crashes. Bad outputs are fixed by a retry that includes the validation error. If the retries run out, the request returns a clean <code>{"error": …}</code> instead of crashing.',
+  why:'This is <code>call_with_guardrail</code> in HOS 3 Create.',
+  setup:function(h){ h.click('gReset'); h.set('gOn',true); h.set('bad',35); h.set('retries',2); h.set('feed',true); h.click('twenty'); }},
+ {title:'3 · Retrying blindly helps less',
+  'do':'Press <b>Set this up for me</b>. It turns off "Feed the validation error into the retry".',
+  watch:'Compare the counters with step 2.',
+  expect:'Fewer recoveries and more errors, because the model repeats the same mistake.',
+  why:'HOS 3 Analyze asks why the error message goes into the next attempt. Now you\'ve seen the answer.',
+  setup:function(h){ h.click('gReset'); h.set('gOn',true); h.set('bad',35); h.set('retries',2); h.set('feed',false); h.click('twenty'); }},
+ {title:'4 · Inline ingestion blocks everyone',
+  'do':'Press <b>Set this up for me</b>. It switches to <b>Inline</b>, uploads a document, then sends "hi".',
+  watch:'The API column\'s busy bar, and how long "hi" waits in the log.',
+  expect:'"hi" waits behind the whole document. The API can\'t answer anyone until the upload finishes.',
+  why:'Slow work inside a request hurts every user. That\'s why HOS 3 moves ingestion to a queue.',
+  setup:function(h){ h.click('mInline'); h.set('workers',1); h.set('dur',6); h.click('upload'); setTimeout(function(){ h.click('chat'); },300); }},
+ {title:'5 · A queue with no worker is a silent bug',
+  'do':'Press <b>Set this up for me</b>. It switches to <b>Queue + worker</b> with 0 workers and uploads a document. Press <b>GET /jobs/{id}</b> a few times, then drag workers to 1.',
+  watch:'The job in the Queue column.',
+  expect:'The upload returns a <code>job_id</code> instantly, but the job stays <code>queued</code> until a worker exists.',
+  why:'It\'s the most common HOS 3 snag: the worker runs in its own terminal, and if it isn\'t running nothing errors.',
+  setup:function(h){ h.click('mQueue'); h.set('workers',0); h.set('dur',6); h.click('upload'); }},
+ {title:'Your turn',
+  'do':'Raise "malformed args" to 90%, or run two workers against several uploads.',
+  expect:'You can explain the difference between retrying, failing to <code>{"error"}</code> and crashing, and why a queue keeps the API responsive.',
+  why:'That\'s HOS 3 Analyze. Now go back to the <a href="index.html#lecture">lesson</a>.'}
+];</script>
+<script src="../assets/sim-tour.js"></script>
 </body>
 </html>
