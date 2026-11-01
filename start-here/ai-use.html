@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 410 AI Use Guide: where AI is expected, limited or off in each activity, and how to disclose what you used.">
+<title>AI 410 — AI Use Guide</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+.rule-tag { display:inline-block; margin-top:4px; font-size:.74rem; font-weight:700; padding:2px 8px; border-radius:999px; }
+.rule-tag.yes { background:var(--accent-light); color:var(--accent2); }
+.rule-tag.limit { background:var(--blue-bg); color:var(--blue); }
+.rule-tag.no { background:var(--bad-bg); color:var(--bad); }
+.back-home { display:inline-block; margin-top:10px; font-size:.85rem; font-weight:600; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="../index.html"><span class="brand-icon">410</span><span><b>AI 410: AI Engineering</b><small>Course guides</small></span></a>
+    <div class="top-right"><a class="pill-btn" href="../index.html">Course home</a><button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI 410 · Start here · Read before Week 1</div>
+    <h1>AI Use Guide</h1>
+    <p class="lede">You'll use AI assistants a lot in this course, and in a few places not at all. This page shows which is which, and how to say what you used.</p>
+    <div class="chips"><span class="chip">About 5 minutes</span><span class="chip">Applies to every module</span></div>
+  </div>
+</section>
+<main id="main">
+
+<section class="module card" id="short">
+  <div class="module-head"><div class="module-icon">🤖</div><div><h2>The short version</h2></div></div>
+  <ol>
+    <li><b>AI can help you build and think.</b> In most of this course, using it well is part of the skill.</li>
+    <li><b>You answer for what you submit.</b> If it's in your work, you should be able to explain it and say whether it's right.</li>
+    <li><b>Say what you used.</b> Disclosing AI use doesn't cost you points.</li>
+  </ol>
+  <p>The reason is the job itself. AI engineers spend their time judging what models produce, and you can't judge work you couldn't do or explain yourself. That's why every HOS starts with AI and ends by hand.</p>
+  <div class="callout amber"><span class="label">Keep your keys out of it</span><p>Never paste an API key or your <code>.env</code> file into an AI chat.</p></div>
+</section>
+
+<section class="module card" id="activities">
+  <div class="module-head"><div class="module-icon">🗂️</div><div><h2>What's allowed in each activity</h2></div></div>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="AI rules for each activity"><table class="t">
+    <tr><th scope="col" style="width:40%">Activity and AI rule</th><th scope="col">What that means</th></tr>
+    <tr><td><b>HOS · Create / Scaffold</b><br><span class="rule-tag yes">Expected</span></td><td>Use an AI assistant to build the app. Paste your prompt into <code>NOTES.md</code>.</td></tr>
+    <tr><td><b>HOS · Evaluate</b><br><span class="rule-tag limit">Your judgment</span></td><td>An AI can suggest tests, but you run them and report what actually happened, including what the AI got wrong or missed.</td></tr>
+    <tr><td><b>HOS · Analyze</b><br><span class="rule-tag limit">Your own words</span></td><td>You can ask an AI to explain code while you learn it. The walkthrough you submit is your own explanation, not a paraphrase of AI output.</td></tr>
+    <tr><td><b>HOS · Understand &amp; Refine</b><br><span class="rule-tag no">No AI</span></td><td>Done by hand. Every lesson labels this part "No AI assistant for this part."</td></tr>
+    <tr><td><b>Application Challenge</b><br><span class="rule-tag yes">Allowed, disclose</span></td><td>Say in <code>DECISIONS.md</code> what your assistant wrote, got wrong or missed. The decisions and the reasons for them are yours to defend.</td></tr>
+    <tr><td><b>Muddiest Point</b><br><span class="rule-tag limit">Think, don't write</span></td><td>Ask an AI first if you like, then write about what's still unclear, in your own words. If you asked, say so under "What you already tried."</td></tr>
+    <tr><td><b>Concept Debate</b><br><span class="rule-tag limit">Think, don't write</span></td><td>Use an AI to test your thinking. Posts are your own words and your own reasoning. If AI changed your thinking, say how in one line.</td></tr>
+    <tr><td><b>Knowledge Check</b><br><span class="rule-tag no">No AI</span></td><td>Each quiz opens with a no-AI pledge. Retakes and hints are there so you can learn from your misses.</td></tr>
+    <tr><td><b>Term Project · System</b><br><span class="rule-tag yes">Allowed, disclose</span></td><td>List every model, framework and coding assistant in your README's AI Tool Disclosure.</td></tr>
+    <tr><td><b>Term Project · Reports and presentation</b><br><span class="rule-tag yes">Allowed, disclose</span></td><td>The analysis must be yours, and so must the words. Check every source and claim an AI gives you, because you answer for them. List the tools in your README.</td></tr>
+  </table></div>
+</section>
+
+<section class="module card" id="disclose">
+  <div class="module-head"><div class="module-icon">✍️</div><div><h2>How to say what you used</h2></div></div>
+  <p>One or two plain sentences are enough: which tool, what you asked for, and what you did with the answer.</p>
+  <div class="two">
+    <div class="eg weak"><span class="label">Not useful</span>"I used AI for this assignment."</div>
+    <div class="eg strong"><span class="label">Useful</span>"Copilot Chat wrote the first version of <code>cancel_appointment</code>. It let patients cancel other patients' slots, so I added the ownership check and a test for it."</div>
+  </div>
+</section>
+
+<section class="module card" id="examples">
+  <div class="module-head"><div class="module-icon">💬</div><div><h2>Examples</h2></div></div>
+  <h3>Muddiest Point</h3>
+  <div class="eg strong"><span class="label">Under "What you already tried"</span>"I re-read step 5 and tried the simulator. I asked Copilot Chat, and it said the model is stateless, so it needs the history every time. That explains earlier chat turns, but not why the model's own function call has to go back too."</div>
+  <p class="small muted" style="margin-top:8px">Each lesson has a full example answer in its Muddiest Point section.</p>
+  <h3>Concept Debate, Stage 3</h3>
+  <div class="eg strong"><span class="label">Your own reasoning, plus one line on AI</span>"Priya's point that a routing rule is testable changed my mind for anything that writes data. I'd let the model choose read-only tools like <code>calculate</code>, but route anything that sends email or charges money through backend code that checks the request first. AI use: I asked Copilot Chat for the best objection to my position, and it pushed me to separate tools that read from tools that write."</div>
+  <p class="small muted" style="margin-top:8px"><a href="../reference/concept-debate-example.html#ai-use">See a full debate, with pasted AI text compared to good AI use →</a></p>
+</section>
+
+<section class="module card" id="checks">
+  <div class="module-head"><div class="module-icon">🔎</div><div><h2>How your work is checked</h2></div></div>
+  <ul>
+    <li><b>No AI detectors.</b> They're unreliable, so your grade won't be based on one.</li>
+    <li><b>A short follow-up instead.</b> Your instructor may ask you to explain a line of your code, make a small change to it, or say more about a post. If it's your work, that takes a minute or two.</li>
+    <li><b>If that doesn't resolve it,</b> your instructor follows CityU's Academic Integrity Policy (University Catalog → Student Rights and Responsibilities).</li>
+  </ul>
+  <p>Not sure whether something is allowed? Ask before you submit.</p>
+  <a class="back-home" href="../index.html">← Back to course home</a>
+</section>
+
+</main>
+<footer class="foot">AI 410: AI Engineering · City University of Seattle, School of Technology &amp; Computing<br>Course design &amp; materials: Clark Ngo <br>© 2026 Clark Ngo · Free to reuse and adapt under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, except where noted · <a href="https://github.com/cityuseattle/ai410/blob/main/LICENSE.md">How to credit</a></footer>
+<script src="../assets/course.js"></script>
+</body>
+</html>

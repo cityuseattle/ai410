@@ -13,6 +13,7 @@ Students reach these pages from Brightspace. All graded work is submitted in Bri
 | `index.html` | Course home |
 | `start-here/accounts.html` | Account & service setup |
 | `start-here/tools.html` | Tools you'll use all term |
+| `start-here/ai-use.html` | AI Use Guide: the rule for each activity |
 | `module-N/index.html` | Module N lesson (N = 1–4) |
 | `module-N/hos-guide.html` | HOS N (Hands-On Skill) guide |
 | `module-N/simulator.html` | Module N simulator |

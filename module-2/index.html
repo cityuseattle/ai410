@@ -280,10 +280,19 @@ q_vec = result.embeddings[0].values      # the list of 1,024 numbers</code></pre
 <section class="module card" id="muddiest">
   <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
   <p>Four short fields, not a blank box. Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
+  <div class="callout blue"><span class="label">AI use</span><p>You may ask an AI assistant about the material first. Often that clears up the confusion, which is a good outcome. Then write about what's still unclear. Write it yourself: don't paste AI text or ask an AI to come up with a confusion for you. If you asked an AI, say so under "What you already tried," along with what it told you and why that didn't settle it. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="two" style="margin-bottom:14px">
     <div class="eg weak"><span class="label">Doesn't meet the bar</span>"Embeddings are confusing. I don't really get RAG."</div>
     <div class="eg strong"><span class="label">Meets the bar</span>"Lecture Part 2: if the documents and the question are both embedded by the same model, why does the <code>task_type</code> need to be different? Wouldn't the same setting make them easier to compare? I re-read Part 2 and searched the Gemini docs but only found the list of values, not why."</div>
   </div>
+  <details class="eg-toggle"><summary>See a full example answer, with AI use disclosed</summary>
+    <div class="eg strong"><span class="label">Meets the bar</span>
+      <p><b>1 · What I was doing:</b> Lecture Part 2, the part on <code>task_type</code>.</p>
+      <p><b>2 · Where I got stuck:</b> If the documents and the question are embedded by the same model, why does the <code>task_type</code> need to be different? Wouldn't the same setting make them easier to compare?</p>
+      <p><b>3 · What I already tried:</b> I re-read Part 2 and searched the Gemini docs, but only found the list of values. I asked Copilot Chat, and it said the two settings "optimize the embeddings for retrieval." That repeats the name. It doesn't say what actually changes in the vector.</p>
+      <p style="margin-bottom:0"><b>4 · My best guess:</b> A question and the passage that answers it are worded differently, so maybe each setting nudges its text toward the meaning they share.</p>
+    </div>
+  </details>
   <form onsubmit="return false">
     <label class="field" for="mp1">1 · What were you doing right before you got confused?</label>
     <input type="text" id="mp1" placeholder="e.g. Lecture Part 3, the ingest-time pipeline — or a line in ingest.py">
@@ -291,7 +300,7 @@ q_vec = result.embeddings[0].values      # the list of 1,024 numbers</code></pre
     <textarea id="mp2" placeholder="Not 'I don't get RAG' — the specific thing that doesn't add up."></textarea>
     <div class="counter" id="mp2count">0 words</div>
     <label class="field" for="mp3">3 · What you already tried</label>
-    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator…"></textarea>
+    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator, asked an AI assistant (say what it told you)…"></textarea>
     <label class="field" for="mp4">4 · Optional: your best guess at the answer</label>
     <textarea id="mp4" placeholder="Even if you think it's wrong."></textarea>
   </form>
@@ -334,8 +343,9 @@ q_vec = result.embeddings[0].values      # the list of 1,024 numbers</code></pre
       </ul>
     </div>
   </div>
+  <div class="callout blue"><span class="label">AI use</span><p>You may use an AI assistant to test your thinking, for example by asking it for the best objection to your side. Your posts must be your own words and your own reasoning: don't paste or lightly edit AI text. If AI changed your thinking, say how in one line. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="stages">
-    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a test question you ran, a sample doc, a simulator run. Not a topic summary.</div>
+    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a test question you ran, a sample doc, a simulator run, a reading, or a real-world example. Not a topic summary.</div>
     <div class="stage"><span class="day">Stage 2 · by Thu</span><h4>Argue the opposite</h4>Before replying to anyone, post the <em>strongest</em> version of the side you didn't hold.</div>
     <div class="stage"><span class="day">Stage 3 · by Sat</span><h4>Synthesis</h4>Drop advocacy. State a real position, citing at least one specific point from a classmate's post.</div>
   </div>

@@ -89,7 +89,7 @@
 <div class="week-tabs no-print" role="group" aria-label="Weeks"><button type="button" data-week="1" aria-controls="week-1">Week 1<span class="tab-sub"> · Build &amp; Judge</span></button><button type="button" data-week="2" aria-controls="week-2">Week 2<span class="tab-sub"> · Explain &amp; Master</span></button><button type="button" class="show-all">Show both weeks</button></div>
 <div class="week-panel" id="week-1" data-week="1">
 <div class="part-banner"><b>Week 1 · Build &amp; Judge</b><span>Lecture → Muddiest Point → Concept Debate → HOS 1: Create → Evaluate</span></div>
-<div class="due-card"><h3>Week 1: what's due</h3><label><input type="checkbox" data-k="l1-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-prev"><span><a href="#preview">Preview the build: the Agentic Loop Simulator guided tour</a> <span class="muted">(ungraded, about 15 min)</span></span><span class="when">before the lecture</span></label><label><input type="checkbox" data-k="l1-w0-0"><span><a href="#muddiest">Muddiest Point</a></span><span class="when">by Wed</span></label><label><input type="checkbox" data-k="l1-w0-1"><span><a href="#debate">Concept Debate: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w0-cc"><span><a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l1-w0-2"><span><a href="#create">HOS 1 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w0-3"><span><a href="#evaluate">HOS 1 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+<div class="due-card"><h3>Week 1: what's due</h3><label><input type="checkbox" data-k="l1-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-ai"><span><a href="../start-here/ai-use.html">Read the AI Use Guide</a> <span class="muted">(about 5 min)</span></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-prev"><span><a href="#preview">Preview the build: the Agentic Loop Simulator guided tour</a> <span class="muted">(ungraded, about 15 min)</span></span><span class="when">before the lecture</span></label><label><input type="checkbox" data-k="l1-w0-0"><span><a href="#muddiest">Muddiest Point</a></span><span class="when">by Wed</span></label><label><input type="checkbox" data-k="l1-w0-1"><span><a href="#debate">Concept Debate: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w0-cc"><span><a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l1-w0-2"><span><a href="#create">HOS 1 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w0-3"><span><a href="#evaluate">HOS 1 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
 
 
 <section class="module card" id="preview">
@@ -241,10 +241,19 @@ calculate_tool = {
 <section class="module card" id="muddiest">
   <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
   <p>Not a blank box. Four short fields, because a specific confusion is much easier for your instructor to fix than "this week was confusing." Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
+  <div class="callout blue"><span class="label">AI use</span><p>You may ask an AI assistant about the material first. Often that clears up the confusion, which is a good outcome. Then write about what's still unclear. Write it yourself: don't paste AI text or ask an AI to come up with a confusion for you. If you asked an AI, say so under "What you already tried," along with what it told you and why that didn't settle it. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="two" style="margin-bottom:14px">
     <div class="eg weak"><span class="label">Doesn't meet the bar</span>"I didn't really get the agent loop part. Tool calling is confusing."</div>
     <div class="eg strong"><span class="label">Meets the bar</span>"In Part 3, step 5: why does the backend have to resend the whole history with the function result? Couldn't it just send <code>29754</code>? I re-read step 5 and tried the simulator — the log shows the history growing but not why."</div>
   </div>
+  <details class="eg-toggle"><summary>See a full example answer, with AI use disclosed</summary>
+    <div class="eg strong"><span class="label">Meets the bar</span>
+      <p><b>1 · What I was doing:</b> Lecture Part 3, step 5.</p>
+      <p><b>2 · Where I got stuck:</b> Why does the backend have to resend the whole history with the function result? Couldn't it just send <code>29754</code>?</p>
+      <p><b>3 · What I already tried:</b> I re-read step 5 and tried the simulator. The log shows the history growing but not why. I asked Copilot Chat, and it said the model is stateless, so it needs the history every time. That explains earlier chat turns, but not why the model's own function call has to go back too, when it wrote that a moment ago.</p>
+      <p style="margin-bottom:0"><b>4 · My best guess:</b> Maybe the model needs to see its own call to match the result to it. Otherwise <code>29754</code> is just a number with no question attached.</p>
+    </div>
+  </details>
   <form id="mpForm" onsubmit="return false">
     <label class="field" for="mp1">1 · What were you doing right before you got confused?</label>
     <input type="text" id="mp1" placeholder="e.g. Lecture Part 3, step 5 — or a line in the hands-on guide">
@@ -252,7 +261,7 @@ calculate_tool = {
     <textarea id="mp2" placeholder="Not 'I don't get agents' — the specific thing that doesn't add up."></textarea>
     <div class="counter" id="mp2count">0 words</div>
     <label class="field" for="mp3">3 · What you already tried</label>
-    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator…"></textarea>
+    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator, asked an AI assistant (say what it told you)…"></textarea>
     <label class="field" for="mp4">4 · Optional: your best guess at the answer</label>
     <textarea id="mp4" placeholder="Even if you think it's wrong."></textarea>
   </form>
@@ -301,15 +310,16 @@ calculate_tool = {
       </ul>
     </div>
   </div>
+  <div class="callout blue"><span class="label">AI use</span><p>You may use an AI assistant to test your thinking, for example by asking it for the best objection to your side. Your posts must be your own words and your own reasoning: don't paste or lightly edit AI text. If AI changed your thinking, say how in one line. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="stages">
-    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a test you ran, a line of the guide, a simulator run. Not a topic summary.</div>
+    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a test you ran, a line of the guide, a simulator run, a reading, or a real-world example. Not a topic summary.</div>
     <div class="stage"><span class="day">Stage 2 · by Thu</span><h4>Argue the opposite</h4>Before replying to anyone, post the <em>strongest</em> version of the side you didn't hold.</div>
     <div class="stage"><span class="day">Stage 3 · by Sat</span><h4>Synthesis</h4>Drop advocacy. State a real position (it can be "it depends on X"), citing at least one specific point from a classmate's post.</div>
   </div>
   <details class="eg-toggle"><summary>See a weak vs. strong example</summary>
   <div class="two">
     <div class="eg weak"><span class="label">Weak synthesis</span>"Great points everyone, I think both sides are right and it depends on the situation."</div>
-    <div class="eg strong"><span class="label">Strong synthesis</span>"Priya's point that a routing rule is testable changed my mind for anything that writes data. I'd let the model choose read-only tools like <code>calculate</code>, but route anything that sends email or charges money through backend code that checks the request first — which is roughly what HOS 3's guardrails do."</div>
+    <div class="eg strong"><span class="label">Strong synthesis</span>"Priya's point that a routing rule is testable changed my mind for anything that writes data. I'd let the model choose read-only tools like <code>calculate</code>, but route anything that sends email or charges money through backend code that checks the request first — which is roughly what HOS 3's guardrails do. AI use: I asked Copilot Chat for the best objection to my position, and it pushed me to separate tools that read from tools that write."</div>
   </div>
   </details>
   <p class="small muted" style="margin-top:10px"><b>Grading:</b> Participation — initial position plus response to at least one peer (50%) · Writing — quality of argument and reasoning (50%). <a href="../reference/concept-debate-example.html">See a worked example: four students through one debate, with a timeline →</a> A reply that only affirms agreement without citing what it agrees with doesn't meet the Writing criterion.</p>
@@ -442,7 +452,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 
 <section class="module card" id="project">
   <div class="module-head"><div class="module-icon">🚀</div><div><h2>Term Project — Phase 1 begins</h2><div class="module-meta"><span class="tag amber">Phase 1 due end of Week 3</span></div></div></div>
-  <p>The Term Project combines all 4 HOS into one agent-driven app, built on your own or in a group of up to three (four with instructor approval) and presented in Week 10. <b>Phase 1 runs Weeks 1–3:</b> decide whether you're working solo or in a group, and lock your scope: which HOS pieces your project combines and why, who owns each piece if you're in a group, and a rough architecture sketch. <b>Due end of Week 3:</b> System v0.3 in a GitHub repository with a README, and a one-page proposal with three key references. A good first question: <strong>what are the 2–4 tools your project's agent would need, and which of them should require confirmation?</strong> That's this week's Application Challenge, pointed at your own idea.</p>
+  <p>The Term Project combines all 4 HOS into one agent-driven app, built on your own or in a group of up to three (four with instructor approval) and presented in Week 10. <b>Phase 1 runs Weeks 1–3:</b> decide whether you're working solo or in a group, and lock your scope: which HOS pieces your project combines and why, who owns each piece if you're in a group, and a rough architecture sketch. <b>Due end of Week 3:</b> System v0.3 in a GitHub repository with a README, and a one-page proposal with three key references. Curious what a finished project looks like? <a href="../module-5/example-project.html">Click through the Flashcard Coach example</a> (optional). A good first question: <strong>what are the 2–4 tools your project's agent would need, and which of them should require confirmation?</strong> That's this week's Application Challenge, pointed at your own idea.</p>
   <div class="table-wrap" tabindex="0"><table class="t project-map">
     <tr><th>HOS</th><th>What it contributes to your project</th><th>Rehearse it in</th></tr>
     <tr><td>HOS 1</td><td>The agent and its tools</td><td><a href="simulator.html">Agentic Loop Simulator</a></td></tr>

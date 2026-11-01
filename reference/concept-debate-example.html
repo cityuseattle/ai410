@@ -81,7 +81,7 @@
 <main id="main">
 
 <nav class="secnav no-print" aria-label="Sections" style="margin-top:14px">
-  <div class="secnav-inner"><a href="#setup">The setup</a><a href="#timeline">Timeline</a><a href="#thread">Thread view</a><a href="#posts">The posts</a><a href="#grading">Grading</a><a href="#brightspace">Brightspace setup</a></div>
+  <div class="secnav-inner"><a href="#setup">The setup</a><a href="#timeline">Timeline</a><a href="#thread">Thread view</a><a href="#posts">The posts</a><a href="#ai-use">AI use</a><a href="#grading">Grading</a><a href="#brightspace">Brightspace setup</a></div>
 </nav>
 
 <section class="module card" id="setup" style="margin-top:18px">
@@ -149,10 +149,20 @@
 <div class="post weakp reply"><div class="ph"><b>Marcus</b><span class="tag blue">Side A</span><span class="tag">Stage 2</span><span class="ts">Thu 11:05 pm</span></div><div class="pb"><p>The other side would say that backend code is more predictable and easier to test.</p></div><div class="note"><b>What's missing:</b> names the other side's point but doesn't make its strongest case, and doesn't take up the instructor's nudge.</div></div>
 <div class="post strongp reply"><div class="ph"><b>Jordan</b><span class="tag rose">Side B</span><span class="tag">Stage 2</span><span class="ts">Thu 8:00 pm</span></div><div class="pb"><p>The strongest case for the model: Priya's tip example shows that rules miss real requests, and a missed request is a failure the user sees right away. Injection is a real risk, but it's a risk about <em>which tools exist</em>, not about who picks between them. You can let the model choose and simply not give it an email tool.</p></div></div>
   <h3>Stage 3 · Friday – Saturday: synthesis (a reply to a classmate from the other side)</h3>
-<div class="post strongp"><div class="ph"><b>Priya → Dana's thread</b><span class="tag blue">Side A</span><span class="tag">Stage 3</span><span class="ts">Fri 7:45 pm</span></div><div class="pb"><p>Dana's "3+" crash changed where I draw the line. The model wasn't wrong to pick the calculator; it was wrong about the arguments, and that's a validation problem (HOS 3), not a routing one. My position: let the model choose among read-only tools, validate every argument before running it, and route anything that writes data or spends money through backend code that checks the request first.</p></div><div class="note"><b>Why it works:</b> cites a specific point from Dana, changes her own view because of it, and lands on a position that isn't just "it depends".</div></div>
+<div class="post strongp"><div class="ph"><b>Priya → Dana's thread</b><span class="tag blue">Side A</span><span class="tag">Stage 3</span><span class="ts">Fri 7:45 pm</span></div><div class="pb"><p>Dana's "3+" crash changed where I draw the line. The model wasn't wrong to pick the calculator; it was wrong about the arguments, and that's a validation problem (HOS 3), not a routing one. My position: let the model choose among read-only tools, validate every argument before running it, and route anything that writes data or spends money through backend code that checks the request first.</p><p><em>AI use: I asked Copilot Chat for the best objection to my position. It said rules can't see intent, which made me rethink where I draw the line.</em></p></div><div class="note"><b>Why it works:</b> cites a specific point from Dana, changes her own view because of it, says how AI was used, and lands on a position that isn't just "it depends".</div></div>
 <div class="post strongp"><div class="ph"><b>Dana → Priya's thread</b><span class="tag rose">Side B</span><span class="tag">Stage 3</span><span class="ts">Sat 11:20 am</span></div><div class="pb"><p>Priya's tip example convinced me that keyword rules can't keep up with how people phrase things, so I'm dropping "rules for everything". I'd keep backend control for one category: tools with side effects. The model can <em>propose</em> sending an email; backend code decides whether it runs. That keeps the flexibility Priya wants wherever a mistake is cheap.</p></div></div>
 <div class="post strongp"><div class="ph"><b>Jordan → Marcus's thread</b><span class="tag rose">Side B</span><span class="tag">Stage 3</span><span class="ts">Sat 4:10 pm</span></div><div class="pb"><p>Building on Marcus's point that this is how the Gemini API is designed: the API actually supports both sides, because you pass a tool list with each request. So backend code can decide which tools are available for this request, and the model decides among them. My synthesis: code sets the menu, the model orders from it.</p></div><div class="note"><b>Why it works:</b> finds the one usable point in a weak post and builds on it, which counts as engaging with a classmate.</div></div>
 <div class="post weakp"><div class="ph"><b>Marcus → Jordan's thread</b><span class="tag blue">Side A</span><span class="tag">Stage 3</span><span class="ts">Sat 10:55 pm</span></div><div class="pb"><p>Great points! I agree both sides have pros and cons and it really depends on the situation.</p></div><div class="note"><b>What's missing:</b> no point from Jordan's post, and no position. This is the response Stage 3 is designed to rule out.</div></div>
+</section>
+
+<section class="module card" id="ai-use">
+  <div class="module-head"><div class="module-icon">🤖</div><div><h2>AI use in a debate</h2><div class="module-meta"><span class="tag">AI can help you think, not write</span></div></div></div>
+  <p>You may use an AI assistant to test your thinking. Your posts must be your own words and your own reasoning. Here's the difference in practice, on this debate's question:</p>
+  <div class="two">
+    <div class="eg weak"><span class="label">Pasted AI text</span>"Both approaches offer distinct advantages. Model-driven routing provides flexibility, while deterministic logic ensures reliability. The optimal solution balances these considerations based on context."<br><br><b>What's missing:</b> no classmate's point, no specific evidence, and no position. It would earn little under Writing without anyone needing to ask where it came from.</div>
+    <div class="eg strong"><span class="label">AI as a sparring partner</span>Priya's Stage 3 above. Copilot Chat supplied an objection, Priya weighed it against Dana's point, then named the AI use in one line. The reasoning and the position are all Priya's.</div>
+  </div>
+  <p class="small muted" style="margin-top:10px">Full rules for every activity: <a href="../start-here/ai-use.html">AI Use Guide</a>.</p>
 </section>
 
 <section class="module card" id="grading">
@@ -181,6 +191,7 @@
 </section>
 
 <section class="card"><h2>Related</h2><ul>
+<li><a href="../start-here/ai-use.html">AI Use Guide</a>: the rule for every activity.</li>
 <li>The debates themselves: <a href="../module-1/index.html#debate">Module 1</a> · <a href="../module-2/index.html#debate">Module 2</a> · <a href="../module-3/index.html#debate">Module 3</a> · <a href="../module-4/index.html#debate">Module 4</a> · <a href="../module-4/index.html#integration">Integration (Week 8)</a></li>
 </ul></section>
 </main>
