@@ -4,7 +4,7 @@ The interactive lessons, hands-on guides, simulators and reference pages for **A
 
 **Live site:** https://cityuseattle.github.io/ai410/
 
-Students reach these pages from Brightspace. All graded work is submitted in Brightspace; builds happen in GitHub Codespaces through each module's GitHub Classroom repository.
+Students reach these pages from Brightspace. Graded work is submitted in Brightspace, except the HOS: each HOS is graded straight from the student's GitHub Classroom repository, where the build happens in GitHub Codespaces.
 
 ## What's where
 
