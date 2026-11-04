@@ -428,7 +428,7 @@ instruction suppress tool use.</code></pre>
   <div class="progress-line" id="refineProgress">0 / 5 done</div>
   <div class="checklist" id="refineList">
     <label><input type="checkbox"><span>Write the document by hand: a <code>#</code> title and 2–4 short paragraphs with at least one specific, checkable detail (a temperature rating, a price, a time limit).</span></label>
-    <label><input type="checkbox"><span>Re-run <code>python ingest.py</code> — the vector database doesn't know about new files until you do.</span></label>
+    <label><input type="checkbox"><span>Re-run <code>python ingest.py</code> — the vector database doesn't know about new files until you do. Then restart the backend (Ctrl+C, start <code>uvicorn</code> again): the running API keeps its own in-memory copy of the database and won't see the new chunks until it restarts.</span></label>
     <label><input type="checkbox"><span>Ask a question that can <em>only</em> be answered from your new document, and confirm the answer includes your specific detail.</span></label>
     <label><input type="checkbox"><span>Confirm your new chunk appears in the retrieved set, and that an old question (the return window) still works.</span></label>
     <label><input type="checkbox"><span>Write 2–3 sentences: what you changed, and one thing about retrieval that surprised you.</span></label>
