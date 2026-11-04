@@ -127,7 +127,7 @@
   <div class="module-head"><div class="module-icon">✋</div><div><h2>4 · Understand &amp; Refine</h2></div></div>
             <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
             <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
-            <p>Write a <strong>sixth</strong> sample document by hand (a new policy or product page, in the same style as the existing five) and re-run <code>ingest.py</code>. Confirm a question that can only be answered from your new document returns the correct, specific detail — proof the full ingest → embed → retrieve path is something you actually understand, not just something you ran once.</p>
+            <p>Write a <strong>sixth</strong> sample document by hand (a new policy or product page, in the same style as the existing five), re-run <code>ingest.py</code>, then restart the backend (Ctrl+C in its terminal, then start <code>uvicorn</code> again). Confirm a question that can only be answered from your new document returns the correct, specific detail — proof the full ingest → embed → retrieve path is something you actually understand, not just something you ran once.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
                 <ul>
@@ -144,6 +144,7 @@
                 <li><strong>Tool calls stop working after adding RAG</strong> — check your system instruction's wording. "If the answer isn't in the context, say you don't know" applied broadly will make the model refuse to use tools too. Scope it explicitly to content questions, and say tools are exempt.</li>
                 <li><strong><code>EMBED_DIM</code> mismatch</strong> — the embedding dimensionality has to be identical in <code>ingest.py</code> and <code>retrieval.py</code>, or Chroma's comparison breaks. If retrieval returns nothing useful, check this first.</li>
                 <li><strong>Forgot to re-run <code>ingest.py</code></strong> — after adding your sixth document (Stage 4), the vector database won't know about it until you ingest again.</li>
+                <li><strong>Re-ran <code>ingest.py</code> but the app still says "I don't know"</strong> — restart the backend. Chroma keeps a copy of the database in memory inside the running API, so it doesn't see chunks another process (<code>ingest.py</code>) just added. <code>--reload</code> doesn't help, because it only restarts when a <code>.py</code> file changes.</li>
             </ul>
             <p class="small" style="margin:10px 0 0">Most snags trace back to a concept. If one doesn't make sense, see <a href="../reference/concept-companion.html#module-2">Concept Companion → Module 2</a>.</p>
         </div>
