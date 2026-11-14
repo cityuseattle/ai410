@@ -21,13 +21,14 @@ Students reach these pages from Brightspace. Graded work is submitted in Brights
 | `module-5/example-project.html` | Example Term Project (Flashcard Coach): interactive demo |
 | `reference/` | Concept Companion, starter-code walkthrough, Concept Debate example |
 | `assets/` | Shared `course.css` and `course.js`, images |
+| `figures/` | Build scripts for the interactive figures inside lessons (see `figures/README.md`) |
 | `tools/check_site.py` | Pre-push checker |
 
 Starter code lives in the private template repositories `cityuseattle/AI410-HOS01`–`04` and `AI410-AC01`–`04`; students copy them through the Classroom50 invites linked from each lesson. Instructor material (teaching guide, answer keys, example answers) is not in this repository.
 
 ## Editing
 
-Every page is a standalone HTML file. Edit it directly, then:
+Every page is a standalone HTML file. Edit it directly, except the blocks between `<!-- anatomy:… -->` markers, which `figures/` rebuilds. Then:
 
 ```bash
 python3 tools/check_site.py            # links, anchors, accessibility basics, no instructor content
