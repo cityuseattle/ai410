@@ -44,6 +44,9 @@ def a11y_problems(text):
     """Static accessibility checks (WCAG 2.2 AA basics) that every published page must pass.
     They catch regressions cheaply; the full audit is axe-core in a browser (see README)."""
     out = []
+    # Markup inside <script> bodies (template strings, inlined figure kits) isn't in the DOM
+    # until a script renders it, and axe audits what it renders, so skip it here.
+    text = re.sub(r"(<script\b[^>]*>).*?(</script>)", r"\1\2", text, flags=re.S | re.I)
     if not re.search(r'<html[^>]*\blang="[a-z]', text):
         out.append("<html> has no lang attribute")
     if not re.search(r"<title>[^<]+</title>", text):
