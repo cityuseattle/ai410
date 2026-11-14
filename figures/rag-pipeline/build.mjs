@@ -120,7 +120,7 @@ function plate() {
   // a groove that splits the bench into its two lanes: ingest (back) and every question (front)
   // (from the plate's inset groove to the press's side: the press serves both lanes)
   out.push(L(k.lineOnTop([PLATE.x + 5, LANE_Y], [PRESS.x, LANE_Y], 0, P), { tone: "faint" }));
-  out.push(topText(PLATE.x + 9, LANE_Y - 3.5, 0, "INGEST · ONCE", 2.8, "lo"));
+  out.push(topText(PLATE.x + 9, LANE_Y - 3.5, 0, "ingest.py · ONCE", 2.8, "lo"));
   out.push(topText(PLATE.x + 9, LANE_Y + 6.5, 0, "EVERY QUESTION", 2.8, "lo"));
   // label plate, front left
   const label = { x: -128, y: 62, w: 52, d: 16, r: 1.2 };
@@ -161,7 +161,10 @@ function cutter() {
   const ticks = k.topTicks(CUT.y + 5, CUT.y + CUT.d - 5, (CUT.d - 10) / 18, 6, rx, CUT_H, [1.6, 3], P, "y");
   out.push(L(ticks.minor, { tone: "lo" }), L(ticks.major, { tone: "mid" }));
   out.push(L(k.lineOnTop([rx, CUT.y + 5], [rx, CUT.y + CUT.d - 5], CUT_H, P), { tone: "faint" }) + screws([[rx, CUT.y + 5], [rx, CUT.y + CUT.d - 5]], CUT_H, 0.4));
-  out.push(topText(CUT.x + 9, CUT.y + CUT.d - 3, CUT_H, "30 W · 5 OVERLAP", 2.2, "lo"));
+  // engraved along y, in the strip the press never hides: the function and its two settings
+  const alongY = (x, y, text, size, tone) => k.faceTextSvg(k.topMatrix([x, y], CUT_H, P, "y"), text, { size, tone });
+  out.push(alongY(CUT.x + 12.4, CUT.y + CUT.d - 2, "chunk_text()", 2.2, "mid"));
+  out.push(alongY(CUT.x + 15.8, CUT.y + CUT.d - 2, "30 W · 5 LAP", 2, "lo"));
   // the cut slot the blade drops into
   const slotY = CUT.y + 20;
   out.push(L(k.planOutline({ x: CUT.x + 7, y: slotY - 0.8, w: CUT.w - 9, d: 1.6, r: 0.4 }, CUT_H, P, 2), { tone: "lo" }));
@@ -211,7 +214,7 @@ function pressFrame() {
   }
   out.push(S(k.slabOf(CROWN, CROWN_Z, CROWN_H, P, 3, 0.6), { tone: "mid", inner: L(k.sideSeam(CROWN, CROWN_Z + 2, P, 3), { tone: "faint" }) }));
   for (const [x, y] of COLS) out.push(S(k.cylinder(x, y, 2.6, CROWN_Z + CROWN_H, 1.6, P, 6), { tone: "mid" }), Dt([at([x, y, CROWN_Z + CROWN_H + 1.6])], { size: 0.45 }));
-  out.push(topText(CROWN.x + 4, CROWN.y + 7, CROWN_Z + CROWN_H, "EMBED", 3, "mid"));
+  out.push(topText(CROWN.x + 6.5, CROWN.y + 7, CROWN_Z + CROWN_H, "embed_content()", 2.1, "mid"));
   out.push(L(k.lineOnTop([CROWN.x + 4, CROWN.y + 8.8], [CROWN.x + 18, CROWN.y + 8.8], CROWN_Z + CROWN_H, P), { tone: "faint", free: true }));
   // the screw that drives the ram, from the crown down to the ram's top
   out.push(`<g data-screw>${screwSvg(RAM_Z[0] + RAM_H)}</g>`);
@@ -276,7 +279,7 @@ function lip() {
   for (let i = 0; i < N; i++) out.push(k.faceTextSvg(k.sideMatrix([cardX(i) - 1, face], 6.2, P, "left"), LETTER[store[i].di], { size: 2.6, tone: store[i].di % 2 ? "lo" : "mid" }));
   out.push(L(k.sideSeam(LIP, 2, P, 2), { tone: "faint" }));
   out.push(Dt([at([LIP.x + 2.5, face, LIP_H - 2]), at([LIP.x + LIP.w - 2.5, face, LIP_H - 2])], { size: 0.45 }));
-  out.push(topText(LIP.x + LIP.w - 3, LIP.y + 3, LIP_H, "CHROMA", 2.6, "lo", "end"));
+  out.push(topText(LIP.x + LIP.w - 3, LIP.y + 3, LIP_H, "CHROMA · documents", 2.6, "lo", "end"));
   return out.join("");
 }
 
@@ -316,6 +319,7 @@ function knob() {
   out.push(`<path class="iso-line" data-tone="hi" data-knob data-free="both" d="${knobPointer(knobAngle(K0 - 1))}" style="stroke-width:1.1"/>`);
   out.push(Dt([at([cx, cy, KNOB_Z[1]])], { size: 0.55, tone: "hi" }));
   out.push(topText(cx - DIAL_R - 6, cy + DIAL_R - 2, 0, "TOP-K", 3, "mid", "middle"));
+  out.push(topText(cx - DIAL_R + 1, cy + DIAL_R + 3.4, 0, "retrieve(k)", 2.3, "lo", "middle"));
   return out.join("");
 }
 function knobPointer(a) {
@@ -332,7 +336,7 @@ function board() {
   out.push(S(k.slabOf({ x: BOARD.x + 12, y: hy - 2.5, w: BOARD.w - 24, d: 5, r: 1 }, BOARD_H, 2.6, P, 3, 0.4), { tone: "mid" }));
   out.push(L(k.lineOnTop([BOARD.x + 14, hy], [BOARD.x + BOARD.w - 14, hy], BOARD_H + 2.6, P), { tone: "lo" }) + screws([[BOARD.x + 14, hy], [BOARD.x + BOARD.w - 14, hy]], BOARD_H + 2.6, 0.4));
   // the system sheet, always on the board
-  out.push(S(k.slabOf(SYS, BOARD_H, 0.8, P, 2), { tone: "hi", crease: "none", inner: topText(SYS.x + 3, SYS.y + 4.6, BOARD_H + 0.8, "SYSTEM · USE THIS CONTEXT;", 2.3, "mid") + topText(SYS.x + 3, SYS.y + 8.6, BOARD_H + 0.8, "TOOLS STILL ALLOWED", 2.3, "mid") }));
+  out.push(S(k.slabOf(SYS, BOARD_H, 0.8, P, 2), { tone: "hi", crease: "none", inner: topText(SYS.x + 3, SYS.y + 4.6, BOARD_H + 0.8, "system_instruction", 2.3, "mid") + topText(SYS.x + 3, SYS.y + 8.6, BOARD_H + 0.8, "USE CONTEXT · TOOLS OK", 2.3, "mid") }));
   // empty slip seats, one per k
   out.push(L([0, 1, 2, 3, 4].map((n) => k.planOutline(box(BOARD.x + BOARD.w / 2, slipY(n), SLIP.w, SLIP.d, 0.5), BOARD_H, P, 2)).join(""), { tone: "faint", dashed: true }));
   out.push(topText(BOARD.x + 4, BOARD.y + BOARD.d - 2, BOARD_H, "PROMPT", 2.4, "lo"));
@@ -352,6 +356,7 @@ function model() {
   const vx = MODEL.x + 7;
   out.push(L([0, 1, 2, 3, 4, 5].map((j) => k.planOutline({ x: vx, y: MODEL.y + 8 + j * 4, w: 18, d: 1.6, r: 0.6 }, MODEL_H, P, 2)).join(""), { tone: "lo" }));
   out.push(topText(MODEL.x + 30, MODEL.y + 12, MODEL_H, "MODEL", 3, "mid"));
+  out.push(topText(MODEL.x + 7, MODEL.y + 52, MODEL_H, "agent.py · answer()", 2.2, "lo"));
   out.push(L(k.lineOnTop([MODEL.x + 30, MODEL.y + 14], [MODEL.x + 41, MODEL.y + 14], MODEL_H, P), { tone: "faint", free: true }));
   // the tools block on top: a calculator key pad (HOS 1's calculate still declared)
   const tools = { x: MODEL.x + 28, y: MODEL.y + 22, w: 13, d: 15, r: 1 };
@@ -771,6 +776,6 @@ const plateBody = k.plateHtml({
 });
 
 const scores = `<h4 style="margin:6px 0 0">Scores for this question</h4><p class="tip">The five best of ${N} chunks. The top k (bold) go into the prompt. Hover a row for the chunk's text.</p><ol class="pc-bars" style="margin-bottom:10px">${[0, 1, 2, 3, 4].map((r) => `<li data-bar="${r}" style="--p:0"><span></span><i></i><b></b></li>`).join("")}</ol>`;
-const html = embedHtml({ slug: "rag-pipeline", plate: plateBody, parts: partsHtml(PARTS, { extra: scores }), live });
+const html = embedHtml({ slug: "rag-pipeline", plate: plateBody, parts: partsHtml(PARTS, { extra: scores }), task: "Set top-k to 1 (press −) and step through all three questions. Does the one chunk still hold the answer? Then look at the scores: what were the other four adding at k = 5?", live });
 inject("module-2/index.html", "rag-pipeline", html);
 preview("rag-pipeline", html);

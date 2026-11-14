@@ -29,6 +29,8 @@ export const EXPAND_BUTTON = `<button type="button" class="pc-btn pc-expand" dat
 const CSS = `
 .anatomy-embed{--anatomy-page:var(--surface,#fff);--anatomy-muted:var(--muted,#53695d);--anatomy-text:var(--text,#10231a);margin:22px 0 26px;color:var(--text);font:inherit}
 .anatomy-embed .iso-figure{margin:0}
+.anatomy-embed{scroll-margin-top:16px}
+.anatomy-embed .pc-try{margin:12px 0 0;padding:10px 12px;border-left:3px solid var(--text);background:var(--surface2);border-radius:0 6px 6px 0;color:var(--text);font-size:.96rem}
 .anatomy-embed .iso-plate{background:var(--anatomy-card);border:1px solid var(--border,#d3e2d8);border-radius:var(--radius-sm,8px);padding:16px 16px 40px}
 .anatomy-embed .iso-plate-corner{color:var(--muted)}
 .anatomy-embed .iso-plate-corner[data-corner="fig"],.anatomy-embed .iso-plate-corner[data-corner="readout"]{color:var(--text)}
@@ -128,11 +130,14 @@ export function partsHtml(parts, { extra = "", tip = "Point at a part, or focus 
 }
 
 // The inline block for a lesson: wrapper, styles, plate, parts and one module script.
-export function embedHtml({ slug, plate, parts, css = "", live }) {
+// The wrapper's id is fig-<slug>, so a lesson can link to it (#fig-rag-pipeline).
+// `task` is a one-line "Try this" under the plate.
+export function embedHtml({ slug, plate, parts, task = "", css = "", live }) {
   const script = (kitScript() + PRELUDE(slug) + live).replace(/<\/(script)/gi, "<\\/$1");
-  return `<div class="iso anatomy-embed" data-anatomy="${slug}" data-theme="light">
+  return `<div class="iso anatomy-embed" id="fig-${slug}" data-anatomy="${slug}" data-theme="light">
 <style>${k.ISO_CSS}${CSS}${css}</style>
 ${plate}
+${task ? `<p class="pc-try"><b>Try this:</b> ${task}</p>` : ""}
 ${parts}
 <script type="module">${script}</script>
 </div>`;

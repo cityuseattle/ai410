@@ -656,6 +656,6 @@ const plateBody = k.plateHtml({
 });
 
 const odds = `<h4 style="margin:6px 0 0">The odds now</h4><p class="tip">Change the temperature with − and + (or [ and ] while the figure has focus) and watch the spread.</p><ol class="pc-bars" style="margin-bottom:10px">${WORDS.map((w, i) => `<li data-bar="${i}" style="--p:${probs0[i].toFixed(4)}"><span>${w}</span><i></i><b>${Math.round(probs0[i] * 100)}%</b></li>`).join("")}</ol>`;
-const html = embedHtml({ slug: "language-model", plate: plateBody, parts: partsHtml(PARTS, { extra: odds }), live });
+const html = embedHtml({ slug: "language-model", plate: plateBody, parts: partsHtml(PARTS, { extra: odds }), task: "Turn the temperature down to 0.25 and press Draw five times, then turn it up to 2 and draw five more. Which setting would you want for a support bot, and why?", live });
 inject("module-1/index.html", "language-model", html);
 preview("language-model", html);
