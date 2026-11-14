@@ -13,19 +13,7 @@
   --shadow:0 2px 8px rgba(10,40,25,.08); --shadow-hover:0 8px 24px rgba(10,40,25,.14);
   --radius:12px; --radius-sm:8px;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#0a1510; --surface:#11211a; --surface2:#172c22; --border:#26402f;
-    --text:#e5f0ea; --muted:#94ab9d; --accent:#4ade80; --accent2:#86efac;
-    --accent-light:#0f2e1c; --on-accent:#052e16; --link:#4ade80;
-    --header-bg:#06100b; --header-text:#e5f0ea;
-    --blue:#93b4ff; --blue-bg:#101c38; --amber:#fbbf24; --amber-bg:#2a1d05;
-    --violet:#d8b4fe; --violet-bg:#221233; --rose:#f9a8d4; --rose-bg:#2c1020;
-    --ok:#86efac; --ok-bg:#0d2615; --bad:#fca5a5; --bad-bg:#2c1111;
-    --code-bg:#050b08; --code-text:#d9e7df;
-    --shadow:0 2px 8px rgba(0,0,0,.4); --shadow-hover:0 8px 24px rgba(0,0,0,.55);
-  }
-}
+/* Light by default; dark only when the reader picks it (html[data-theme="dark"]). */
 :root[data-theme="dark"] {
   --bg:#0a1510; --surface:#11211a; --surface2:#172c22; --border:#26402f;
   --text:#e5f0ea; --muted:#94ab9d; --accent:#4ade80; --accent2:#86efac;

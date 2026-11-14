@@ -2,7 +2,7 @@
 //
 // - The figure sits in <div class="iso anatomy-embed" data-anatomy="slug">, so the kit's CSS
 //   (scoped to .iso) can't touch the rest of the page.
-// - Its theme follows the site: html[data-theme] when the reader chose one, else the system.
+// - Its theme follows the site: light, or dark when the reader picks dark with the toggle.
 // - Keys (arrows, F to expand, ...) only act while focus is inside the figure, so typing in a
 //   lesson's text boxes is never intercepted.
 // - Text colours are mapped to the site's tokens so the legend and parts list pass WCAG AA.
@@ -90,12 +90,11 @@ const CSS = `
 const PRELUDE = (slug) => `
 const ROOT = document.querySelector('[data-anatomy="${slug}"]');
 {
+  // light unless the reader chose dark with the site's toggle
   const html = document.documentElement;
-  const dark = matchMedia("(prefers-color-scheme: dark)");
-  const sync = () => { const t = html.getAttribute("data-theme"); ROOT.setAttribute("data-theme", t ? t : dark.matches ? "dark" : "light"); };
+  const sync = () => ROOT.setAttribute("data-theme", html.getAttribute("data-theme") === "dark" ? "dark" : "light");
   sync();
   new MutationObserver(sync).observe(html, { attributes: true, attributeFilter: ["data-theme"] });
-  try { dark.addEventListener("change", sync); } catch (e) {}
 }
 {
   const figure = ROOT.querySelector(".iso-figure");
