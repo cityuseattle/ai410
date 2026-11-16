@@ -54,6 +54,7 @@
     <span class="label">What's the HOS?</span>
     <p><strong>HOS 1 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 1, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 2. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 2. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
   </div>
+  <p class="small">Each activity below is tagged with its AI rule, from <span class="tag ok">AI: expected</span> in Create / Scaffold to <span class="tag bad">No AI</span> in Understand &amp; Refine and the Knowledge Check.</p>
   <p>Most people meet a large language model through a chat box, and it's easy to think the chat box <em>is</em> the model. It isn't. Behind every AI product there are at least three separate pieces — a <strong>frontend</strong> the user sees, a <strong>backend</strong> that holds secrets and makes decisions, and the <strong>LLM</strong> itself, which only ever turns text into more text. This first HOS is about seeing those pieces clearly, and then about the one idea that turns a chat app into an <em>agent</em>: letting the model ask your code to run a real function and wait for the answer.</p>
   <p>You'll spend Week 1 getting a working app running quickly with an AI coding assistant and then judging it on purpose. Week 2 is the harder half: explaining exactly how the loop works, extending it by hand, and applying the same judgment to a business you've never built for.</p>
   <div class="callout blue">
@@ -1396,7 +1397,7 @@ calculate_tool = {
 </section>
 
 <section class="module card" id="muddiest">
-  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span><span class="tag">AI: think, don't write</span></div></div></div>
   <p>Not a blank box. Four short fields, because a specific confusion is much easier for your instructor to fix than "this week was confusing." Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
   <div class="two" style="margin-bottom:14px">
     <div class="eg weak"><span class="label">Doesn't meet the bar</span>"I didn't really get the agent loop part. Tool calling is confusing."</div>
@@ -1420,7 +1421,7 @@ calculate_tool = {
 </section>
 
 <section class="module card" id="debate">
-  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span></div></div></div>
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
   <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>When a request might need a tool, who should decide — the model, or deterministic backend code?</strong></p></div>
   <p>You'll argue a side you're <em>assigned</em>, then argue the other one, then drop advocacy and synthesize. Nobody gets to post "I agree" — by Stage 3 everyone has argued both sides.</p>
   <div class="callout blue">
@@ -1473,10 +1474,14 @@ calculate_tool = {
 </section>
 
 <section class="module card" id="create">
-  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span><span class="tag ok">AI: expected</span></div></div></div>
   <div class="callout violet">
     <span class="label">Before you build</span>
     <p>Try the self-check at the end of <a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1</a>. If you can answer every question, start building. If one stumps you, read that module first (about 10 minutes); it's quicker than untangling the same idea in the middle of the build.</p>
+  </div>
+  <div class="callout blue">
+    <span class="label">Plan before you prompt · 2 minutes, ungraded</span>
+    <p>Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</p>
   </div>
   <p>Get a working app running fast with an AI coding assistant. This is the starting point, not the deliverable — you don't hand-edit anything yet.</p>
   <ol>
@@ -1499,7 +1504,11 @@ that's already open) — edit files here; do not create a new workspace or proje
 </section>
 
 <section class="module card" id="evaluate">
-  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 2 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 2 of 4</span><span class="tag">AI: your judgment</span></div></div></div>
+  <div class="callout blue">
+    <span class="label">Why this is the stage that counts</span>
+    <p>Checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026). A test that breaks the app is a good result here: it shows you exactly where the AI's code is weakest.</p>
+  </div>
   <p>Is the AI-produced result actually right? Test it <em>on purpose</em>. Tick each test as you run it and jot what happened — this becomes your Evaluate note.</p>
   <div class="progress-line" id="evalProgress">0 / 4 tests run</div>
   <div class="checklist" id="evalList">
@@ -1510,6 +1519,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what I found · what the AI got wrong, missed, or handled surprisingly well"></textarea>
+  <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
   <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
 </section>
 
@@ -1533,7 +1543,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 
 
 <section class="module card" id="analyze">
-  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why does this work?</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 3 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why does this work?</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 3 of 4</span><span class="tag">AI: your own words</span></div></div></div>
   <p>Pick <strong>one</strong> specific piece of the AI-generated code and explain, in your own words, exactly how it works. Depth beats breadth: one function explained well scores higher than a tour of every file.</p>
   <div class="pick" id="analyzePick">
     <button type="button" aria-pressed="false" data-k="loop"><b>The loop in <code>agent.py</code></b>What stops it? What happens if the model calls a tool twice in a row?</button>
@@ -1547,6 +1557,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 
 <section class="module card" id="refine">
   <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
+  <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
   <p>Add a <strong>second tool</strong> yourself — for example <code>get_current_time(timezone)</code> or <code>convert_units(value, from_unit, to_unit)</code> — and prove the agent chooses the right tool for the right question.</p>
   <div class="progress-line" id="refineProgress">0 / 5 done</div>
   <div class="checklist" id="refineList">
@@ -1561,7 +1572,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 </section>
 
 <section class="module card" id="challenge">
-  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a clinic's booking agent</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a clinic's booking agent</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span><span class="tag">AI: allowed, disclose</span></div></div></div>
   <p>Build the tools for Cascade Family Clinic's booking agent from a written spec with provided tests, make the one call the spec leaves open (what happens to a cancellation inside the $40 late-fee window), and argue which other tools the model should never get. Everything you need is in the <a href="application-challenge.html"><b>AC 1 guide</b></a>: the spec, the starter code, and the rubric.</p>
   <p class="small"><b>Starter code:</b> <a href="https://classroom50.org/cityuseattle/ai410/assignments/ac01/accept?k=ai410" target="_blank" rel="noopener">accept the AC 1 invite</a>. It creates your own repo, which you open in GitHub Codespaces.</p>
   <p class="small">Warm up first: the judgment is the same one the challenge asks for. Pick a business and sort its proposed tools.</p>
@@ -1586,7 +1597,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 </section>
 
 <section class="module card" id="check">
-  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span></div></div></div>
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span><span class="tag bad">No AI</span></div></div></div>
   <p>Five quick questions. Then answer the two open questions below out loud or in a notes file — they're the ones your instructor will ask in the Week 2 check-in.</p>
   <div id="quiz"></div>
   <p class="score" id="quizScore" aria-live="polite"></p>

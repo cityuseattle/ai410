@@ -24,6 +24,7 @@
         .submit-box h5 { margin:0 0 8px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
         .submit-box ul { margin:0; padding-left:20px; }
         .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:20px 0; border-radius:4px; }
+        .teaches { display:block; margin-top:4px; }
         .snag-box h4 { margin:0 0 8px; color:var(--amber); }
         .guide-nav { display:flex; justify-content:space-between; margin-top:30px; padding-top:16px; border-top:1px solid var(--border); font-size:0.9rem; }
         .guide-nav a { color:var(--link); text-decoration:none; font-weight:600; }
@@ -82,6 +83,7 @@
 <section class="module card" id="create">
   <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
             <p class="stage-tagline">Graded as Engagement: 20% of this HOS. The AI-assisted starting point, not the deliverable.</p>
+            <div class="not-graded"><b>Plan before you prompt (2 minutes, ungraded).</b> Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</div>
             <p>Prompt your AI assistant to add both pieces:</p>
 <pre tabindex="0">Add a mobile client and observability to this app:
 - mobile/: an Expo (React Native) chat screen that calls this
@@ -105,6 +107,7 @@
 <section class="module card" id="evaluate">
   <div class="module-head"><div class="module-icon">🔍</div><div><h2>2 · Evaluate</h2></div></div>
             <p class="stage-tagline">The critical gate — is the AI-produced result actually correct?</p>
+            <p class="small"><b>Why it counts:</b> checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026).</p>
             <p>Test it on purpose. At minimum, try:</p>
             <ul>
                 <li>Upload a document with your device registered — does a push notification actually arrive on your phone, not just does the API call return success?</li>
@@ -114,6 +117,7 @@
             <p style="font-size:0.85rem;color:var(--muted)">What you're looking for, illustrated below: the trace view shows <code>retrieve</code> nested under <code>run_agent</code> as its own span with its own latency, plus the faithfulness score attached to that run. The Scores table is where every run's score accumulates over time, so you can see whether faithfulness is trending up or down, not just what one run happened to score.</p>
             <img src="../assets/files/assets/ai410-langfuse-broll/01-trace-detail.svg" width="760" height="400" loading="lazy" alt="Illustrative mockup of a Langfuse trace: run_agent span (0.30s) with a nested retrieve span and a faithfulness score of 0.83, plus the Input/Output panel showing the retrieved return-policy answer" style="width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--border);margin:14px 0"/>
             <img src="../assets/files/assets/ai410-langfuse-broll/02-scores-table.svg" width="760" height="340" loading="lazy" alt="Illustrative mockup of a Langfuse Scores table, listing five faithfulness score runs by timestamp and value" style="width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--border);margin:0 0 14px"/>
+            <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
                 <ul><li>A short written note: what you tested, what you found, and anything the AI got wrong, missed, or handled surprisingly well.</li></ul>
@@ -134,6 +138,7 @@
   <div class="module-head"><div class="module-icon">✋</div><div><h2>4 · Understand &amp; Refine</h2></div></div>
             <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
             <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
+            <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
             <p>Write a <code>score_faithfulness(answer, context)</code> function yourself — a heuristic or cheap check for whether the agent's answer is actually grounded in what was retrieved, not just plausible-sounding. Call it from <code>run_agent()</code> and log the score against the current trace.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
@@ -146,6 +151,7 @@
 
 <section class="module card" id="snags">
   <div class="module-head"><div class="module-icon">🧯</div><div><h2>Common snags</h2></div></div>
+        <p>These all came up in testing, so expect to hit one or two. A snag doesn't mean you did it wrong. Most show how the system really works, and the ones marked <b>What it teaches</b> make good material for your Analyze or Understand writing.</p>
         <div class="snag-box">
             <ul>
                 <li><strong><code>npm: command not found</code></strong> — this HOS's <code>.devcontainer/devcontainer.json</code> installs Node.js automatically, but only when the container is <em>built</em>. If this Codespace was created earlier (e.g. carried over from an earlier HOS that never needed Node), it won't have picked up that change. Command Palette (<code>Cmd/Ctrl+Shift+P</code>) → <strong>"Codespaces: Rebuild Container"</strong> — your files are untouched, only the container's installed tools get reapplied from the config.</li>
@@ -153,9 +159,9 @@
                 <li><strong>Project won't load in Expo Go at all — stuck on a loading/login screen</strong> — unlike the push-token issue below, this blocks everything, chat included. Current Expo Go on iOS requires the same Expo account logged in on <em>both</em> your terminal (<code>npx expo login</code>) and the Expo Go app on your phone (tap the avatar icon on its home screen → sign in). Logged in as different accounts, or only on one side, and the project won't open.</li>
                 <li><strong>App crashes (or a red error screen) the moment it asks for a push token</strong> — <code>getExpoPushTokenAsync()</code> requires an EAS project ID as of SDK 49+, and a fresh project doesn't have one yet. Run <code>npx eas init</code> once inside <code>mobile/</code> (free — sign in with the Expo account above; no credit card) and it writes the ID into <code>app.json</code> for you. Chat works fine without this; only push notifications need it.</li>
                 <li><strong>On Android, no push notification ever arrives — not even a failed one</strong> — this isn't a bug in this course's code. Expo removed push-notification support from Expo Go on Android entirely as of SDK 53 (iOS Expo Go still supports it). Chat still works fine on Android either way; for the actual push-notification proof step, test on an iPhone if you have access to one, or build a free Expo development client via <code>eas build --profile development</code> instead of using Expo Go (no local Android Studio needed — EAS builds it in the cloud).</li>
-                <li><strong>Push notification API call succeeds but nothing arrives on your phone</strong> — Expo's push service returns <code>200 OK</code> even for a stale or invalid token, with the actual error inside the response body. Checking only the HTTP status isn't enough to confirm delivery.</li>
-                <li><strong>No Langfuse keys set yet, app still works</strong> — that's expected, not a bug. The SDK disables tracing and logs a line about it instead of crashing. You just won't see anything in the dashboard until keys are configured.</li>
-                <li><strong>Physical device can't reach a Codespaces-hosted backend</strong> — make the API port public in the Ports tab, use that forwarded URL as your mobile app's API base (ideally via an <code>EXPO_PUBLIC_API_BASE</code> variable in <code>mobile/.env</code>, reloading the app after editing it), and start Expo with <code>--tunnel</code> instead of the default LAN mode.</li>
+                <li><strong>Push notification API call succeeds but nothing arrives on your phone</strong> — Expo's push service returns <code>200 OK</code> even for a stale or invalid token, with the actual error inside the response body. Checking only the HTTP status isn't enough to confirm delivery.<span class="teaches"><b>What it teaches:</b> a 200 status means the request was accepted, not that the work happened. Read the response body.</span></li>
+                <li><strong>No Langfuse keys set yet, app still works</strong> — that's expected, not a bug. The SDK disables tracing and logs a line about it instead of crashing. You just won't see anything in the dashboard until keys are configured.<span class="teaches"><b>What it teaches:</b> good observability code fails quietly. Missing tracing should never take the app down.</span></li>
+                <li><strong>Physical device can't reach a Codespaces-hosted backend</strong> — make the API port public in the Ports tab, use that forwarded URL as your mobile app's API base (ideally via an <code>EXPO_PUBLIC_API_BASE</code> variable in <code>mobile/.env</code>, reloading the app after editing it), and start Expo with <code>--tunnel</code> instead of the default LAN mode.<span class="teaches"><b>What it teaches:</b> your phone is outside the Codespace's network. Every hop between them has to be opened on purpose.</span></li>
                 <li><strong>Testing with <code>npx expo start --web</code>: "Failed to fetch" / server log shows <code>OPTIONS /chat ... 405 Method Not Allowed</code></strong> — unlike Streamlit or Expo Go on a real device, Expo <em>web</em> runs inside an actual browser, and browsers block cross-origin requests until the server explicitly allows them (a "CORS preflight" — the browser's own <code>OPTIONS</code> check before the real request). If your AI-scaffolded backend doesn't already have this, add it to <code>backend/main.py</code>:
 <pre tabindex="0">from fastapi.middleware.cors import CORSMiddleware
 
@@ -165,8 +171,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )</pre>
-                Restart <code>uvicorn</code> afterward — like any code change, it isn't picked up until the server restarts (or reloads, if you're running with <code>--reload</code>).</li>
-                <li><strong>Replies feel slower on the phone than they did testing with <code>curl</code></strong> — expected, not a bug. A <code>curl</code> test from inside the Codespace terminal is a loopback call; your phone's request travels over the real internet through GitHub's port-forwarding proxy to reach the Codespace and back, on top of whatever the agentic loop itself takes (a Gemini call, sometimes two if a tool fires, plus retrieval and guardrail validation). A couple of seconds is normal for this setup.</li>
+                Restart <code>uvicorn</code> afterward — like any code change, it isn't picked up until the server restarts (or reloads, if you're running with <code>--reload</code>).<span class="teaches"><b>What it teaches:</b> the same request follows different rules from a browser than from a server or a phone app.</span></li>
+                <li><strong>Replies feel slower on the phone than they did testing with <code>curl</code></strong> — expected, not a bug. A <code>curl</code> test from inside the Codespace terminal is a loopback call; your phone's request travels over the real internet through GitHub's port-forwarding proxy to reach the Codespace and back, on top of whatever the agentic loop itself takes (a Gemini call, sometimes two if a tool fires, plus retrieval and guardrail validation). A couple of seconds is normal for this setup.<span class="teaches"><b>What it teaches:</b> latency adds up across every hop, so measure where it is before you optimize.</span></li>
             </ul>
             <p class="small" style="margin:10px 0 0">Most snags trace back to a concept. If one doesn't make sense, see <a href="../reference/concept-companion.html#module-4">Concept Companion → Module 4</a>.</p>
         </div>

@@ -23,6 +23,7 @@
         .submit-box h5 { margin:0 0 8px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
         .submit-box ul { margin:0; padding-left:20px; }
         .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:20px 0; border-radius:4px; }
+        .teaches { display:block; margin-top:4px; }
         .snag-box h4 { margin:0 0 8px; color:var(--amber); }
         .guide-nav { display:flex; justify-content:space-between; margin-top:30px; padding-top:16px; border-top:1px solid var(--border); font-size:0.9rem; }
         .guide-nav a { color:var(--link); text-decoration:none; font-weight:600; }
@@ -79,6 +80,7 @@
 <section class="module card" id="create">
   <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
             <p class="stage-tagline">Graded as Engagement: 20% of this HOS. The AI-assisted starting point, not the deliverable.</p>
+            <div class="not-graded"><b>Plan before you prompt (2 minutes, ungraded).</b> Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</div>
             <p>Prompt your AI assistant to add both pieces:</p>
 <pre tabindex="0">Add reliability to this app:
 - backend/guardrails.py: a call_with_guardrail(fn, schema, ...)
@@ -103,6 +105,7 @@
 <section class="module card" id="evaluate">
   <div class="module-head"><div class="module-icon">🔍</div><div><h2>2 · Evaluate</h2></div></div>
             <p class="stage-tagline">The critical gate — is the AI-produced result actually correct?</p>
+            <p class="small"><b>Why it counts:</b> checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026).</p>
             <p>Test it on purpose. At minimum, try:</p>
             <ul>
                 <li>A message likely to produce a malformed tool call (e.g. "calculate the square root of a banana") — does the guardrail catch it and retry, or does the request crash?</li>
@@ -117,6 +120,7 @@ curl http://127.0.0.1:8000/jobs/YOUR-JOB-ID-HERE
                 While that job is still processing, send a message through the chat UI at the same time — if it replies normally instead of hanging, that's your proof the two are running independently, not that ingestion is just fast.</li>
                 <li>Stop the worker process and upload a document — does <code>/jobs/{id}</code> correctly report <code>"queued"</code> forever, rather than erroring or hanging?</li>
             </ul>
+            <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
                 <ul><li>A short written note: what you tested, what you found, and anything the AI got wrong, missed, or handled surprisingly well.</li></ul>
@@ -137,6 +141,7 @@ curl http://127.0.0.1:8000/jobs/YOUR-JOB-ID-HERE
   <div class="module-head"><div class="module-icon">✋</div><div><h2>4 · Understand &amp; Refine</h2></div></div>
             <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
             <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
+            <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
             <p>Extend the guardrail pattern to your <strong>second</strong> tool (from HOS 1's Understand &amp; Refine) — write a Pydantic schema for its arguments, including at least one validation rule beyond "the field exists" (e.g. rejecting an empty string), and wire it into the tool dispatch in <code>agent.py</code> the same way the first tool is guarded.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
@@ -149,11 +154,12 @@ curl http://127.0.0.1:8000/jobs/YOUR-JOB-ID-HERE
 
 <section class="module card" id="snags">
   <div class="module-head"><div class="module-icon">🧯</div><div><h2>Common snags</h2></div></div>
+        <p>These all came up in testing, so expect to hit one or two. A snag doesn't mean you did it wrong. Most show how the system really works, and the ones marked <b>What it teaches</b> make good material for your Analyze or Understand writing.</p>
         <div class="snag-box">
             <ul>
-                <li><strong>Jobs stuck on "queued" forever</strong> — the single most common issue. It means the worker process isn't running. Start it in its own terminal: <code>python worker.py</code>.</li>
+                <li><strong>Jobs stuck on "queued" forever</strong> — the single most common issue. It means the worker process isn't running. Start it in its own terminal: <code>python worker.py</code>.<span class="teaches"><b>What it teaches:</b> async work needs a separate process to do it. The queue only holds jobs.</span></li>
                 <li><strong>Testing locally on macOS, a job goes straight to "failed"</strong> — if the worker log mentions <code>NSMutableString</code> or <code>fork()</code>, that's a known macOS + RQ interaction, not a bug. Run the worker with <code>OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES python worker.py</code>, or just use Codespaces, where this doesn't happen.</li>
-                <li><strong>The guardrail "retries" but gets the same wrong answer every time</strong> — check that <code>correction_hint</code> (if you're using one) actually feeds the validation error back into the next attempt. A retry with no new information has no better chance of succeeding than the first try.</li>
+                <li><strong>The guardrail "retries" but gets the same wrong answer every time</strong> — check that <code>correction_hint</code> (if you're using one) actually feeds the validation error back into the next attempt. A retry with no new information has no better chance of succeeding than the first try.<span class="teaches"><b>What it teaches:</b> a retry only helps when the next attempt gets new information.</span></li>
             </ul>
             <p class="small" style="margin:10px 0 0">Most snags trace back to a concept. If one doesn't make sense, see <a href="../reference/concept-companion.html#module-3">Concept Companion → Module 3</a>.</p>
         </div>

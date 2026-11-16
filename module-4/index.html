@@ -84,6 +84,7 @@
     <span class="label">What's the HOS?</span>
     <p><strong>HOS 4 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 7, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 8. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 8. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
   </div>
+  <p class="small">Each activity below is tagged with its AI rule, from <span class="tag ok">AI: expected</span> in Create / Scaffold to <span class="tag bad">No AI</span> in Understand &amp; Refine and the Knowledge Check.</p>
   <p>Three HOS in, your app reasons, retrieves, validates, and works in the background — and you can only see any of that from a browser tab and a terminal. This last HOS takes it to production shape. A <strong>mobile client</strong> puts the app on a real phone. <strong>Push notifications</strong> tell the user when background work finishes, even with the app closed. And <strong>observability</strong> lets you see what the agent actually did on every request, so "it gave a wrong answer" becomes a specific span you can open and fix.</p>
   <p>Week 7 builds and tests all three. Week 8 is the last HOS week, and it does double duty: finish HOS 4, then step back and connect all four HOS in an architecture review and a final Integration Concept Debate — the bridge into your Term Project.</p>
   <div class="callout blue">
@@ -1452,7 +1453,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 </section>
 
 <section class="module card" id="muddiest">
-  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span><span class="tag">AI: think, don't write</span></div></div></div>
   <p>Four short fields, not a blank box. Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
   <div class="two" style="margin-bottom:14px">
     <div class="eg weak"><span class="label">Doesn't meet the bar</span>"I don't understand observability or Langfuse."</div>
@@ -1476,7 +1477,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 </section>
 
 <section class="module card" id="debate">
-  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span></div></div></div>
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
   <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>Should a production AI app trace and score every request, or only a sample of them?</strong></p></div>
   <p>You'll argue the side your debate group is assigned, then argue the other one, then drop advocacy and synthesize.</p>
   <div class="callout blue">
@@ -1517,10 +1518,14 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 </section>
 
 <section class="module card" id="create">
-  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 4 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 4 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span><span class="tag ok">AI: expected</span></div></div></div>
   <div class="callout violet">
     <span class="label">Before you build</span>
     <p>Try the self-check at the end of <a href="../reference/concept-companion.html#module-4">Concept Companion, Module 4</a>. If you can answer every question, start building. If one stumps you, read that module first (about 10 minutes); it's quicker than untangling the same idea in the middle of the build.</p>
+  </div>
+  <div class="callout blue">
+    <span class="label">Plan before you prompt · 2 minutes, ungraded</span>
+    <p>Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</p>
   </div>
   <p>Add the mobile client, push, and tracing to your HOS 3 app with an AI coding assistant.</p>
   <ol>
@@ -1542,7 +1547,11 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 </section>
 
 <section class="module card" id="evaluate">
-  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 4 · Stage 2 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 4 · Stage 2 of 4</span><span class="tag">AI: your judgment</span></div></div></div>
+  <div class="callout blue">
+    <span class="label">Why this is the stage that counts</span>
+    <p>Checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026). A test that breaks the app is a good result here: it shows you exactly where the AI's code is weakest.</p>
+  </div>
   <p>This week "the API returned 200" is not evidence. Check what actually happened on the phone and in the trace.</p>
   <div class="progress-line" id="evalProgress">0 / 4 tests run</div>
   <div class="checklist" id="evalList">
@@ -1553,6 +1562,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what the phone and the traces showed · what the AI got wrong, missed, or handled surprisingly well"></textarea>
+  <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
   <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add screenshots (the notification on the phone, a trace) to <code>screenshots/</code>, then commit and push by the end of Week 7. Your commit history is your Week 7 checkpoint.</p>
 </section>
 
@@ -1576,7 +1586,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 
 
 <section class="module card" id="analyze">
-  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why is it built this way?</h2><div class="module-meta"><span class="tag blue">HOS 4 · Stage 3 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why is it built this way?</h2><div class="module-meta"><span class="tag blue">HOS 4 · Stage 3 of 4</span><span class="tag">AI: your own words</span></div></div></div>
   <p>Pick <strong>one</strong> piece and explain what it lets you do that the alternative wouldn't.</p>
   <div class="pick" id="analyzePick">
     <button type="button" aria-pressed="false" data-k="token"><b>Device token, not user ID</b>Why push is addressed to a device.</button>
@@ -1589,6 +1599,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 
 <section class="module card" id="refine">
   <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">HOS 4 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
+  <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
   <p>Write your own <code>score_faithfulness(answer, context)</code> — a heuristic or cheap check for whether the answer is grounded in what was retrieved — call it from <code>run_agent()</code>, and log the score against the current trace.</p>
   <div class="progress-line" id="refineProgress">0 / 5 done</div>
   <div class="checklist" id="refineList">
@@ -1612,7 +1623,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 </section>
 
 <section class="module card" id="challenge">
-  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — make someone else's AI feature observable</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — make someone else's AI feature observable</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span><span class="tag">AI: allowed, disclose</span></div></div></div>
   <p>Puget Pantry's AI feature swaps out-of-stock groceries and pushes the change to the customer's phone, and nobody can see inside it. Instrument it with traces, spans, and a quality score per swap, run a recorded day of orders through it, and decide what's worth paging the on-call engineer for. The spec, starter code, and rubric are in the <a href="application-challenge.html"><b>AC 4 guide</b></a>.</p>
   <p class="small"><b>Starter code:</b> <a href="https://classroom50.org/cityuseattle/ai410/assignments/ac04/accept?k=ai410" target="_blank" rel="noopener">accept the AC 4 invite</a>. It creates your own repo, which you open in GitHub Codespaces.</p>
   <p class="small">Warm up first: signal versus noise is the same call the challenge asks you to make.</p>
@@ -1632,7 +1643,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 </section>
 
 <section class="module card" id="check">
-  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span></div></div></div>
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span><span class="tag bad">No AI</span></div></div></div>
   <p>Five quick questions, then the two open questions your instructor will ask in the Week 8 check-in.</p>
   <div id="quiz"></div>
   <p class="score" id="quizScore" aria-live="polite"></p>
