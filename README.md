@@ -17,10 +17,11 @@ Students reach these pages from Brightspace. Graded work is submitted in Brights
 | `module-N/index.html` | Module N lesson (N = 1–4) |
 | `module-N/hos-guide.html` | HOS N (Hands-On Skill) guide |
 | `module-N/simulator.html` | Module N simulator |
-| `module-N/application-challenge.html` | Application Challenge N |
+| `module-N/application-challenge.html` | HOS N Part B challenge guide (the path keeps its old name because Brightspace links to it) |
 | `module-5/index.html` | Term Project |
 | `module-5/example-project.html` | Example Term Project (Flashcard Coach): interactive demo |
 | `reference/` | Concept Companion, starter-code walkthrough, Concept Debate example |
+| `archive/` | Frozen, browsable copies of earlier versions (e.g. `archive/v1.1/`, made with `tools/archive_version.py`) |
 | `assets/` | Shared `course.css` and `course.js`, images |
 | `figures/` | Build scripts for the interactive figures inside lessons (see `figures/README.md`) |
 | `tools/check_site.py` | Pre-push checker |

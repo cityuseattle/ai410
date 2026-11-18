@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI 410 Module 1 (Weeks 1-2): lecture, Muddiest Point, Concept Debate, CEAU stages, Application Challenge and knowledge check for Foundations & the Agentic Loop.">
+<meta name="description" content="AI 410 Module 1 (Weeks 1-2): lecture, weekly Concept Debates and Knowledge Checks, and HOS 1 in two parts (Build, then Apply with an individual challenge) for Foundations & the Agentic Loop.">
 <title>Module 1: Foundations &amp; the Agentic Loop</title>
 <link rel="stylesheet" href="../assets/course.css">
 <style>
@@ -22,7 +22,7 @@
     <div class="eyebrow">AI 410 · Module 1 · Weeks 1–2</div>
     <h1>Foundations &amp; the Agentic Loop</h1>
     <p class="lede">What a full-stack AI app is actually made of, what an LLM actually does, and the loop that lets a model ask your code to run a real function — built fast in Week 1, explained and extended by hand in Week 2.</p>
-    <div class="chips"><span class="chip">Outcome O1</span><span class="chip">2 weeks</span><span class="chip">Lecture · Muddiest Point · Concept Debate</span><span class="chip">HOS 1 (Hands-On Skill): 4 stages</span><span class="chip">Application Challenge</span><span class="chip">Codespaces · free tier</span></div>
+    <div class="chips"><span class="chip">Outcome O1</span><span class="chip">2 weeks</span><span class="chip">Lecture · 2 Concept Debates · 2 Knowledge Checks</span><span class="chip">HOS 1 (Hands-On Skill): Part A Build · Part B Apply</span><span class="chip">Part B challenge</span><span class="chip">Codespaces · free tier</span></div>
   </div>
 </section>
 <main id="main">
@@ -33,15 +33,16 @@
     <span class="sep">Week 1</span>
     <a href="#preview">Preview</a>
     <a href="#lecture">Lecture</a>
-    <a href="#muddiest">Muddiest Point</a>
-    <a href="#debate">Concept Debate</a>
+    <a href="#debate">Concept Debate A</a>
     <a href="#create">HOS 1 · Create</a>
     <a href="#evaluate">HOS 1 · Evaluate</a>
+    <a href="#check-theory">Knowledge Check (theory)</a>
     <span class="sep">Week 2</span>
+    <a href="#debate-b">Concept Debate B</a>
     <a href="#analyze">HOS 1 · Analyze</a>
     <a href="#refine">HOS 1 · Understand &amp; Refine</a>
-    <a href="#challenge">Application Challenge</a>
-    <a href="#check">Knowledge Check</a>
+    <a href="#challenge">HOS 1 · Part B challenge</a>
+    <a href="#check">Knowledge Check (skill)</a>
     <a href="#project">Term Project</a>
   </div>
 </nav>
@@ -49,10 +50,10 @@
 <p class="small muted" style="margin-top:18px">Everything in this HOS runs in GitHub Codespaces on free tiers, with no credit card. Which accounts you need, and when: <a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a>.</p>
 
 <section class="module card" id="overview">
-  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O1</span><span class="tag blue">HOS 1: 10% of course</span><span class="tag">+ Muddiest Point · Concept Debate · Application Challenge · Knowledge Check</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O1</span><span class="tag blue">HOS 1: 10% of course</span><span class="tag">+ 2 Concept Debates · 2 Knowledge Checks</span></div></div></div>
   <div class="callout blue">
     <span class="label">What's the HOS?</span>
-    <p><strong>HOS 1 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 1, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 2. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 2. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
+    <p><strong>HOS 1 (Hands-On Skill)</strong> is this module's main build: 100 points, 10% of your course grade. It runs in two parts. <b>Part A: Build</b> (Week 1): <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a>. <b>Part B: Apply</b> (Week 2): <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a>, then the individual <a href="#challenge">challenge</a>, which applies the same skill to a new scenario. Everything goes in one GitHub repo, with the challenge in its <code>challenge/</code> folder. Your last push before the end of Week 2 is your submission, and it's graded once: 60 points for the build and 40 for the challenge. The weekly Concept Debates and Knowledge Checks are graded separately.</p>
   </div>
   <p class="small">Each activity below is tagged with its AI rule, from <span class="tag ok">AI: expected</span> in Create / Scaffold to <span class="tag bad">No AI</span> in Understand &amp; Refine and the Knowledge Check. The <a href="../start-here/ai-use.html">AI Use Guide</a> explains each one.</p>
   <p>Most people meet a large language model through a chat box, and it's easy to think the chat box <em>is</em> the model. It isn't. Behind every AI product there are at least three separate pieces — a <strong>frontend</strong> the user sees, a <strong>backend</strong> that holds secrets and makes decisions, and the <strong>LLM</strong> itself, which only ever turns text into more text. This first HOS is about seeing those pieces clearly, and then about the one idea that turns a chat app into an <em>agent</em>: letting the model ask your code to run a real function and wait for the answer.</p>
@@ -74,23 +75,24 @@
   <div class="flow">
     <a href="#preview"><span class="n">Wk 1 · Mon</span><span class="t">Preview the build</span><span class="w">simulator tour · ungraded</span></a>
     <a href="#lecture"><span class="n">Wk 1 · Mon</span><span class="t">Lecture</span><span class="w">~30 min, 3 parts</span></a>
-    <a href="#muddiest"><span class="n">Wk 1 · by Wed</span><span class="t">Muddiest Point</span><span class="w">graded · 5% pool</span></a>
-    <a href="#debate"><span class="n">Wk 1 · Tue–Sat</span><span class="t">Concept Debate</span><span class="w">graded · 3 stages</span></a>
-    <a href="#create"><span class="n">Wk 1 · Wed–Thu</span><span class="t">HOS 1 · Create / Scaffold</span><span class="w">Engagement · 20% of HOS</span></a>
-    <a href="#evaluate"><span class="n">Wk 1 · Fri–Sun</span><span class="t">HOS 1 · Evaluate</span><span class="w">part of Skills (80%)</span></a>
-    <a href="#analyze"><span class="n">Wk 2 · Mon–Tue</span><span class="t">HOS 1 · Analyze</span><span class="w">part of Skills (80%)</span></a>
-    <a href="#refine"><span class="n">Wk 2 · Wed–Thu</span><span class="t">HOS 1 · Understand &amp; Refine</span><span class="w">part of Skills · no AI</span></a>
-    <a href="#challenge"><span class="n">Wk 2 · Fri–Sun</span><span class="t">Application Challenge</span><span class="w">5% of course</span></a>
-    <a href="#check"><span class="n">Wk 2 · any time</span><span class="t">Knowledge Check</span><span class="w">graded · 10% pool</span></a>
+    <a href="#debate"><span class="n">Wk 1 · Tue–Sat</span><span class="t">Concept Debate A</span><span class="w">graded · 10 pts</span></a>
+    <a href="#create"><span class="n">Wk 1 · Wed–Thu</span><span class="t">HOS 1 · Create / Scaffold</span><span class="w">Build · Create · 10 pts</span></a>
+    <a href="#evaluate"><span class="n">Wk 1 · Fri–Sun</span><span class="t">HOS 1 · Evaluate</span><span class="w">Build · Evaluate · 15 pts</span></a>
+    <a href="#check-theory"><span class="n">Wk 1 · any time</span><span class="t">Knowledge Check (theory)</span><span class="w">graded · 10 pts · no AI</span></a>
+    <a href="#debate-b"><span class="n">Wk 2 · Tue–Sat</span><span class="t">Concept Debate B</span><span class="w">graded · 10 pts</span></a>
+    <a href="#analyze"><span class="n">Wk 2 · Mon–Tue</span><span class="t">HOS 1 · Analyze</span><span class="w">Build · Analyze · 15 pts</span></a>
+    <a href="#refine"><span class="n">Wk 2 · Wed–Thu</span><span class="t">HOS 1 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 20 pts · no AI</span></a>
+    <a href="#challenge"><span class="n">Wk 2 · Fri–Sun</span><span class="t">HOS 1 · Part B challenge</span><span class="w">Challenge · 40 pts</span></a>
+    <a href="#check"><span class="n">Wk 2 · any time</span><span class="t">Knowledge Check (skill)</span><span class="w">graded · 10 pts · no AI</span></a>
   </div>
   <p class="small muted" style="margin-top:10px">Days are a suggested pacing for an online term, not fixed deadlines — your instructor's Brightspace dates win.</p>
 </section>
 
 <!-- ========================= WEEK 1 ========================= -->
-<div class="week-tabs no-print" role="group" aria-label="Weeks"><button type="button" data-week="1" aria-controls="week-1">Week 1<span class="tab-sub"> · Build &amp; Judge</span></button><button type="button" data-week="2" aria-controls="week-2">Week 2<span class="tab-sub"> · Explain &amp; Master</span></button><button type="button" class="show-all">Show both weeks</button></div>
+<div class="week-tabs no-print" role="group" aria-label="Weeks"><button type="button" data-week="1" aria-controls="week-1">Week 1<span class="tab-sub"> · Part A: Build</span></button><button type="button" data-week="2" aria-controls="week-2">Week 2<span class="tab-sub"> · Part B: Apply</span></button><button type="button" class="show-all">Show both weeks</button></div>
 <div class="week-panel" id="week-1" data-week="1">
-<div class="part-banner"><b>Week 1 · Build &amp; Judge</b><span>Lecture → Muddiest Point → Concept Debate → HOS 1: Create → Evaluate</span></div>
-<div class="due-card"><h3>Week 1: what's due</h3><label><input type="checkbox" data-k="l1-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-ai"><span><a href="../start-here/ai-use.html">Read the AI Use Guide</a> <span class="muted">(about 5 min)</span></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-prev"><span><a href="#preview">Preview the build: the Agentic Loop Simulator guided tour</a> <span class="muted">(ungraded, about 15 min)</span></span><span class="when">before the lecture</span></label><label><input type="checkbox" data-k="l1-w0-0"><span><a href="#muddiest">Muddiest Point</a></span><span class="when">by Wed</span></label><label><input type="checkbox" data-k="l1-w0-1"><span><a href="#debate">Concept Debate: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w0-cc"><span><a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l1-w0-2"><span><a href="#create">HOS 1 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w0-3"><span><a href="#evaluate">HOS 1 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+<div class="part-banner"><b>Week 1 · Part A: Build</b><span>Lecture → Concept Debate A → HOS 1: Create → Evaluate → Knowledge Check (theory)</span></div>
+<div class="due-card"><h3>Week 1: what's due</h3><label><input type="checkbox" data-k="l1-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-ai"><span><a href="../start-here/ai-use.html">Read the AI Use Guide</a> <span class="muted">(about 5 min)</span></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-prev"><span><a href="#preview">Preview the build: the Agentic Loop Simulator guided tour</a> <span class="muted">(ungraded, about 15 min)</span></span><span class="when">before the lecture</span></label><label><input type="checkbox" data-k="l1-w0-1"><span><a href="#debate">Concept Debate A: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w0-cc"><span><a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l1-w0-2"><span><a href="#create">HOS 1 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w0-3"><span><a href="#evaluate">HOS 1 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w0-kc"><span><a href="#check-theory">Knowledge Check (theory) quiz, in Brightspace</a></span><span class="when">any time</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
 
 
 <section class="module card" id="preview">
@@ -110,14 +112,14 @@
   <div class="callout blue">
     <span class="label">After the tour, you should be able to answer</span>
     <ul><li>Who actually runs the tool: the model or your backend?</li><li>Why does a missing tool produce a wrong answer instead of an error?</li><li>Why does the backend resend the whole history on every model call?</li></ul>
-    <p>If one of these still doesn't make sense, it's a good start for your <a href="#muddiest">Muddiest Point</a>.</p>
+    <p>If one of these still doesn't make sense, re-read that part of the lecture, then ask your instructor before you build.</p>
   </div>
   <p class="small muted">The simulator is a simplified model, not the real app: no real model, database or network calls. Your HOS 1 build in Codespaces is the real thing.</p>
 </section>
 
 <section class="module card" id="lecture">
   <div class="module-head"><div class="module-icon">🎓</div><div><h2>Lecture: from chat box to agent</h2><div class="module-meta"><span class="tag">≈ 30 min with videos</span><span class="tag blue">3 short parts</span><span class="tag">O1</span></div></div></div>
-  <p class="small muted">Three short segments instead of one long one: watch the video, read the notes, then try the quick check before moving on. The notes cover everything you need, so the videos are a second explanation rather than a requirement. If something stays fuzzy, that's exactly what your <a href="#muddiest">Muddiest Point</a> is for.</p>
+  <p class="small muted">Three short segments instead of one long one: watch the video, read the notes, then try the quick check before moving on. The notes cover everything you need, so the videos are a second explanation rather than a requirement. If something stays fuzzy, note it and ask your instructor before you build.</p>
 
   <div class="lecture-part">
     <h3>Part 1 — Anatomy of a full-stack AI app <small>≈ 5 min</small></h3>
@@ -1371,7 +1373,7 @@ calculate_tool = {
         "required": ["expression"],
     },
 }</code></pre>
-    <p>Notice what the model <em>never</em> does: it never runs the function. It only asks. That's the property that makes tool calling safe to reason about — and it's why deciding <em>which</em> functions to expose is an engineering judgment, not a detail (you'll practice that in the <a href="#challenge">Application Challenge</a>).</p>
+    <p>Notice what the model <em>never</em> does: it never runs the function. It only asks. That's the property that makes tool calling safe to reason about — and it's why deciding <em>which</em> functions to expose is an engineering judgment, not a detail (you'll practice that in the <a href="#challenge">Part B challenge</a>).</p>
     <div class="mistakes">
       <h4>⚠ Common mistakes</h4>
       <ul>
@@ -1396,50 +1398,17 @@ calculate_tool = {
   </dl></details>
 </section>
 
-<section class="module card" id="muddiest">
-  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span><span class="tag">AI: think, don't write</span></div></div></div>
-  <p>Not a blank box. Four short fields, because a specific confusion is much easier for your instructor to fix than "this week was confusing." Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
-  <div class="callout blue"><span class="label">AI use</span><p>You may ask an AI assistant about the material first. Often that clears up the confusion, which is a good outcome. Then write about what's still unclear. Write it yourself: don't paste AI text or ask an AI to come up with a confusion for you. If you asked an AI, say so under "What you already tried," along with what it told you and why that didn't settle it. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
-  <div class="two" style="margin-bottom:14px">
-    <div class="eg weak"><span class="label">Doesn't meet the bar</span>"I didn't really get the agent loop part. Tool calling is confusing."</div>
-    <div class="eg strong"><span class="label">Meets the bar</span>"In Part 3, step 5: why does the backend have to resend the whole history with the function result? Couldn't it just send <code>29754</code>? I re-read step 5 and tried the simulator — the log shows the history growing but not why."</div>
-  </div>
-  <details class="eg-toggle"><summary>See a full example answer, with AI use disclosed</summary>
-    <div class="eg strong"><span class="label">Meets the bar</span>
-      <p><b>1 · What I was doing:</b> Lecture Part 3, step 5.</p>
-      <p><b>2 · Where I got stuck:</b> Why does the backend have to resend the whole history with the function result? Couldn't it just send <code>29754</code>?</p>
-      <p><b>3 · What I already tried:</b> I re-read step 5 and tried the simulator. The log shows the history growing but not why. I asked Copilot Chat, and it said the model is stateless, so it needs the history every time. That explains earlier chat turns, but not why the model's own function call has to go back too, when it wrote that a moment ago.</p>
-      <p style="margin-bottom:0"><b>4 · My best guess:</b> Maybe the model needs to see its own call to match the result to it. Otherwise <code>29754</code> is just a number with no question attached.</p>
-    </div>
-  </details>
-  <form id="mpForm" onsubmit="return false">
-    <label class="field" for="mp1">1 · What were you doing right before you got confused?</label>
-    <input type="text" id="mp1" placeholder="e.g. Lecture Part 3, step 5 — or a line in the hands-on guide">
-    <label class="field" for="mp2">2 · The exact place you got stuck</label>
-    <textarea id="mp2" placeholder="Not 'I don't get agents' — the specific thing that doesn't add up."></textarea>
-    <div class="counter" id="mp2count">0 words</div>
-    <label class="field" for="mp3">3 · What you already tried</label>
-    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator, asked an AI assistant (say what it told you)…"></textarea>
-    <label class="field" for="mp4">4 · Optional: your best guess at the answer</label>
-    <textarea id="mp4" placeholder="Even if you think it's wrong."></textarea>
-  </form>
-  <div class="spec-meter"><b>Specificity</b><div class="spec-track"><div class="spec-fill" id="specFill"></div></div><span id="specLabel">—</span></div>
-  <ul class="hints" id="specHints"></ul>
-  <div class="row"><button class="btn" id="mpCopy" type="button">Copy for submission</button><button class="btn secondary" id="mpClear" type="button">Clear draft</button><span class="small muted" id="mpStatus" aria-live="polite"></span></div>
-  <p class="small muted" style="margin-top:10px"><b>Grading:</b> Participation — on time, addresses a genuine confusion (80%) · Writing — clear, specific, not generic (20%). The meter above is a nudge, not your grade.</p>
-</section>
-
 <section class="module card" id="debate">
-  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate A</h2><div class="module-meta"><span class="tag">CD01 · Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
   <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>When a request might need a tool, who should decide — the model, or deterministic backend code?</strong></p></div>
   <p>You'll argue a side you're <em>assigned</em>, then argue the other one, then drop advocacy and synthesize. Nobody gets to post "I agree" — by Stage 3 everyone has argued both sides.</p>
   <div class="callout blue">
     <span class="label">How your side is assigned</span>
-    <p>Before the first debate you join <b>Debate Group 1</b> or <b>Debate Group 2</b>, either assigned by your instructor or chosen yourself, as long as the two groups stay close to even. You stay in that group all term; find yours under <b>Communication → Groups</b>. The sides rotate each HOS, so nobody argues the same kind of position all term:</p>
+    <p>Before the first debate you join <b>Debate Group 1</b> or <b>Debate Group 2</b>, either assigned by your instructor or chosen yourself, as long as the two groups stay close to even. You stay in that group all term; find yours under <b>Communication → Groups</b>. Your side switches with every debate, two a module (Debate A and Debate B), so nobody argues the same kind of position all term:</p>
     <div class="table-wrap" tabindex="0"><table class="t" style="margin:6px 0 8px;background:var(--surface)">
-      <tr><th></th><th>HOS 1</th><th>HOS 2</th><th>HOS 3</th><th>HOS 4</th><th>Integration (Wk 8)</th></tr>
-      <tr><td><b>Group 1</b></td><td>Side A</td><td>Side B</td><td>Side A</td><td>Side B</td><td>Side A</td></tr>
-      <tr><td><b>Group 2</b></td><td>Side B</td><td>Side A</td><td>Side B</td><td>Side A</td><td>Side B</td></tr>
+      <tr><th></th><th>M1 · A</th><th>M1 · B</th><th>M2 · A</th><th>M2 · B</th><th>M3 · A</th><th>M3 · B</th><th>M4 · A</th><th>M4 · B</th><th>Wk 9</th><th>Wk 10</th></tr>
+      <tr><td><b>Group 1</b></td><td>Side A</td><td>Side B</td><td>Side B</td><td>Side A</td><td>Side A</td><td>Side B</td><td>Side B</td><td>Side A</td><td>Side B</td><td>Side A</td></tr>
+      <tr><td><b>Group 2</b></td><td>Side B</td><td>Side A</td><td>Side A</td><td>Side B</td><td>Side B</td><td>Side A</td><td>Side A</td><td>Side B</td><td>Side A</td><td>Side B</td></tr>
     </table></div>
     <p class="small"><b>Not in a group?</b> (for example, you added the course late) Before posting Stage 1, count the posts on each side and join the side with fewer; if they're tied, take Side A.</p>
   </div>
@@ -1450,7 +1419,7 @@ calculate_tool = {
   </div>
   <div class="two">
     <div class="side a" id="sideA">
-      <h4><span>Side A — Let the model decide</span><span class="tag blue">Group 1 this HOS</span></h4>
+      <h4><span>Side A — Let the model decide</span><span class="tag blue">Group 1 this debate</span></h4>
       <p>Declare the tools and let the LLM choose when to call them.</p>
       <ul class="small">
         <li>Handles phrasing no rule anticipated ("what's a 15% tip on $48?").</li>
@@ -1459,7 +1428,7 @@ calculate_tool = {
       </ul>
     </div>
     <div class="side b" id="sideB">
-      <h4><span>Side B — Backend code decides</span><span class="tag rose">Group 2 this HOS</span></h4>
+      <h4><span>Side B — Backend code decides</span><span class="tag rose">Group 2 this debate</span></h4>
       <p>Use rules (regex, keywords, a classifier) to decide, and only ask the model to phrase the answer.</p>
       <ul class="small">
         <li>Deterministic: the same input always takes the same path — testable.</li>
@@ -1510,7 +1479,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 - requirements.txt files for both.</code></pre>
   <p class="small"><b>Two gotchas caught in testing:</b> (1) Codespaces' default Copilot Chat agent likes to build in a <em>new</em> workspace instead of your starter folder — use Agent mode and say “this existing workspace” (the prompt does). (2) A <code>502 Bad Gateway</code> usually means the assistant picked a retired model like <code>gemini-2.5-flash</code>, which new keys can't use — set it to <code>gemini-3.8-flash</code> and restart the backend.</p>
   <p class="small">Full step-by-step instructions, troubleshooting, and the exact submission list are in the <a href="hos-guide.html">HOS 1 hands-on guide</a>. Unsure what a generated file does? <a href="../reference/starter-code-walkthrough.html#hos1">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded as Engagement (20% of this HOS):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 1 repo.</p>
+  <p class="small"><b>Graded under Build: Create (10 of the 100 HOS points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 1 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -1530,15 +1499,21 @@ that's already open) — edit files here; do not create a new workspace or proje
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what I found · what the AI got wrong, missed, or handled surprisingly well"></textarea>
   <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
-  <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
+  <p class="small"><b>Graded under Build: Evaluate (15 points).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
+</section>
+
+<section class="module card" id="check-theory">
+  <div class="module-head"><div class="module-icon">🧠</div><div><h2>Knowledge check (theory)</h2><div class="module-meta"><span class="tag">KC01 · graded quiz in Brightspace · 10 pts</span><span class="tag bad">No AI</span></div></div></div>
+  <p>This week's Knowledge Check tests <b>theory</b>: the ideas from the <a href="#lecture">lecture</a> and readings. Take it in Brightspace any time this week, without AI. Retakes are unlimited and 80% passes.</p>
+  <p class="small">Warm up with the quick check at the end of each lecture part. Next week's check moves on to <b>skill</b>: reading code, logs and output like your build's.</p>
 </section>
 
 <section class="module card" id="week1-done">
   <div class="module-head"><div class="module-icon">🏁</div><div><h2>End of Week 1</h2><div class="module-meta"><span class="tag">Before you stop for the week</span></div></div></div>
   <ul>
     <li><b>HOS 1</b>: Create and Evaluate are in <code>NOTES.md</code>, with screenshots, committed and pushed.</li>
-    <li>Muddiest Point posted.</li>
-    <li>Concept Debate: Stage 3 posted by Saturday.</li>
+    <li>Knowledge Check (theory) taken in Brightspace.</li>
+    <li>Concept Debate A: Stage 3 posted by Saturday.</li>
   </ul>
   <p><strong>Week 2 starts Monday with HOS 1 · Analyze.</strong> Take the weekend: explaining the code goes better after a break from it. Ahead of schedule? You can start now; your Brightspace dates are what count.</p>
   <p><a class="btn" href="#analyze">Go to Week 2: Analyze →</a></p>
@@ -1548,8 +1523,44 @@ that's already open) — edit files here; do not create a new workspace or proje
 </div>
 
 <div class="week-panel" id="week-2" data-week="2">
-<div class="part-banner"><b>Week 2 · Explain &amp; Master</b><span>HOS 1: Analyze → Understand &amp; Refine → Application Challenge → Knowledge Check</span></div>
-<div class="due-card"><h3>Week 2: what's due</h3><label><input type="checkbox" data-k="l1-w1-0"><span><a href="#analyze">HOS 1 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l1-w1-1"><span><a href="#refine">HOS 1 · Understand &amp; Refine: the second tool, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w1-2"><span><a href="#challenge">Application Challenge 1</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w1-3"><span><a href="#check">Knowledge Check quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l1-w1-4"><span><a href="#project">Term Project: decide solo or group (Phase 1 is due end of Week 3)</a></span><span class="when">this week</span></label><label><input type="checkbox" data-k="l1-w1-5"><span><a href="#refine">HOS 1: push your final work to your repo (it is your submission)</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+<div class="part-banner"><b>Week 2 · Part B: Apply</b><span>Concept Debate B → HOS 1: Analyze → Understand &amp; Refine → Challenge → Knowledge Check (skill)</span></div>
+<div class="due-card"><h3>Week 2: what's due</h3><label><input type="checkbox" data-k="l1-w1-cdb"><span><a href="#debate-b">Concept Debate B: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w1-0"><span><a href="#analyze">HOS 1 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l1-w1-1"><span><a href="#refine">HOS 1 · Understand &amp; Refine: the second tool, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w1-2"><span><a href="#challenge">HOS 1 · Part B challenge, in your repo's <code>challenge/</code> folder</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w1-3"><span><a href="#check">Knowledge Check (skill) quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l1-w1-4"><span><a href="#project">Term Project: decide solo or group (Phase 1 is due end of Week 3)</a></span><span class="when">this week</span></label><label><input type="checkbox" data-k="l1-w1-5"><span><a href="#refine">HOS 1: push your final work to your repo (it is your submission)</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+
+<section class="module card" id="debate-b">
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate B</h2><div class="module-meta"><span class="tag">CD02 · Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
+  <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>Before the agent takes an action that changes data, like booking or cancelling an appointment, should it ask the user to confirm first, or just act?</strong></p></div>
+  <p>Same three stages as <a href="#debate">Debate A</a>, and the same Debate Groups. This time your group argues the <b>other</b> side from the one it took in Debate A.</p>
+  <div class="row" style="margin-bottom:10px">
+    <label for="teamInputB" class="small"><b>My Brightspace group:</b></label>
+    <select id="teamInputB" style="width:auto"><option value="">—</option><option value="1">Debate Group 1</option><option value="2">Debate Group 2</option></select>
+    <span class="small" id="sideResultB" aria-live="polite"></span>
+  </div>
+  <div class="two">
+    <div class="side a" id="bSideA">
+      <h4><span>Side A — Just act on the request</span><span class="tag blue">Group 2 this debate</span></h4>
+      <ul class="small">
+        <li>The user already asked for it; a confirmation step doubles the turns.</li>
+        <li>Backend validation and an undo path catch most mistakes.</li>
+        <li>Confirmation prompts get clicked through without being read.</li>
+      </ul>
+    </div>
+    <div class="side b" id="bSideB">
+      <h4><span>Side B — Confirm before every change</span><span class="tag rose">Group 1 this debate</span></h4>
+      <ul class="small">
+        <li>A wrong booking or a missed late-fee warning costs a real person time or money.</li>
+        <li>The model can misread which appointment or patient was meant.</li>
+        <li>A confirmation leaves a clear record that the user agreed.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="small muted">The same <a href="../start-here/ai-use.html">AI rule</a> applies: AI can help you think, but the posts are your own words.</p>
+  <div class="stages">
+    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence: a test you ran, a reading, or a real-world example.</div>
+    <div class="stage"><span class="day">Stage 2 · by Thu</span><h4>Argue the opposite</h4>Before replying to anyone, post the <em>strongest</em> version of the side you didn't hold.</div>
+    <div class="stage"><span class="day">Stage 3 · by Sat</span><h4>Synthesis</h4>Drop advocacy. State a real position (it can be "it depends on X"), citing at least one specific point from a classmate's post.</div>
+  </div>
+</section>
+
 
 
 <section class="module card" id="analyze">
@@ -1562,7 +1573,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
   <p class="small muted">Common trap: pasting the AI's own explanation of the code. Your instructor will ask a follow-up about one line — write it so you could answer.</p>
-  <p class="small"><b>Graded as Skills: Analyze (20% of this HOS).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded under Build: Analyze (15 points).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -1578,13 +1589,13 @@ that's already open) — edit files here; do not create a new workspace or proje
     <label><input type="checkbox"><span>Write 2–3 sentences: what you changed, and one thing that surprised you.</span></label>
   </div>
   <p class="small muted">This is the mastery check: can you change the system correctly without the assistant doing it for you? Rehearse first in the <a href="simulator.html">simulator</a> — toggle a second tool on and watch the routing change.</p>
-  <p class="small"><b>Graded as Skills: Apply and Understand (20% each of this HOS).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push and submit your repo link to the HOS 1 assignment in Brightspace by the end of Week 2.</p>
+  <p class="small"><b>Graded under Build: Apply and Understand (10 points each).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push. Your last push before the end of Week 2, challenge included, is your submission; there's nothing to upload in Brightspace.</p>
 </section>
 
 <section class="module card" id="challenge">
-  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a clinic's booking agent</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span><span class="tag">AI: allowed, disclose</span></div></div></div>
-  <p>Build the tools for Cascade Family Clinic's booking agent from a written spec with provided tests, make the one call the spec leaves open (what happens to a cancellation inside the $40 late-fee window), and argue which other tools the model should never get. Everything you need is in the <a href="application-challenge.html"><b>AC 1 guide</b></a>: the spec, the starter code, and the rubric.</p>
-  <p class="small"><b>Starter code:</b> <a href="https://classroom50.org/cityuseattle/ai410/assignments/ac01/accept?k=ai410" target="_blank" rel="noopener">accept the AC 1 invite</a>. It creates your own repo, which you open in GitHub Codespaces.</p>
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Part B challenge — a clinic's booking agent</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span><span class="tag">AI: allowed, disclose</span></div></div></div>
+  <p>Build the tools for Cascade Family Clinic's booking agent from a written spec with provided tests, make the one call the spec leaves open (what happens to a cancellation inside the $40 late-fee window), and argue which other tools the model should never get. Everything you need is in the <a href="application-challenge.html"><b>challenge guide</b></a>: the spec, the starter code, and the rubric.</p>
+  <p class="small"><b>Starter code:</b> it's already in the <code>challenge/</code> folder of your HOS 1 repo, so there's no separate invite. Work in the same Codespace you used for the build.</p>
   <p class="small">Warm up first: the judgment is the same one the challenge asks for. Pick a business and sort its proposed tools.</p>
   <div class="pick" id="bizPick">
     <button type="button" aria-pressed="true" data-b="vet"><b>🐾 Neighborhood vet clinic</b>Appointment booking &amp; pet records</button>
@@ -1595,7 +1606,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   <p class="small">For each tool, decide: can the model call it <b>automatically</b>, does it need <b>user confirmation</b> first, or should it <b>never</b> be exposed to the model? Then reveal the reasoning.</p>
   <div id="sorter"></div>
   <div class="row" style="margin:8px 0 16px"><button class="btn" id="sorterReveal" type="button">Reveal reasoning</button><span class="small" id="sorterScore" aria-live="polite"></span></div>
-  <div class="callout"><span class="label">What to submit</span>
+  <div class="callout"><span class="label">What goes in <code>challenge/</code></span>
     <ul>
       <li><code>tools.py</code> and <code>tests/test_my_rules.py</code></li>
       <li>The output of <code>pytest</code>, all tests passing (including yours)</li>
@@ -1603,11 +1614,12 @@ that's already open) — edit files here; do not create a new workspace or proje
       <li><code>DECISIONS.md</code>: your late-cancellation rule, and your call on two more tools</li>
     </ul>
   </div>
-  <p class="small muted"><b>Grading:</b> Application — genuinely applied to the new scenario, not a restatement of the calculator build (10%) · Analysis — break the problem into its parts (20%) · Evaluation — justify your call against clear criteria (30%) · Design — your own original solution (40%).</p>
+  <p class="small muted"><b>Graded under Challenge (40 of the 100 HOS points):</b> Design — a working solution that passes the tests, including your open decision (20) · Justify — your decision argued against clear criteria, naming the trade-off it accepts (20). It's graded with the rest of HOS 1, once, at the end of Week 2.</p>
 </section>
 
 <section class="module card" id="check">
-  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span><span class="tag bad">No AI</span></div></div></div>
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check (skill)</h2><div class="module-meta"><span class="tag">Practice · the graded KC02 is in Brightspace · 10 pts</span><span class="tag bad">No AI</span></div></div></div>
+  <p>This week's graded Knowledge Check tests <b>skill</b>: reading code, logs and output like your build's, and saying what happens next. Take it in Brightspace any time this week, without AI. Retakes are unlimited and 80% passes.</p>
   <p>Five quick questions. Then answer the two open questions below out loud or in a notes file — they're the ones your instructor will ask in the Week 2 check-in.</p>
   <div id="quiz"></div>
   <p class="score" id="quizScore" aria-live="polite"></p>
@@ -1620,7 +1632,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 
 <section class="module card" id="project">
   <div class="module-head"><div class="module-icon">🚀</div><div><h2>Term Project — Phase 1 begins</h2><div class="module-meta"><span class="tag amber">Phase 1 due end of Week 3</span></div></div></div>
-  <p>The Term Project combines all 4 HOS into one agent-driven app, built on your own or in a group of up to three (four with instructor approval) and presented in Week 10. <b>Phase 1 runs Weeks 1–3:</b> decide whether you're working solo or in a group, and lock your scope: which HOS pieces your project combines and why, who owns each piece if you're in a group, and a rough architecture sketch. <b>Due end of Week 3:</b> System v0.3 in a GitHub repository with a README, and a one-page proposal with three key references. Curious what a finished project looks like? <a href="../module-5/example-project.html">Click through the Flashcard Coach example</a> (optional). A good first question: <strong>what are the 2–4 tools your project's agent would need, and which of them should require confirmation?</strong> That's this week's Application Challenge, pointed at your own idea.</p>
+  <p>The Term Project combines all 4 HOS into one agent-driven app, built on your own or in a group of up to three (four with instructor approval) and presented in Week 10. <b>Phase 1 runs Weeks 1–3:</b> decide whether you're working solo or in a group, and lock your scope: which HOS pieces your project combines and why, who owns each piece if you're in a group, and a rough architecture sketch. <b>Due end of Week 3:</b> System v0.3 in a GitHub repository with a README, and a one-page proposal with three key references. Curious what a finished project looks like? <a href="../module-5/example-project.html">Click through the Flashcard Coach example</a> (optional). A good first question: <strong>what are the 2–4 tools your project's agent would need, and which of them should require confirmation?</strong> That's this week's Part B challenge, pointed at your own idea.</p>
   <div class="table-wrap" tabindex="0"><table class="t project-map">
     <tr><th>HOS</th><th>What it contributes to your project</th><th>Rehearse it in</th></tr>
     <tr><td>HOS 1</td><td>The agent and its tools</td><td><a href="simulator.html">Agentic Loop Simulator</a></td></tr>
@@ -1675,38 +1687,23 @@ function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); loca
   Object.keys(map).forEach(function(id){ var s=document.getElementById(id); if(s) io.observe(s); });
 })();
 
-/* Muddiest Point */
+/* Debate B side: shares the Brightspace group with Debate A (Group 1 = Side B) */
 (function(){
-  var ids=['mp1','mp2','mp3','mp4'], els=ids.map(function(i){return document.getElementById(i);});
-  els.forEach(function(el){ var v=store('ai410-l1-'+el.id); if(v) el.value=v; el.addEventListener('input',update); });
-  var vague=/\b(confus(ing|ed)|everything|all of it|the whole|in general|not sure about anything|kind of|stuff)\b/i;
-  var concrete=/(`|\(|\)|\.py|\/|step \d|part \d|line|function|endpoint|api|key|token|schema|history|loop|tool|call|json|backend|frontend|model|declar)/i;
-  function words(s){ return (s.trim().match(/\S+/g)||[]).length; }
-  function update(){
-    els.forEach(function(el){ store('ai410-l1-'+el.id, el.value); });
-    var ctx=els[0].value, stuck=els[1].value, tried=els[2].value;
-    var w=words(stuck); document.getElementById('mp2count').textContent=w+' words';
-    var checks=[
-      [words(ctx)>=3,'Context names where you were (a part, step, or line)'],
-      [w>=15,'Stuck point is at least ~15 words'],
-      [concrete.test(stuck),'Stuck point mentions a concrete thing (a step, function, file, term)'],
-      [!vague.test(stuck)||w>=30,'Avoids vague catch-alls like "confusing" or "everything"'],
-      [words(tried)>=5,'Says what you already tried']
-    ];
-    var n=checks.filter(function(c){return c[0];}).length, pct=n/checks.length*100;
-    var f=document.getElementById('specFill'); f.style.width=pct+'%';
-    f.style.background= pct>=80?'var(--ok)':pct>=40?'var(--amber)':'var(--bad)';
-    document.getElementById('specLabel').textContent= pct>=80?'Specific':pct>=40?'Getting there':'Too vague';
-    document.getElementById('specHints').innerHTML=checks.map(function(c){return '<li class="'+(c[0]?'ok':'no')+'">'+(c[0]?'✓ ':'○ ')+c[1]+'</li>';}).join('');
+  var sel=document.getElementById('teamInputB'), main=document.getElementById('teamInput'), out=document.getElementById('sideResultB');
+  if(!sel) return;
+  var v=store('ai410-team'); if(v) sel.value=v;
+  function upd(){
+    var a=document.getElementById('bSideA'), b=document.getElementById('bSideB');
+    a.classList.remove('mine'); b.classList.remove('mine');
+    if(sel.value===''){ out.textContent=''; return; }
+    store('ai410-team',sel.value);
+    var sideA=(sel.value==='1')===false;
+    (sideA?a:b).classList.add('mine');
+    out.innerHTML='In Debate B you argue <b>'+(sideA?'Just act on the request'.replace(/^/,'Side A — '):'Confirm before every change'.replace(/^/,'Side B — '))+'</b> in Stage 1.';
   }
-  update();
-  document.getElementById('mpCopy').addEventListener('click',function(){
-    var t='MUDDIEST POINT — AI 410 HOS 1\n\n1. Right before I got confused: '+els[0].value+'\n\n2. Where I got stuck: '+els[1].value+'\n\n3. What I already tried: '+els[2].value+'\n\n4. My best guess: '+(els[3].value||'(none)');
-    var s=document.getElementById('mpStatus');
-    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ s.textContent='Copied — paste it into Brightspace.'; },function(){ s.textContent='Copy blocked — select the fields manually.'; }); }
-    else s.textContent='Copy not supported — select the fields manually.';
-  });
-  document.getElementById('mpClear').addEventListener('click',function(){ els.forEach(function(el){ el.value=''; }); update(); document.getElementById('mpStatus').textContent='Draft cleared.'; });
+  sel.addEventListener('change',function(){ if(main && main.value!==sel.value){ main.value=sel.value; main.dispatchEvent(new Event('change')); } upd(); });
+  if(main) main.addEventListener('change',function(){ if(sel.value!==main.value){ sel.value=main.value; upd(); } });
+  upd();
 })();
 
 /* Debate side: Brightspace group -> side for HOS 1 (Group 1 = A) */
@@ -1720,7 +1717,7 @@ function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); loca
     store('ai410-team',sel.value);
     var sideA=sel.value==='1';
     (sideA?a:b).classList.add('mine');
-    out.innerHTML='In HOS 1 you argue <b>'+(sideA?'Side A — Let the model decide':'Side B — Backend code decides')+'</b> in Stage 1.';
+    out.innerHTML='In Debate A you argue <b>'+(sideA?'Side A — Let the model decide':'Side B — Backend code decides')+'</b> in Stage 1.';
   }
   sel.addEventListener('change',upd); upd();
 })();
@@ -1756,7 +1753,7 @@ wireChecklist('refineList','refineProgress','done','ai410-l1-refine');
   }); });
 })();
 
-/* Application Challenge sorter */
+/* Part B challenge sorter */
 (function(){
   var biz={
     vet:[

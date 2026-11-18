@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 410 — Application Challenge 4: Puget Pantry Substitution Observability</title>
+    <title>AI 410 — HOS 4 Part B Challenge: Puget Pantry Substitution Observability</title>
     <link rel="stylesheet" href="../assets/course.css">
     <style>
         .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
@@ -54,8 +54,8 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI 410 · Module 4 · Application Challenge</div>
-    <h1>Application Challenge 4: Puget Pantry Substitution Observability</h1>
+    <div class="eyebrow">AI 410 · Module 4 · HOS 4 Part B: Apply</div>
+    <h1>HOS 4 Part B Challenge: Puget Pantry Substitution Observability</h1>
     <p class="lede">Take the tracing and scoring skills from HOS 4 to someone else's AI feature: instrument it so every order shows what happened at each step, score each AI decision, and decide what's worth waking the on-call engineer for.</p>
     <div class="chips"><span class="chip">Est. 60–90 min</span><span class="chip">Outcomes 4 &amp; 5</span><span class="chip">Module 4 · end of Week 8</span><span class="chip">Individual</span><span class="chip">AI assistant allowed — disclose it</span><span class="chip">5% of final grade</span></div>
   </div>
@@ -119,7 +119,9 @@
   <div class="module-head"><div class="module-icon">🪜</div><div><h2>Steps &amp; what to submit</h2></div></div>
         <div class="stage-block">
             <h3><span class="stage-num">1</span>Open it and run the tests</h3>
-            <p>Open your own <b>AC 4</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/ac04/accept?k=ai410" target="_blank" rel="noopener">accept the AC 4 invite</a>) in GitHub Codespaces. It installs everything for you. Then run:</p>
+            <p>Open your HOS 4 repo in the same Codespace you used for the build, and move into the challenge folder. Everything it needs is already installed. Then run:</p>
+<pre tabindex="0">cd challenge</pre>
+            <p>and:</p>
 <pre tabindex="0">pytest</pre>
             <p>Almost everything fails. That's your to-do list.</p>
         </div>
@@ -143,10 +145,10 @@
         </div>
 
         <div class="submit-box">
-            <h5>Submit (via Brightspace)</h5>
+            <h5>What goes in <code>challenge/</code> (pushed with your HOS 4 repo)</h5>
             <ul>
                 <li><code>instrumented.py</code> and <code>tests/test_my_rules.py</code></li>
-                <li>The output of <code>pytest</code>, pasted as text (all tests passing, including yours)</li>
+                <li>The output of <code>pytest</code>, saved as <code>challenge/pytest-output.txt</code> (all tests passing, including yours)</li>
                 <li><code>REPORT.md</code></li>
                 <li><code>DECISIONS.md</code></li>
             </ul>
@@ -155,18 +157,16 @@
 
 <section class="module card" id="grading">
   <div class="module-head"><div class="module-icon">📊</div><div><h2>How it's graded</h2></div></div>
-        <p>Each criterion is graded on one part of your submission, at one of three levels.</p>
+        <p>The challenge is the <b>Challenge half of the HOS 4 grade: 40 of its 100 points</b>, graded with the build at the end of Week 8. Each criterion is graded on part of what you push, at one of three levels.</p>
         <div class="table-scroll">
         <div class="table-wrap" tabindex="0"><table class="mini rubric">
             <tr><th>Criterion</th><th>Weight</th><th>Graded on</th><th>Full</th><th>Partial</th><th>Missing</th></tr>
-            <tr><td><strong>Application</strong></td><td class="wt">10%</td><td><code>REPORT.md</code></td><td>Every order is traced and scored, and the pages match your rule.</td><td>It runs, but an order is paged (or not) in a way you don't explain.</td><td>It restates the HOS build, or doesn't run.</td></tr>
-            <tr><td><strong>Analysis</strong></td><td class="wt">20%</td><td><code>DECISIONS.md</code>, section 2 (what the trace lets you see)</td><td>Each problem in the report is tied to the span that shows it, compared with a single log line, plus one thing the trace still can't show.</td><td>Spans are listed, but not tied to the day's problems.</td><td>No breakdown.</td></tr>
-            <tr><td><strong>Evaluation</strong></td><td class="wt">30%</td><td><code>DECISIONS.md</code>, section 1</td><td>A clear paging rule, judged against stated criteria (how rare, how harmful, can someone act now), with a condition you put on the dashboard instead and why.</td><td>A rule with a reason, but no criteria or no dashboard alternative.</td><td>No rule, or no justification.</td></tr>
-            <tr><td><strong>Design</strong></td><td class="wt">40%</td><td><code>instrumented.py</code>, your tests, and the <code>pytest</code> output</td><td>All provided tests pass, and your own tests check your rule, including a hand-built edge case.</td><td>Most provided tests pass, or your own tests cover only the day's obvious orders.</td><td>It doesn't run, or you wrote no tests of your own.</td></tr>
+            <tr><td><strong>Design</strong></td><td class="wt">20 pts</td><td><code>instrumented.py</code>, your tests, and the <code>pytest</code> output; and <code>REPORT.md</code></td><td>All provided tests pass, and your own tests check your rule, including a hand-built edge case. Every order is traced and scored, and the pages match your rule.</td><td>Most provided tests pass, or your own tests cover only the day's obvious orders. It runs, but an order is paged (or not) in a way you don't explain.</td><td>It doesn't run, restates the HOS build, or has no tests of your own.</td></tr>
+            <tr><td><strong>Justify</strong></td><td class="wt">20 pts</td><td><code>DECISIONS.md</code>, section 1; and <code>DECISIONS.md</code>, section 2 (what the trace lets you see)</td><td>A clear paging rule, judged against stated criteria (how rare, how harmful, can someone act now), with a condition you put on the dashboard instead and why. Each problem in the report is tied to the span that shows it, compared with a single log line, plus one thing the trace still can't show.</td><td>A rule with a reason, but no criteria or no dashboard alternative. Spans are listed, but not tied to the day's problems.</td><td>No rule, no justification, or no breakdown.</td></tr>
         </table></div>
         </div>
 
-        <p style="font-size:0.88rem;color:var(--muted)">How this differs from HOS 4's Understand &amp; Refine: there you wrote a faithfulness score for your own app, by hand. Here the feature, its failures, and the paging call are someone else's, AI help is allowed, and half the grade (Analysis and Evaluation) is for the calls you make.</p>
+        <p style="font-size:0.88rem;color:var(--muted)">How this differs from HOS 4's Understand &amp; Refine: there you wrote a faithfulness score for your own app, by hand. Here the feature, its failures, and the paging call are someone else's, AI help is allowed, and half the challenge grade (Justify) is for the calls you make.</p>
 </section>
 
 <section class="module card" id="snags">

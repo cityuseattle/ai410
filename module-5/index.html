@@ -50,7 +50,7 @@
     <div class="eyebrow">AI 410 · Module 5 · Weeks 9–10 · Term Project</div>
     <h1>Term Project: Plan, Build &amp; Present</h1>
     <p class="lede">All four HOS, combined into one app a real user would want, built on your own or in a group of up to three. Phases 1 and 2 set it up; Phase 3 (Weeks 8–10) reviews the architecture in Week 8, then builds, freezes, rehearses, and ends with the final system, report, presentation and demo video.</p>
-    <div class="chips"><span class="chip">Outcomes O1–O5</span><span class="chip">20% of course</span><span class="chip">Solo or group</span><span class="chip">Backlog builder</span><span class="chip">Demo plan</span></div>
+    <div class="chips"><span class="chip">Outcomes O1–O5</span><span class="chip">40% of course</span><span class="chip">Solo or group</span><span class="chip">Backlog builder</span><span class="chip">Demo plan</span></div>
   </div>
 </section>
 <main id="main">
@@ -58,6 +58,7 @@
 <nav class="secnav no-print" aria-label="Page sections">
   <div class="secnav-inner">
     <a href="#overview">Overview</a>
+    <a href="#weekly">Weekly debates &amp; checks</a>
     <span class="sep">Week 9</span>
     <a href="#backlog">Backlog &amp; Sprint 1</a>
     <a href="#roles">Roles &amp; tools</a>
@@ -76,25 +77,74 @@
 </div>
 
 <section class="module card" id="overview">
-  <div class="module-head"><div class="module-icon">🧭</div><div><h2>What Weeks 9–10 are for</h2><div class="module-meta"><span class="tag">20% of course</span><span class="tag">Outcomes O1–O5</span><span class="tag blue">Solo or group</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>What Weeks 9–10 are for</h2><div class="module-meta"><span class="tag">40% of course</span><span class="tag">Outcomes O1–O5</span><span class="tag blue">Solo or group</span></div></div></div>
   <p>The Term Project combines all 4 HOS — the agent and its tools, retrieval over your own documents, guardrails and background jobs, and a mobile client with push and observability — into one app a real user would want. You've built every piece once already. The work now is <strong>synthesis</strong>: deciding how the pieces fit, building the combined version, and showing it working live.</p>
   <p>The project runs all term in three phases. By the end of Week 7 you have locked your scope (Phase 1) and have a rough working version (Phase 2). Phase 3 starts with the Week 8 architecture review, then a backlog in Week 9, then builds. Week 10 finishes, freezes, rehearses, and presents.</p>
   <div class="callout blue"><span class="label">See a finished example</span><p><a href="example-project.html"><strong>Example Term Project: Flashcard Coach</strong></a> is a fictional, finished project you can click through: all four HOS in one app, its live demo played step by step with what the presenter says, its three releases, and a demo video storyboard.</p></div>
   <div class="table-wrap" tabindex="0"><table class="t">
     <tr><th>Phase</th><th>Weeks</th><th>Goal</th><th>Due</th></tr>
-    <tr><td>1</td><td>1–3</td><td><b>Scope is locked:</b> which HOS your project combines and why, in writing; roles per HOS piece; a rough architecture sketch.</td><td>End of Week 3: System v0.3 (repo + README, 10 pts) and a one-page proposal with 3 references (10 pts). <a href="../module-1/index.html#project">HOS 1 lesson</a></td></tr>
-    <tr><td>2</td><td>4–7</td><td><b>A rough, working version:</b> something a partner or the instructor can run, touching at least two of the combined HOS pieces end to end.</td><td>End of Week 7: System v0.7 (30 pts) and a 3–4 page progress report with 12+ references (30 pts). <a href="../module-4/index.html#project">HOS 4 lesson</a></td></tr>
+    <tr><td>1</td><td>1–3</td><td><b>Scope is locked:</b> which HOS your project combines and why, in writing; roles per HOS piece; a rough architecture sketch.</td><td>End of Week 3: System v0.3 (repo + README, 20 pts) and a one-page proposal with 3 references (20 pts). <a href="../module-1/index.html#project">HOS 1 lesson</a></td></tr>
+    <tr><td>2</td><td>4–7</td><td><b>A rough, working version:</b> something a partner or the instructor can run, touching at least two of the combined HOS pieces end to end.</td><td>End of Week 7: System v0.7 (60 pts) and a 3–4 page progress report with 12+ references (60 pts). <a href="../module-4/index.html#project">HOS 4 lesson</a></td></tr>
     <tr><td><b>3</b></td><td><b>8–10</b></td><td><b>Feature-complete and rehearsed:</b> all combined HOS pieces work together; remaining time goes to polish, edge cases and a practiced walkthrough, not new features.</td><td><b>End of Week 10:</b> System v1.0, final report, presentation and demo video (below). <b>This page.</b></td></tr>
   </table></div>
   <h3>Phase 3 deliverables and how they're graded</h3>
   <div class="table-wrap" tabindex="0"><table class="t">
     <tr><th>Deliverable</th><th>Points</th><th>Graded on</th></tr>
-    <tr><td>System v1.0</td><td>40</td><td>Environment (one-click Codespace launch), Architecture (modular structure), Execution Guide (README with an AI tool disclosure), Security &amp; Configuration (no committed keys, a proper <code>.gitignore</code>), and Git Workflow &amp; Collaboration (commits from every member in a group; steady commits across the term if you work solo): 20% each.</td></tr>
-    <tr><td>Final report</td><td>50</td><td>5–6 pages, ISCAP template, 12+ references, ending with an Author Contribution statement. General computing knowledge 20%, critical thinking 60%, collaboration 20%.</td></tr>
-    <tr><td>Final presentation</td><td>20</td><td>15 content slides plus 4 (cover, agenda, key references, Q&amp;A); 15 minutes plus 5 for questions, every member speaking (solo: you present and answer every question).</td></tr>
-    <tr><td>Demo video</td><td>10</td><td>1–2 minutes, public YouTube link: the problem, how the system works, and a title card naming who built what (solo: just you).</td></tr>
+    <tr><td>System v1.0</td><td>80</td><td>Environment (one-click Codespace launch), Architecture (modular structure), Execution Guide (README with an AI tool disclosure), Security &amp; Configuration (no committed keys, a proper <code>.gitignore</code>), and Git Workflow &amp; Collaboration (commits from every member in a group; steady commits across the term if you work solo): 20% each.</td></tr>
+    <tr><td>Final report</td><td>100</td><td>5–6 pages, ISCAP template, 12+ references, ending with an Author Contribution statement. General computing knowledge 20%, critical thinking 60%, collaboration 20%.</td></tr>
+    <tr><td>Final presentation</td><td>40</td><td>15 content slides plus 4 (cover, agenda, key references, Q&amp;A); 15 minutes plus 5 for questions, every member speaking (solo: you present and answer every question).</td></tr>
+    <tr><td>Demo video</td><td>20</td><td>1–2 minutes, public YouTube link: the problem, how the system works, and a title card naming who built what (solo: just you).</td></tr>
   </table></div>
   <p class="small">Full rubrics: the Term Project section of the syllabus (in Brightspace).</p>
+</section>
+
+<section class="module card" id="weekly">
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Weekly Concept Debates and Knowledge Checks</h2><div class="module-meta"><span class="tag">CD09 · CD10 · KC09 · KC10</span><span class="tag">10 pts each</span></div></div></div>
+  <p>The weekly rhythm keeps going through the project weeks: one Concept Debate and one Knowledge Check each week, graded separately from the Term Project. Both debates use the usual three stages (Stage 1 by Tuesday, Stage 2 by Thursday, Stage 3 by Saturday) and the usual <a href="../start-here/ai-use.html">AI rule</a>: AI can help you think, but the posts are your own words.</p>
+  <h3 id="cd09">Week 9 · Concept Debate CD09</h3>
+  <div class="callout violet"><span class="label">The question</span><p style="font-size:1.02rem"><strong>For a production agent, should a team adopt a managed agent framework, or keep the hand-written loop it understands?</strong></p></div>
+  <p class="small"><b>Debate Group 1 argues Side B and Debate Group 2 argues Side A.</b></p>
+  <div class="two">
+    <div class="side a">
+      <h4><span>Side A — Adopt a framework</span><span class="tag blue">Group 2</span></h4>
+      <ul class="small">
+        <li>Tracing, retries, memory and tool plumbing come built in.</li>
+        <li>Less custom code to maintain as models change.</li>
+        <li>New teammates may already know the framework.</li>
+      </ul>
+    </div>
+    <div class="side b">
+      <h4><span>Side B — Keep your own loop</span><span class="tag rose">Group 1</span></h4>
+      <ul class="small">
+        <li>You can read every step when something goes wrong.</li>
+        <li>No framework upgrade can change your agent’s behavior overnight.</li>
+        <li>The HOS 1 loop is short; a framework adds a lot of code you didn’t write.</li>
+      </ul>
+    </div>
+  </div>
+  <h3 id="cd10">Week 10 · Concept Debate CD10</h3>
+  <div class="callout violet"><span class="label">The question</span><p style="font-size:1.02rem"><strong>When a deployed agent makes a costly mistake, who should be accountable: the team that built it, or the business that chose to deploy it?</strong></p></div>
+  <p class="small"><b>Debate Group 1 argues Side A and Debate Group 2 argues Side B.</b></p>
+  <div class="two">
+    <div class="side a">
+      <h4><span>Side A — The team that built it</span><span class="tag blue">Group 1</span></h4>
+      <ul class="small">
+        <li>They chose the tools the model could call and the guardrails around them.</li>
+        <li>Only they can read the traces and fix the cause.</li>
+        <li>Accountability pushes builders to test the risky paths.</li>
+      </ul>
+    </div>
+    <div class="side b">
+      <h4><span>Side B — The business that deployed it</span><span class="tag rose">Group 2</span></h4>
+      <ul class="small">
+        <li>It decided where the agent is used and what it may do on its own.</li>
+        <li>It owns the relationship with the customer who was harmed.</li>
+        <li>Builders can’t foresee every setting the system ends up in.</li>
+      </ul>
+    </div>
+  </div>
+  <h3 id="kc">Knowledge Checks KC09 and KC10</h3>
+  <p><b>KC09 (Week 9, theory)</b> and <b>KC10 (Week 10, skill)</b> are cumulative: they draw on all four modules, including how the pieces fit together. Take them in Brightspace without AI. Retakes are unlimited and 80% passes.</p>
 </section>
 
 <!-- ========================= WEEK 9 ========================= -->
@@ -179,7 +229,7 @@ Blocked:  Expo Go on Android won't receive push — need someone with an iPhone 
 </section>
 
 <section class="module card" id="demo">
-  <div class="module-head"><div class="module-icon">🎤</div><div><h2>Demo plan — show every HOS working</h2><div class="module-meta"><span class="tag">Presentation · 20 pts</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🎤</div><div><h2>Demo plan — show every HOS working</h2><div class="module-meta"><span class="tag">Presentation · 40 pts</span></div></div></div>
   <p>A suggested shape for the live-demo part of your 15-minute presentation (the rest is the problem, architecture and results on your 15 content slides). Adjust the times to your slot; keep the order.</p>
   <p class="try-it">▶ <b>See it played out:</b> the <a href="example-project.html#demo">Flashcard Coach demo</a> follows this plan step by step, with what the presenter says and what each step shows behind the scenes.</p>
   <div class="demo-row"><span class="tm">~0:30</span><span><b>The user and the problem.</b> Who is this for, and what's hard for them today? One sentence each.</span></div>
