@@ -23,6 +23,7 @@
         .submit-box h5 { margin:0 0 8px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
         .submit-box ul { margin:0; padding-left:20px; }
         .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:20px 0; border-radius:4px; }
+        .teaches { display:block; margin-top:4px; }
         .snag-box h4 { margin:0 0 8px; color:var(--amber); }
         .shot { margin:14px 0; }
         .shot img { max-width:100%; height:auto; border:1px solid var(--border); border-radius:6px; display:block; }
@@ -88,6 +89,7 @@
 <section class="module card" id="create">
   <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
             <p class="stage-tagline">Graded as Engagement: 20% of this HOS. The AI-assisted starting point, not the deliverable.</p>
+            <div class="not-graded"><b>Plan before you prompt (2 minutes, ungraded).</b> Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</div>
             <p>Open your starter-code folder in Codespaces (or locally) and prompt your AI assistant to build the app. A reasonable starting prompt:</p>
 <pre tabindex="0">Build a full-stack chat app in THIS existing workspace (the starter-code
 folder that's already open) — edit files here; do not create a new
@@ -129,12 +131,14 @@ workspace or project:
 <section class="module card" id="evaluate">
   <div class="module-head"><div class="module-icon">🔍</div><div><h2>2 · Evaluate</h2></div></div>
             <p class="stage-tagline">The critical gate — is the AI-produced result actually correct?</p>
+            <p class="small"><b>Why it counts:</b> checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026).</p>
             <p>Test it on purpose. At minimum, try:</p>
             <ul>
                 <li>A message that clearly needs the tool (e.g. "what's 342 times 87?") — did it actually call the tool, or guess the answer in text?</li>
                 <li>A message that doesn't need the tool at all — did it answer directly instead of forcing a tool call?</li>
                 <li>An input that could break the tool (e.g. an incomplete expression) — does it fail gracefully, or crash the whole request?</li>
             </ul>
+            <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
                 <ul><li>A short written note: what you tested, what you found, and anything the AI got wrong, missed, or handled surprisingly well.</li></ul>
@@ -155,6 +159,7 @@ workspace or project:
   <div class="module-head"><div class="module-icon">✋</div><div><h2>4 · Understand &amp; Refine</h2></div></div>
             <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
             <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
+            <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
             <p>Add a <strong>second</strong> tool to the agent yourself — something different from whatever your AI assistant built in Stage 1 (a word counter, a unit converter, a date lookup — anything with a clear, testable behavior). Register it correctly alongside the first tool, and confirm the agent calls the right tool for the right question.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
@@ -167,14 +172,15 @@ workspace or project:
 
 <section class="module card" id="snags">
   <div class="module-head"><div class="module-icon">🧯</div><div><h2>Common snags</h2></div></div>
+        <p>These all came up in testing, so expect to hit one or two. A snag doesn't mean you did it wrong. Most show how the system really works, and the ones marked <b>What it teaches</b> make good material for your Analyze or Understand writing.</p>
         <div class="snag-box">
             <ul>
-                <li><strong>Copilot Chat builds the app somewhere other than your starter folder</strong> — in Codespaces, the default Copilot Chat agent tends to scaffold a brand-new workspace/folder of its own (and may offer to open it) instead of editing the starter-code workspace that's already open — so your <code>.devcontainer</code> and <code>backend/.env.example</code> get left behind. Use <strong>Agent</strong> mode with the starter folder open, and say explicitly “in this existing workspace, don't create a new one” (the starter prompt above does). If it already happened, delete the stray folder and re-prompt; don't try to merge the two.</li>
+                <li><strong>Copilot Chat builds the app somewhere other than your starter folder</strong> — in Codespaces, the default Copilot Chat agent tends to scaffold a brand-new workspace/folder of its own (and may offer to open it) instead of editing the starter-code workspace that's already open — so your <code>.devcontainer</code> and <code>backend/.env.example</code> get left behind. Use <strong>Agent</strong> mode with the starter folder open, and say explicitly “in this existing workspace, don't create a new one” (the starter prompt above does). If it already happened, delete the stray folder and re-prompt; don't try to merge the two.<span class="teaches"><b>What it teaches:</b> an assistant acts on the context it can see. Check where it writes before you click Allow.</span></li>
                 <li><strong><code>502 Bad Gateway</code> (or a 404 / “model not found”) from <code>/chat</code></strong> — almost always the model name. AI assistants default to whatever model was current in their training data — e.g. <code>gemini-2.5-flash</code>, which is no longer available to new API keys. The backend's Gemini call fails, and the frontend reports it as a 502. Set the model to <code>gemini-3.8-flash</code> (tested working in Codespaces with a fresh free key), restart <code>uvicorn</code>, and try again. If that ever stops working too, check the current list at <a href="https://ai.google.dev/gemini-api/docs/models" target="_blank" rel="noopener">ai.google.dev/gemini-api/docs/models</a> and use the current Flash model — this is exactly why the model name belongs in one constant.
-                    <figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/08-chat-502-bad-gateway.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/08-chat-502-bad-gateway.webp" alt="uvicorn log: POST /chat returns 502 Bad Gateway three times while GET /health returns 200 OK" loading="lazy"></a><figcaption>What it looks like in the <code>uvicorn</code> terminal: <code>/health</code> is <code>200 OK</code>, so the server is up, but every <code>POST /chat</code> is <code>502 Bad Gateway</code>, because the call to Gemini is failing. (The <code>404</code>s for <code>/</code> and <code>/favicon.ico</code> are harmless. The backend has no home page.)</figcaption></figure></li>
-                <li><strong>The AI assistant adds CORS middleware</strong> — you don't need it. The Streamlit frontend calls the backend server-side (Python to Python), not from JavaScript in a browser, so CORS is irrelevant here. Fine to remove if you notice it.</li>
-                <li><strong>The agent always calls the tool, even when it shouldn't</strong> — check the tool's description in its schema. A vague description ("does math") makes the model over-eager; a specific one narrows it down.</li>
-                <li><strong>Two terminals, easy to forget</strong> — the backend (<code>uvicorn</code>) and frontend (<code>streamlit run</code>) are separate processes. If the frontend can't reach the backend, check both are actually running.</li>
+                    <span class="teaches"><b>What it teaches:</b> an assistant's defaults come from its training data, which can be out of date. Settings that change belong in one place.</span><figure class="shot"><a href="../assets/files/ai-410-guides/images/hos-01-sample-run/08-chat-502-bad-gateway.webp" target="_blank" rel="noopener"><img src="../assets/files/ai-410-guides/images/hos-01-sample-run/08-chat-502-bad-gateway.webp" alt="uvicorn log: POST /chat returns 502 Bad Gateway three times while GET /health returns 200 OK" loading="lazy"></a><figcaption>What it looks like in the <code>uvicorn</code> terminal: <code>/health</code> is <code>200 OK</code>, so the server is up, but every <code>POST /chat</code> is <code>502 Bad Gateway</code>, because the call to Gemini is failing. (The <code>404</code>s for <code>/</code> and <code>/favicon.ico</code> are harmless. The backend has no home page.)</figcaption></figure></li>
+                <li><strong>The AI assistant adds CORS middleware</strong> — you don't need it. The Streamlit frontend calls the backend server-side (Python to Python), not from JavaScript in a browser, so CORS is irrelevant here. Fine to remove if you notice it.<span class="teaches"><b>What it teaches:</b> CORS only applies to requests a browser makes. Knowing which side makes each call tells you which rules apply.</span></li>
+                <li><strong>The agent always calls the tool, even when it shouldn't</strong> — check the tool's description in its schema. A vague description ("does math") makes the model over-eager; a specific one narrows it down.<span class="teaches"><b>What it teaches:</b> the model routes on the tool's description. The description is part of your code.</span></li>
+                <li><strong>Two terminals, easy to forget</strong> — the backend (<code>uvicorn</code>) and frontend (<code>streamlit run</code>) are separate processes. If the frontend can't reach the backend, check both are actually running.<span class="teaches"><b>What it teaches:</b> the frontend and backend are separate programs that talk over HTTP, the architecture from Lecture Part 1.</span></li>
             </ul>
             <p class="small" style="margin:10px 0 0">Most snags trace back to a concept. If one doesn't make sense, see <a href="../reference/concept-companion.html#module-1">Concept Companion → Module 1</a>.</p>
         </div>

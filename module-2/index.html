@@ -64,6 +64,7 @@
     <span class="label">What's the HOS?</span>
     <p><strong>HOS 2 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 3, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 4. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 4. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
   </div>
+  <p class="small">Each activity below is tagged with its AI rule, from <span class="tag ok">AI: expected</span> in Create / Scaffold to <span class="tag bad">No AI</span> in Understand &amp; Refine and the Knowledge Check. The <a href="../start-here/ai-use.html">AI Use Guide</a> explains each one.</p>
   <p>Your HOS 1 agent can reason and call tools, but it knows nothing about <em>your</em> business. Ask it how long Northwind Outfitters gives customers to return a tent and it will answer anyway — with a typical return window it has seen somewhere, stated confidently. This HOS fixes that by giving the model the right few paragraphs of your own documents at the moment it answers. That's <strong>Retrieval-Augmented Generation (RAG)</strong>: retrieve first, then generate.</p>
   <p>Week 3 gets the pipeline working (chunk, embed, store, retrieve, inject) and tests it deliberately, including the bug where adding RAG quietly breaks the tool calling you built in HOS 1. Week 4 is about understanding <em>why</em> retrieval works: why the query and the documents are embedded differently, and whether you can add knowledge to the system by hand.</p>
   <div class="callout blue">
@@ -1479,12 +1480,21 @@ place();
 </section>
 
 <section class="module card" id="muddiest">
-  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span><span class="tag">AI: think, don't write</span></div></div></div>
   <p>Four short fields, not a blank box. Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
+  <div class="callout blue"><span class="label">AI use</span><p>You may ask an AI assistant about the material first. Often that clears up the confusion, which is a good outcome. Then write about what's still unclear. Write it yourself: don't paste AI text or ask an AI to come up with a confusion for you. If you asked an AI, say so under "What you already tried," along with what it told you and why that didn't settle it. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="two" style="margin-bottom:14px">
     <div class="eg weak"><span class="label">Doesn't meet the bar</span>"Embeddings are confusing. I don't really get RAG."</div>
     <div class="eg strong"><span class="label">Meets the bar</span>"Lecture Part 2: if the documents and the question are both embedded by the same model, why does the <code>task_type</code> need to be different? Wouldn't the same setting make them easier to compare? I re-read Part 2 and searched the Gemini docs but only found the list of values, not why."</div>
   </div>
+  <details class="eg-toggle"><summary>See a full example answer, with AI use disclosed</summary>
+    <div class="eg strong"><span class="label">Meets the bar</span>
+      <p><b>1 · What I was doing:</b> Lecture Part 2, the part on <code>task_type</code>.</p>
+      <p><b>2 · Where I got stuck:</b> If the documents and the question are embedded by the same model, why does the <code>task_type</code> need to be different? Wouldn't the same setting make them easier to compare?</p>
+      <p><b>3 · What I already tried:</b> I re-read Part 2 and searched the Gemini docs, but only found the list of values. I asked Copilot Chat, and it said the two settings "optimize the embeddings for retrieval." That repeats the name. It doesn't say what actually changes in the vector.</p>
+      <p style="margin-bottom:0"><b>4 · My best guess:</b> A question and the passage that answers it are worded differently, so maybe each setting nudges its text toward the meaning they share.</p>
+    </div>
+  </details>
   <form onsubmit="return false">
     <label class="field" for="mp1">1 · What were you doing right before you got confused?</label>
     <input type="text" id="mp1" placeholder="e.g. Lecture Part 3, the ingest-time pipeline — or a line in ingest.py">
@@ -1492,7 +1502,7 @@ place();
     <textarea id="mp2" placeholder="Not 'I don't get RAG' — the specific thing that doesn't add up."></textarea>
     <div class="counter" id="mp2count">0 words</div>
     <label class="field" for="mp3">3 · What you already tried</label>
-    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator…"></textarea>
+    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator, asked an AI assistant (say what it told you)…"></textarea>
     <label class="field" for="mp4">4 · Optional: your best guess at the answer</label>
     <textarea id="mp4" placeholder="Even if you think it's wrong."></textarea>
   </form>
@@ -1503,7 +1513,7 @@ place();
 </section>
 
 <section class="module card" id="debate">
-  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span></div></div></div>
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
   <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>When retrieval finds nothing relevant, should the assistant refuse ("I don't have that information"), or answer from general knowledge with a clear caveat?</strong></p></div>
   <p>You'll argue the side your debate group is assigned, then argue the other one, then drop advocacy and synthesize.</p>
   <div class="callout blue">
@@ -1535,8 +1545,9 @@ place();
       </ul>
     </div>
   </div>
+  <div class="callout blue"><span class="label">AI use</span><p>You may use an AI assistant to test your thinking, for example by asking it for the best objection to your side. Your posts must be your own words and your own reasoning: don't paste or lightly edit AI text. If AI changed your thinking, say how in one line. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="stages">
-    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a test question you ran, a sample doc, a simulator run. Not a topic summary.</div>
+    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a test question you ran, a sample doc, a simulator run, a reading, or a real-world example. Not a topic summary.</div>
     <div class="stage"><span class="day">Stage 2 · by Thu</span><h4>Argue the opposite</h4>Before replying to anyone, post the <em>strongest</em> version of the side you didn't hold.</div>
     <div class="stage"><span class="day">Stage 3 · by Sat</span><h4>Synthesis</h4>Drop advocacy. State a real position, citing at least one specific point from a classmate's post.</div>
   </div>
@@ -1550,10 +1561,14 @@ place();
 </section>
 
 <section class="module card" id="create">
-  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 2 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 2 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span><span class="tag ok">AI: expected</span></div></div></div>
   <div class="callout violet">
     <span class="label">Before you build</span>
     <p>Try the self-check at the end of <a href="../reference/concept-companion.html#module-2">Concept Companion, Module 2</a>. If you can answer every question, start building. If one stumps you, read that module first (about 10 minutes); it's quicker than untangling the same idea in the middle of the build.</p>
+  </div>
+  <div class="callout blue">
+    <span class="label">Plan before you prompt · 2 minutes, ungraded</span>
+    <p>Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</p>
   </div>
   <p>Add retrieval to your working HOS 1 app with an AI coding assistant. As before, this is the starting point — no hand edits yet.</p>
   <ol>
@@ -1576,7 +1591,11 @@ instruction suppress tool use.</code></pre>
 </section>
 
 <section class="module card" id="evaluate">
-  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 2 · Stage 2 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 2 · Stage 2 of 4</span><span class="tag">AI: your judgment</span></div></div></div>
+  <div class="callout blue">
+    <span class="label">Why this is the stage that counts</span>
+    <p>Checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026). A test that breaks the app is a good result here: it shows you exactly where the AI's code is weakest.</p>
+  </div>
   <p>Test on purpose. Print or log what <code>retrieve()</code> returned for each test — the chunks are your evidence, not just the final answer.</p>
   <div class="progress-line" id="evalProgress">0 / 4 tests run</div>
   <div class="checklist" id="evalList">
@@ -1587,6 +1606,7 @@ instruction suppress tool use.</code></pre>
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · which chunks came back · what the AI got wrong, missed, or handled surprisingly well"></textarea>
+  <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
   <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 3. Your commit history is your Week 3 checkpoint.</p>
 </section>
 
@@ -1611,7 +1631,7 @@ instruction suppress tool use.</code></pre>
 
 
 <section class="module card" id="analyze">
-  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why does retrieval work?</h2><div class="module-meta"><span class="tag blue">HOS 2 · Stage 3 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why does retrieval work?</h2><div class="module-meta"><span class="tag blue">HOS 2 · Stage 3 of 4</span><span class="tag">AI: your own words</span></div></div></div>
   <p>Pick <strong>one</strong> piece and explain, in your own words, exactly how it works. The first option is the strongest choice.</p>
   <div class="pick" id="analyzePick">
     <button type="button" aria-pressed="false" data-k="task"><b>Recommended: the two <code>task_type</code> values</b>Why <code>ingest.py</code> and <code>retrieval.py</code> call the same API differently.</button>
@@ -1625,6 +1645,7 @@ instruction suppress tool use.</code></pre>
 
 <section class="module card" id="refine">
   <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">HOS 2 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
+  <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
   <p>Write a <strong>sixth sample document</strong> yourself — for example <code>product-sleeping-bags.md</code> or <code>care-and-repair.md</code> — in the same style as the other five, and prove the whole path works for knowledge you added.</p>
   <div class="progress-line" id="refineProgress">0 / 5 done</div>
   <div class="checklist" id="refineList">
@@ -1639,7 +1660,7 @@ instruction suppress tool use.</code></pre>
 </section>
 
 <section class="module card" id="challenge">
-  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — measure someone else's RAG pipeline</h2><div class="module-meta"><span class="tag blue">Measure &amp; improve · 60–90 min</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — measure someone else's RAG pipeline</h2><div class="module-meta"><span class="tag blue">Measure &amp; improve · 60–90 min</span><span class="tag">AI: allowed, disclose</span></div></div></div>
   <p>A campus IT help-desk team built the pipeline below to answer student questions from their knowledge base. It runs without errors, and nobody knows how often it answers from the wrong passage. In the challenge you get a runnable copy, six articles, and 20 questions with known answers: measure how often it finds the answer, beat it with your own chunking, and decide when the bot should say "I don't know". The spec, starter code, and rubric are in the <a href="application-challenge.html"><b>AC 2 guide</b></a>.</p>
   <p class="small"><b>Starter code:</b> <a href="https://classroom50.org/cityuseattle/ai410/assignments/ac02/accept?k=ai410" target="_blank" rel="noopener">accept the AC 2 invite</a>. It creates your own repo, which you open in GitHub Codespaces.</p>
   <p class="small">Warm up first: read the production code and predict what will go wrong. The challenge then measures it.</p>
@@ -1675,7 +1696,7 @@ def answer(question):
 </section>
 
 <section class="module card" id="check">
-  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span></div></div></div>
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span><span class="tag bad">No AI</span></div></div></div>
   <p>Five quick questions, then the two open questions your instructor will ask in the Week 4 check-in.</p>
   <div id="quiz"></div>
   <p class="score" id="quizScore" aria-live="polite"></p>

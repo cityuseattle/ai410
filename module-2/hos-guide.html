@@ -23,6 +23,7 @@
         .submit-box h5 { margin:0 0 8px; color:var(--accent2); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.03em; }
         .submit-box ul { margin:0; padding-left:20px; }
         .snag-box { background:var(--amber-bg); border-left:5px solid var(--amber); padding:15px 18px; margin:20px 0; border-radius:4px; }
+        .teaches { display:block; margin-top:4px; }
         .snag-box h4 { margin:0 0 8px; color:var(--amber); }
         .guide-nav { display:flex; justify-content:space-between; margin-top:30px; padding-top:16px; border-top:1px solid var(--border); font-size:0.9rem; }
         .guide-nav a { color:var(--link); text-decoration:none; font-weight:600; }
@@ -79,6 +80,7 @@
 <section class="module card" id="create">
   <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
             <p class="stage-tagline">Graded as Engagement: 20% of this HOS. The AI-assisted starting point, not the deliverable.</p>
+            <div class="not-graded"><b>Plan before you prompt (2 minutes, ungraded).</b> Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</div>
             <p>Prompt your AI assistant to add retrieval to the existing app:</p>
 <pre tabindex="0">Add RAG to this app:
 - backend/ingest.py: chunk each .md file in backend/sample_docs/ into
@@ -101,12 +103,14 @@
 <section class="module card" id="evaluate">
   <div class="module-head"><div class="module-icon">🔍</div><div><h2>2 · Evaluate</h2></div></div>
             <p class="stage-tagline">The critical gate — is the AI-produced result actually correct?</p>
+            <p class="small"><b>Why it counts:</b> checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026).</p>
             <p>Test it on purpose. At minimum, try:</p>
             <ul>
                 <li>A question only answerable from the sample docs (e.g. "how long do I have to return an item?") — does it cite the real figure, or guess?</li>
                 <li>A question that needs one of your HOS 1 tools (e.g. "what's 25 times 4?") — does it still call the tool, or does the new RAG instruction silently swallow tool use? <strong>This is a real, common bug</strong> — worth testing even if your app seems fine at a glance.</li>
                 <li>A policy-shaped question the docs don't cover (e.g. "do you offer gift wrapping?") — does it say it doesn't know, or invent a plausible-sounding answer?</li>
             </ul>
+            <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
                 <ul><li>A short written note: what you tested, what you found, and anything the AI got wrong, missed, or handled surprisingly well.</li></ul>
@@ -127,6 +131,7 @@
   <div class="module-head"><div class="module-icon">✋</div><div><h2>4 · Understand &amp; Refine</h2></div></div>
             <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
             <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
+            <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
             <p>Write a <strong>sixth</strong> sample document by hand (a new policy or product page, in the same style as the existing five), re-run <code>ingest.py</code>, then restart the backend (Ctrl+C in its terminal, then start <code>uvicorn</code> again). Confirm a question that can only be answered from your new document returns the correct, specific detail — proof the full ingest → embed → retrieve path is something you actually understand, not just something you ran once.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
@@ -139,12 +144,13 @@
 
 <section class="module card" id="snags">
   <div class="module-head"><div class="module-icon">🧯</div><div><h2>Common snags</h2></div></div>
+        <p>These all came up in testing, so expect to hit one or two. A snag doesn't mean you did it wrong. Most show how the system really works, and the ones marked <b>What it teaches</b> make good material for your Analyze or Understand writing.</p>
         <div class="snag-box">
             <ul>
-                <li><strong>Tool calls stop working after adding RAG</strong> — check your system instruction's wording. "If the answer isn't in the context, say you don't know" applied broadly will make the model refuse to use tools too. Scope it explicitly to content questions, and say tools are exempt.</li>
-                <li><strong><code>EMBED_DIM</code> mismatch</strong> — the embedding dimensionality has to be identical in <code>ingest.py</code> and <code>retrieval.py</code>, or Chroma's comparison breaks. If retrieval returns nothing useful, check this first.</li>
-                <li><strong>Forgot to re-run <code>ingest.py</code></strong> — after adding your sixth document (Stage 4), the vector database won't know about it until you ingest again.</li>
-                <li><strong>Re-ran <code>ingest.py</code> but the app still says "I don't know"</strong> — restart the backend. Chroma keeps a copy of the database in memory inside the running API, so it doesn't see chunks another process (<code>ingest.py</code>) just added. <code>--reload</code> doesn't help, because it only restarts when a <code>.py</code> file changes.</li>
+                <li><strong>Tool calls stop working after adding RAG</strong> — check your system instruction's wording. "If the answer isn't in the context, say you don't know" applied broadly will make the model refuse to use tools too. Scope it explicitly to content questions, and say tools are exempt.<span class="teaches"><b>What it teaches:</b> a system instruction applies to everything the model does, not only the case you had in mind.</span></li>
+                <li><strong><code>EMBED_DIM</code> mismatch</strong> — the embedding dimensionality has to be identical in <code>ingest.py</code> and <code>retrieval.py</code>, or Chroma's comparison breaks. If retrieval returns nothing useful, check this first.<span class="teaches"><b>What it teaches:</b> vectors can only be compared when they come from the same embedding space.</span></li>
+                <li><strong>Forgot to re-run <code>ingest.py</code></strong> — after adding your sixth document (Stage 4), the vector database won't know about it until you ingest again.<span class="teaches"><b>What it teaches:</b> a vector index is a snapshot. It only knows what was ingested.</span></li>
+                <li><strong>Re-ran <code>ingest.py</code> but the app still says "I don't know"</strong> — restart the backend. Chroma keeps a copy of the database in memory inside the running API, so it doesn't see chunks another process (<code>ingest.py</code>) just added. <code>--reload</code> doesn't help, because it only restarts when a <code>.py</code> file changes.<span class="teaches"><b>What it teaches:</b> each running process keeps its own state in memory. Writing to disk doesn't update a process that already loaded the data.</span></li>
             </ul>
             <p class="small" style="margin:10px 0 0">Most snags trace back to a concept. If one doesn't make sense, see <a href="../reference/concept-companion.html#module-2">Concept Companion → Module 2</a>.</p>
         </div>

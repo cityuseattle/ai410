@@ -69,6 +69,7 @@
     <span class="label">What's the HOS?</span>
     <p><strong>HOS 3 (Hands-On Skill)</strong> is this module's main build and 10% of your course grade. It has four stages across the two weeks: <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a> in Week 5, then <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a> in Week 6. All four go in one GitHub repo, and you submit that repo's link once, in Brightspace, at the end of Week 6. The Muddiest Point, Concept Debate, Application Challenge and Knowledge Check are graded separately.</p>
   </div>
+  <p class="small">Each activity below is tagged with its AI rule, from <span class="tag ok">AI: expected</span> in Create / Scaffold to <span class="tag bad">No AI</span> in Understand &amp; Refine and the Knowledge Check. The <a href="../start-here/ai-use.html">AI Use Guide</a> explains each one.</p>
   <p>Your HOS 2 app works — most of the time. That's the problem this HOS is about. A model that returns valid tool arguments 95% of the time will, across a few hundred requests a day, hand your code garbage several times a day. And a document upload that takes twenty seconds to chunk and embed will, if it runs inside the web request, freeze the app for everyone while it runs. Neither shows up in a quick demo. Both show up the first week real people use it.</p>
   <p>This HOS adds the two reliability layers every production agent needs: a <strong>guardrail</strong> that checks model output before your code trusts it, and a <strong>queue with a background worker</strong> that moves slow work off the request path. Week 5 builds and tests both. Week 6 explains why they're designed the way they are, extends the guardrail by hand, and ends with a quick check-in on your Term Project.</p>
   <div class="callout blue">
@@ -1503,12 +1504,21 @@ def job_status(job_id: str):
 </section>
 
 <section class="module card" id="muddiest">
-  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🌫️</div><div><h2>Muddiest Point</h2><div class="module-meta"><span class="tag">Due before the build begins</span><span class="tag">AI: think, don't write</span></div></div></div>
   <p>Four short fields, not a blank box. Draft it here — your draft stays in this browser only — then <strong>copy it into the Brightspace submission</strong>.</p>
+  <div class="callout blue"><span class="label">AI use</span><p>You may ask an AI assistant about the material first. Often that clears up the confusion, which is a good outcome. Then write about what's still unclear. Write it yourself: don't paste AI text or ask an AI to come up with a confusion for you. If you asked an AI, say so under "What you already tried," along with what it told you and why that didn't settle it. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="two" style="margin-bottom:14px">
     <div class="eg weak"><span class="label">Doesn't meet the bar</span>"The async part was confusing. Not sure how queues work."</div>
     <div class="eg strong"><span class="label">Meets the bar</span>"Lecture Part 3: why does the worker have to be a separate process in its own terminal? Couldn't FastAPI just run the ingest function in a background thread? I read the RQ docs' intro and tried the simulator with 0 workers, but that shows <em>what</em> breaks, not why a thread isn't enough."</div>
   </div>
+  <details class="eg-toggle"><summary>See a full example answer, with AI use disclosed</summary>
+    <div class="eg strong"><span class="label">Meets the bar</span>
+      <p><b>1 · What I was doing:</b> Lecture Part 3, the worker.</p>
+      <p><b>2 · Where I got stuck:</b> Why does the worker have to be a separate process in its own terminal? Couldn't FastAPI just run the ingest function in a background thread?</p>
+      <p><b>3 · What I already tried:</b> I read the RQ docs' intro and tried the simulator with 0 workers, which shows <em>what</em> breaks but not why a thread isn't enough. I asked Copilot Chat, and it said a thread "would block the server." That confused me more, because I thought avoiding blocking was the reason to use a thread.</p>
+      <p style="margin-bottom:0"><b>4 · My best guess:</b> Maybe it's about what survives. If the server restarts, a thread's work is gone, but a job in Redis is still there.</p>
+    </div>
+  </details>
   <form onsubmit="return false">
     <label class="field" for="mp1">1 · What were you doing right before you got confused?</label>
     <input type="text" id="mp1" placeholder="e.g. Lecture Part 2, the retry loop — or a line in guardrails.py">
@@ -1516,7 +1526,7 @@ def job_status(job_id: str):
     <textarea id="mp2" placeholder="Not 'I don't get async' — the specific thing that doesn't add up."></textarea>
     <div class="counter" id="mp2count">0 words</div>
     <label class="field" for="mp3">3 · What you already tried</label>
-    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator…"></textarea>
+    <textarea id="mp3" placeholder="Re-read a section, searched something specific, asked a classmate, tried the simulator, asked an AI assistant (say what it told you)…"></textarea>
     <label class="field" for="mp4">4 · Optional: your best guess at the answer</label>
     <textarea id="mp4" placeholder="Even if you think it's wrong."></textarea>
   </form>
@@ -1527,7 +1537,7 @@ def job_status(job_id: str):
 </section>
 
 <section class="module card" id="debate">
-  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span></div></div></div>
+  <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate</h2><div class="module-meta"><span class="tag">Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
   <div class="callout violet"><span class="label">This week's question</span><p style="font-size:1.02rem"><strong>When a model's output fails validation, should the system keep retrying for a better answer, or fail fast and tell the user?</strong></p></div>
   <p>You'll argue the side your debate group is assigned, then argue the other one, then drop advocacy and synthesize.</p>
   <div class="callout blue">
@@ -1559,8 +1569,9 @@ def job_status(job_id: str):
       </ul>
     </div>
   </div>
+  <div class="callout blue"><span class="label">AI use</span><p>You may use an AI assistant to test your thinking, for example by asking it for the best objection to your side. Your posts must be your own words and your own reasoning: don't paste or lightly edit AI text. If AI changed your thinking, say how in one line. <a href="../start-here/ai-use.html">AI Use Guide →</a></p></div>
   <div class="stages">
-    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a simulator run (try "Send 20" with different retry settings), a test from your build, a cost estimate.</div>
+    <div class="stage"><span class="day">Stage 1 · by Tue</span><h4>Initial position</h4>Argue your assigned side with one specific claim and one piece of evidence — a simulator run (try "Send 20" with different retry settings), a test from your build, a cost estimate, a reading, or a real-world example.</div>
     <div class="stage"><span class="day">Stage 2 · by Thu</span><h4>Argue the opposite</h4>Before replying to anyone, post the <em>strongest</em> version of the side you didn't hold.</div>
     <div class="stage"><span class="day">Stage 3 · by Sat</span><h4>Synthesis</h4>Drop advocacy. State a real position, citing at least one specific point from a classmate's post.</div>
   </div>
@@ -1574,10 +1585,14 @@ def job_status(job_id: str):
 </section>
 
 <section class="module card" id="create">
-  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span><span class="tag ok">AI: expected</span></div></div></div>
   <div class="callout violet">
     <span class="label">Before you build</span>
     <p>Try the self-check at the end of <a href="../reference/concept-companion.html#module-3">Concept Companion, Module 3</a>. If you can answer every question, start building. If one stumps you, read that module first (about 10 minutes); it's quicker than untangling the same idea in the middle of the build.</p>
+  </div>
+  <div class="callout blue">
+    <span class="label">Plan before you prompt · 2 minutes, ungraded</span>
+    <p>Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</p>
   </div>
   <p>Add both reliability layers to your HOS 2 app with an AI coding assistant. As always, this is the starting point — no hand edits yet.</p>
   <ol>
@@ -1603,7 +1618,11 @@ def job_status(job_id: str):
 </section>
 
 <section class="module card" id="evaluate">
-  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 2 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 2 of 4</span><span class="tag">AI: your judgment</span></div></div></div>
+  <div class="callout blue">
+    <span class="label">Why this is the stage that counts</span>
+    <p>Checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026). A test that breaks the app is a good result here: it shows you exactly where the AI's code is weakest.</p>
+  </div>
   <p>Test on purpose — including the failure cases. A guardrail you've never seen fire and a queue you've never seen stall haven't been tested.</p>
   <div class="progress-line" id="evalProgress">0 / 4 tests run</div>
   <div class="checklist" id="evalList">
@@ -1614,6 +1633,7 @@ def job_status(job_id: str):
   </div>
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what the logs showed · what the AI got wrong, missed, or handled surprisingly well"></textarea>
+  <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
   <p class="small"><b>Graded as Skills: Evaluate (20% of this HOS).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 5. Your commit history is your Week 5 checkpoint.</p>
 </section>
 
@@ -1637,7 +1657,7 @@ def job_status(job_id: str):
 
 
 <section class="module card" id="analyze">
-  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why is it designed this way?</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 3 of 4</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why is it designed this way?</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 3 of 4</span><span class="tag">AI: your own words</span></div></div></div>
   <p>Pick <strong>one</strong> design choice and explain the specific failure it prevents.</p>
   <div class="pick" id="analyzePick">
     <button type="button" aria-pressed="false" data-k="feed"><b>Feeding the error into the retry</b>Why <code>call_with_guardrail</code> doesn't just try again.</button>
@@ -1651,6 +1671,7 @@ def job_status(job_id: str):
 
 <section class="module card" id="refine">
   <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">HOS 3 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
+  <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
   <p>Extend the guardrail pattern to <strong>your second tool</strong> from HOS 1's Understand &amp; Refine.</p>
   <div class="progress-line" id="refineProgress">0 / 5 done</div>
   <div class="checklist" id="refineList">
@@ -1664,7 +1685,7 @@ def job_status(job_id: str):
 </section>
 
 <section class="module card" id="challenge">
-  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a guardrail for a refund tool</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Application Challenge — a guardrail for a refund tool</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span><span class="tag">AI: allowed, disclose</span></div></div></div>
   <p>Pacific Bean Coffee's support bot can issue refunds, and in testing the model filled in the refund tool's arguments wrong a dozen ways. Build the guardrail (a Pydantic schema, checks against the order data, and a human review queue), replay every recorded call through it, and decide what the bot may refund without a person. The spec, starter code, and rubric are in the <a href="application-challenge.html"><b>AC 3 guide</b></a>.</p>
   <p class="small"><b>Starter code:</b> <a href="https://classroom50.org/cityuseattle/ai410/assignments/ac03/accept?k=ai410" target="_blank" rel="noopener">accept the AC 3 invite</a>. It creates your own repo, which you open in GitHub Codespaces.</p>
   <p class="small">Warm up first: the question of which layer catches what is the same one the challenge asks.</p>
@@ -1684,7 +1705,7 @@ def job_status(job_id: str):
 </section>
 
 <section class="module card" id="check">
-  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span></div></div></div>
+  <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check</h2><div class="module-meta"><span class="tag">Practice · the graded quiz is in Brightspace</span><span class="tag bad">No AI</span></div></div></div>
   <p>Five quick questions, then the two open questions your instructor will ask in the Week 6 check-in.</p>
   <div id="quiz"></div>
   <p class="score" id="quizScore" aria-live="polite"></p>
