@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI 410 HOS 4 simulator: trace the push-notification delivery chain and read request traces with retrieval/generation spans and faithfulness scores.">
+<meta name="description" content="AI 410 AIC 4 simulator: trace the push-notification delivery chain and read request traces with retrieval/generation spans and faithfulness scores.">
 <title>Push & Observability Simulator</title>
 <link rel="stylesheet" href="../assets/course.css">
 <style>
@@ -79,7 +79,7 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">Simulator 4 · Pairs with HOS 4 (Weeks 7–8)</div>
+    <div class="eyebrow">Simulator 4 · Pairs with AIC 4 (Weeks 7–8)</div>
     <h1>Push &amp; Observability Simulator</h1>
     <p class="lede">Find the broken link when a push notification never arrives, then read request traces the way you will in Langfuse — nested spans, latency, a faithfulness score, and the question every on-call engineer asks: what do I check first?</p>
     <div class="chips"><span class="chip">Outcomes O4 &amp; O5</span><span class="chip">Expo push chain</span><span class="chip">Traces &amp; spans</span><span class="chip">Faithfulness</span><span class="chip">Alert thresholds</span></div>
@@ -151,9 +151,9 @@
   <h2>What this teaches</h2>
   <ul>
     <li><b>Push is a chain, and it fails silently.</b> Every link has to hold — the app loads, permission is granted, a real device yields a token, the backend stores it, and the job knows which device to notify. Break any one and nothing errors; the notification just never comes.</li>
-    <li><b>A trace turns "it's slow" or "it's wrong" into a specific span.</b> Retrieval and generation are separate spans on purpose — that's the HOS 4 Analyze question.</li>
+    <li><b>A trace turns "it's slow" or "it's wrong" into a specific span.</b> Retrieval and generation are separate spans on purpose — that's the AIC 4 Analyze question.</li>
     <li><b>Faithfulness is measurable.</b> The score here is a word-overlap version of what your hand-written <code>score_faithfulness()</code> does in Understand &amp; Refine.</li>
-    <li><b>Alerts are a judgment call.</b> Drag the thresholds: too tight and every request pages you (noise); too loose and the hallucination sails through. That's the HOS 4 Part B challenge.</li>
+    <li><b>Alerts are a judgment call.</b> Drag the thresholds: too tight and every request pages you (noise); too loose and the hallucination sails through. That's the AIC 4 Part B challenge.</li>
   </ul>
 </div>
 <div class="project-tip">
@@ -202,7 +202,7 @@ $('pushGo').addEventListener('click',function(){
   $('chain').innerHTML=LINKS.map(function(l,i){ return '<li id="lk'+i+'"><span class="ic">'+(i+1)+'</span><span>'+l[0]+'<small></small></span></li>'; }).join('');
   var i=0;
   (function next(){
-    if(i>=LINKS.length){ $('notif').classList.add('show'); $('pushVerdict').innerHTML='<div class="verdict ok">Delivered. Every link held — this is the screenshot your HOS 4 Evaluate asks for.</div>'; return; }
+    if(i>=LINKS.length){ $('notif').classList.add('show'); $('pushVerdict').innerHTML='<div class="verdict ok">Delivered. Every link held — this is the screenshot your AIC 4 Evaluate asks for.</div>'; return; }
     var li=$('lk'+i);
     if(i===failAt){
       li.className='fail'; li.querySelector('.ic').textContent='✗'; li.querySelector('small').textContent=reason;
@@ -270,35 +270,35 @@ function render(key){
   'do':'Press <b>Set this up for me</b>. It sets a phone with Expo Go over a tunnel, with permission granted, and finishes a job.',
   watch:'The <b>Delivery chain</b> list and the lock screen.',
   expect:'Every link is green and the notification appears on the phone.',
-  why:'This is the HOS 4 Create path: app → register the device → job finishes → backend sends the push.',
+  why:'This is the AIC 4 Create path: app → register the device → job finishes → backend sends the push.',
   setup:function(h){ h.set('dev','phone'); h.set('net','tunnel'); h.set('perm','granted'); h.set('login',true); h.set('eas',true); h.set('reg',true); h.set('jobDev',true); h.click('pushGo'); }},
  {title:'2 · Break one link: nothing errors',
   'do':'Press <b>Set this up for me</b>. It sets notification permission to "Never requested".',
   watch:'Which link turns red, and whether anything shows an error.',
   expect:'The notification never arrives, and no error appears anywhere except at that one link.',
-  why:'Push fails silently. In HOS 4 Evaluate you check each link on purpose. Try the other settings to break different links.',
+  why:'Push fails silently. In AIC 4 Evaluate you check each link on purpose. Try the other settings to break different links.',
   setup:function(h){ h.set('dev','phone'); h.set('net','tunnel'); h.set('perm','never'); h.set('login',true); h.set('eas',true); h.set('reg',true); h.set('jobDev',true); h.click('pushGo'); }},
  {title:'3 · Read a healthy trace',
   'do':'Press <b>Set this up for me</b>. It sends a covered question through Langfuse-style tracing.',
   watch:'The waterfall: separate spans for retrieval and generation, each with its time.',
   expect:'A fast trace with a high faithfulness score and no alerts.',
-  why:'Retrieval and generation are separate spans on purpose. That\'s the HOS 4 Analyze question.',
+  why:'Retrieval and generation are separate spans on purpose. That\'s the AIC 4 Analyze question.',
   setup:function(h){ h.set('latA',3); h.set('faithA',70); h.click(h.q('#scen [data-s="healthy"]')); }},
  {title:'4 · Catch a hallucination with a score',
   'do':'Press <b>Set this up for me</b>. It asks about gift wrapping, which the documents don\'t cover.',
   watch:'The faithfulness list (is each sentence supported?) and the alert box.',
   expect:'Low faithfulness and an alert. Answer the "What do you check first?" question under the trace.',
-  why:'You write a version of this score by hand in HOS 4 Understand &amp; Refine.',
+  why:'You write a version of this score by hand in AIC 4 Understand &amp; Refine.',
   setup:function(h){ h.set('latA',3); h.set('faithA',70); h.click(h.q('#scen [data-s="halluc"]')); }},
  {title:'5 · Alerts are a judgment call',
   'do':'With the hallucination trace still showing, drag <b>Alert if faithfulness &lt;</b> down to 40, then try the slow scenario with a 1 s latency alert.',
   watch:'When the alerts appear and disappear.',
   expect:'Too loose and the hallucination gets through. Too tight and every request raises an alert.',
-  why:'Choosing those thresholds is the HOS 4 Part B challenge.'},
+  why:'Choosing those thresholds is the AIC 4 Part B challenge.'},
  {title:'Your turn',
   'do':'Try the slow and tool + RAG scenarios, or switch the device to a web browser.',
   expect:'You can explain where push breaks silently, and how a trace turns "it\'s wrong" into a specific span.',
-  why:'That\'s HOS 4 Analyze. Now go back to the <a href="index.html#lecture">lesson</a>.'}
+  why:'That\'s AIC 4 Analyze. Now go back to the <a href="index.html#lecture">lesson</a>.'}
 ];</script>
 <script src="../assets/sim-tour.js"></script>
 </body>

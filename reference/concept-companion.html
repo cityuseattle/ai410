@@ -89,7 +89,7 @@
     <div class="eyebrow">AI 410 · Reference · Read before each module</div>
     <h1>Concept Companion</h1>
     <p class="lede">Every concept and piece of vocabulary you should understand before you open a module's hands-on guide, gathered in one place. Read the module you're about to start, not the whole page.</p>
-    <div class="chips"><span class="chip">Read before you start, not while debugging</span><span class="chip">One module per HOS</span><span class="chip">Modules 1–4, then putting it together</span></div>
+    <div class="chips"><span class="chip">Read before you start, not while debugging</span><span class="chip">One module per AIC</span><span class="chip">Modules 1–4, then putting it together</span></div>
   </div>
 </section>
 <main id="main">
@@ -110,8 +110,8 @@
         <div class="intro-box">
             <h4>What this page is</h4>
             <p>The Hands-On Guides tell you <em>what to build, step by step</em>. This page is different: it's every concept and piece of vocabulary you should already understand <strong>before</strong> you open one of those guides, gathered in one place instead of scattered across the term. Read the module for what you're about to start, not the whole page at once — each module is written to stand on its own.</p>
-            <p style="margin-bottom:0"><strong>Modular by design:</strong> Its four modules match the <a href="../index.html">course's Modules 1–4</a>, one per HOS. Module 5, the Term Project, adds no new concepts, so the last section, <a href="#module-5">Putting it together</a>, connects the four HOS instead: read it before the Week 8 architecture review. The tools you'll use all term (Codespaces, the terminal, git) are on their own page: <a href="../start-here/tools.html">Tools you'll use all term</a>. Use the table below to find your module.</p>
-            <p style="margin:10px 0 0"><strong>Want to see a concept in motion?</strong> Each HOS has a browser simulator: <a href="../module-1/simulator.html">agentic loop</a>, <a href="../module-2/simulator.html">RAG pipeline</a>, <a href="../module-3/simulator.html">guardrails &amp; queue</a>, <a href="../module-4/simulator.html">push &amp; observability</a>. See all of them, plus the interactive lessons, on the <a href="../index.html">interactive index</a>.</p>
+            <p style="margin-bottom:0"><strong>Modular by design:</strong> Its four modules match the <a href="../index.html">course's Modules 1–4</a>, one per AIC. Module 5, the Term Project, adds no new concepts, so the last section, <a href="#module-5">Putting it together</a>, connects the four AICs instead: read it before the Week 8 architecture review. The tools you'll use all term (Codespaces, the terminal, git) are on their own page: <a href="../start-here/tools.html">Tools you'll use all term</a>. Use the table below to find your module.</p>
+            <p style="margin:10px 0 0"><strong>Want to see a concept in motion?</strong> Each AIC has a browser simulator: <a href="../module-1/simulator.html">agentic loop</a>, <a href="../module-2/simulator.html">RAG pipeline</a>, <a href="../module-3/simulator.html">guardrails &amp; queue</a>, <a href="../module-4/simulator.html">push &amp; observability</a>. See all of them, plus the interactive lessons, on the <a href="../index.html">interactive index</a>.</p>
         </div>
         <div style="overflow-x:auto" tabindex="0"><table class="map-table">
             <tr><th>Module</th><th>When</th><th>Outcome(s)</th><th>Jump</th></tr>
@@ -140,7 +140,7 @@
                 <td><a class="jump" href="#module-4">Read →</a></td>
             </tr>
             <tr>
-                <td class="mod-name">Putting it together — all 4 HOS</td>
+                <td class="mod-name">Putting it together — all 4 AICs</td>
                 <td>Before the Week 8 review and the Term Project</td>
                 <td>O3, O5</td>
                 <td><a class="jump" href="#module-5">Read →</a></td>
@@ -154,14 +154,14 @@
             <button type="button" data-mod="2" aria-controls="module-2">Module 2<span class="tab-sub"> · RAG</span></button>
             <button type="button" data-mod="3" aria-controls="module-3">Module 3<span class="tab-sub"> · Guardrails</span></button>
             <button type="button" data-mod="4" aria-controls="module-4">Module 4<span class="tab-sub"> · Mobile &amp; observability</span></button>
-            <button type="button" data-mod="5" aria-controls="module-5">Putting it together<span class="tab-sub"> · all 4 HOS</span></button>
+            <button type="button" data-mod="5" aria-controls="module-5">Putting it together<span class="tab-sub"> · all 4 AICs</span></button>
             <button type="button" class="show-all">Show all modules</button>
         </div>
         <p class="small muted tabs-hint">Pick your module. Searching the page (Ctrl/Cmd+F) only looks in the open tab; use "Show all modules" to search everything.</p>
 
 <section class="module card" id="module-1">
-  <div class="module-head"><div class="module-icon">1️⃣</div><div><h2>Module 1: Foundations &amp; the Agentic Loop</h2><div class="module-meta"><span class="tag blue">HOS 1</span><span class="tag">Outcome 1</span></div></div></div>
-            <p class="why-line"><strong>Why before you start:</strong> almost everything you build for the rest of the term is an extension of one request/response call and one decision loop. Get these two shapes solid now and every later HOS is "the same thing, plus one more piece."</p>
+  <div class="module-head"><div class="module-icon">1️⃣</div><div><h2>Module 1: Foundations &amp; the Agentic Loop</h2><div class="module-meta"><span class="tag blue">AIC 1</span><span class="tag">Outcome 1</span></div></div></div>
+            <p class="why-line"><strong>Why before you start:</strong> almost everything you build for the rest of the term is an extension of one request/response call and one decision loop. Get these two shapes solid now and every later AIC is "the same thing, plus one more piece."</p>
 
             <div class="diagram-box">
                 <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Request and response: the frontend, which the user sees, sends a request to your backend, which holds the API key. The backend calls the Gemini API on Google's servers and returns the reply to the frontend as JSON. The frontend never talks to Gemini directly.">
@@ -189,7 +189,7 @@
 
                     <text x="360" y="155" text-anchor="middle" font-size="11" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">The frontend never talks to Gemini directly — only your backend ever holds the API key.</text>
                 </svg>
-                <div class="diagram-caption">The request/response shape underneath every HOS of this course.</div>
+                <div class="diagram-caption">The request/response shape underneath every AIC of this course.</div>
             </div>
 
             <div class="concept-grid">
@@ -221,7 +221,7 @@
                 <div class="concept-card">
                     <h4>Same input, different output</h4>
                     <p>The model writes its reply one token at a time, <strong>sampling</strong> each one from a set of probabilities. So the same request can come back worded differently, or occasionally with a different decision about calling a tool.</p>
-                    <div class="why"><strong>Why it matters:</strong> one successful run proves little. Run important checks several times. This is also why HOS 3 adds guardrails.</div>
+                    <div class="why"><strong>Why it matters:</strong> one successful run proves little. Run important checks several times. This is also why AIC 3 adds guardrails.</div>
                 </div>
                 <div class="concept-card">
                     <h4>The model doesn't remember you</h4>
@@ -295,13 +295,13 @@
 </section>
 
 <section class="module card" id="module-2">
-  <div class="module-head"><div class="module-icon">2️⃣</div><div><h2>Module 2: Embeddings, Chunking &amp; RAG</h2><div class="module-meta"><span class="tag blue">HOS 2</span><span class="tag">Outcomes 1–2</span></div></div></div>
+  <div class="module-head"><div class="module-icon">2️⃣</div><div><h2>Module 2: Embeddings, Chunking &amp; RAG</h2><div class="module-meta"><span class="tag blue">AIC 2</span><span class="tag">Outcomes 1–2</span></div></div></div>
             <p class="why-line"><strong>Why before you start:</strong> Retrieval-Augmented Generation (RAG) is the single most common pattern for making a model answer accurately about specific data instead of guessing. Every concept here builds toward that one pipeline.</p>
 
             <div class="concept-grid">
                 <div class="concept-card">
                     <h4>Embeddings</h4>
-                    <p>A list of numbers (a "vector"; the HOS 2 code asks for 1,024) representing the <em>meaning</em> of a piece of text. Text with similar meaning gets vectors that point in similar directions; unrelated text points in very different directions — pure math, no human labeling needed.</p>
+                    <p>A list of numbers (a "vector"; the AIC 2 code asks for 1,024) representing the <em>meaning</em> of a piece of text. Text with similar meaning gets vectors that point in similar directions; unrelated text points in very different directions — pure math, no human labeling needed.</p>
                     <div class="why"><strong>Why not keyword search?</strong> A keyword search for "return policy" misses a document about "sending an item back within 30 days" that never uses the word "return." Embeddings capture meaning, not exact wording.</div>
                 </div>
                 <div class="concept-card">
@@ -394,7 +394,7 @@
 </section>
 
 <section class="module card" id="module-3">
-  <div class="module-head"><div class="module-icon">3️⃣</div><div><h2>Module 3: Guardrails &amp; Asynchronous Processing</h2><div class="module-meta"><span class="tag blue">HOS 3</span><span class="tag">Outcome 3</span></div></div></div>
+  <div class="module-head"><div class="module-icon">3️⃣</div><div><h2>Module 3: Guardrails &amp; Asynchronous Processing</h2><div class="module-meta"><span class="tag blue">AIC 3</span><span class="tag">Outcome 3</span></div></div></div>
             <p class="why-line"><strong>Why before you start:</strong> once your app is doing real retrieval and tool calls, two new risks show up — the model can produce malformed output, and slow work can freeze the app for everyone using it. This module is about naming those risks on purpose, then handling both.</p>
 
             <div class="concept-grid">
@@ -497,7 +497,7 @@
 </section>
 
 <section class="module card" id="module-4">
-  <div class="module-head"><div class="module-icon">4️⃣</div><div><h2>Module 4: Mobile, Push &amp; Observability</h2><div class="module-meta"><span class="tag blue">HOS 4</span><span class="tag">Outcomes 4–5</span></div></div></div>
+  <div class="module-head"><div class="module-icon">4️⃣</div><div><h2>Module 4: Mobile, Push &amp; Observability</h2><div class="module-meta"><span class="tag blue">AIC 4</span><span class="tag">Outcomes 4–5</span></div></div></div>
             <p class="why-line"><strong>Why before you start:</strong> the last stretch puts the same backend you've been building in front of a real device, and makes what's happening inside it visible instead of a black box you have to guess about.</p>
 
             <div class="concept-grid">
@@ -507,7 +507,7 @@
                 </div>
                 <div class="concept-card">
                     <h4>Same backend, different client</h4>
-                    <p>The mobile app is just another caller of the exact same API you've been building since HOS 1 — it doesn't talk to Gemini directly either, and it doesn't require rebuilding anything on the backend.</p>
+                    <p>The mobile app is just another caller of the exact same API you've been building since AIC 1 — it doesn't talk to Gemini directly either, and it doesn't require rebuilding anything on the backend.</p>
                 </div>
                 <div class="concept-card">
                     <h4>Push notifications &amp; push tokens</h4>
@@ -529,12 +529,12 @@
                 </div>
                 <div class="concept-card">
                     <h4>Evaluation &amp; the faithfulness score</h4>
-                    <p>A way to score output quality with a number instead of a vibe. In HOS 4 you write <code>score_faithfulness</code>: is the answer supported by the retrieved context? Even a rough heuristic (how many of the answer's sentences have support in the chunks) is enough to spot a model ignoring what it was given.</p>
+                    <p>A way to score output quality with a number instead of a vibe. In AIC 4 you write <code>score_faithfulness</code>: is the answer supported by the retrieved context? Even a rough heuristic (how many of the answer's sentences have support in the chunks) is enough to spot a model ignoring what it was given.</p>
                     <div class="why"><strong>Read the trend, not one score:</strong> a single heuristic score is noisy. The trend across runs tells you whether a change helped, and a surprising score is a cue to open its trace.</div>
                 </div>
                 <div class="concept-card">
                     <h4>Deployment (a Term Project question)</h4>
-                    <p>No HOS deploys to a public host: Codespaces and Expo's tunnel are development setups. Turning your system into something anyone can reach is a Term Project decision: where the API, the worker, Redis and the vector store would run, and how the secrets get there without being committed.</p>
+                    <p>No AIC deploys to a public host: Codespaces and Expo's tunnel are development setups. Turning your system into something anyone can reach is a Term Project decision: where the API, the worker, Redis and the vector store would run, and how the secrets get there without being committed.</p>
                 </div>
             </div>
 
@@ -608,38 +608,38 @@
 </section>
 
 <section class="module card" id="module-5">
-  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Putting it together: all 4 HOS</h2><div class="module-meta"><span class="tag blue">Week 8 review</span><span class="tag">Term Project</span><span class="tag">Outcomes 3 &amp; 5</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧩</div><div><h2>Putting it together: all 4 AICs</h2><div class="module-meta"><span class="tag blue">Week 8 review</span><span class="tag">Term Project</span><span class="tag">Outcomes 3 &amp; 5</span></div></div></div>
             <p class="why-line"><strong>Why before you start:</strong> by Week 8 you've built every piece once. The Week 8 architecture review and your Term Project ask a different question: how the pieces connect, and which one catches which problem. Nothing here is new; it's the four modules, joined up.</p>
 
             <div class="concept-grid">
                 <div class="concept-card">
                     <h4>The path of a chat question</h4>
-                    <p>Client (Streamlit or the Expo app) → <code>POST /chat</code> → your backend → retrieve the top-k chunks (HOS 2) → the model, with tools in the loop and a guardrail checking every tool call (HOS 1, HOS 3) → reply → client. The whole request is one trace, with a span per step (HOS 4).</p>
+                    <p>Client (Streamlit or the Expo app) → <code>POST /chat</code> → your backend → retrieve the top-k chunks (AIC 2) → the model, with tools in the loop and a guardrail checking every tool call (AIC 1, AIC 3) → reply → client. The whole request is one trace, with a span per step (AIC 4).</p>
                 </div>
                 <div class="concept-card">
                     <h4>The path of a document upload</h4>
-                    <p>Client → <code>POST /documents</code> → a job is queued and a <code>job_id</code> comes straight back (HOS 3) → the worker chunks and embeds the document into Chroma (HOS 2) → the backend sends a push through Expo to that device (HOS 4). It never touches the agent loop.</p>
+                    <p>Client → <code>POST /documents</code> → a job is queued and a <code>job_id</code> comes straight back (AIC 3) → the worker chunks and embeds the document into Chroma (AIC 2) → the backend sends a push through Expo to that device (AIC 4). It never touches the agent loop.</p>
                 </div>
             </div>
 
             <h3 style="margin:18px 0 8px;font-size:1rem">Which layer catches what</h3>
             <div class="table-wrap" tabindex="0"><table class="t layer-table">
                 <tr><th>Problem</th><th>What catches it</th></tr>
-                <tr><td>A tool call with a missing, misnamed or wrong-type argument</td><td>The Pydantic schema in the guardrail, before the tool runs (HOS 3)</td></tr>
-                <tr><td>The right type, but not allowed (a blank string)</td><td>A validator rule on the schema (HOS 3)</td></tr>
-                <tr><td>Valid arguments that are still wrong: over a limit, not what the user asked</td><td>A rule or lookup in your code, or a person who confirms (the HOS Part B challenges)</td></tr>
-                <tr><td>An answer the documents don't support</td><td>Reduced by retrieval and an honest "I don't know" (HOS 2); spotted afterwards by the faithfulness score and its trace (HOS 4)</td></tr>
-                <tr><td>A slow request</td><td>The trace: which span took the time (HOS 4)</td></tr>
-                <tr><td>Uploads that never finish</td><td>Job status stuck on <code>queued</code>: the worker isn't running (HOS 3)</td></tr>
-                <tr><td>A notification that never arrives</td><td>Expo's response body, then the push chain link by link (HOS 4)</td></tr>
-                <tr><td>An API key someone could copy</td><td>Nothing catches it later. Prevent it: the key lives only in the backend's <code>.env</code> (HOS 1)</td></tr>
+                <tr><td>A tool call with a missing, misnamed or wrong-type argument</td><td>The Pydantic schema in the guardrail, before the tool runs (AIC 3)</td></tr>
+                <tr><td>The right type, but not allowed (a blank string)</td><td>A validator rule on the schema (AIC 3)</td></tr>
+                <tr><td>Valid arguments that are still wrong: over a limit, not what the user asked</td><td>A rule or lookup in your code, or a person who confirms (the AIC Part B challenges)</td></tr>
+                <tr><td>An answer the documents don't support</td><td>Reduced by retrieval and an honest "I don't know" (AIC 2); spotted afterwards by the faithfulness score and its trace (AIC 4)</td></tr>
+                <tr><td>A slow request</td><td>The trace: which span took the time (AIC 4)</td></tr>
+                <tr><td>Uploads that never finish</td><td>Job status stuck on <code>queued</code>: the worker isn't running (AIC 3)</td></tr>
+                <tr><td>A notification that never arrives</td><td>Expo's response body, then the push chain link by link (AIC 4)</td></tr>
+                <tr><td>An API key someone could copy</td><td>Nothing catches it later. Prevent it: the key lives only in the backend's <code>.env</code> (AIC 1)</td></tr>
             </table></div>
 
             <div class="check-box">
                 <h5>Quick self-check before the Week 8 review</h5>
                 <ul>
-                    <li>Can you draw both paths above from memory, labelling each arrow with the HOS it came from?</li>
-                    <li>Which two HOS pieces does a chat question never touch?</li>
+                    <li>Can you draw both paths above from memory, labelling each arrow with the AIC it came from?</li>
+                    <li>Which two AIC pieces does a chat question never touch?</li>
                     <li>Name one problem no schema can catch, and what catches it instead.</li>
                 </ul>
                 <details class="check-answers">
@@ -653,7 +653,7 @@
             </div>
 </section>
 
-        <p style="font-size:0.85rem;color:var(--muted);margin-top:8px">Missed something after all this? Every Hands-On Guide's "Common snags" box is written for exactly that moment — go back to the relevant HOS guide and re-read its <code>explain</code> boxes alongside this page.</p>
+        <p style="font-size:0.85rem;color:var(--muted);margin-top:8px">Missed something after all this? Every Hands-On Guide's "Common snags" box is written for exactly that moment — go back to the relevant AIC guide and re-read its <code>explain</code> boxes alongside this page.</p>
         <a class="back-to-top" href="#find">↑ Back to the module map</a>
 
 </main>

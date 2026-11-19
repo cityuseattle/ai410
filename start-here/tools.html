@@ -77,7 +77,7 @@
   <div class="hero-inner">
     <div class="eyebrow">AI 410 · Start here · Read before Week 1</div>
     <h1>Tools You'll Use All Term</h1>
-    <p class="lede">Codespaces, the terminal, virtual environments, packages, keys and git: the tools every module uses. Learn them once here instead of under deadline pressure in HOS 1.</p>
+    <p class="lede">Codespaces, the terminal, virtual environments, packages, keys and git: the tools every module uses. Learn them once here instead of under deadline pressure in AIC 1.</p>
     <div class="chips"><span class="chip">Read before Week 1</span><span class="chip">Runs in GitHub Codespaces</span><span class="chip">Free tiers only</span></div>
   </div>
 </section>
@@ -104,10 +104,10 @@
 
 <section class="module card" id="module-0">
   <div class="module-head"><div class="module-icon">🧰</div><div><h2>Universal tooling</h2><div class="module-meta"><span class="tag blue">Read before Week 1</span></div></div></div>
-            <p class="why-line">These tools show up in <strong>every single HOS</strong> of this course, not just one. Get comfortable with them once, here, instead of relearning them under deadline pressure in HOS 1.</p>
+            <p class="why-line">These tools show up in <strong>every single AIC</strong> of this course, not just one. Get comfortable with them once, here, instead of relearning them under deadline pressure in AIC 1.</p>
 
             <div class="diagram-box">
-                <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The setup path: open a terminal, create a venv, pip install the requirements, add your keys to .env, and you are ready to code. Every HOS starts with some version of it.">
+                <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The setup path: open a terminal, create a venv, pip install the requirements, add your keys to .env, and you are ready to code. Every AIC starts with some version of it.">
                     <defs><marker id="m0arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" style="fill:var(--code-bg)"/></marker></defs>
                     <g font-family="Inter,system-ui,sans-serif">
                         <rect x="0" y="35" width="120" height="50" rx="8" style="fill:var(--blue-bg);stroke:var(--blue)"/>
@@ -126,9 +126,9 @@
                         <text x="653" y="60" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--accent2)">Ready</text>
                         <text x="653" y="73" text-anchor="middle" font-size="9" style="fill:var(--accent2)">to code</text>
                     </g>
-                    <text x="350" y="115" text-anchor="middle" font-size="11" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">Every HOS's "What you'll need" starts with some version of this same setup path.</text>
+                    <text x="350" y="115" text-anchor="middle" font-size="11" style="fill:var(--muted)" font-family="Inter,system-ui,sans-serif">Every AIC's "What you'll need" starts with some version of this same setup path.</text>
                 </svg>
-                <div class="diagram-caption">The setup pipeline you'll repeat, in some form, at the start of nearly every HOS.</div>
+                <div class="diagram-caption">The setup pipeline you'll repeat, in some form, at the start of nearly every AIC.</div>
             </div>
 
             <div class="concept-grid">
@@ -139,7 +139,7 @@
                 <div class="concept-card">
                     <h4>Python virtual environment (<code>venv</code>)</h4>
                     <p>A private, self-contained copy of Python and its installed packages, scoped to one project folder. <code>python3 -m venv venv</code> creates it; <code>source venv/bin/activate</code> switches your terminal to use it.</p>
-                    <div class="why"><strong>Why it matters:</strong> different HOS units (and different projects entirely) can need different, sometimes conflicting, package versions. Without a venv, installing one project's dependencies can silently break another's.</div>
+                    <div class="why"><strong>Why it matters:</strong> different AIC units (and different projects entirely) can need different, sometimes conflicting, package versions. Without a venv, installing one project's dependencies can silently break another's.</div>
                 </div>
                 <div class="concept-card">
                     <h4>Package managers — <code>pip</code> and <code>npm</code></h4>
@@ -157,18 +157,18 @@
                 <div class="concept-card">
                     <h4>GitHub Codespaces &amp; devcontainers</h4>
                     <p>A <code>.devcontainer/devcontainer.json</code> file describes a ready-made development environment — the right language versions, tools, and settings — that GitHub can spin up for you in the browser with one click (<strong>Code → Codespaces → Create codespace on main</strong>), dependencies and <code>.env</code> setup included.</p>
-                    <div class="why"><strong>Why it matters:</strong> the most common bug in this course is a local machine with an old package already installed globally that silently shadows the project's own version. A fresh Codespace sidesteps that entirely — every HOS's starter code is built to support it.</div>
-                    <div class="why"><strong>Changes to <code>devcontainer.json</code> only apply on rebuild.</strong> If a Codespace already exists and its config changes later (e.g. you carry the same Codespace forward from an earlier HOS into one that needs Node.js for the first time), it won't have the new tools — a command like <code>npm</code> will say "not found" even though the config says it should be there. Fix: Command Palette (<code>Cmd/Ctrl+Shift+P</code>) → "Codespaces: Rebuild Container." Your files are untouched; only the container's installed tools get reapplied.</div>
+                    <div class="why"><strong>Why it matters:</strong> the most common bug in this course is a local machine with an old package already installed globally that silently shadows the project's own version. A fresh Codespace sidesteps that entirely — every AIC's starter code is built to support it.</div>
+                    <div class="why"><strong>Changes to <code>devcontainer.json</code> only apply on rebuild.</strong> If a Codespace already exists and its config changes later (e.g. you carry the same Codespace forward from an earlier AIC into one that needs Node.js for the first time), it won't have the new tools — a command like <code>npm</code> will say "not found" even though the config says it should be there. Fix: Command Palette (<code>Cmd/Ctrl+Shift+P</code>) → "Codespaces: Rebuild Container." Your files are untouched; only the container's installed tools get reapplied.</div>
                 </div>
                 <div class="concept-card">
                     <h4>A new terminal tab starts back at the repo root</h4>
-                    <p>Every HOS from HOS 3 onward asks you to run two or three processes at once (the API, the worker, the mobile dev server) in separate terminal tabs. In Codespaces, opening a <strong>new</strong> tab always starts you back at the repo's top-level folder — it does not remember that an earlier tab was sitting inside <code>backend/</code>.</p>
+                    <p>Every AIC from AIC 3 onward asks you to run two or three processes at once (the API, the worker, the mobile dev server) in separate terminal tabs. In Codespaces, opening a <strong>new</strong> tab always starts you back at the repo's top-level folder — it does not remember that an earlier tab was sitting inside <code>backend/</code>.</p>
                     <div class="why"><strong>Why it matters:</strong> if you copy just the run command (e.g. <code>./venv/bin/python worker.py</code>) into a fresh tab without <code>cd backend</code> first, it fails — that script only exists inside <code>backend/</code>. Get in the habit of typing <code>cd backend</code> (or <code>cd mobile</code>) as the very first thing in every new terminal tab, every time, even if you already did it in a different tab a minute ago.</div>
                 </div>
                 <div class="concept-card">
                     <h4>Working with an AI coding assistant</h4>
-                    <p>The first stage of each HOS (<strong>Create/Scaffold</strong>) is deliberately AI-driven — you prompt an assistant to build the app, then spend the rest of the HOS proving, in writing and by hand, that you actually understand what it built.</p>
-                    <div class="why"><strong>Why it matters:</strong> getting the AI-built app running is only 20% of each HOS grade (Create). The other 80% is whether <em>you</em> can evaluate it, explain one piece of it mechanistically, and extend it correctly without AI help. Treat Stage 1 as a starting point, not the deliverable.</div>
+                    <p>The first stage of each AIC (<strong>Create/Scaffold</strong>) is deliberately AI-driven — you prompt an assistant to build the app, then spend the rest of the AIC proving, in writing and by hand, that you actually understand what it built.</p>
+                    <div class="why"><strong>Why it matters:</strong> getting the AI-built app running is only 20% of each AIC grade (Create). The other 80% is whether <em>you</em> can evaluate it, explain one piece of it mechanistically, and extend it correctly without AI help. Treat Stage 1 as a starting point, not the deliverable.</div>
                 </div>
             </div>
 
@@ -177,7 +177,7 @@
                 <ul>
                     <li>Could you explain to someone else why a venv exists, in one sentence?</li>
                     <li>Do you know where your Gemini API key is stored, and why it's not inside a <code>.py</code> file?</li>
-                    <li>Do you know which part of each HOS is done with an AI assistant, and which parts you must do and explain yourself? The <a href="ai-use.html">AI Use Guide</a> has the full list.</li>
+                    <li>Do you know which part of each AIC is done with an AI assistant, and which parts you must do and explain yourself? The <a href="ai-use.html">AI Use Guide</a> has the full list.</li>
                 </ul>
             </div>
             <p class="module-nav"><a href="../reference/concept-companion.html#module-1">Next: Module 1 — Foundations &amp; the Agentic Loop →</a></p>

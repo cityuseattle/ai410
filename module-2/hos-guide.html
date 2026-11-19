@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 410 — HOS 2 Hands-On Guide: Embeddings, Chunking &amp; RAG Pipelines</title>
+    <title>AI 410 — AIC 2 Hands-On Guide: Embeddings, Chunking &amp; RAG Pipelines</title>
     <link rel="stylesheet" href="../assets/course.css">
     <style>
         .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
@@ -39,9 +39,9 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI 410 · Module 2 · Hands-On Skill (HOS) guide</div>
-    <h1>HOS 2: Embeddings, Chunking &amp; RAG Pipelines</h1>
-    <p class="lede">Extend HOS 1's chat app with retrieval: chunk and embed a set of documents into a vector database, then ground the agent's answers in them — using an AI assistant to scaffold it, then proving you understand what it built.</p>
+    <div class="eyebrow">AI 410 · Module 2 · AI Challenge (AIC) guide</div>
+    <h1>AIC 2: Embeddings, Chunking &amp; RAG Pipelines</h1>
+    <p class="lede">Extend AIC 1's chat app with retrieval: chunk and embed a set of documents into a vector database, then ground the agent's answers in them — using an AI assistant to scaffold it, then proving you understand what it built.</p>
     <div class="chips"><span class="chip">Est. 2–2.5 hrs</span><span class="chip">Outcome 2</span><span class="chip">Module 2 · Weeks 3–4</span><span class="chip">10% of final grade</span></div>
   </div>
 </section>
@@ -69,17 +69,17 @@
 
         <h4>What you'll need</h4>
         <ul class="needs-list">
-            <li><strong>Starter code:</strong> your <b>HOS 2</b> repo, created when you <a href="https://classroom50.org/cityuseattle/ai410/assignments/hos02/accept?k=ai410" target="_blank" rel="noopener">accept the HOS 2 invite</a> — your HOS 1 app, already working, plus five blank sample documents. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos2">starter code walkthrough for this HOS</a>.</li>
-            <li>Your HOS 1 API key — same `.env` setup</li>
+            <li><strong>Starter code:</strong> your <b>AIC 2</b> repo, created when you <a href="https://classroom50.org/cityuseattle/ai410/assignments/hos02/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 2 invite</a> — your AIC 1 app, already working, plus five blank sample documents. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos2">starter code walkthrough for this AIC</a>.</li>
+            <li>Your AIC 1 API key — same `.env` setup</li>
             <li>An AI coding assistant available in your environment</li>
         </ul>
 
-        <p>This guide covers the <strong>build</strong>: Part A (Create / Scaffold, Evaluate) and the first half of Part B (Analyze, Understand &amp; Refine). It is graded across those stages instead of on code correctness alone, for <strong>60 of the 100 HOS points</strong>: Create 10, Evaluate 15, Analyze 15, Apply (the change you make by hand in Understand &amp; Refine) 10 and Understand (your own explanation of it) 10. The other 40 points are the <a href="application-challenge.html">Part B challenge</a>, in the <code>challenge/</code> folder of the same repo. The whole HOS is graded once, at the end of Week 4. Each stage below says exactly what to submit. Everything goes in your Module 2 GitHub Classroom repo: written work under the matching heading in <code>NOTES.md</code>, screenshots in <code>screenshots/</code>. Commit and push as you go. By the end of Week 4, push your final work: your repo is your submission, so there is nothing to submit in Brightspace, and your last push before the deadline is what counts.</p>
+        <p>This guide covers the <strong>build</strong>: Part A (Create / Scaffold, Evaluate) and the first half of Part B (Analyze, Understand &amp; Refine). It is graded across those stages instead of on code correctness alone, for <strong>60 of the 100 AIC points</strong>: Create 10, Evaluate 15, Analyze 15, Apply (the change you make by hand in Understand &amp; Refine) 10 and Understand (your own explanation of it, plus the short <a href="index.html#postmortem">Post Mortem</a> you write after the challenge) 10. The other 40 points are the <a href="application-challenge.html">Part B challenge</a>, in the <code>challenge/</code> folder of the same repo. The whole AIC is graded once, at the end of Week 4. Each stage below says exactly what to submit. Everything goes in your Module 2 GitHub Classroom repo: written work under the matching heading in <code>NOTES.md</code>, screenshots in <code>screenshots/</code>. Commit and push as you go. By the end of Week 4, push your final work: your repo is your submission, so there is nothing to submit in Brightspace, and your last push before the deadline is what counts.</p>
 </section>
 
 <section class="module card" id="create">
   <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
-            <p class="stage-tagline">Graded under Build: Create, 10 of the 100 HOS points. The AI-assisted starting point, not the deliverable.</p>
+            <p class="stage-tagline">Graded under Build: Create, 10 of the 100 AIC points. The AI-assisted starting point, not the deliverable.</p>
             <div class="not-graded"><b>Plan before you prompt (2 minutes, ungraded).</b> Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</div>
             <p>Prompt your AI assistant to add retrieval to the existing app:</p>
 <pre tabindex="0">Add RAG to this app:
@@ -107,7 +107,7 @@
             <p>Test it on purpose. At minimum, try:</p>
             <ul>
                 <li>A question only answerable from the sample docs (e.g. "how long do I have to return an item?") — does it cite the real figure, or guess?</li>
-                <li>A question that needs one of your HOS 1 tools (e.g. "what's 25 times 4?") — does it still call the tool, or does the new RAG instruction silently swallow tool use? <strong>This is a real, common bug</strong> — worth testing even if your app seems fine at a glance.</li>
+                <li>A question that needs one of your AIC 1 tools (e.g. "what's 25 times 4?") — does it still call the tool, or does the new RAG instruction silently swallow tool use? <strong>This is a real, common bug</strong> — worth testing even if your app seems fine at a glance.</li>
                 <li>A policy-shaped question the docs don't cover (e.g. "do you offer gift wrapping?") — does it say it doesn't know, or invent a plausible-sounding answer?</li>
             </ul>
             <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
@@ -157,7 +157,7 @@
 </section>
 
 <div class="guide-nav">
-            <a href="../module-1/hos-guide.html">← HOS 1</a>
+            <a href="../module-1/hos-guide.html">← AIC 1</a>
             <a href="index.html">Module 2 lesson →</a>
         </div>
 

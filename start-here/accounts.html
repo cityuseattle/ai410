@@ -98,46 +98,46 @@
   <div class="module-head"><div class="module-icon">🗺️</div><div><h2>Find your service</h2></div></div>
         <div class="intro-box">
             <h4>What this page is</h4>
-            <p>Every external account this course ever asks you to create, in one place, with exactly what to click and — for Redis specifically — what that intimidating connection string actually means. You don't need all five on day one: GitHub and Google are needed immediately (HOS 1), Redis isn't needed until HOS 3, and Expo and Langfuse aren't needed until HOS 4. Each section below says when, so you can set things up as you go instead of all at once.</p>
+            <p>Every external account this course ever asks you to create, in one place, with exactly what to click and — for Redis specifically — what that intimidating connection string actually means. You don't need all five on day one: GitHub and Google are needed immediately (AIC 1), Redis isn't needed until AIC 3, and Expo and Langfuse aren't needed until AIC 4. Each section below says when, so you can set things up as you go instead of all at once.</p>
         </div>
         <div class="table-wrap" tabindex="0"><table class="map-table">
             <tr><th>Service</th><th>What it's for</th><th>First needed</th><th>Jump</th></tr>
             <tr>
                 <td class="svc-name">GitHub</td>
                 <td>Hosting your code, Codespaces (recommended dev environment)</td>
-                <td>HOS 1</td>
+                <td>AIC 1</td>
                 <td><a class="jump" href="#github">Read →</a></td>
             </tr>
             <tr>
                 <td class="svc-name">Google AI Studio</td>
                 <td>Your Gemini API key — every LLM call all term runs through this</td>
-                <td>HOS 1</td>
+                <td>AIC 1</td>
                 <td><a class="jump" href="#google">Read →</a></td>
             </tr>
             <tr>
                 <td class="svc-name">Upstash (Redis)</td>
                 <td>The job queue behind background/async document processing</td>
-                <td>HOS 3</td>
+                <td>AIC 3</td>
                 <td><a class="jump" href="#redis">Read →</a></td>
             </tr>
             <tr>
                 <td class="svc-name">Expo</td>
                 <td>Your mobile app's EAS project ID — required for push notifications to work at all</td>
-                <td>HOS 4</td>
+                <td>AIC 4</td>
                 <td><a class="jump" href="#expo">Read →</a></td>
             </tr>
             <tr>
                 <td class="svc-name">Langfuse</td>
                 <td>Tracing/observability for your pipeline</td>
-                <td>HOS 4</td>
+                <td>AIC 4</td>
                 <td><a class="jump" href="#langfuse">Read →</a></td>
             </tr>
         </table></div>
 </section>
 
 <section class="module card" id="github">
-  <div class="module-head"><div class="module-icon">🐙</div><div><h2>GitHub</h2><div class="module-meta"><span class="tag blue">First needed: HOS 1</span><span class="tag">Free — no credit card</span></div></div></div>
-            <p class="why-line"><strong>What it's for:</strong> hosting your own copy of each HOS's starter code, and — the recommended path all term — <strong>GitHub Codespaces</strong>, a ready-made cloud dev environment that sidesteps the most common setup bug in this course (an old package on your own machine silently shadowing the project's real one).</p>
+  <div class="module-head"><div class="module-icon">🐙</div><div><h2>GitHub</h2><div class="module-meta"><span class="tag blue">First needed: AIC 1</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> hosting your own copy of each AIC's starter code, and — the recommended path all term — <strong>GitHub Codespaces</strong>, a ready-made cloud dev environment that sidesteps the most common setup bug in this course (an old package on your own machine silently shadowing the project's real one).</p>
 
             <ol class="steps">
                 <li>Go to <a href="https://github.com" target="_blank" rel="noopener">github.com</a> and click <strong>Sign up</strong> (top right).</li>
@@ -155,8 +155,8 @@
 </section>
 
 <section class="module card" id="google">
-  <div class="module-head"><div class="module-icon">🔑</div><div><h2>Google AI Studio: Gemini API key</h2><div class="module-meta"><span class="tag blue">First needed: HOS 1</span><span class="tag">Free — no credit card</span></div></div></div>
-            <p class="why-line"><strong>What it's for:</strong> the API key that lets your backend talk to Gemini. You get this once, in HOS 1, and reuse the exact same key for every remaining HOS — chat, embeddings, everything.</p>
+  <div class="module-head"><div class="module-icon">🔑</div><div><h2>Google AI Studio: Gemini API key</h2><div class="module-meta"><span class="tag blue">First needed: AIC 1</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> the API key that lets your backend talk to Gemini. You get this once, in AIC 1, and reuse the exact same key for every remaining AIC — chat, embeddings, everything.</p>
 
             <ol class="steps">
                 <li>Go to <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> and sign in with any Google account (a personal Gmail account is fine — you don't need a special one).</li>
@@ -176,7 +176,7 @@
 </section>
 
 <section class="module card" id="redis">
-  <div class="module-head"><div class="module-icon">🧱</div><div><h2>Upstash: Redis database</h2><div class="module-meta"><span class="tag blue">First needed: HOS 3</span><span class="tag">Free — no credit card</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧱</div><div><h2>Upstash: Redis database</h2><div class="module-meta"><span class="tag blue">First needed: AIC 3</span><span class="tag">Free — no credit card</span></div></div></div>
             <p class="why-line"><strong>What it's for:</strong> Redis is the fast, simple database your background job queue runs on — one process (your API) adds "please ingest this document" tasks to it, and a separate worker process pulls them off. Upstash gives you a managed, free Redis instance with no server to install yourself.</p>
 
             <ol class="steps">
@@ -227,12 +227,12 @@
 
             <div class="done-box">
                 <h4>You'll know it worked when…</h4>
-                <ul><li>Your <code>.env</code> has one line starting <code>REDIS_URL=rediss://default:...@...upstash.io:6379</code>, and HOS 3's <code>queue_setup.py</code> can connect without a connection error.</li></ul>
+                <ul><li>Your <code>.env</code> has one line starting <code>REDIS_URL=rediss://default:...@...upstash.io:6379</code>, and AIC 3's <code>queue_setup.py</code> can connect without a connection error.</li></ul>
             </div>
 </section>
 
 <section class="module card" id="expo">
-  <div class="module-head"><div class="module-icon">📱</div><div><h2>Expo: account, login &amp; EAS project ID</h2><div class="module-meta"><span class="tag blue">First needed: HOS 4</span><span class="tag">Free — no credit card</span></div></div></div>
+  <div class="module-head"><div class="module-icon">📱</div><div><h2>Expo: account, login &amp; EAS project ID</h2><div class="module-meta"><span class="tag blue">First needed: AIC 4</span><span class="tag">Free — no credit card</span></div></div></div>
             <p class="why-line"><strong>What it's for:</strong> two separate things, both solved by the same free account. First — on current versions of <strong>Expo Go for iOS</strong>, you must be logged in to the same Expo account in <em>both</em> your terminal and the Expo Go app just to load the project at all (a newer Expo Go requirement, not specific to this course). Second — requesting a <strong>push token</strong> specifically also requires the app to be linked to a project on Expo's own servers (EAS), separately from the login above.</p>
 
             <ol class="steps">
@@ -274,8 +274,8 @@ npx expo install --fix</pre>
 </section>
 
 <section class="module card" id="langfuse">
-  <div class="module-head"><div class="module-icon">🔭</div><div><h2>Langfuse</h2><div class="module-meta"><span class="tag blue">First needed: HOS 4</span><span class="tag">Free — no credit card</span></div></div></div>
-            <p class="why-line"><strong>What it's for:</strong> observability — recording what actually happened on every real request (timing, inputs, outputs, cost) so you can look at data instead of guessing when something's slow or wrong. You won't need this until the observability HOS, but it's included here so this page covers every account the course asks for.</p>
+  <div class="module-head"><div class="module-icon">🔭</div><div><h2>Langfuse</h2><div class="module-meta"><span class="tag blue">First needed: AIC 4</span><span class="tag">Free — no credit card</span></div></div></div>
+            <p class="why-line"><strong>What it's for:</strong> observability — recording what actually happened on every real request (timing, inputs, outputs, cost) so you can look at data instead of guessing when something's slow or wrong. You won't need this until the observability AIC, but it's included here so this page covers every account the course asks for.</p>
 
             <ol class="steps">
                 <li>Go to <a href="https://cloud.langfuse.com" target="_blank" rel="noopener">cloud.langfuse.com</a> and sign up.</li>
@@ -292,21 +292,21 @@ LANGFUSE_HOST=https://cloud.langfuse.com</pre>
 
             <div class="done-box">
                 <h4>You'll know it worked when…</h4>
-                <ul><li>Your Langfuse project's <strong>Traces</strong> tab shows real entries after you send a few chat messages through your HOS 4 app.</li></ul>
+                <ul><li>Your Langfuse project's <strong>Traces</strong> tab shows real entries after you send a few chat messages through your AIC 4 app.</li></ul>
             </div>
 </section>
 
 <section class="module card" id="together">
   <div class="module-head"><div class="module-icon">🧩</div><div><h2>Putting it all together</h2></div></div>
-        <p style="font-size:0.9rem;color:var(--muted)">By the end of the term, your <code>backend/.env</code> holds all four — but you add them one at a time, as each HOS needs them, not all on day one:</p>
+        <p style="font-size:0.9rem;color:var(--muted)">By the end of the term, your <code>backend/.env</code> holds all four — but you add them one at a time, as each AIC needs them, not all on day one:</p>
         <div class="env-example" tabindex="0">
-<span class="comment"># HOS 1</span><br>
+<span class="comment"># AIC 1</span><br>
 <span class="key">GEMINI_API_KEY</span>=AIzaSyD-your-real-key-goes-right-here<br>
 <br>
-<span class="comment"># HOS 3</span><br>
+<span class="comment"># AIC 3</span><br>
 <span class="key">REDIS_URL</span>=rediss://default:AbCdEf123...@your-instance-name.upstash.io:6379<br>
 <br>
-<span class="comment"># HOS 4</span><br>
+<span class="comment"># AIC 4</span><br>
 <span class="key">LANGFUSE_PUBLIC_KEY</span>=pk-lf-...<br>
 <span class="key">LANGFUSE_SECRET_KEY</span>=sk-lf-...<br>
 <span class="key">LANGFUSE_HOST</span>=https://cloud.langfuse.com

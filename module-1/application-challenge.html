@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 410 — HOS 1 Part B Challenge: Cascade Family Clinic Booking Agent</title>
+    <title>AI 410 — AIC 1 Part B Challenge: Cascade Family Clinic Booking Agent</title>
     <link rel="stylesheet" href="../assets/course.css">
     <style>
         .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
@@ -54,9 +54,9 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI 410 · Module 1 · HOS 1 Part B: Apply</div>
-    <h1>HOS 1 Part B Challenge: Cascade Family Clinic Booking Agent</h1>
-    <p class="lede">Take the tool-calling skill from HOS 1 to a business you haven't seen: build the tools a clinic's booking agent needs from a written spec, make one decision the spec leaves open, and defend which capabilities the model should, and shouldn't, be able to call.</p>
+    <div class="eyebrow">AI 410 · Module 1 · AIC 1 Part B: Apply</div>
+    <h1>AIC 1 Part B Challenge: Cascade Family Clinic Booking Agent</h1>
+    <p class="lede">Take the tool-calling skill from AIC 1 to a business you haven't seen: build the tools a clinic's booking agent needs from a written spec, make one decision the spec leaves open, and defend which capabilities the model should, and shouldn't, be able to call.</p>
     <div class="chips"><span class="chip">Est. 60–90 min</span><span class="chip">Outcome 1</span><span class="chip">Module 1 · end of Week 2</span><span class="chip">Individual</span><span class="chip">AI assistant allowed — disclose it</span><span class="chip">5% of final grade</span></div>
   </div>
 </section>
@@ -76,13 +76,13 @@
 
 <section class="module card" id="rules">
   <div class="module-head"><div class="module-icon">📏</div><div><h2>Ground rules</h2></div></div>
-        <div class="rules-box">Everything here runs in GitHub Codespaces on free tiers, with no credit card. The tests need no API key; the chat demo uses your free Gemini key from HOS 1.</div>
+        <div class="rules-box">Everything here runs in GitHub Codespaces on free tiers, with no credit card. The tests need no API key; the chat demo uses your free Gemini key from AIC 1.</div>
 </section>
 
 <section class="module card" id="scenario">
   <div class="module-head"><div class="module-icon">🏢</div><div><h2>The scenario</h2></div></div>
         <div class="scenario">
-            <p><strong>Cascade Family Clinic</strong> (fictional) has two providers and a front desk that is overwhelmed with scheduling calls. They want a chat assistant patients can use to find a time, book it, and cancel. A teammate already wrote the chat app (the same agentic loop you built in HOS 1) and the clinic's data. The tools are missing. That's your job.</p>
+            <p><strong>Cascade Family Clinic</strong> (fictional) has two providers and a front desk that is overwhelmed with scheduling calls. They want a chat assistant patients can use to find a time, book it, and cancel. A teammate already wrote the chat app (the same agentic loop you built in AIC 1) and the clinic's data. The tools are missing. That's your job.</p>
             <p>Two things about the app you should know before you start:</p>
             <ul>
                 <li><strong>The app knows who is logged in.</strong> <code>agent.py</code> passes the logged-in patient's ID into every tool call itself. Your schemas must not let the model choose a patient.</li>
@@ -103,7 +103,7 @@
             <tr><td>Schemas in <code>TOOLS</code></td><td>One per tool, with a real description (the model reads it to decide <em>when</em> to call the tool).</td><td>Any schema that exposes <code>patient_id</code>.</td></tr>
         </table></div>
         </div>
-        <p>Every error returns <code>{"error": "..."}</code> and changes nothing. That's the HOS 1 rule: a tool that fails should tell the model, not crash the request.</p>
+        <p>Every error returns <code>{"error": "..."}</code> and changes nothing. That's the AIC 1 rule: a tool that fails should tell the model, not crash the request.</p>
 
         <div class="decision-box">
             <h4>The open decision: late cancellations</h4>
@@ -126,7 +126,7 @@
   <div class="module-head"><div class="module-icon">🪜</div><div><h2>Steps &amp; what to submit</h2></div></div>
         <div class="stage-block">
             <h3><span class="stage-num">1</span>Open it and run the tests</h3>
-            <p>Open your HOS 1 repo in the same Codespace you used for the build, and move into the challenge folder. Everything it needs is already installed. Then run:</p>
+            <p>Open your AIC 1 repo in the same Codespace you used for the build, and move into the challenge folder. Everything it needs is already installed. Then run:</p>
 <pre tabindex="0">cd challenge</pre>
             <p>and:</p>
 <pre tabindex="0">pytest</pre>
@@ -158,7 +158,7 @@ you&gt; I need to cancel my appointment today.</pre>
         </div>
 
         <div class="submit-box">
-            <h5>What goes in <code>challenge/</code> (pushed with your HOS 1 repo)</h5>
+            <h5>What goes in <code>challenge/</code> (pushed with your AIC 1 repo)</h5>
             <ul>
                 <li><code>tools.py</code> and <code>tests/test_my_rules.py</code></li>
                 <li>The output of <code>pytest</code>, saved as <code>challenge/pytest-output.txt</code> (all tests passing, including yours)</li>
@@ -170,15 +170,16 @@ you&gt; I need to cancel my appointment today.</pre>
 
 <section class="module card" id="grading">
   <div class="module-head"><div class="module-icon">📊</div><div><h2>How it's graded</h2></div></div>
-        <p>The challenge is the <b>Challenge half of the HOS 1 grade: 40 of its 100 points</b>, graded with the build at the end of Week 2. Each criterion is graded on part of what you push, at one of three levels.</p>
+        <p>The challenge is the <b>Challenge half of the AIC 1 grade: 40 of its 100 points</b>, graded with the build at the end of Week 2. Each criterion is graded on part of what you push, at one of three levels.</p>
+        <p>When the challenge is done, finish AIC 1 with the <a href="index.html#postmortem"><b>Post Mortem</b></a>: three short answers in <code>NOTES.md</code>, written without AI and graded under the build's Understand criterion.</p>
         <div class="table-scroll">
         <div class="table-wrap" tabindex="0"><table class="mini rubric">
             <tr><th>Criterion</th><th>Weight</th><th>Graded on</th><th>Full</th><th>Partial</th><th>Missing</th></tr>
-            <tr><td><strong>Design</strong></td><td class="wt">20 pts</td><td><code>tools.py</code>, your tests, and the <code>pytest</code> output; and <code>TRANSCRIPT.md</code></td><td>All provided tests pass, and your own tests check your rule, including an edge case. Your solution runs in the clinic scenario, and the right tool fires for each message.</td><td>Most provided tests pass, or your own tests cover only the easy case. It runs, but one message misbehaves and you don't explain why.</td><td>It doesn't run, restates the HOS 1 build, or has no tests of your own.</td></tr>
+            <tr><td><strong>Design</strong></td><td class="wt">20 pts</td><td><code>tools.py</code>, your tests, and the <code>pytest</code> output; and <code>TRANSCRIPT.md</code></td><td>All provided tests pass, and your own tests check your rule, including an edge case. Your solution runs in the clinic scenario, and the right tool fires for each message.</td><td>Most provided tests pass, or your own tests cover only the easy case. It runs, but one message misbehaves and you don't explain why.</td><td>It doesn't run, restates the AIC 1 build, or has no tests of your own.</td></tr>
             <tr><td><strong>Justify</strong></td><td class="wt">20 pts</td><td><code>DECISIONS.md</code>, section 1 (late cancellations); and <code>DECISIONS.md</code>, section 2 (wish list)</td><td>A clear rule, judged against stated criteria (who it protects, what it costs), with an alternative you rejected and why. For each wish-list tool, you break down what it would actually let the model do: what data it could see and what actions it could take.</td><td>A rule with a reason, but no criteria or no rejected alternative. You name a risk, but only in general terms ("privacy").</td><td>No rule, no justification, or no breakdown.</td></tr>
         </table></div>
         </div>
-        <p style="font-size:0.88rem;color:var(--muted)">How this differs from HOS 1's Understand &amp; Refine: there you extended code you already understood, by hand, with no AI. Here the business, the code, and the decisions are new, AI help is allowed, and half the challenge grade (Justify) is for the calls you make, not the typing.</p>
+        <p style="font-size:0.88rem;color:var(--muted)">How this differs from AIC 1's Understand &amp; Refine: there you extended code you already understood, by hand, with no AI. Here the business, the code, and the decisions are new, AI help is allowed, and half the challenge grade (Justify) is for the calls you make, not the typing.</p>
 </section>
 
 <section class="module card" id="snags">
@@ -188,13 +189,13 @@ you&gt; I need to cancel my appointment today.</pre>
                 <li><strong><code>test_model_cannot_choose_the_patient</code> fails.</strong> A schema lists <code>patient_id</code> as a parameter. Remove it from the schema. The function still takes it, because the app passes it in.</li>
                 <li><strong>A time test fails by one slot.</strong> Somewhere you used <code>datetime.now()</code>. Use <code>clinic_data.now()</code>.</li>
                 <li><strong>An error test says "an error must not change any data".</strong> Check for the error <em>before</em> you change <code>booked_by</code>, not after.</li>
-                <li><strong><code>agent.py</code> fails with 502 or "model not found".</strong> The model is set to <code>gemini-3.8-flash</code>. If your assistant changed it, change it back. See the <a href="hos-guide.html">HOS 1 guide's</a> Common snags.</li>
+                <li><strong><code>agent.py</code> fails with 502 or "model not found".</strong> The model is set to <code>gemini-3.8-flash</code>. If your assistant changed it, change it back. See the <a href="hos-guide.html">AIC 1 guide's</a> Common snags.</li>
             </ul>
         </div>
 </section>
 
 <div class="guide-nav">
-            <a href="hos-guide.html">← HOS 1 guide</a>
+            <a href="hos-guide.html">← AIC 1 guide</a>
             <a href="index.html">Module 1 lesson →</a>
         </div>
 

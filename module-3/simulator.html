@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI 410 HOS 3 simulator: validate-and-retry guardrails around tool calls, and inline vs. queued background document ingestion.">
+<meta name="description" content="AI 410 AIC 3 simulator: validate-and-retry guardrails around tool calls, and inline vs. queued background document ingestion.">
 <title>Guardrails & Queue Simulator</title>
 <link rel="stylesheet" href="../assets/course.css">
 <style>
@@ -79,7 +79,7 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">Simulator 3 · Pairs with HOS 3 (Weeks 5–6)</div>
+    <div class="eyebrow">Simulator 3 · Pairs with AIC 3 (Weeks 5–6)</div>
     <h1>Guardrails &amp; Queue Simulator</h1>
     <p class="lede">Two kinds of unpredictability in one page: a model that sometimes calls a tool with bad arguments, and a slow document upload that can freeze the whole app. Tune the guardrail, then move ingestion to a background worker.</p>
     <div class="chips"><span class="chip">Outcome O3</span><span class="chip">Validate &amp; retry</span><span class="chip">Nondeterminism</span><span class="chip">Redis queue &amp; worker</span><span class="chip">Async bottlenecks</span></div>
@@ -153,14 +153,14 @@
   <ul>
     <li><b>Nondeterminism means "usually right" isn't "right."</b> Send 20 with the guardrail off: some fraction crash, and you can't predict which.</li>
     <li><b>Retrying blindly helps less than you'd think.</b> Turn off "feed the error back" — the model repeats the same mistake. The Analyze stage asks why the error goes into the next attempt.</li>
-    <li><b>Failing to <code>{"error": …}</code> is a success.</b> It keeps the request alive so the model can explain, like HOS 1's try/except.</li>
+    <li><b>Failing to <code>{"error": …}</code> is a success.</b> It keeps the request alive so the model can explain, like AIC 1's try/except.</li>
     <li><b>Inline ingestion blocks everyone.</b> In inline mode, "hi" waits behind the whole document. With a queue, the upload returns a <code>job_id</code> instantly.</li>
-    <li><b>A queue with no worker is a silent bug.</b> Set workers to 0: uploads "succeed" and jobs stay <code>queued</code> forever. It's the #1 HOS 3 snag — the worker runs in its own terminal.</li>
+    <li><b>A queue with no worker is a silent bug.</b> Set workers to 0: uploads "succeed" and jobs stay <code>queued</code> forever. It's the #1 AIC 3 snag — the worker runs in its own terminal.</li>
   </ul>
 </div>
 <div class="project-tip">
   <b class="h">For your Term Project</b>
-  Name the one AI output in your project you'd validate first (a flashcard, a booking, a summary) and write its schema in one line. Then list anything that takes more than ~2 seconds — that's your background job. The Week 6 checkpoint asks which HOS pieces you'll combine; this is HOS 3's answer.
+  Name the one AI output in your project you'd validate first (a flashcard, a booking, a summary) and write its schema in one line. Then list anything that takes more than ~2 seconds — that's your background job. The Week 6 checkpoint asks which AIC pieces you'll combine; this is AIC 3's answer.
 </div>
 
 </main>
@@ -291,36 +291,36 @@ log('Ready — queue mode, 1 worker.');
   'do':'Press <b>Set this up for me</b>. It turns the guardrail off and sends 20 requests.',
   watch:'The four counters under <b>Tool-call outcomes</b>, and the log.',
   expect:'Some of the 20 requests crash with HTTP 500. Press it again: the number changes every time, and you can\'t predict which ones.',
-  why:'"Usually right" isn\'t "right". This is the problem HOS 3 solves.',
+  why:'"Usually right" isn\'t "right". This is the problem AIC 3 solves.',
   setup:function(h){ h.click('gReset'); h.set('gOn',false); h.set('bad',35); h.set('retries',2); h.set('feed',true); h.click('twenty'); }},
  {title:'2 · Guardrail on: validate, retry, fall back',
   'do':'Press <b>Set this up for me</b>. Same 20 requests, with the guardrail on.',
   watch:'The <b>recovered by retry</b> and <b>returned {"error"}</b> counters.',
   expect:'No crashes. Bad outputs are fixed by a retry that includes the validation error. If the retries run out, the request returns a clean <code>{"error": …}</code> instead of crashing.',
-  why:'This is <code>call_with_guardrail</code> in HOS 3 Create.',
+  why:'This is <code>call_with_guardrail</code> in AIC 3 Create.',
   setup:function(h){ h.click('gReset'); h.set('gOn',true); h.set('bad',35); h.set('retries',2); h.set('feed',true); h.click('twenty'); }},
  {title:'3 · Retrying blindly helps less',
   'do':'Press <b>Set this up for me</b>. It turns off "Feed the validation error into the retry".',
   watch:'Compare the counters with step 2.',
   expect:'Fewer recoveries and more errors, because the model repeats the same mistake.',
-  why:'HOS 3 Analyze asks why the error message goes into the next attempt. Now you\'ve seen the answer.',
+  why:'AIC 3 Analyze asks why the error message goes into the next attempt. Now you\'ve seen the answer.',
   setup:function(h){ h.click('gReset'); h.set('gOn',true); h.set('bad',35); h.set('retries',2); h.set('feed',false); h.click('twenty'); }},
  {title:'4 · Inline ingestion blocks everyone',
   'do':'Press <b>Set this up for me</b>. It switches to <b>Inline</b>, uploads a document, then sends "hi".',
   watch:'The API column\'s busy bar, and how long "hi" waits in the log.',
   expect:'"hi" waits behind the whole document. The API can\'t answer anyone until the upload finishes.',
-  why:'Slow work inside a request hurts every user. That\'s why HOS 3 moves ingestion to a queue.',
+  why:'Slow work inside a request hurts every user. That\'s why AIC 3 moves ingestion to a queue.',
   setup:function(h){ h.click('mInline'); h.set('workers',1); h.set('dur',6); h.click('upload'); setTimeout(function(){ h.click('chat'); },300); }},
  {title:'5 · A queue with no worker is a silent bug',
   'do':'Press <b>Set this up for me</b>. It switches to <b>Queue + worker</b> with 0 workers and uploads a document. Press <b>GET /jobs/{id}</b> a few times, then drag workers to 1.',
   watch:'The job in the Queue column.',
   expect:'The upload returns a <code>job_id</code> instantly, but the job stays <code>queued</code> until a worker exists.',
-  why:'It\'s the most common HOS 3 snag: the worker runs in its own terminal, and if it isn\'t running nothing errors.',
+  why:'It\'s the most common AIC 3 snag: the worker runs in its own terminal, and if it isn\'t running nothing errors.',
   setup:function(h){ h.click('mQueue'); h.set('workers',0); h.set('dur',6); h.click('upload'); }},
  {title:'Your turn',
   'do':'Raise "malformed args" to 90%, or run two workers against several uploads.',
   expect:'You can explain the difference between retrying, failing to <code>{"error"}</code> and crashing, and why a queue keeps the API responsive.',
-  why:'That\'s HOS 3 Analyze. Now go back to the <a href="index.html#lecture">lesson</a>.'}
+  why:'That\'s AIC 3 Analyze. Now go back to the <a href="index.html#lecture">lesson</a>.'}
 ];</script>
 <script src="../assets/sim-tour.js"></script>
 </body>

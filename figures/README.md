@@ -14,7 +14,7 @@ Don't edit inside the markers: the next build overwrites them.
 |---|---|---|
 | `language-model/` | Module 1, Lecture Part 2 | How a model picks the next word: score, softmax with temperature, sample. Adapted from [clarkngo/anatomy-of](https://github.com/clarkngo/anatomy-of). |
 | `rag-pipeline/` | Module 2, Lecture Part 3 | Ingest once (chunk, embed, store), then every question (embed, score, top-k, prompt, answer). `model.mjs` reads the documents, tokenizer and cosine straight from `module-2/simulator.html`, so the figure and the simulator always agree. |
-| `guardrail/` | Module 3, Lecture Part 2 | Validate, retry with the error, fail to data. HOS 3's `CalculateArgs`, `max_retries` (0–4) and blind vs fed-back retries; the odds panel is the lecture's arithmetic (30% invalid first attempts). |
+| `guardrail/` | Module 3, Lecture Part 2 | Validate, retry with the error, fail to data. AIC 3's `CalculateArgs`, `max_retries` (0–4) and blind vs fed-back retries; the odds panel is the lecture's arithmetic (30% invalid first attempts). |
 | `push-chain/` | Module 4, Lecture Part 2 | The six push links as knife switches; the backend's meter reads 200 even when the body says `DeviceNotRegistered`. Scenarios are the Module 4 simulator's. |
 
 ## Rebuild

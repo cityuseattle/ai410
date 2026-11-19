@@ -56,9 +56,9 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI 410 · Reference · Read as you start each HOS</div>
+    <div class="eyebrow">AI 410 · Reference · Read as you start each AIC</div>
     <h1>Starter Code Walkthrough</h1>
-    <p class="lede">What every file in each module's starter code does, and how a request moves through it. Read the section for the HOS you're starting, not the ones after it.</p>
+    <p class="lede">What every file in each module's starter code does, and how a request moves through it. Read the section for the AIC you're starting, not the ones after it.</p>
     <div class="chips"><span class="chip">Reference — read as you go, not up front</span><span class="chip">Runs in GitHub Codespaces</span><span class="chip">Free tiers only</span></div>
   </div>
 </section>
@@ -67,10 +67,10 @@
 <nav class="secnav no-print" aria-label="Page sections">
   <div class="secnav-inner">
     <a href="#overview">How to use</a>
-    <a href="#hos1">HOS 1</a>
-    <a href="#hos2">HOS 2</a>
-    <a href="#hos3">HOS 3</a>
-    <a href="#hos4">HOS 4</a>
+    <a href="#hos1">AIC 1</a>
+    <a href="#hos2">AIC 2</a>
+    <a href="#hos3">AIC 3</a>
+    <a href="#hos4">AIC 4</a>
     <a href="#run">Run it</a>
     <a href="#reading">Reading code</a>
   </div>
@@ -84,33 +84,33 @@
 
         <div class="intro-box">
             <h4>What "starter code" means in this course</h4>
-            <p>Each HOS has a starter-code template repository on GitHub (you get your own copy by accepting that HOS's invite, linked from its lesson), and each one is a complete snapshot of the app <em>as it stands when that HOS begins</em>. HOS 1's folder is nearly empty on purpose — you scaffold the app yourself with an AI assistant. From HOS 2 on, the folder is a <strong>reference version of your previous HOS's finished result</strong>, carried forward, plus the blank spot where this HOS's new piece goes — so everyone starts from the same working code even if their own AI-scaffolded version differs. That means your first job in each HOS is reading working code you did not type out yourself. This page explains that code, one HOS at a time.</p>
+            <p>Each AIC has a starter-code template repository on GitHub (you get your own copy by accepting that AIC's invite, linked from its lesson), and each one is a complete snapshot of the app <em>as it stands when that AIC begins</em>. AIC 1's folder is nearly empty on purpose — you scaffold the app yourself with an AI assistant. From AIC 2 on, the folder is a <strong>reference version of your previous AIC's finished result</strong>, carried forward, plus the blank spot where this AIC's new piece goes — so everyone starts from the same working code even if their own AI-scaffolded version differs. That means your first job in each AIC is reading working code you did not type out yourself. This page explains that code, one AIC at a time.</p>
         </div>
 
         <div class="spoiler-box">
-            <strong>Don't read ahead.</strong> The section for HOS 3 explains the retrieval code you <em>build</em> in HOS 2; the section for HOS 4 explains the guardrail and queue code you build in HOS 3. Each HOS grades you on explaining that code in your own words (the Analyze stage), so read a section only when you're <em>starting</em> that HOS — at which point it describes code you've already written and understood.
+            <strong>Don't read ahead.</strong> The section for AIC 3 explains the retrieval code you <em>build</em> in AIC 2; the section for AIC 4 explains the guardrail and queue code you build in AIC 3. Each AIC grades you on explaining that code in your own words (the Analyze stage), so read a section only when you're <em>starting</em> that AIC — at which point it describes code you've already written and understood.
         </div>
 
         <div class="table-wrap" tabindex="0"><table class="jump-table">
             <tr><th>You're starting…</th><th>The folder hands you</th><th>Jump</th></tr>
-            <tr><td class="hos">HOS 1</td><td>Almost nothing — a Codespace config and a <code>.env.example</code></td><td><a href="#hos1">Read →</a></td></tr>
-            <tr><td class="hos">HOS 2</td><td>Your HOS 1 chat app with a working tool-calling agent, plus five sample documents</td><td><a href="#hos2">Read →</a></td></tr>
-            <tr><td class="hos">HOS 3</td><td>+ retrieval: <code>ingest.py</code>, <code>retrieval.py</code>, a local vector database</td><td><a href="#hos3">Read →</a></td></tr>
-            <tr><td class="hos">HOS 4</td><td>+ guardrails and an async ingestion queue: <code>guardrails.py</code>, <code>jobs.py</code>, <code>queue_setup.py</code>, <code>worker.py</code></td><td><a href="#hos4">Read →</a></td></tr>
+            <tr><td class="hos">AIC 1</td><td>Almost nothing — a Codespace config and a <code>.env.example</code></td><td><a href="#hos1">Read →</a></td></tr>
+            <tr><td class="hos">AIC 2</td><td>Your AIC 1 chat app with a working tool-calling agent, plus five sample documents</td><td><a href="#hos2">Read →</a></td></tr>
+            <tr><td class="hos">AIC 3</td><td>+ retrieval: <code>ingest.py</code>, <code>retrieval.py</code>, a local vector database</td><td><a href="#hos3">Read →</a></td></tr>
+            <tr><td class="hos">AIC 4</td><td>+ guardrails and an async ingestion queue: <code>guardrails.py</code>, <code>jobs.py</code>, <code>queue_setup.py</code>, <code>worker.py</code></td><td><a href="#hos4">Read →</a></td></tr>
             <tr><td class="hos">Any</td><td>Running it, and how to read code you didn't write</td><td><a href="#run">Run →</a> · <a href="#reading">Read →</a></td></tr>
         </table></div>
 </section>
 
 <section class="module card" id="hos1">
-  <div class="module-head"><div class="module-icon">1️⃣</div><div><h2>Starting HOS 1</h2></div></div>
+  <div class="module-head"><div class="module-icon">1️⃣</div><div><h2>Starting AIC 1</h2></div></div>
             <span class="hos-tag empty">Almost empty on purpose</span>
             <p>The folder contains exactly two useful things, and no application code at all:</p>
             <details class="file-block">
                 <summary>.devcontainer/devcontainer.json <span class="role">— your Codespace, pre-configured</span></summary>
                 <div class="file-body">
-                    <p>When you open the folder as a Codespace, GitHub reads this file and builds a container for you: a Python 3.12 image, then a <code>postCreateCommand</code> that copies <code>.env.example</code> to <code>.env</code> (the <code>-n</code> flag means it never overwrites a <code>.env</code> you've already filled in). It also forwards ports <code>8000</code> and <code>8501</code>, which your backend and frontend will use once you build them. From HOS 2 on, this same file also installs the requirements for you.</p>
+                    <p>When you open the folder as a Codespace, GitHub reads this file and builds a container for you: a Python 3.12 image, then a <code>postCreateCommand</code> that copies <code>.env.example</code> to <code>.env</code> (the <code>-n</code> flag means it never overwrites a <code>.env</code> you've already filled in). It also forwards ports <code>8000</code> and <code>8501</code>, which your backend and frontend will use once you build them. From AIC 2 on, this same file also installs the requirements for you.</p>
                     <p>Why it matters: a brand-new container has nothing else installed, so a stray global package on your own laptop can't silently shadow the project's real dependencies — the most common setup bug in this course.</p>
-                    <div class="watch"><strong>Watch out:</strong> in HOS 1 there are no requirements files yet, so nothing is installed for you. You (or your AI assistant) create <code>requirements.txt</code> files and run <code>pip install -r</code> yourself. That's expected.</div>
+                    <div class="watch"><strong>Watch out:</strong> in AIC 1 there are no requirements files yet, so nothing is installed for you. You (or your AI assistant) create <code>requirements.txt</code> files and run <code>pip install -r</code> yourself. That's expected.</div>
                 </div>
             </details>
             <details class="file-block">
@@ -123,14 +123,14 @@
 </section>
 
 <section class="module card" id="hos2">
-  <div class="module-head"><div class="module-icon">2️⃣</div><div><h2>Starting HOS 2</h2></div></div>
-            <span class="hos-tag">Reference HOS 1 result, carried forward</span>
-            <p>You're handed a working chat app with an agent that can call tools. Nothing here needs to change in HOS 2 — but you need to understand it, because everything you add in HOS 2 plugs into it.</p>
+  <div class="module-head"><div class="module-icon">2️⃣</div><div><h2>Starting AIC 2</h2></div></div>
+            <span class="hos-tag">Reference AIC 1 result, carried forward</span>
+            <p>You're handed a working chat app with an agent that can call tools. Nothing here needs to change in AIC 2 — but you need to understand it, because everything you add in AIC 2 plugs into it.</p>
 
             <ul class="have-list">
                 <li><code>backend/main.py</code>, <code>agent.py</code>, <code>tools.py</code>, <code>requirements.txt</code>, <code>.env.example</code></li>
                 <li><code>frontend/app.py</code>, <code>requirements.txt</code></li>
-                <li><code>backend/sample_docs/</code> — five markdown documents for a fictional outdoor-gear company (Northwind Outfitters): backpacks, tents, return policy, shipping, warranty. This is the raw material for HOS 2's retrieval work.</li>
+                <li><code>backend/sample_docs/</code> — five markdown documents for a fictional outdoor-gear company (Northwind Outfitters): backpacks, tents, return policy, shipping, warranty. This is the raw material for AIC 2's retrieval work.</li>
             </ul>
 
             <h3 style="font-size:1rem;color:var(--text)">How one chat message travels</h3>
@@ -244,13 +244,13 @@
                     </ul>
                 </div>
             </details>
-            <p style="font-size:0.85rem;color:var(--muted);margin-top:10px">A few header comments in this code still name the HOS it was first written in (for example, <code>main.py</code> may say "HOS 1"). The code is what counts.</p>
+            <p style="font-size:0.85rem;color:var(--muted);margin-top:10px">A few header comments in this code still name the AIC it was first written in (for example, <code>main.py</code> may say "AIC 1"). The code is what counts.</p>
 </section>
 
 <section class="module card" id="hos3">
-  <div class="module-head"><div class="module-icon">3️⃣</div><div><h2>Starting HOS 3</h2></div></div>
-            <span class="hos-tag">Reference HOS 2 result, carried forward</span>
-            <p>Everything from HOS 2, plus retrieval. The agent can now answer questions about the Northwind documents instead of guessing. New this time: <code>backend/ingest.py</code>, <code>backend/retrieval.py</code>, a changed <code>agent.py</code>, and <code>chromadb</code> in <code>requirements.txt</code>.</p>
+  <div class="module-head"><div class="module-icon">3️⃣</div><div><h2>Starting AIC 3</h2></div></div>
+            <span class="hos-tag">Reference AIC 2 result, carried forward</span>
+            <p>Everything from AIC 2, plus retrieval. The agent can now answer questions about the Northwind documents instead of guessing. New this time: <code>backend/ingest.py</code>, <code>backend/retrieval.py</code>, a changed <code>agent.py</code>, and <code>chromadb</code> in <code>requirements.txt</code>.</p>
 
             <h3 style="font-size:1rem;color:var(--text)">Two phases: prepare once, then look up per question</h3>
             <div class="diagram" tabindex="0">
@@ -324,15 +324,15 @@
                 <div class="file-body">
                     <p>At the top of <code>run_agent</code>, the new code calls <code>retrieve(user_message, k=5)</code>, joins the chunks into one block, and puts it in a <code>system_instruction</code> that's passed on <em>every</em> Gemini call in the loop. The instruction tells the model to answer Northwind questions from that context, to say it doesn't know rather than guess, and — importantly — that this restriction does <strong>not</strong> apply to its tools, so <code>calculate</code> still works on questions the documents don't cover.</p>
                     <div class="think"><strong>Think about it:</strong> that last sentence exists because of a real bug pattern — tell a model "only use this context" and it may refuse to use tools at all. Prompts are part of your program's logic.</div>
-                    <p>The rest of the loop is unchanged from HOS 2.</p>
+                    <p>The rest of the loop is unchanged from AIC 2.</p>
                 </div>
             </details>
 </section>
 
 <section class="module card" id="hos4">
-  <div class="module-head"><div class="module-icon">4️⃣</div><div><h2>Starting HOS 4</h2></div></div>
-            <span class="hos-tag">Reference HOS 3 result, carried forward</span>
-            <p>Everything from HOS 3, plus two more layers: <strong>guardrails</strong> around tool arguments, and <strong>async document ingestion</strong> through a background queue. New files: <code>guardrails.py</code>, <code>jobs.py</code>, <code>queue_setup.py</code>, <code>worker.py</code>. Changed: <code>main.py</code> and <code>agent.py</code>. The <code>mobile/</code> folder is empty — that's yours to build this HOS.</p>
+  <div class="module-head"><div class="module-icon">4️⃣</div><div><h2>Starting AIC 4</h2></div></div>
+            <span class="hos-tag">Reference AIC 3 result, carried forward</span>
+            <p>Everything from AIC 3, plus two more layers: <strong>guardrails</strong> around tool arguments, and <strong>async document ingestion</strong> through a background queue. New files: <code>guardrails.py</code>, <code>jobs.py</code>, <code>queue_setup.py</code>, <code>worker.py</code>. Changed: <code>main.py</code> and <code>agent.py</code>. The <code>mobile/</code> folder is empty — that's yours to build this AIC.</p>
 
             <details class="file-block" open>
                 <summary>backend/guardrails.py <span class="role">— validate what the model sends, retry if it's wrong</span></summary>
@@ -443,7 +443,7 @@
                 <summary>Config that changed <span class="role">— .env.example, requirements, devcontainer</span></summary>
                 <div class="file-body">
                     <ul>
-                        <li><strong>.env.example</strong> now also lists <code>REDIS_URL</code> (Upstash) and three Langfuse values: <code>LANGFUSE_PUBLIC_KEY</code>, <code>LANGFUSE_SECRET_KEY</code>, <code>LANGFUSE_HOST</code>. Langfuse is what you'll wire up for tracing this HOS — free tier, no credit card.</li>
+                        <li><strong>.env.example</strong> now also lists <code>REDIS_URL</code> (Upstash) and three Langfuse values: <code>LANGFUSE_PUBLIC_KEY</code>, <code>LANGFUSE_SECRET_KEY</code>, <code>LANGFUSE_HOST</code>. Langfuse is what you'll wire up for tracing this AIC — free tier, no credit card.</li>
                         <li><strong>requirements.txt</strong> adds <code>redis</code> and <code>rq</code> (the queue library).</li>
                         <li><strong>devcontainer.json</strong> adds Node 20 (for the Expo mobile app) and forwards port <code>8081</code>, the Expo dev server.</li>
                     </ul>
@@ -453,7 +453,7 @@
 
 <section class="module card" id="run">
   <div class="module-head"><div class="module-icon">▶️</div><div><h2>Running it in a Codespace</h2></div></div>
-        <p>Open the HOS folder as a Codespace (Code → Codespaces → Create codespace on main). The devcontainer installs dependencies and creates <code>backend/.env</code> for you. Add your real keys to that file, then use one terminal per process:</p>
+        <p>Open the AIC folder as a Codespace (Code → Codespaces → Create codespace on main). The devcontainer installs dependencies and creates <code>backend/.env</code> for you. Add your real keys to that file, then use one terminal per process:</p>
 <pre tabindex="0"># Terminal 1 — the API
 cd backend
 uvicorn main:app --reload
@@ -462,11 +462,11 @@ uvicorn main:app --reload
 cd frontend
 streamlit run app.py
 
-# HOS 2 onward, once (and after adding a document)
+# AIC 2 onward, once (and after adding a document)
 cd backend
 python ingest.py
 
-# HOS 4 only — Terminal 3, the queue worker
+# AIC 4 only — Terminal 3, the queue worker
 cd backend
 python worker.py</pre>
         <p>No virtual environment needed — the Codespace is already an isolated container. Check the API is alive at <code>/health</code>; try endpoints at <code>/docs</code>. Stop your Codespace when you're done — free hours are limited.</p>
@@ -480,7 +480,7 @@ python worker.py</pre>
             <li><strong>Run it before you change it.</strong> Send a message, ask a question the documents cover, ask one they don't. Watching real behavior beats guessing.</li>
             <li><strong>Break it on purpose.</strong> Stop the worker, blank the API key, ask for something the tool can't do. Knowing how it fails is how you know you understand it.</li>
         </ol>
-        <p>This is the same habit the Evaluate and Analyze stages of every HOS are training.</p>
+        <p>This is the same habit the Evaluate and Analyze stages of every AIC are training.</p>
 </section>
 
 <div class="guide-nav">
