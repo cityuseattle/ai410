@@ -358,7 +358,7 @@ function model() {
   out.push(topText(MODEL.x + 30, MODEL.y + 12, MODEL_H, "MODEL", 3, "mid"));
   out.push(topText(MODEL.x + 7, MODEL.y + 52, MODEL_H, "agent.py · answer()", 2.2, "lo"));
   out.push(L(k.lineOnTop([MODEL.x + 30, MODEL.y + 14], [MODEL.x + 41, MODEL.y + 14], MODEL_H, P), { tone: "faint", free: true }));
-  // the tools block on top: a calculator key pad (HOS 1's calculate still declared)
+  // the tools block on top: a calculator key pad (AIC 1's calculate still declared)
   const tools = { x: MODEL.x + 28, y: MODEL.y + 22, w: 13, d: 15, r: 1 };
   out.push(S(k.slabOf(tools, MODEL_H, 3.2, P, 3, 0.4), { tone: "mid" }));
   out.push(Dt([0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => at([tools.x + 3 + c * 3.5, tools.y + 4 + r * 3.5, MODEL_H + 3.2]))), { size: 0.55 }));
@@ -416,8 +416,8 @@ const STEPS = [
   { say: "answer", next: "Ask again" },
 ];
 const PARTS = [
-  { id: "documents", step: 0, title: "Documents", fact: `documents · ${titles.length} policies, ${perDoc.join(" + ")} chunks`, text: `Northwind's ${titles.length} policy files: returns, shipping, warranty and two product guides. These are the same sample documents as the simulator and the HOS 2 starter.` },
-  { id: "chunker", step: 1, title: "Chunker", fact: `chunk · every ${CHUNK - OVERLAP} words, ${CHUNK} long`, text: `Splits each document into pieces of ${CHUNK} words, stepping back ${OVERLAP} each time so a sentence on a boundary appears whole in one piece. The HOS 2 starter uses 400 and 50, which leaves each short sample document as one chunk; the figure uses the simulator's smaller setting so you can see chunks compete.` },
+  { id: "documents", step: 0, title: "Documents", fact: `documents · ${titles.length} policies, ${perDoc.join(" + ")} chunks`, text: `Northwind's ${titles.length} policy files: returns, shipping, warranty and two product guides. These are the same sample documents as the simulator and the AIC 2 starter.` },
+  { id: "chunker", step: 1, title: "Chunker", fact: `chunk · every ${CHUNK - OVERLAP} words, ${CHUNK} long`, text: `Splits each document into pieces of ${CHUNK} words, stepping back ${OVERLAP} each time so a sentence on a boundary appears whole in one piece. The AIC 2 starter uses 400 and 50, which leaves each short sample document as one chunk; the figure uses the simulator's smaller setting so you can see chunks compete.` },
   { id: "embedder", step: 2, title: "Embedding press", fact: "embed · one model, two task types", text: "Turns text into a vector, stamped here as a fingerprint. Chunks are embedded once at ingest with task type RETRIEVAL_DOCUMENT; each question is embedded with RETRIEVAL_QUERY by the same model, so the two land in the same space and can be compared." },
   { id: "store", step: 2, title: "Vector store (Chroma)", fact: `Chroma · ${N} vectors + their text`, text: "Keeps each chunk's vector next to its original text, on disk. Ingest fills it once. If you edit a document and don't re-run ingest, the file still holds the old cards and the app keeps answering from them." },
   { id: "question", step: 3, title: "Question", fact: "question · embedded on every request", text: "What the user typed. Unlike the documents, it is embedded fresh on every request, so retrieval runs on every question." },

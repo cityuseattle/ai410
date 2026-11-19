@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 410 — HOS 3 Hands-On Guide: Guardrails &amp; Asynchronous Processing</title>
+    <title>AI 410 — AIC 3 Hands-On Guide: Guardrails &amp; Asynchronous Processing</title>
     <link rel="stylesheet" href="../assets/course.css">
     <style>
         .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
@@ -39,9 +39,9 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI 410 · Module 3 · Hands-On Skill (HOS) guide</div>
-    <h1>HOS 3: Guardrails &amp; Asynchronous Processing</h1>
-    <p class="lede">Make HOS 2's app reliable under two different kinds of unpredictability: a model that sometimes calls a tool with bad arguments, and document ingestion that's slow enough to block the whole app if it runs inline.</p>
+    <div class="eyebrow">AI 410 · Module 3 · AI Challenge (AIC) guide</div>
+    <h1>AIC 3: Guardrails &amp; Asynchronous Processing</h1>
+    <p class="lede">Make AIC 2's app reliable under two different kinds of unpredictability: a model that sometimes calls a tool with bad arguments, and document ingestion that's slow enough to block the whole app if it runs inline.</p>
     <div class="chips"><span class="chip">Est. 2.5–3 hrs</span><span class="chip">Outcome 3</span><span class="chip">Module 3 · Weeks 5–6</span><span class="chip">10% of final grade</span></div>
   </div>
 </section>
@@ -69,17 +69,17 @@
 
         <h4>What you'll need</h4>
         <ul class="needs-list">
-            <li><strong>Starter code:</strong> your <b>HOS 3</b> repo, created when you <a href="https://classroom50.org/cityuseattle/ai410/assignments/hos03/accept?k=ai410" target="_blank" rel="noopener">accept the HOS 3 invite</a> — your HOS 2 app, already working. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos3">starter code walkthrough for this HOS</a>.</li>
+            <li><strong>Starter code:</strong> your <b>AIC 3</b> repo, created when you <a href="https://classroom50.org/cityuseattle/ai410/assignments/hos03/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 3 invite</a> — your AIC 2 app, already working. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos3">starter code walkthrough for this AIC</a>.</li>
             <li>A free <a href="https://upstash.com" target="_blank" rel="noopener">Upstash Redis</a> instance (no credit card) — get the connection URL from its dashboard before you start.</li>
             <li>An AI coding assistant available in your environment</li>
         </ul>
 
-        <p>This guide covers the <strong>build</strong>: Part A (Create / Scaffold, Evaluate) and the first half of Part B (Analyze, Understand &amp; Refine). It is graded across those stages instead of on code correctness alone, for <strong>60 of the 100 HOS points</strong>: Create 10, Evaluate 15, Analyze 15, Apply (the change you make by hand in Understand &amp; Refine) 10 and Understand (your own explanation of it) 10. The other 40 points are the <a href="application-challenge.html">Part B challenge</a>, in the <code>challenge/</code> folder of the same repo. The whole HOS is graded once, at the end of Week 6. Each stage below says exactly what to submit. Everything goes in your Module 3 GitHub Classroom repo: written work under the matching heading in <code>NOTES.md</code>, screenshots in <code>screenshots/</code>. Commit and push as you go. By the end of Week 6, push your final work: your repo is your submission, so there is nothing to submit in Brightspace, and your last push before the deadline is what counts.</p>
+        <p>This guide covers the <strong>build</strong>: Part A (Create / Scaffold, Evaluate) and the first half of Part B (Analyze, Understand &amp; Refine). It is graded across those stages instead of on code correctness alone, for <strong>60 of the 100 AIC points</strong>: Create 10, Evaluate 15, Analyze 15, Apply (the change you make by hand in Understand &amp; Refine) 10 and Understand (your own explanation of it, plus the short <a href="index.html#postmortem">Post Mortem</a> you write after the challenge) 10. The other 40 points are the <a href="application-challenge.html">Part B challenge</a>, in the <code>challenge/</code> folder of the same repo. The whole AIC is graded once, at the end of Week 6. Each stage below says exactly what to submit. Everything goes in your Module 3 GitHub Classroom repo: written work under the matching heading in <code>NOTES.md</code>, screenshots in <code>screenshots/</code>. Commit and push as you go. By the end of Week 6, push your final work: your repo is your submission, so there is nothing to submit in Brightspace, and your last push before the deadline is what counts.</p>
 </section>
 
 <section class="module card" id="create">
   <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
-            <p class="stage-tagline">Graded under Build: Create, 10 of the 100 HOS points. The AI-assisted starting point, not the deliverable.</p>
+            <p class="stage-tagline">Graded under Build: Create, 10 of the 100 AIC points. The AI-assisted starting point, not the deliverable.</p>
             <div class="not-graded"><b>Plan before you prompt (2 minutes, ungraded).</b> Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</div>
             <p>Prompt your AI assistant to add both pieces:</p>
 <pre tabindex="0">Add reliability to this app:
@@ -142,7 +142,7 @@ curl http://127.0.0.1:8000/jobs/YOUR-JOB-ID-HERE
             <p class="stage-tagline">The mastery check — can you extend it correctly, without AI doing this part too?</p>
             <div class="not-graded">By hand this time — no AI assistance for this stage.</div>
             <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
-            <p>Extend the guardrail pattern to your <strong>second</strong> tool (from HOS 1's Understand &amp; Refine) — write a Pydantic schema for its arguments, including at least one validation rule beyond "the field exists" (e.g. rejecting an empty string), and wire it into the tool dispatch in <code>agent.py</code> the same way the first tool is guarded.</p>
+            <p>Extend the guardrail pattern to your <strong>second</strong> tool (from AIC 1's Understand &amp; Refine) — write a Pydantic schema for its arguments, including at least one validation rule beyond "the field exists" (e.g. rejecting an empty string), and wire it into the tool dispatch in <code>agent.py</code> the same way the first tool is guarded.</p>
             <div class="submit-box">
                 <h5>Submit</h5>
                 <ul>
@@ -166,7 +166,7 @@ curl http://127.0.0.1:8000/jobs/YOUR-JOB-ID-HERE
 </section>
 
 <div class="guide-nav">
-            <a href="../module-2/hos-guide.html">← HOS 2</a>
+            <a href="../module-2/hos-guide.html">← AIC 2</a>
             <a href="index.html">Module 3 lesson →</a>
         </div>
 

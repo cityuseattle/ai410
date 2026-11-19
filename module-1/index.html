@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI 410 Module 1 (Weeks 1-2): lecture, weekly Concept Debates and Knowledge Checks, and HOS 1 in two parts (Build, then Apply with an individual challenge) for Foundations & the Agentic Loop.">
+<meta name="description" content="AI 410 Module 1 (Weeks 1-2): lecture, weekly Concept Debates and Knowledge Checks, and AIC 1 in two parts (Build, then Apply with an individual challenge) for Foundations & the Agentic Loop.">
 <title>Module 1: Foundations &amp; the Agentic Loop</title>
 <link rel="stylesheet" href="../assets/course.css">
 <style>
@@ -22,7 +22,7 @@
     <div class="eyebrow">AI 410 · Module 1 · Weeks 1–2</div>
     <h1>Foundations &amp; the Agentic Loop</h1>
     <p class="lede">What a full-stack AI app is actually made of, what an LLM actually does, and the loop that lets a model ask your code to run a real function — built fast in Week 1, explained and extended by hand in Week 2.</p>
-    <div class="chips"><span class="chip">Outcome O1</span><span class="chip">2 weeks</span><span class="chip">Lecture · 2 Concept Debates · 2 Knowledge Checks</span><span class="chip">HOS 1 (Hands-On Skill): Part A Build · Part B Apply</span><span class="chip">Part B challenge</span><span class="chip">Codespaces · free tier</span></div>
+    <div class="chips"><span class="chip">Outcome O1</span><span class="chip">2 weeks</span><span class="chip">Lecture · 2 Concept Debates · 2 Knowledge Checks</span><span class="chip">AIC 1 (AI Challenge): Part A Build · Part B Apply</span><span class="chip">Part B challenge</span><span class="chip">Codespaces · free tier</span></div>
   </div>
 </section>
 <main id="main">
@@ -34,29 +34,30 @@
     <a href="#preview">Preview</a>
     <a href="#lecture">Lecture</a>
     <a href="#debate">Concept Debate A</a>
-    <a href="#create">HOS 1 · Create</a>
-    <a href="#evaluate">HOS 1 · Evaluate</a>
+    <a href="#create">AIC 1 · Create</a>
+    <a href="#evaluate">AIC 1 · Evaluate</a>
     <a href="#check-theory">Knowledge Check (theory)</a>
     <span class="sep">Week 2</span>
     <a href="#debate-b">Concept Debate B</a>
-    <a href="#analyze">HOS 1 · Analyze</a>
-    <a href="#refine">HOS 1 · Understand &amp; Refine</a>
-    <a href="#challenge">HOS 1 · Part B challenge</a>
+    <a href="#analyze">AIC 1 · Analyze</a>
+    <a href="#refine">AIC 1 · Understand &amp; Refine</a>
+    <a href="#challenge">AIC 1 · Part B challenge</a>
+    <a href="#postmortem">AIC 1 · Post Mortem</a>
     <a href="#check">Knowledge Check (skill)</a>
     <a href="#project">Term Project</a>
   </div>
 </nav>
 
-<p class="small muted" style="margin-top:18px">Everything in this HOS runs in GitHub Codespaces on free tiers, with no credit card. Which accounts you need, and when: <a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a>.</p>
+<p class="small muted" style="margin-top:18px">Everything in this AIC runs in GitHub Codespaces on free tiers, with no credit card. Which accounts you need, and when: <a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a>.</p>
 
 <section class="module card" id="overview">
-  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O1</span><span class="tag blue">HOS 1: 10% of course</span><span class="tag">+ 2 Concept Debates · 2 Knowledge Checks</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🧭</div><div><h2>Lesson overview</h2><div class="module-meta"><span class="tag">Outcome O1</span><span class="tag blue">AIC 1: 10% of course</span><span class="tag">+ 2 Concept Debates · 2 Knowledge Checks</span></div></div></div>
   <div class="callout blue">
-    <span class="label">What's the HOS?</span>
-    <p><strong>HOS 1 (Hands-On Skill)</strong> is this module's main build: 100 points, 10% of your course grade. It runs in two parts. <b>Part A: Build</b> (Week 1): <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a>. <b>Part B: Apply</b> (Week 2): <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a>, then the individual <a href="#challenge">challenge</a>, which applies the same skill to a new scenario. Everything goes in one GitHub repo, with the challenge in its <code>challenge/</code> folder. Your last push before the end of Week 2 is your submission, and it's graded once: 60 points for the build and 40 for the challenge. The weekly Concept Debates and Knowledge Checks are graded separately.</p>
+    <span class="label">What's the AIC?</span>
+    <p><strong>AIC 1 (AI Challenge)</strong> is this module's main build: 100 points, 10% of your course grade. It runs in two parts. <b>Part A: Build</b> (Week 1): <a href="#create">Create / Scaffold</a> and <a href="#evaluate">Evaluate</a>. <b>Part B: Apply</b> (Week 2): <a href="#analyze">Analyze</a> and <a href="#refine">Understand &amp; Refine</a>, then the individual <a href="#challenge">challenge</a>, which applies the same skill to a new scenario, and a short <a href="#postmortem">Post Mortem</a> to close it. Everything goes in one GitHub repo, with the challenge in its <code>challenge/</code> folder. Your last push before the end of Week 2 is your submission, and it's graded once: 60 points for the build and 40 for the challenge. The weekly Concept Debates and Knowledge Checks are graded separately.</p>
   </div>
   <p class="small">Each activity below is tagged with its AI rule, from <span class="tag ok">AI: expected</span> in Create / Scaffold to <span class="tag bad">No AI</span> in Understand &amp; Refine and the Knowledge Check. The <a href="../start-here/ai-use.html">AI Use Guide</a> explains each one.</p>
-  <p>Most people meet a large language model through a chat box, and it's easy to think the chat box <em>is</em> the model. It isn't. Behind every AI product there are at least three separate pieces — a <strong>frontend</strong> the user sees, a <strong>backend</strong> that holds secrets and makes decisions, and the <strong>LLM</strong> itself, which only ever turns text into more text. This first HOS is about seeing those pieces clearly, and then about the one idea that turns a chat app into an <em>agent</em>: letting the model ask your code to run a real function and wait for the answer.</p>
+  <p>Most people meet a large language model through a chat box, and it's easy to think the chat box <em>is</em> the model. It isn't. Behind every AI product there are at least three separate pieces — a <strong>frontend</strong> the user sees, a <strong>backend</strong> that holds secrets and makes decisions, and the <strong>LLM</strong> itself, which only ever turns text into more text. This first AIC is about seeing those pieces clearly, and then about the one idea that turns a chat app into an <em>agent</em>: letting the model ask your code to run a real function and wait for the answer.</p>
   <p>You'll spend Week 1 getting a working app running quickly with an AI coding assistant and then judging it on purpose. Week 2 is the harder half: explaining exactly how the loop works, extending it by hand, and applying the same judgment to a business you've never built for.</p>
   <div class="callout blue">
     <span class="label">Anchoring analogy</span>
@@ -76,13 +77,14 @@
     <a href="#preview"><span class="n">Wk 1 · Mon</span><span class="t">Preview the build</span><span class="w">simulator tour · ungraded</span></a>
     <a href="#lecture"><span class="n">Wk 1 · Mon</span><span class="t">Lecture</span><span class="w">~30 min, 3 parts</span></a>
     <a href="#debate"><span class="n">Wk 1 · Tue–Sat</span><span class="t">Concept Debate A</span><span class="w">graded · 10 pts</span></a>
-    <a href="#create"><span class="n">Wk 1 · Wed–Thu</span><span class="t">HOS 1 · Create / Scaffold</span><span class="w">Build · Create · 10 pts</span></a>
-    <a href="#evaluate"><span class="n">Wk 1 · Fri–Sun</span><span class="t">HOS 1 · Evaluate</span><span class="w">Build · Evaluate · 15 pts</span></a>
+    <a href="#create"><span class="n">Wk 1 · Wed–Thu</span><span class="t">AIC 1 · Create / Scaffold</span><span class="w">Build · Create · 10 pts</span></a>
+    <a href="#evaluate"><span class="n">Wk 1 · Fri–Sun</span><span class="t">AIC 1 · Evaluate</span><span class="w">Build · Evaluate · 15 pts</span></a>
     <a href="#check-theory"><span class="n">Wk 1 · any time</span><span class="t">Knowledge Check (theory)</span><span class="w">graded · 10 pts · no AI</span></a>
     <a href="#debate-b"><span class="n">Wk 2 · Tue–Sat</span><span class="t">Concept Debate B</span><span class="w">graded · 10 pts</span></a>
-    <a href="#analyze"><span class="n">Wk 2 · Mon–Tue</span><span class="t">HOS 1 · Analyze</span><span class="w">Build · Analyze · 15 pts</span></a>
-    <a href="#refine"><span class="n">Wk 2 · Wed–Thu</span><span class="t">HOS 1 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 20 pts · no AI</span></a>
-    <a href="#challenge"><span class="n">Wk 2 · Fri–Sun</span><span class="t">HOS 1 · Part B challenge</span><span class="w">Challenge · 40 pts</span></a>
+    <a href="#analyze"><span class="n">Wk 2 · Mon–Tue</span><span class="t">AIC 1 · Analyze</span><span class="w">Build · Analyze · 15 pts</span></a>
+    <a href="#refine"><span class="n">Wk 2 · Wed–Thu</span><span class="t">AIC 1 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 20 pts · no AI</span></a>
+    <a href="#challenge"><span class="n">Wk 2 · Fri–Sun</span><span class="t">AIC 1 · Part B challenge</span><span class="w">Challenge · 40 pts</span></a>
+    <a href="#postmortem"><span class="n">Wk 2 · end</span><span class="t">AIC 1 · Post Mortem</span><span class="w">in Understand · no AI</span></a>
     <a href="#check"><span class="n">Wk 2 · any time</span><span class="t">Knowledge Check (skill)</span><span class="w">graded · 10 pts · no AI</span></a>
   </div>
   <p class="small muted" style="margin-top:10px">Days are a suggested pacing for an online term, not fixed deadlines — your instructor's Brightspace dates win.</p>
@@ -91,15 +93,15 @@
 <!-- ========================= WEEK 1 ========================= -->
 <div class="week-tabs no-print" role="group" aria-label="Weeks"><button type="button" data-week="1" aria-controls="week-1">Week 1<span class="tab-sub"> · Part A: Build</span></button><button type="button" data-week="2" aria-controls="week-2">Week 2<span class="tab-sub"> · Part B: Apply</span></button><button type="button" class="show-all">Show both weeks</button></div>
 <div class="week-panel" id="week-1" data-week="1">
-<div class="part-banner"><b>Week 1 · Part A: Build</b><span>Lecture → Concept Debate A → HOS 1: Create → Evaluate → Knowledge Check (theory)</span></div>
-<div class="due-card"><h3>Week 1: what's due</h3><label><input type="checkbox" data-k="l1-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-ai"><span><a href="../start-here/ai-use.html">Read the AI Use Guide</a> <span class="muted">(about 5 min)</span></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-prev"><span><a href="#preview">Preview the build: the Agentic Loop Simulator guided tour</a> <span class="muted">(ungraded, about 15 min)</span></span><span class="when">before the lecture</span></label><label><input type="checkbox" data-k="l1-w0-1"><span><a href="#debate">Concept Debate A: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w0-cc"><span><a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l1-w0-2"><span><a href="#create">HOS 1 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w0-3"><span><a href="#evaluate">HOS 1 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w0-kc"><span><a href="#check-theory">Knowledge Check (theory) quiz, in Brightspace</a></span><span class="when">any time</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+<div class="part-banner"><b>Week 1 · Part A: Build</b><span>Lecture → Concept Debate A → AIC 1: Create → Evaluate → Knowledge Check (theory)</span></div>
+<div class="due-card"><h3>Week 1: what's due</h3><label><input type="checkbox" data-k="l1-w0-acct"><span><b>Check your account setup:</b> <a href="../start-here/accounts.html#github">GitHub account</a> and <a href="../start-here/accounts.html#google">free Gemini API key</a></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-ai"><span><a href="../start-here/ai-use.html">Read the AI Use Guide</a> <span class="muted">(about 5 min)</span></span><span class="when">before Mon</span></label><label><input type="checkbox" data-k="l1-w0-prev"><span><a href="#preview">Preview the build: the Agentic Loop Simulator guided tour</a> <span class="muted">(ungraded, about 15 min)</span></span><span class="when">before the lecture</span></label><label><input type="checkbox" data-k="l1-w0-1"><span><a href="#debate">Concept Debate A: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w0-cc"><span><a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1: the self-check</a> <span class="muted">(ungraded, about 10 min)</span></span><span class="when">before you build</span></label><label><input type="checkbox" data-k="l1-w0-2"><span><a href="#create">AIC 1 · Create / Scaffold: your prompt + a screenshot of the app running</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w0-3"><span><a href="#evaluate">AIC 1 · Evaluate: your Evaluate note</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w0-kc"><span><a href="#check-theory">Knowledge Check (theory) quiz, in Brightspace</a></span><span class="when">any time</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
 
 
 <section class="module card" id="preview">
   <div class="module-head"><div class="module-icon">🗺️</div><div><h2>Preview the build</h2><div class="module-meta"><span class="tag">Before the lecture</span><span class="tag">about 15 min · ungraded</span><span class="tag blue">Guided simulator tour</span></div></div></div>
-  <p>Before the lecture, see what HOS 1 builds and watch it run. The Agentic Loop Simulator is a browser model of the finished HOS 1 app: no account, no API key and no code. A guided tour sets it up for you one scenario at a time, so you know what to look for in the lecture and in your own build.</p>
+  <p>Before the lecture, see what AIC 1 builds and watch it run. The Agentic Loop Simulator is a browser model of the finished AIC 1 app: no account, no API key and no code. A guided tour sets it up for you one scenario at a time, so you know what to look for in the lecture and in your own build.</p>
   <p>The model inside it is up close in the lecture: <a href="#fig-language-model">Fig 1</a> is a machine you step through as it picks one next word.</p>
-  <h3>What you'll build in HOS 1</h3>
+  <h3>What you'll build in AIC 1</h3>
   <p>A chat app with three separate pieces: a <strong>Streamlit</strong> frontend, a <strong>FastAPI</strong> backend that holds your Gemini API key, and the <strong>Gemini</strong> model. The backend declares one tool, <code>calculate(expression)</code>. When the model asks for it, your code runs the function and sends the result back.</p>
   <div class="table-wrap" tabindex="0"><table>
     <thead><tr><th>Piece</th><th>What it does</th><th>Where you see it in the simulator</th></tr></thead>
@@ -114,7 +116,7 @@
     <ul><li>Who actually runs the tool: the model or your backend?</li><li>Why does a missing tool produce a wrong answer instead of an error?</li><li>Why does the backend resend the whole history on every model call?</li></ul>
     <p>If one of these still doesn't make sense, re-read that part of the lecture, then ask your instructor before you build.</p>
   </div>
-  <p class="small muted">The simulator is a simplified model, not the real app: no real model, database or network calls. Your HOS 1 build in Codespaces is the real thing.</p>
+  <p class="small muted">The simulator is a simplified model, not the real app: no real model, database or network calls. Your AIC 1 build in Codespaces is the real thing.</p>
 </section>
 
 <section class="module card" id="lecture">
@@ -128,7 +130,7 @@
       <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/1mXrxc_sv1o" title="Front-end vs back-end: What's the difference? (Codecademy)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
       <p class="watch-note">A quick picture of the two halves of every app you'll build. Watch for what each half is responsible for, then read on for the part the video skips: why the API key has to live in the backend. <a href="https://www.youtube.com/watch?v=1mXrxc_sv1o" target="_blank" rel="noopener">Open on YouTube</a>. Auto-generated captions only; everything in it is covered in the notes below.</p>
     </div>
-    <p>Every app you build this term has the same three-piece shape. The <strong>frontend</strong> (a Streamlit page now, an Expo mobile app in HOS 4) collects the user's message and shows the reply. The <strong>backend</strong> (a FastAPI server) receives that message over HTTP, adds anything the model needs, calls the LLM, and runs any tools. The <strong>LLM</strong> (Google's Gemini, via the free API) receives text and returns text — or, as you'll see in Part 3, a structured request to run a function.</p>
+    <p>Every app you build this term has the same three-piece shape. The <strong>frontend</strong> (a Streamlit page now, an Expo mobile app in AIC 4) collects the user's message and shows the reply. The <strong>backend</strong> (a FastAPI server) receives that message over HTTP, adds anything the model needs, calls the LLM, and runs any tools. The <strong>LLM</strong> (Google's Gemini, via the free API) receives text and returns text — or, as you'll see in Part 3, a structured request to run a function.</p>
     <div class="arch" aria-label="Frontend to backend to LLM">
       <div class="box"><b>Frontend</b>Streamlit chat page. Runs on the user's machine / browser. <em>Anyone can inspect it.</em></div>
       <div class="arrow">⇄</div>
@@ -140,7 +142,7 @@
       <span class="label">Worked example</span>
       <p>A classmate ships a quick demo that calls Gemini directly from the frontend, with the API key pasted into the JavaScript. It works — and within an hour of posting the link, anyone who opens the browser's developer tools can copy the key and spend its quota. Moving the call behind a backend endpoint doesn't make the app smarter; it makes the secret unreachable. That's the first reason the backend exists. The second is that tools (Part 3) have to run somewhere trustworthy too.</p>
     </div>
-    <p>The two halves talk over <strong>HTTP</strong>. The frontend sends a request (<code>POST /chat</code> with a small JSON body such as <code>{"message": "What's 342 times 87?"}</code>) and the backend answers with JSON (<code>{"reply": "342 × 87 = 29,754."}</code>). That request and response are the <em>contract</em> between the halves. As long as it stays the same, you can replace either side: HOS 4 adds a phone app without touching the backend's AI code at all.</p>
+    <p>The two halves talk over <strong>HTTP</strong>. The frontend sends a request (<code>POST /chat</code> with a small JSON body such as <code>{"message": "What's 342 times 87?"}</code>) and the backend answers with JSON (<code>{"reply": "342 × 87 = 29,754."}</code>). That request and response are the <em>contract</em> between the halves. As long as it stays the same, you can replace either side: AIC 4 adds a phone app without touching the backend's AI code at all.</p>
     <div class="mistakes">
       <h4>⚠ Common mistakes</h4>
       <ul>
@@ -164,7 +166,7 @@
       <p class="deeper"><b>Go deeper (optional):</b> IBM Technology, <a href="https://www.youtube.com/watch?v=vD0E3EUb8-8" target="_blank" rel="noopener">Context Engineering vs. Prompt Engineering</a> (7:52). It explains the difference in the table below, then goes on to retrieval and agents, which you'll meet in Module 2 and later courses.</p>
     </div>
     <p>An LLM reads a sequence of <strong>tokens</strong> (word pieces) and predicts the next one, over and over, until it decides to stop. Everything it "knows" about your conversation is whatever fits in its <strong>context window</strong> for that single request — the system instruction, the chat history your backend chose to resend, any retrieved documents, and the user's latest message. It doesn't remember the last request unless you send it again.</p>
-    <p>Because each next token is <em>sampled</em> from a probability distribution, the same input can produce different outputs. That <strong>nondeterminism</strong> is a feature for writing and a hazard for software — it's why HOS 3 adds guardrails, and why "it worked once" is never a complete Evaluate.</p>
+    <p>Because each next token is <em>sampled</em> from a probability distribution, the same input can produce different outputs. That <strong>nondeterminism</strong> is a feature for writing and a hazard for software — it's why AIC 3 adds guardrails, and why "it worked once" is never a complete Evaluate.</p>
     <p>Step through one next-word pick below. Press <b>Draw</b> a few times at the same temperature: the odds stay the same, and the word doesn't always.</p>
 <!-- anatomy:language-model (built by figures/language-model/build.mjs; edit that, not this) -->
 <div class="iso anatomy-embed" id="fig-language-model" data-anatomy="language-model" data-theme="light">
@@ -1326,11 +1328,11 @@ place();
       <tr><td><b>Question it answers</b></td><td>How should I word the request?</td><td>What information should the model see at all?</td></tr>
       <tr><td><b>Where it lives</b></td><td>The instruction text</td><td>The backend code that assembles each request</td></tr>
       <tr><td><b>Example</b></td><td>"Answer in two sentences, cite the policy."</td><td>Resend only the last 6 turns; attach the 3 most relevant policy chunks; list the tools available.</td></tr>
-      <tr><td><b>Where you'll see it</b></td><td>Every HOS</td><td>Tool declarations (HOS 1), retrieval (HOS 2), trace review (HOS 4)</td></tr>
+      <tr><td><b>Where you'll see it</b></td><td>Every AIC</td><td>Tool declarations (AIC 1), retrieval (AIC 2), trace review (AIC 4)</td></tr>
     </table></div>
     <div class="callout">
       <span class="label">Worked example</span>
-      <p>A student types "I'm Dana," then "What's my name?" The Streamlit page shows both messages, so it looks like a conversation with memory. The model answers "I don't know your name." In the HOS 1 build, the frontend keeps the chat on screen, but each <code>POST /chat</code> sends only the latest message, and the backend starts a fresh request to Gemini every time. What the user sees and what the model sees are different things. If you want the model to remember, your backend has to send the earlier turns.</p>
+      <p>A student types "I'm Dana," then "What's my name?" The Streamlit page shows both messages, so it looks like a conversation with memory. The model answers "I don't know your name." In the AIC 1 build, the frontend keeps the chat on screen, but each <code>POST /chat</code> sends only the latest message, and the backend starts a fresh request to Gemini every time. What the user sees and what the model sees are different things. If you want the model to remember, your backend has to send the earlier turns.</p>
     </div>
     <div class="mistakes">
       <h4>⚠ Common mistakes</h4>
@@ -1446,14 +1448,14 @@ calculate_tool = {
   <details class="eg-toggle"><summary>See a weak vs. strong example</summary>
   <div class="two">
     <div class="eg weak"><span class="label">Weak synthesis</span>"Great points everyone, I think both sides are right and it depends on the situation."</div>
-    <div class="eg strong"><span class="label">Strong synthesis</span>"Priya's point that a routing rule is testable changed my mind for anything that writes data. I'd let the model choose read-only tools like <code>calculate</code>, but route anything that sends email or charges money through backend code that checks the request first — which is roughly what HOS 3's guardrails do. AI use: I asked Copilot Chat for the best objection to my position, and it pushed me to separate tools that read from tools that write."</div>
+    <div class="eg strong"><span class="label">Strong synthesis</span>"Priya's point that a routing rule is testable changed my mind for anything that writes data. I'd let the model choose read-only tools like <code>calculate</code>, but route anything that sends email or charges money through backend code that checks the request first — which is roughly what AIC 3's guardrails do. AI use: I asked Copilot Chat for the best objection to my position, and it pushed me to separate tools that read from tools that write."</div>
   </div>
   </details>
   <p class="small muted" style="margin-top:10px"><b>Grading:</b> Participation — initial position plus response to at least one peer (50%) · Writing — quality of argument and reasoning (50%). <a href="../reference/concept-debate-example.html">See a worked example: four students through one debate, with a timeline →</a> A reply that only affirms agreement without citing what it agrees with doesn't meet the Writing criterion.</p>
 </section>
 
 <section class="module card" id="create">
-  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span><span class="tag ok">AI: expected</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🛠️</div><div><h2>Create / Scaffold</h2><div class="module-meta"><span class="tag blue">AIC 1 · Stage 1 of 4</span><span class="tag blue">GitHub Codespaces</span><span class="tag ok">AI: expected</span></div></div></div>
   <div class="callout violet">
     <span class="label">Before you build</span>
     <p>Try the self-check at the end of <a href="../reference/concept-companion.html#module-1">Concept Companion, Module 1</a>. If you can answer every question, start building. If one stumps you, read that module first (about 10 minutes); it's quicker than untangling the same idea in the middle of the build.</p>
@@ -1464,7 +1466,7 @@ calculate_tool = {
   </div>
   <p>Get a working app running fast with an AI coding assistant. This is the starting point, not the deliverable — you don't hand-edit anything yet.</p>
   <ol>
-    <li>Open your own <b>HOS 1</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/hos01/accept?k=ai410" target="_blank" rel="noopener">accept the HOS 1 invite</a>) in GitHub Codespaces (its <code>.devcontainer</code> sets up Python for you).</li>
+    <li>Open your own <b>AIC 1</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/hos01/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 1 invite</a>) in GitHub Codespaces (its <code>.devcontainer</code> sets up Python for you).</li>
     <li>Put your free Gemini key in <code>backend/.env</code> as <code>GEMINI_API_KEY=…</code> — never in the frontend.</li>
     <li>Give your assistant the starting prompt below, and iterate until the chat app calls at least one tool.</li>
   </ol>
@@ -1478,12 +1480,12 @@ that's already open) — edit files here; do not create a new workspace or proje
 - frontend/: a Streamlit chat app that calls the backend's /chat endpoint over HTTP.
 - requirements.txt files for both.</code></pre>
   <p class="small"><b>Two gotchas caught in testing:</b> (1) Codespaces' default Copilot Chat agent likes to build in a <em>new</em> workspace instead of your starter folder — use Agent mode and say “this existing workspace” (the prompt does). (2) A <code>502 Bad Gateway</code> usually means the assistant picked a retired model like <code>gemini-2.5-flash</code>, which new keys can't use — set it to <code>gemini-3.8-flash</code> and restart the backend.</p>
-  <p class="small">Full step-by-step instructions, troubleshooting, and the exact submission list are in the <a href="hos-guide.html">HOS 1 hands-on guide</a>. Unsure what a generated file does? <a href="../reference/starter-code-walkthrough.html#hos1">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded under Build: Create (10 of the 100 HOS points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 1 repo.</p>
+  <p class="small">Full step-by-step instructions, troubleshooting, and the exact submission list are in the <a href="hos-guide.html">AIC 1 hands-on guide</a>. Unsure what a generated file does? <a href="../reference/starter-code-walkthrough.html#hos1">Starter code walkthrough →</a></p>
+  <p class="small"><b>Graded under Build: Create (10 of the 100 AIC points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 1 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
-  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 2 of 4</span><span class="tag">AI: your judgment</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔍</div><div><h2>Evaluate — the critical gate</h2><div class="module-meta"><span class="tag blue">AIC 1 · Stage 2 of 4</span><span class="tag">AI: your judgment</span></div></div></div>
   <div class="callout blue">
     <span class="label">Why this is the stage that counts</span>
     <p>Checking AI output is what working developers do. In Stack Overflow's developer surveys, the share of professional developers using AI tools rose to 85% by 2026, but only about 4 in 10 of them trusted its accuracy, and 98% said they check its output before using it (Makara &amp; Chhim, 2026). A test that breaks the app is a good result here: it shows you exactly where the AI's code is weakest.</p>
@@ -1504,18 +1506,18 @@ that's already open) — edit files here; do not create a new workspace or proje
 
 <section class="module card" id="check-theory">
   <div class="module-head"><div class="module-icon">🧠</div><div><h2>Knowledge check (theory)</h2><div class="module-meta"><span class="tag">KC01 · graded quiz in Brightspace · 10 pts</span><span class="tag bad">No AI</span></div></div></div>
-  <p>This week's Knowledge Check tests <b>theory</b>: the ideas from the <a href="#lecture">lecture</a> and readings. Take it in Brightspace any time this week, without AI. Retakes are unlimited and 80% passes.</p>
+  <p>This week's Knowledge Check tests <b>theory</b>: the ideas from the <a href="#lecture">lecture</a> and readings. Take it in Brightspace any time this week, without AI. It's pass/fail: 80% or better on any attempt earns all 10 points, below 80% earns 0, and attempts are unlimited.</p>
   <p class="small">Warm up with the quick check at the end of each lecture part. Next week's check moves on to <b>skill</b>: reading code, logs and output like your build's.</p>
 </section>
 
 <section class="module card" id="week1-done">
   <div class="module-head"><div class="module-icon">🏁</div><div><h2>End of Week 1</h2><div class="module-meta"><span class="tag">Before you stop for the week</span></div></div></div>
   <ul>
-    <li><b>HOS 1</b>: Create and Evaluate are in <code>NOTES.md</code>, with screenshots, committed and pushed.</li>
+    <li><b>AIC 1</b>: Create and Evaluate are in <code>NOTES.md</code>, with screenshots, committed and pushed.</li>
     <li>Knowledge Check (theory) taken in Brightspace.</li>
     <li>Concept Debate A: Stage 3 posted by Saturday.</li>
   </ul>
-  <p><strong>Week 2 starts Monday with HOS 1 · Analyze.</strong> Take the weekend: explaining the code goes better after a break from it. Ahead of schedule? You can start now; your Brightspace dates are what count.</p>
+  <p><strong>Week 2 starts Monday with AIC 1 · Analyze.</strong> Take the weekend: explaining the code goes better after a break from it. Ahead of schedule? You can start now; your Brightspace dates are what count.</p>
   <p><a class="btn" href="#analyze">Go to Week 2: Analyze →</a></p>
 </section>
 
@@ -1523,8 +1525,8 @@ that's already open) — edit files here; do not create a new workspace or proje
 </div>
 
 <div class="week-panel" id="week-2" data-week="2">
-<div class="part-banner"><b>Week 2 · Part B: Apply</b><span>Concept Debate B → HOS 1: Analyze → Understand &amp; Refine → Challenge → Knowledge Check (skill)</span></div>
-<div class="due-card"><h3>Week 2: what's due</h3><label><input type="checkbox" data-k="l1-w1-cdb"><span><a href="#debate-b">Concept Debate B: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w1-0"><span><a href="#analyze">HOS 1 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l1-w1-1"><span><a href="#refine">HOS 1 · Understand &amp; Refine: the second tool, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w1-2"><span><a href="#challenge">HOS 1 · Part B challenge, in your repo's <code>challenge/</code> folder</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w1-3"><span><a href="#check">Knowledge Check (skill) quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l1-w1-4"><span><a href="#project">Term Project: decide solo or group (Phase 1 is due end of Week 3)</a></span><span class="when">this week</span></label><label><input type="checkbox" data-k="l1-w1-5"><span><a href="#refine">HOS 1: push your final work to your repo (it is your submission)</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
+<div class="part-banner"><b>Week 2 · Part B: Apply</b><span>Concept Debate B → AIC 1: Analyze → Understand &amp; Refine → Challenge → Post Mortem → Knowledge Check (skill)</span></div>
+<div class="due-card"><h3>Week 2: what's due</h3><label><input type="checkbox" data-k="l1-w1-cdb"><span><a href="#debate-b">Concept Debate B: Stage 1 · Stage 2 · Stage 3</a></span><span class="when">Tue · Thu · Sat</span></label><label><input type="checkbox" data-k="l1-w1-0"><span><a href="#analyze">AIC 1 · Analyze: your walkthrough of one mechanism</a></span><span class="when">Mon–Tue</span></label><label><input type="checkbox" data-k="l1-w1-1"><span><a href="#refine">AIC 1 · Understand &amp; Refine: the second tool, by hand (no AI)</a></span><span class="when">Wed–Thu</span></label><label><input type="checkbox" data-k="l1-w1-2"><span><a href="#challenge">AIC 1 · Part B challenge, in your repo's <code>challenge/</code> folder</a></span><span class="when">Fri–Sun</span></label><label><input type="checkbox" data-k="l1-w1-pm"><span><a href="#postmortem">AIC 1 · Post Mortem: three short answers in <code>NOTES.md</code> (no AI)</a></span><span class="when">Sun</span></label><label><input type="checkbox" data-k="l1-w1-3"><span><a href="#check">Knowledge Check (skill) quiz, in Brightspace</a></span><span class="when">any time</span></label><label><input type="checkbox" data-k="l1-w1-4"><span><a href="#project">Term Project: decide solo or group (Phase 1 is due end of Week 3)</a></span><span class="when">this week</span></label><label><input type="checkbox" data-k="l1-w1-5"><span><a href="#refine">AIC 1: push your final work to your repo (it is your submission)</a></span><span class="when">end of week</span></label><p class="muted">Suggested days for an online term; your Brightspace dates win. Ticks stay in this browser.</p></div>
 
 <section class="module card" id="debate-b">
   <div class="module-head"><div class="module-icon">⚖️</div><div><h2>Concept Debate B</h2><div class="module-meta"><span class="tag">CD02 · Discussion board · 3 stages</span><span class="tag">AI: think, don't write</span></div></div></div>
@@ -1564,7 +1566,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 
 
 <section class="module card" id="analyze">
-  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why does this work?</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 3 of 4</span><span class="tag">AI: your own words</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🔬</div><div><h2>Analyze — why does this work?</h2><div class="module-meta"><span class="tag blue">AIC 1 · Stage 3 of 4</span><span class="tag">AI: your own words</span></div></div></div>
   <p>Pick <strong>one</strong> specific piece of the AI-generated code and explain, in your own words, exactly how it works. Depth beats breadth: one function explained well scores higher than a tour of every file.</p>
   <div class="pick" id="analyzePick">
     <button type="button" aria-pressed="false" data-k="loop"><b>The loop in <code>agent.py</code></b>What stops it? What happens if the model calls a tool twice in a row?</button>
@@ -1577,7 +1579,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 </section>
 
 <section class="module card" id="refine">
-  <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">HOS 1 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
+  <div class="module-head"><div class="module-icon">✋</div><div><h2>Understand &amp; Refine — by hand, no AI</h2><div class="module-meta"><span class="tag blue">AIC 1 · Stage 4 of 4</span><span class="tag bad">No AI assistant for this part</span></div></div></div>
   <p class="small"><b>Why by hand?</b> You can only judge AI output against know-how of your own, and that know-how comes from doing the work yourself. This stage is where it forms.</p>
   <p>Add a <strong>second tool</strong> yourself — for example <code>get_current_time(timezone)</code> or <code>convert_units(value, from_unit, to_unit)</code> — and prove the agent chooses the right tool for the right question.</p>
   <div class="progress-line" id="refineProgress">0 / 5 done</div>
@@ -1595,7 +1597,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 <section class="module card" id="challenge">
   <div class="module-head"><div class="module-icon">🧩</div><div><h2>Part B challenge — a clinic's booking agent</h2><div class="module-meta"><span class="tag blue">Build to spec · 60–90 min</span><span class="tag">AI: allowed, disclose</span></div></div></div>
   <p>Build the tools for Cascade Family Clinic's booking agent from a written spec with provided tests, make the one call the spec leaves open (what happens to a cancellation inside the $40 late-fee window), and argue which other tools the model should never get. Everything you need is in the <a href="application-challenge.html"><b>challenge guide</b></a>: the spec, the starter code, and the rubric.</p>
-  <p class="small"><b>Starter code:</b> it's already in the <code>challenge/</code> folder of your HOS 1 repo, so there's no separate invite. Work in the same Codespace you used for the build.</p>
+  <p class="small"><b>Starter code:</b> it's already in the <code>challenge/</code> folder of your AIC 1 repo, so there's no separate invite. Work in the same Codespace you used for the build.</p>
   <p class="small">Warm up first: the judgment is the same one the challenge asks for. Pick a business and sort its proposed tools.</p>
   <div class="pick" id="bizPick">
     <button type="button" aria-pressed="true" data-b="vet"><b>🐾 Neighborhood vet clinic</b>Appointment booking &amp; pet records</button>
@@ -1614,12 +1616,24 @@ that's already open) — edit files here; do not create a new workspace or proje
       <li><code>DECISIONS.md</code>: your late-cancellation rule, and your call on two more tools</li>
     </ul>
   </div>
-  <p class="small muted"><b>Graded under Challenge (40 of the 100 HOS points):</b> Design — a working solution that passes the tests, including your open decision (20) · Justify — your decision argued against clear criteria, naming the trade-off it accepts (20). It's graded with the rest of HOS 1, once, at the end of Week 2.</p>
+  <p class="small muted"><b>Graded under Challenge (40 of the 100 AIC points):</b> Design — a working solution that passes the tests, including your open decision (20) · Justify — your decision argued against clear criteria, naming the trade-off it accepts (20). It's graded with the rest of AIC 1, once, at the end of Week 2.</p>
+</section>
+
+<section class="module card" id="postmortem">
+  <div class="module-head"><div class="module-icon">🪞</div><div><h2>Post Mortem</h2><div class="module-meta"><span class="tag blue">About 150 words · 15 min</span><span class="tag bad">No AI</span></div></div></div>
+  <p>Once the challenge is done, look back at the whole of AIC 1 before your last push. Add a <code>## Post Mortem</code> section to your repo's <code>NOTES.md</code> and answer three questions in your own words, a few sentences each:</p>
+  <ol>
+    <li><b>Still unclear.</b> What is the one thing about this module's skill you still can't fully explain? Say where your understanding stops.</li>
+    <li><b>Next time.</b> What would you do differently if you started this AIC again, including how you used AI?</li>
+    <li><b>Carry forward.</b> What from this AIC will you use in your Term Project, and where?</li>
+  </ol>
+  <p class="small">Your Analyze walkthrough and challenge decisions already cover what worked and why. The Post Mortem is for the gaps and the plan: an honest "I still don't get X" earns full credit, and a vague one doesn't.</p>
+  <p class="small muted"><b>Graded under Understand (10 of the 100 AIC points),</b> together with your own explanation from Understand &amp; Refine. It's part of the same last push before the end of Week 2.</p>
 </section>
 
 <section class="module card" id="check">
   <div class="module-head"><div class="module-icon">✅</div><div><h2>Knowledge check (skill)</h2><div class="module-meta"><span class="tag">Practice · the graded KC02 is in Brightspace · 10 pts</span><span class="tag bad">No AI</span></div></div></div>
-  <p>This week's graded Knowledge Check tests <b>skill</b>: reading code, logs and output like your build's, and saying what happens next. Take it in Brightspace any time this week, without AI. Retakes are unlimited and 80% passes.</p>
+  <p>This week's graded Knowledge Check tests <b>skill</b>: reading code, logs and output like your build's, and saying what happens next. Take it in Brightspace any time this week, without AI. It's pass/fail: 80% or better on any attempt earns all 10 points, below 80% earns 0, and attempts are unlimited.</p>
   <p>Five quick questions. Then answer the two open questions below out loud or in a notes file — they're the ones your instructor will ask in the Week 2 check-in.</p>
   <div id="quiz"></div>
   <p class="score" id="quizScore" aria-live="polite"></p>
@@ -1632,13 +1646,13 @@ that's already open) — edit files here; do not create a new workspace or proje
 
 <section class="module card" id="project">
   <div class="module-head"><div class="module-icon">🚀</div><div><h2>Term Project — Phase 1 begins</h2><div class="module-meta"><span class="tag amber">Phase 1 due end of Week 3</span></div></div></div>
-  <p>The Term Project combines all 4 HOS into one agent-driven app, built on your own or in a group of up to three (four with instructor approval) and presented in Week 10. <b>Phase 1 runs Weeks 1–3:</b> decide whether you're working solo or in a group, and lock your scope: which HOS pieces your project combines and why, who owns each piece if you're in a group, and a rough architecture sketch. <b>Due end of Week 3:</b> System v0.3 in a GitHub repository with a README, and a one-page proposal with three key references. Curious what a finished project looks like? <a href="../module-5/example-project.html">Click through the Flashcard Coach example</a> (optional). A good first question: <strong>what are the 2–4 tools your project's agent would need, and which of them should require confirmation?</strong> That's this week's Part B challenge, pointed at your own idea.</p>
+  <p>The Term Project combines all 4 AICs into one agent-driven app, built on your own or in a group of up to three (four with instructor approval) and presented in Week 10. <b>Phase 1 runs Weeks 1–3:</b> decide whether you're working solo or in a group, and lock your scope: which AIC pieces your project combines and why, who owns each piece if you're in a group, and a rough architecture sketch. <b>Due end of Week 3:</b> System v0.3 in a GitHub repository with a README, and a one-page proposal with three key references. Curious what a finished project looks like? <a href="../module-5/example-project.html">Click through the Flashcard Coach example</a> (optional). A good first question: <strong>what are the 2–4 tools your project's agent would need, and which of them should require confirmation?</strong> That's this week's Part B challenge, pointed at your own idea.</p>
   <div class="table-wrap" tabindex="0"><table class="t project-map">
-    <tr><th>HOS</th><th>What it contributes to your project</th><th>Rehearse it in</th></tr>
-    <tr><td>HOS 1</td><td>The agent and its tools</td><td><a href="simulator.html">Agentic Loop Simulator</a></td></tr>
-    <tr><td>HOS 2</td><td>Answers grounded in your project's own documents</td><td><a href="../module-2/simulator.html">RAG Pipeline Simulator</a></td></tr>
-    <tr><td>HOS 3</td><td>Validated tool calls and slow work moved to a background job</td><td><a href="../module-3/simulator.html">Guardrails &amp; Queue Simulator</a></td></tr>
-    <tr><td>HOS 4</td><td>A mobile client, push notifications, and traces you can debug from</td><td><a href="../module-4/simulator.html">Push &amp; Observability Simulator</a></td></tr>
+    <tr><th>AIC</th><th>What it contributes to your project</th><th>Rehearse it in</th></tr>
+    <tr><td>AIC 1</td><td>The agent and its tools</td><td><a href="simulator.html">Agentic Loop Simulator</a></td></tr>
+    <tr><td>AIC 2</td><td>Answers grounded in your project's own documents</td><td><a href="../module-2/simulator.html">RAG Pipeline Simulator</a></td></tr>
+    <tr><td>AIC 3</td><td>Validated tool calls and slow work moved to a background job</td><td><a href="../module-3/simulator.html">Guardrails &amp; Queue Simulator</a></td></tr>
+    <tr><td>AIC 4</td><td>A mobile client, push notifications, and traces you can debug from</td><td><a href="../module-4/simulator.html">Push &amp; Observability Simulator</a></td></tr>
   </table></div>
   <p class="small">Phases, deliverables and rubrics: the Term Project section of the syllabus (in Brightspace).</p>
 </section>
@@ -1648,8 +1662,8 @@ that's already open) — edit files here; do not create a new workspace or proje
 <section class="card">
   <h2>Resources</h2>
   <ul>
-    <li><a href="hos-guide.html">HOS 1 hands-on guide</a> — the full build, stage by stage</li>
-    <li><a href="../reference/concept-companion.html">Concept Companion</a> — every concept to know before starting a HOS</li>
+    <li><a href="hos-guide.html">AIC 1 hands-on guide</a> — the full build, stage by stage</li>
+    <li><a href="../reference/concept-companion.html">Concept Companion</a> — every concept to know before starting an AIC</li>
     <li><a href="../start-here/accounts.html">Account &amp; Service Setup Guide</a> — free Gemini key, GitHub, Codespaces</li>
     <li><a href="simulator.html">Agentic Loop Simulator</a></li>
     <li>Next: <a href="../module-2/index.html">Module 2 lesson — Embeddings, Chunking &amp; RAG</a> →</li>
@@ -1706,7 +1720,7 @@ function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); loca
   upd();
 })();
 
-/* Debate side: Brightspace group -> side for HOS 1 (Group 1 = A) */
+/* Debate side: Brightspace group -> side for AIC 1 (Group 1 = A) */
 (function(){
   var sel=document.getElementById('teamInput'), out=document.getElementById('sideResult');
   var v=store('ai410-team'); if(v) sel.value=v;
@@ -1810,7 +1824,7 @@ wireChecklist('refineList','refineProgress','done','ai410-l1-refine');
 /* Quiz */
 (function(){
   var qs=[
-    ['Where should GEMINI_API_KEY live in the HOS 1 app?',['In the Streamlit frontend so it can call Gemini directly','In the backend .env file, read only by the FastAPI server','In the tool declaration so the model can see it','In the chat history'],1,'The backend is the only piece users can\'t inspect. Anything shipped to the frontend is public.'],
+    ['Where should GEMINI_API_KEY live in the AIC 1 app?',['In the Streamlit frontend so it can call Gemini directly','In the backend .env file, read only by the FastAPI server','In the tool declaration so the model can see it','In the chat history'],1,'The backend is the only piece users can\'t inspect. Anything shipped to the frontend is public.'],
     ['When the model "calls" the calculate tool, what actually happens first?',['Gemini runs the Python function on Google\'s servers','Streamlit evaluates the expression','The tool result is guessed and verified later','The model returns a structured function call; your backend runs the function'],3,'The model only asks. Your code runs the function and sends the result back.'],
     ['Why can the same question get two different answers?',['Tokens are sampled from a probability distribution','The API key rotates','The tool declaration changes','FastAPI caches responses'],0,'Nondeterminism comes from sampling — it\'s why a single successful test isn\'t a full Evaluate.'],
     ['Which is context engineering rather than prompt engineering?',['Rewording "be concise" as "answer in two sentences"','Adding "please" to the instruction','Choosing to resend only the last 6 turns and attach the tool list','Using a friendlier tone'],2,'Context engineering decides what information reaches the model at all.'],

@@ -42,6 +42,9 @@ def archive(label, title, extras):
         s = (ROOT / rel).read_text(encoding='utf-8')
         s = re.sub(r'((?:href|src)=")((?:\.\./)*)(assets/files/)',
                    lambda m: m.group(1) + '../../' + m.group(2) + m.group(3), s)
+        # links to the live archive index point at the archive's own index instead
+        s = re.sub(r'((?:href)=")((?:\.\./)*)archive/index\.html"',
+                   lambda m: m.group(1) + '../' * (depth + 1) + 'index.html"', s)
         s = s.replace('<head>', '<head>\n<meta name="robots" content="noindex">', 1)
         banner = BANNER.format(title=html.escape(title), current=up + rel.as_posix(),
                                index='../' * (depth + 1) + 'index.html')

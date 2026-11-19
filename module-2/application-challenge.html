@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 410 — HOS 2 Part B Challenge: Riverbend College Help-Desk Retrieval</title>
+    <title>AI 410 — AIC 2 Part B Challenge: Riverbend College Help-Desk Retrieval</title>
     <link rel="stylesheet" href="../assets/course.css">
     <style>
         .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
@@ -54,9 +54,9 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI 410 · Module 2 · HOS 2 Part B: Apply</div>
-    <h1>HOS 2 Part B Challenge: Riverbend College Help-Desk Retrieval</h1>
-    <p class="lede">Take the retrieval skill from HOS 2 to someone else's pipeline: measure how often it actually finds the answer, improve it with your own chunking, and decide when the bot should stop answering and send the student to a person.</p>
+    <div class="eyebrow">AI 410 · Module 2 · AIC 2 Part B: Apply</div>
+    <h1>AIC 2 Part B Challenge: Riverbend College Help-Desk Retrieval</h1>
+    <p class="lede">Take the retrieval skill from AIC 2 to someone else's pipeline: measure how often it actually finds the answer, improve it with your own chunking, and decide when the bot should stop answering and send the student to a person.</p>
     <div class="chips"><span class="chip">Est. 60–90 min</span><span class="chip">Outcome 2</span><span class="chip">Module 2 · end of Week 4</span><span class="chip">Individual</span><span class="chip">AI assistant allowed — disclose it</span><span class="chip">5% of final grade</span></div>
   </div>
 </section>
@@ -82,7 +82,7 @@
 <section class="module card" id="scenario">
   <div class="module-head"><div class="module-icon">🏢</div><div><h2>The scenario</h2></div></div>
         <div class="scenario">
-            <p><strong>Riverbend College</strong> (fictional) has an IT help-desk bot that answers student questions from six knowledge-base articles: passwords, MFA, Wi-Fi, printing, software, and Canvas. It's the same pipeline you reviewed in the HOS 2 lesson's warm-up, now runnable. It never crashes, and nobody knows how often it answers from the wrong passage.</p>
+            <p><strong>Riverbend College</strong> (fictional) has an IT help-desk bot that answers student questions from six knowledge-base articles: passwords, MFA, Wi-Fi, printing, software, and Canvas. It's the same pipeline you reviewed in the AIC 2 lesson's warm-up, now runnable. It never crashes, and nobody knows how often it answers from the wrong passage.</p>
             <p>You get the pipeline, the articles, and <code>eval_set.json</code>: 16 real student questions with the article and phrase that answers each one, plus 4 questions the articles <em>can't</em> answer.</p>
             <ul>
                 <li><strong>The tests use an offline embedder</strong> (<code>LocalEmbedder</code> counts words) so everyone gets the same numbers. It's cruder than Gemini's, on purpose: some of its misses are ones real embeddings would fix, and telling those apart is part of the challenge.</li>
@@ -118,7 +118,7 @@
   <div class="module-head"><div class="module-icon">🪜</div><div><h2>Steps &amp; what to submit</h2></div></div>
         <div class="stage-block">
             <h3><span class="stage-num">1</span>Open it and run the tests</h3>
-            <p>Open your HOS 2 repo in the same Codespace you used for the build, and move into the challenge folder. Everything it needs is already installed. Then run:</p>
+            <p>Open your AIC 2 repo in the same Codespace you used for the build, and move into the challenge folder. Everything it needs is already installed. Then run:</p>
 <pre tabindex="0">cd challenge</pre>
             <p>and:</p>
 <pre tabindex="0">pytest</pre>
@@ -144,7 +144,7 @@
         </div>
 
         <div class="submit-box">
-            <h5>What goes in <code>challenge/</code> (pushed with your HOS 2 repo)</h5>
+            <h5>What goes in <code>challenge/</code> (pushed with your AIC 2 repo)</h5>
             <ul>
                 <li><code>evaluate.py</code> and <code>tests/test_my_rules.py</code></li>
                 <li>The output of <code>pytest</code>, saved as <code>challenge/pytest-output.txt</code> (all tests passing, including yours)</li>
@@ -156,16 +156,17 @@
 
 <section class="module card" id="grading">
   <div class="module-head"><div class="module-icon">📊</div><div><h2>How it's graded</h2></div></div>
-        <p>The challenge is the <b>Challenge half of the HOS 2 grade: 40 of its 100 points</b>, graded with the build at the end of Week 4. Each criterion is graded on part of what you push, at one of three levels.</p>
+        <p>The challenge is the <b>Challenge half of the AIC 2 grade: 40 of its 100 points</b>, graded with the build at the end of Week 4. Each criterion is graded on part of what you push, at one of three levels.</p>
+        <p>When the challenge is done, finish AIC 2 with the <a href="index.html#postmortem"><b>Post Mortem</b></a>: three short answers in <code>NOTES.md</code>, written without AI and graded under the build's Understand criterion.</p>
         <div class="table-scroll">
         <div class="table-wrap" tabindex="0"><table class="mini rubric">
             <tr><th>Criterion</th><th>Weight</th><th>Graded on</th><th>Full</th><th>Partial</th><th>Missing</th></tr>
-            <tr><td><strong>Design</strong></td><td class="wt">20 pts</td><td><code>evaluate.py</code>, your tests, and the <code>pytest</code> output; and <code>REPORT.md</code></td><td>All provided tests pass, and your own tests check your threshold on real questions, including the closest call. Your chunking runs on the help desk's articles and beats the vendor, with the misses listed.</td><td>Most provided tests pass, or your own tests use only easy questions. It runs, but the report is missing the sweep or the misses.</td><td>It doesn't run, restates the HOS build, or has no tests of your own.</td></tr>
+            <tr><td><strong>Design</strong></td><td class="wt">20 pts</td><td><code>evaluate.py</code>, your tests, and the <code>pytest</code> output; and <code>REPORT.md</code></td><td>All provided tests pass, and your own tests check your threshold on real questions, including the closest call. Your chunking runs on the help desk's articles and beats the vendor, with the misses listed.</td><td>Most provided tests pass, or your own tests use only easy questions. It runs, but the report is missing the sweep or the misses.</td><td>It doesn't run, restates the AIC build, or has no tests of your own.</td></tr>
             <tr><td><strong>Justify</strong></td><td class="wt">20 pts</td><td><code>DECISIONS.md</code>, section 1; and <code>DECISIONS.md</code>, section 2 (why the misses happen)</td><td>A clear threshold, judged against stated criteria (which mistake is worse, for whom), using the sweep's numbers, with a threshold you rejected and why. Every miss is sorted by cause, with a specific question for each cause and what would fix it.</td><td>A threshold with a reason, but no numbers or no rejected alternative. Causes are named, but not tied to specific questions.</td><td>No rule, no justification, or no breakdown.</td></tr>
         </table></div>
         </div>
 
-        <p style="font-size:0.88rem;color:var(--muted)">How this differs from HOS 2's Understand &amp; Refine: there you added a document to your own pipeline, by hand. Here the pipeline, the articles, and the decisions are someone else's, AI help is allowed, and half the challenge grade (Justify) is for the calls you make.</p>
+        <p style="font-size:0.88rem;color:var(--muted)">How this differs from AIC 2's Understand &amp; Refine: there you added a document to your own pipeline, by hand. Here the pipeline, the articles, and the decisions are someone else's, AI help is allowed, and half the challenge grade (Justify) is for the calls you make.</p>
 </section>
 
 <section class="module card" id="snags">
@@ -181,7 +182,7 @@
 </section>
 
 <div class="guide-nav">
-            <a href="hos-guide.html">← HOS 2 guide</a>
+            <a href="hos-guide.html">← AIC 2 guide</a>
             <a href="index.html">Module 2 lesson →</a>
         </div>
 

@@ -4,7 +4,7 @@ The interactive lessons, hands-on guides, simulators and reference pages for **A
 
 **Live site:** https://cityuseattle.github.io/ai410/
 
-Students reach these pages from Brightspace. Graded work is submitted in Brightspace, except the HOS: each HOS is graded straight from the student's GitHub Classroom repository, where the build happens in GitHub Codespaces.
+Students reach these pages from Brightspace. Graded work is submitted in Brightspace, except the AIC: each AIC is graded straight from the student's GitHub Classroom repository, where the build happens in GitHub Codespaces.
 
 ## What's where
 
@@ -15,9 +15,9 @@ Students reach these pages from Brightspace. Graded work is submitted in Brights
 | `start-here/tools.html` | Tools you'll use all term |
 | `start-here/ai-use.html` | AI Use Guide: the rule for each activity |
 | `module-N/index.html` | Module N lesson (N = 1–4) |
-| `module-N/hos-guide.html` | HOS N (Hands-On Skill) guide |
+| `module-N/hos-guide.html` | AIC N (AI Challenge) guide |
 | `module-N/simulator.html` | Module N simulator |
-| `module-N/application-challenge.html` | HOS N Part B challenge guide (the path keeps its old name because Brightspace links to it) |
+| `module-N/application-challenge.html` | AIC N Part B challenge guide (the path keeps its old name because Brightspace links to it) |
 | `module-5/index.html` | Term Project |
 | `module-5/example-project.html` | Example Term Project (Flashcard Coach): interactive demo |
 | `reference/` | Concept Companion, starter-code walkthrough, Concept Debate example |

@@ -96,7 +96,7 @@ function plate() {
   const label = { x: 28, y: 44, w: 44, d: 16, r: 1.2 };
   out.push(S(k.slabOf(label, 0, 0.8, P, 3), { tone: "mid", crease: "none" }));
   out.push(L(k.planOutline(k.insetPlan(label, 1.6), 0.8, P, 3), { tone: "faint" }));
-  out.push(topText(label.x + 5, label.y + 7, 0.8, "HOS 4 · PUSH", 3, "mid"));
+  out.push(topText(label.x + 5, label.y + 7, 0.8, "AIC 4 · PUSH", 3, "mid"));
   out.push(topText(label.x + 5, label.y + 12, 0.8, "push/send", 1.9, "lo"));
   out.push(screws([[label.x + 2.6, label.y + 2.6], [label.x + label.w - 2.6, label.y + label.d - 2.6]], 0.8, 0.4));
   return out.join("");
@@ -300,7 +300,7 @@ const PARTS = [
   { id: "device", step: 3, title: "4 · device_id on the upload", fact: "device_id · whom the job should notify", text: "The upload carries device_id, so when the job finishes the backend knows which token to use. Forget it, and the job finishes fine with no one to notify." },
   { id: "backend", step: 4, title: "5 · Backend → Expo", fact: "push/send · 200 even when delivery failed", text: "One HTTP request to Expo's push service. The status code is 200 even for a stale token; the real outcome is in the body: status ok, or error with DeviceNotRegistered. Read the body." },
   { id: "platform", step: 5, title: "6 · Apple / Google → phone", fact: "APNs · FCM · the only way onto a phone", text: "Phones only accept pushes from their platform's service. Expo hands the message to Apple's or Google's, which delivers it, even to a closed app." },
-  { id: "worker", step: 3, title: "Worker", fact: "job · finished, whatever happens next", text: "The background job from HOS 3. Its status says finished in every scenario here, which is why a broken chain is so easy to miss." },
+  { id: "worker", step: 3, title: "Worker", fact: "job · finished, whatever happens next", text: "The background job from AIC 3. Its status says finished in every scenario here, which is why a broken chain is so easy to miss." },
 ];
 
 const unit = (vector) => { const o = at([0, 0, 0]); const p = at(vector); return [p[0] - o[0], p[1] - o[1]]; };

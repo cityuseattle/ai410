@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 410 — HOS 4 Hands-On Guide: Mobile Client, Push &amp; Observability</title>
+    <title>AI 410 — AIC 4 Hands-On Guide: Mobile Client, Push &amp; Observability</title>
     <link rel="stylesheet" href="../assets/course.css">
     <style>
         .draft-banner { background:var(--amber-bg); border:2px solid var(--amber); border-radius:8px; padding:14px 18px; margin:0 0 22px; font-size:0.88rem; }
@@ -40,9 +40,9 @@
 </header>
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">AI 410 · Module 4 · Hands-On Skill (HOS) guide</div>
-    <h1>HOS 4: Mobile Client, Push &amp; Observability</h1>
-    <p class="lede">Take HOS 3's app all the way to production shape: a real mobile client that gets notified when work finishes, and full visibility into what the agent is actually doing on every request.</p>
+    <div class="eyebrow">AI 410 · Module 4 · AI Challenge (AIC) guide</div>
+    <h1>AIC 4: Mobile Client, Push &amp; Observability</h1>
+    <p class="lede">Take AIC 3's app all the way to production shape: a real mobile client that gets notified when work finishes, and full visibility into what the agent is actually doing on every request.</p>
     <div class="chips"><span class="chip">Est. 2.5–3 hrs</span><span class="chip">Outcomes 4 &amp; 5</span><span class="chip">Module 4 · Weeks 7–8</span><span class="chip">10% of final grade</span></div>
   </div>
 </section>
@@ -70,19 +70,19 @@
 
         <h4>What you'll need</h4>
         <ul class="needs-list">
-            <li><strong>Starter code:</strong> your <b>HOS 4</b> repo, created when you <a href="https://classroom50.org/cityuseattle/ai410/assignments/hos04/accept?k=ai410" target="_blank" rel="noopener">accept the HOS 4 invite</a> — your HOS 3 app, already working. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos4">starter code walkthrough for this HOS</a>.</li>
+            <li><strong>Starter code:</strong> your <b>AIC 4</b> repo, created when you <a href="https://classroom50.org/cityuseattle/ai410/assignments/hos04/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 4 invite</a> — your AIC 3 app, already working. Not sure what a file does? See the <a href="../reference/starter-code-walkthrough.html#hos4">starter code walkthrough for this AIC</a>.</li>
             <li>A free <a href="https://cloud.langfuse.com" target="_blank" rel="noopener">Langfuse</a> project (no credit card)</li>
             <li>The <strong>Expo Go</strong> app on your phone, or an emulator — no Xcode/Android Studio required</li>
             <li>A free <a href="https://expo.dev/signup" target="_blank" rel="noopener">Expo account</a>, logged in on <strong>both</strong> your terminal (<code>npx expo login</code>) and the Expo Go app on your phone (tap the avatar icon → sign in) — on iOS, current Expo Go won't load the project at all without this. See the <a href="../start-here/accounts.html#expo">Account &amp; Service Setup Guide</a> for the exact steps.</li>
             <li>An AI coding assistant available in your environment</li>
         </ul>
 
-        <p>This guide covers the <strong>build</strong>: Part A (Create / Scaffold, Evaluate) and the first half of Part B (Analyze, Understand &amp; Refine). It is graded across those stages instead of on code correctness alone, for <strong>60 of the 100 HOS points</strong>: Create 10, Evaluate 15, Analyze 15, Apply (the change you make by hand in Understand &amp; Refine) 10 and Understand (your own explanation of it) 10. The other 40 points are the <a href="application-challenge.html">Part B challenge</a>, in the <code>challenge/</code> folder of the same repo. The whole HOS is graded once, at the end of Week 8. Each stage below says exactly what to submit. Everything goes in your Module 4 GitHub Classroom repo: written work under the matching heading in <code>NOTES.md</code>, screenshots in <code>screenshots/</code>. Commit and push as you go. By the end of Week 8, push your final work: your repo is your submission, so there is nothing to submit in Brightspace, and your last push before the deadline is what counts.</p>
+        <p>This guide covers the <strong>build</strong>: Part A (Create / Scaffold, Evaluate) and the first half of Part B (Analyze, Understand &amp; Refine). It is graded across those stages instead of on code correctness alone, for <strong>60 of the 100 AIC points</strong>: Create 10, Evaluate 15, Analyze 15, Apply (the change you make by hand in Understand &amp; Refine) 10 and Understand (your own explanation of it, plus the short <a href="index.html#postmortem">Post Mortem</a> you write after the challenge) 10. The other 40 points are the <a href="application-challenge.html">Part B challenge</a>, in the <code>challenge/</code> folder of the same repo. The whole AIC is graded once, at the end of Week 8. Each stage below says exactly what to submit. Everything goes in your Module 4 GitHub Classroom repo: written work under the matching heading in <code>NOTES.md</code>, screenshots in <code>screenshots/</code>. Commit and push as you go. By the end of Week 8, push your final work: your repo is your submission, so there is nothing to submit in Brightspace, and your last push before the deadline is what counts.</p>
 </section>
 
 <section class="module card" id="create">
   <div class="module-head"><div class="module-icon">🛠️</div><div><h2>1 · Create / Scaffold</h2></div></div>
-            <p class="stage-tagline">Graded under Build: Create, 10 of the 100 HOS points. The AI-assisted starting point, not the deliverable.</p>
+            <p class="stage-tagline">Graded under Build: Create, 10 of the 100 AIC points. The AI-assisted starting point, not the deliverable.</p>
             <div class="not-graded"><b>Plan before you prompt (2 minutes, ungraded).</b> Before you paste the prompt, jot a few lines of your own plan: which files you expect, where the key logic should live, and one thing you think the assistant might get wrong. When it's done, compare. Where its version differs from yours is where to look first in Evaluate. Nothing to submit; this doesn't change how Create / Scaffold is graded.</div>
             <p>Prompt your AI assistant to add both pieces:</p>
 <pre tabindex="0">Add a mobile client and observability to this app:
@@ -155,7 +155,7 @@
         <p>These all came up in testing, so expect to hit one or two. A snag doesn't mean you did it wrong. Most show how the system really works, and the ones marked <b>What it teaches</b> make good material for your Analyze or Understand writing.</p>
         <div class="snag-box">
             <ul>
-                <li><strong><code>npm: command not found</code></strong> — this HOS's <code>.devcontainer/devcontainer.json</code> installs Node.js automatically, but only when the container is <em>built</em>. If this Codespace was created earlier (e.g. carried over from an earlier HOS that never needed Node), it won't have picked up that change. Command Palette (<code>Cmd/Ctrl+Shift+P</code>) → <strong>"Codespaces: Rebuild Container"</strong> — your files are untouched, only the container's installed tools get reapplied from the config.</li>
+                <li><strong><code>npm: command not found</code></strong> — this AIC's <code>.devcontainer/devcontainer.json</code> installs Node.js automatically, but only when the container is <em>built</em>. If this Codespace was created earlier (e.g. carried over from an earlier AIC that never needed Node), it won't have picked up that change. Command Palette (<code>Cmd/Ctrl+Shift+P</code>) → <strong>"Codespaces: Rebuild Container"</strong> — your files are untouched, only the container's installed tools get reapplied from the config.</li>
                 <li><strong>"Project is incompatible with this version of Expo Go"</strong> — Expo Go on your phone only ever supports the newest Expo SDK, and it updates itself, so this project's pinned version can fall behind. Fix inside <code>mobile/</code>: <code>npx expo install expo@latest</code>, then <code>npx expo install --fix</code> to realign every other package, then restart <code>npx expo start --tunnel</code>. This will happen again after any future Expo SDK release — same two commands fix it.</li>
                 <li><strong>Project won't load in Expo Go at all — stuck on a loading/login screen</strong> — unlike the push-token issue below, this blocks everything, chat included. Current Expo Go on iOS requires the same Expo account logged in on <em>both</em> your terminal (<code>npx expo login</code>) and the Expo Go app on your phone (tap the avatar icon on its home screen → sign in). Logged in as different accounts, or only on one side, and the project won't open.</li>
                 <li><strong>App crashes (or a red error screen) the moment it asks for a push token</strong> — <code>getExpoPushTokenAsync()</code> requires an EAS project ID as of SDK 49+, and a fresh project doesn't have one yet. Run <code>npx eas init</code> once inside <code>mobile/</code> (free — sign in with the Expo account above; no credit card) and it writes the ID into <code>app.json</code> for you. Chat works fine without this; only push notifications need it.</li>
@@ -181,7 +181,7 @@ app.add_middleware(
 </section>
 
 <div class="guide-nav">
-            <a href="../module-3/hos-guide.html">← HOS 3</a>
+            <a href="../module-3/hos-guide.html">← AIC 3</a>
             <a href="index.html">Module 4 lesson →</a>
         </div>
 

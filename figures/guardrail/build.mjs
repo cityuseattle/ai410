@@ -9,7 +9,7 @@
 // attempt fails, the clip pins {"error": ...} instead and the card goes back as data: the request
 // stays alive and the model explains, rather than an exception becoming an HTTP 500.
 //
-// The schema, retry loop and error are the lecture's own (Part 2's call_with_guardrail, HOS 3's
+// The schema, retry loop and error are the lecture's own (Part 2's call_with_guardrail, AIC 3's
 // CalculateArgs). The odds panel is the lecture's arithmetic: 30% of first attempts invalid,
 // attempts independent; with the error fed back, the Module 3 simulator's assumption that a retry
 // fails 0.3x as often.
@@ -121,7 +121,7 @@ function plate() {
   const label = { x: 58, y: 28, w: 56, d: 15, r: 1.2 };
   out.push(S(k.slabOf(label, 0, 0.8, P, 3), { tone: "mid", crease: "none" }));
   out.push(L(k.planOutline(k.insetPlan(label, 1.6), 0.8, P, 3), { tone: "faint" }));
-  out.push(topText(label.x + 5, label.y + 7, 0.8, "HOS 3 · GUARDRAIL", 3, "mid"));
+  out.push(topText(label.x + 5, label.y + 7, 0.8, "AIC 3 · GUARDRAIL", 3, "mid"));
   out.push(topText(label.x + 5, label.y + 12, 0.8, "guardrails.py", 2.4, "lo"));
   out.push(L(k.lineOnTop([label.x + 25, label.y + 11.2], [label.x + 52, label.y + 11.2], 0.8, P), { tone: "faint", free: true }));
   out.push(screws([[label.x + 2.6, label.y + 2.6], [label.x + label.w - 2.6, label.y + label.d - 2.6]], 0.8, 0.4));
@@ -334,7 +334,7 @@ const svg = k.figureSvg({ width: W, height: H, label: FIGURE_LABEL, body: BODY }
 // ---------- parts ----------
 const PARTS = [
   { id: "model", phase: "issue", title: "Model", fact: "model · each attempt is another roll", text: "Gemini decides the tool's arguments. It is nondeterministic, so the same request can come back valid one time and malformed the next. Each card it issues is one attempt." },
-  { id: "gauge", phase: "check", title: "Schema gauge", fact: "CalculateArgs · expression must exist, must be a string", text: "model_validate() checks the arguments against a Pydantic schema before anything runs. HOS 3's CalculateArgs only checks shape: \"25*4\" passes even if the user asked for 25 + 4. A schema can't check meaning." },
+  { id: "gauge", phase: "check", title: "Schema gauge", fact: "CalculateArgs · expression must exist, must be a string", text: "model_validate() checks the arguments against a Pydantic schema before anything runs. AIC 3's CalculateArgs only checks shape: \"25*4\" passes even if the user asked for 25 + 4. A schema can't check meaning." },
   { id: "gate", phase: "reject", title: "Gate", fact: "gate · valid → tool, invalid → retry", text: "A valid card goes straight on to the tool. An invalid one never reaches it: the gate turns it onto the return loop." },
   { id: "tool", phase: "run", title: "Tool", fact: "calculate() · only ever sees valid arguments", text: "Your calculate function. Without the guardrail, malformed arguments reach it, it raises, and the user gets an HTTP 500." },
   { id: "clip", phase: "hint", title: "Error clip", fact: "correction_hint · the error goes back with the retry", text: "Pins the ValidationError to the card, so the next attempt sees what was wrong. Set the lever to BLIND and it sends the same request again, which tends to repeat the mistake. After the last attempt it pins {\"error\": …} instead." },
@@ -693,7 +693,7 @@ const plateBody = k.plateHtml({
     { mark: "lit", label: "The attempt lamps, and the error tag on the last attempt" },
     { mark: "raised", label: "Gauge and gate: invalid arguments never reach the tool" },
   ],
-  caption: `A guardrail around one tool call, using HOS 3's CalculateArgs schema and max_retries = 2 to start. The three requests are scripted so every outcome appears: valid at once, fixed by a retry, and invalid every time. The odds under the figure are the lecture's arithmetic: 30% of first attempts invalid and attempts independent, so blind retries give about 1.4 model calls per request and leave 2.7% failing. With the error fed back, they use the Module 3 simulator's assumption that a retry fails 0.3 times as often.`,
+  caption: `A guardrail around one tool call, using AIC 3's CalculateArgs schema and max_retries = 2 to start. The three requests are scripted so every outcome appears: valid at once, fixed by a retry, and invalid every time. The odds under the figure are the lecture's arithmetic: 30% of first attempts invalid and attempts independent, so blind retries give about 1.4 model calls per request and leave 2.7% failing. With the error fed back, they use the Module 3 simulator's assumption that a retry fails 0.3 times as often.`,
   body: `<div class="iso-stage" tabindex="0" role="slider" aria-label="Guardrail. Arrow keys step one request through validation and retries; R starts the next request; [ and ] change max_retries; B switches between feeding the error back and blind retries; hover or tap a part to read about it." aria-valuemin="0" aria-valuemax="2" aria-valuenow="0" aria-valuetext="${first}">${svg}</div>
 <div class="pc-controls"><button type="button" class="pc-btn" data-prev aria-label="Back one step" disabled>←</button><span class="pc-group pc-right"><button type="button" class="pc-btn" data-fewer aria-label="Fewer retries (lower max_retries)" aria-keyshortcuts="[">−</button><span data-r data-value>retries ${MAXR0}</span><button type="button" class="pc-btn" data-more aria-label="More retries (raise max_retries)" aria-keyshortcuts="]">+</button></span><button type="button" class="pc-btn" data-feed aria-pressed="false" aria-keyshortcuts="B">Blind retries</button><button type="button" class="pc-btn" data-request aria-keyshortcuts="R">Next request</button><button type="button" class="pc-btn pc-next" data-next><span>Validate</span> →</button>${EXPAND_BUTTON}<span class="pc-live" aria-live="polite" data-live></span></div>`,
 });

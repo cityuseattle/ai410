@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AI 410 example Term Project: Flashcard Coach, a fictional finished project you can click through. An interactive demo of all 4 HOS working together, its three releases, and a demo video storyboard.">
+<meta name="description" content="AI 410 example Term Project: Flashcard Coach, a fictional finished project you can click through. An interactive demo of all 4 AICs working together, its three releases, and a demo video storyboard.">
 <title>Example Term Project: Flashcard Coach</title>
 <link rel="stylesheet" href="../assets/course.css">
 <style>
@@ -79,7 +79,7 @@
   <div class="hero-inner">
     <div class="eyebrow">AI 410 · Module 5 · Example Term Project</div>
     <h1>Example Term Project: Flashcard Coach</h1>
-    <p class="lede">A fictional, finished Term Project you can click through. See all four HOS working together in one app, play its live demo step by step with what the presenter says, and see what each of its three releases contained.</p>
+    <p class="lede">A fictional, finished Term Project you can click through. See all four AICs working together in one app, play its live demo step by step with what the presenter says, and see what each of its three releases contained.</p>
     <div class="chips"><span class="chip">Outcomes O1–O5</span><span class="chip">Interactive demo</span><span class="chip">3 releases: v0.3 · v0.7 · v1.0</span><span class="chip">Demo video storyboard</span></div>
   </div>
 </section>
@@ -95,18 +95,18 @@
   </div>
 </nav>
 
-<p class="sim-note" style="margin-top:18px">⚠ Illustrative example only. Flashcard Coach, its team and its numbers are made up, and the demo is a scripted HTML model: no real model, database or network calls. Your project doesn't have to look like this. It has to combine all four HOS in an app a real user would want.</p>
+<p class="sim-note" style="margin-top:18px">⚠ Illustrative example only. Flashcard Coach, its team and its numbers are made up, and the demo is a scripted HTML model: no real model, database or network calls. Your project doesn't have to look like this. It has to combine all four AICs in an app a real user would want.</p>
 
 <section class="module card" id="overview">
-  <div class="module-head"><div class="module-icon">🗂️</div><div><h2>The project at a glance</h2><div class="module-meta"><span class="tag">Group of three</span><span class="tag blue">All 4 HOS</span></div></div></div>
+  <div class="module-head"><div class="module-icon">🗂️</div><div><h2>The project at a glance</h2><div class="module-meta"><span class="tag">Group of three</span><span class="tag blue">All 4 AICs</span></div></div></div>
   <p><strong>The user and the problem.</strong> Students in a large intro biology course have a hundred pages of their own lecture notes and no time to turn them into study material. Flashcard Coach is a phone app: upload your notes, ask questions about them, and get flashcards made from <em>your</em> notes, not the internet.</p>
   <div class="table-wrap" tabindex="0"><table>
-    <thead><tr><th>HOS</th><th>What it is in Flashcard Coach</th><th>Litmus test: why it's really that HOS</th></tr></thead>
+    <thead><tr><th>AIC</th><th>What it is in Flashcard Coach</th><th>Litmus test: why it's really that AIC</th></tr></thead>
     <tbody>
-      <tr><td><span class="tag hos1">HOS 1 · tools</span></td><td><code>make_flashcards(topic, count)</code> and <code>schedule_review(date)</code>, called by the model when the user asks.</td><td>The model decides when to make cards. The backend runs the function and sends the cards back.</td></tr>
-      <tr><td><span class="tag hos2">HOS 2 · RAG</span></td><td>Notes the user uploads are chunked, embedded and stored in Chroma. Every answer and every card is built from retrieved chunks.</td><td>Retrieval over documents users upload, not a hardcoded FAQ. Answers cite the note they came from.</td></tr>
-      <tr><td><span class="tag hos3">HOS 3 · guardrails &amp; jobs</span></td><td>A schema check on tool arguments (<code>count</code> must be 1–20), and note uploads processed by a background worker.</td><td>Bad arguments get validated and retried, not crashed on. A 40-page upload never blocks the chat.</td></tr>
-      <tr><td><span class="tag hos4">HOS 4 · mobile, push, traces</span></td><td>An Expo app, a push notification when uploaded notes are ready, and a Langfuse trace with a faithfulness score on every answer.</td><td>The team can show a trace for any answer and point at the retrieval span.</td></tr>
+      <tr><td><span class="tag hos1">AIC 1 · tools</span></td><td><code>make_flashcards(topic, count)</code> and <code>schedule_review(date)</code>, called by the model when the user asks.</td><td>The model decides when to make cards. The backend runs the function and sends the cards back.</td></tr>
+      <tr><td><span class="tag hos2">AIC 2 · RAG</span></td><td>Notes the user uploads are chunked, embedded and stored in Chroma. Every answer and every card is built from retrieved chunks.</td><td>Retrieval over documents users upload, not a hardcoded FAQ. Answers cite the note they came from.</td></tr>
+      <tr><td><span class="tag hos3">AIC 3 · guardrails &amp; jobs</span></td><td>A schema check on tool arguments (<code>count</code> must be 1–20), and note uploads processed by a background worker.</td><td>Bad arguments get validated and retried, not crashed on. A 40-page upload never blocks the chat.</td></tr>
+      <tr><td><span class="tag hos4">AIC 4 · mobile, push, traces</span></td><td>An Expo app, a push notification when uploaded notes are ready, and a Langfuse trace with a faithfulness score on every answer.</td><td>The team can show a trace for any answer and point at the retrieval span.</td></tr>
     </tbody>
   </table></div>
   <h3>The team and who owned what</h3>
@@ -114,16 +114,16 @@
   <div class="table-wrap" tabindex="0"><table>
     <thead><tr><th>Member (fictional)</th><th>Owned</th></tr></thead>
     <tbody>
-      <tr><td>Member A</td><td>Agent &amp; tools (HOS 1) and the guardrail (HOS 3)</td></tr>
-      <tr><td>Member B</td><td>Data &amp; retrieval (HOS 2) and the ingestion worker (HOS 3)</td></tr>
-      <tr><td>Member C</td><td>Mobile &amp; push (HOS 4), observability, and the demo script</td></tr>
+      <tr><td>Member A</td><td>Agent &amp; tools (AIC 1) and the guardrail (AIC 3)</td></tr>
+      <tr><td>Member B</td><td>Data &amp; retrieval (AIC 2) and the ingestion worker (AIC 3)</td></tr>
+      <tr><td>Member C</td><td>Mobile &amp; push (AIC 4), observability, and the demo script</td></tr>
     </tbody>
   </table></div>
 </section>
 
 <section class="module card" id="demo">
   <div class="module-head"><div class="module-icon">🎬</div><div><h2>Live demo: play it step by step</h2><div class="module-meta"><span class="tag">Follows the Demo plan</span><span class="tag blue">≈ 4 min live</span></div></div></div>
-  <p>This is the live-demo part of Flashcard Coach's 15-minute presentation, in the order the <a href="index.html#demo">Demo plan</a> suggests. Pick a step, then press <b>Next ▸</b> to play it one event at a time. The phone shows what the audience sees; <b>Behind the scenes</b> shows what the presenter points at, with the HOS each event belongs to.</p>
+  <p>This is the live-demo part of Flashcard Coach's 15-minute presentation, in the order the <a href="index.html#demo">Demo plan</a> suggests. Pick a step, then press <b>Next ▸</b> to play it one event at a time. The phone shows what the audience sees; <b>Behind the scenes</b> shows what the presenter points at, with the AIC each event belongs to.</p>
 
   <div class="steps-pick" id="pick" role="group" aria-label="Demo steps"></div>
 
@@ -169,9 +169,9 @@
   <p>Flashcard Coach didn't appear in Week 10. Each phase released a working system version and a report, the same as yours will.</p>
   <div class="rel">
     <div class="card"><span class="tag">End of Week 3 · Phase 1</span><h3>System v0.3</h3>
-      <ul><li>Repo with a README, a <code>.gitignore</code> and no keys committed</li><li>The HOS 1 chat app running in a Codespace, renamed and restyled</li><li>A one-page proposal with 3 references: the user, the problem, which HOS goes where, and who owns what</li></ul></div>
+      <ul><li>Repo with a README, a <code>.gitignore</code> and no keys committed</li><li>The AIC 1 chat app running in a Codespace, renamed and restyled</li><li>A one-page proposal with 3 references: the user, the problem, which AIC goes where, and who owns what</li></ul></div>
     <div class="card"><span class="tag">End of Week 7 · Phase 2</span><h3>System v0.7</h3>
-      <ul><li>Upload notes, ask questions, get cited answers (HOS 1 + HOS 2 end to end)</li><li><code>make_flashcards</code> working, but no guardrail yet</li><li>Uploads still processed inline, so a big upload freezes the chat. Listed honestly as a known issue.</li><li>A 3–4 page progress report with 12+ references</li></ul></div>
+      <ul><li>Upload notes, ask questions, get cited answers (AIC 1 + AIC 2 end to end)</li><li><code>make_flashcards</code> working, but no guardrail yet</li><li>Uploads still processed inline, so a big upload freezes the chat. Listed honestly as a known issue.</li><li>A 3–4 page progress report with 12+ references</li></ul></div>
     <div class="card"><span class="tag ok">End of Week 10 · Phase 3</span><h3>System v1.0</h3>
       <ul><li>Guardrail with retry on every tool call; uploads moved to a queue and worker</li><li>Expo app with push when notes are ready; Langfuse traces with a faithfulness score</li><li>One-click Codespace launch and a README execution guide with an AI tool disclosure</li><li>Final report, presentation and demo video</li></ul></div>
   </div>
@@ -195,10 +195,10 @@
 <section class="module card" id="strong">
   <div class="module-head"><div class="module-icon">✅</div><div><h2>What makes this a strong example</h2><div class="module-meta"><span class="tag">Use it as a checklist</span></div></div></div>
   <ul>
-    <li><b>Every HOS is real, not a token mention.</b> For each one the team can point to a specific part of the app and say why it's that HOS (the litmus test in the first table).</li>
+    <li><b>Every AIC is real, not a token mention.</b> For each one the team can point to a specific part of the app and say why it's that AIC (the litmus test in the first table).</li>
     <li><b>One live path shows all four.</b> The demo doesn't tour features one by one. A single story moves through tools, retrieval, the guardrail, the queue, push and the trace.</li>
     <li><b>It shows a failure on purpose.</b> The "500 flashcards" request proves the guardrail works, which is more convincing than a demo where nothing goes wrong.</li>
-    <li><b>The trace is ready before anyone asks.</b> "Show me where HOS 2 is" gets an answer in one click.</li>
+    <li><b>The trace is ready before anyone asks.</b> "Show me where AIC 2 is" gets an answer in one click.</li>
     <li><b>It's honest about what's missing.</b> The cut features are named, with what the team would do next.</li>
     <li><b>Every member is visible.</b> Owners per area, commits from all three, everyone speaks, and the title card names who built what.</li>
   </ul>
@@ -227,7 +227,7 @@
 <script>
 (function(){
   var $=function(id){return document.getElementById(id);};
-  var HOS={1:'HOS 1 · tools',2:'HOS 2 · RAG',3:'HOS 3 · guardrails & jobs',4:'HOS 4 · mobile, push, traces'};
+  var AIC={1:'AIC 1 · tools',2:'AIC 2 · RAG',3:'AIC 3 · guardrails & jobs',4:'AIC 4 · mobile, push, traces'};
   var CARDS='<div class="fc"><b>Q:</b> Where do the light reactions happen?<br><b>A:</b> In the thylakoid membranes.</div><div class="fc"><b>Q:</b> What does the Calvin cycle produce?<br><b>A:</b> G3P, used to build glucose.</div><div class="fc"><b>Q:</b> What are the inputs of photosynthesis?<br><b>A:</b> CO₂, water and light.</div><div class="fc"><b>Q:</b> Why is chlorophyll green?<br><b>A:</b> It reflects green light.</div><div class="fc"><b>Q:</b> What gas is released?<br><b>A:</b> Oxygen, from splitting water.</div>';
   var TRACE='<h3 style="margin-top:14px">Langfuse trace · "Make me 5 flashcards on photosynthesis"</h3>'+
     [['POST /chat',0,100,'2.41 s'],['retrieve (Chroma, top-4)',2,14,'0.31 s'],['generation 1 → function call',16,30,'0.74 s'],['make_flashcards · guardrail ✓',47,4,'0.06 s'],['generation 2 → cards',52,46,'1.12 s']]
@@ -247,7 +247,7 @@
     {time:'~0:30', title:'A bad input, handled', say:'"Now a request that would break a naive app. 500 cards is more than our tool allows. The guardrail catches it, retries once with the error, and the app explains instead of crashing."',
      ev:[{from:'phone',to:'api',t:'POST /chat',d:'<code>{"message": "Make 500 flashcards on everything"}</code>',hos:4,phone:{user:'Make 500 flashcards on everything'}},
          {from:'llm',to:'api',t:'The model asks for count = 500',d:'<code>make_flashcards({"topic": "everything", "count": 500})</code>',hos:1},
-         {from:'api',to:'api',t:'Guardrail ✗: count must be 1–20',d:'Validation fails <em>before</em> the tool runs. The error goes into the retry, as in HOS 3.',hos:3,warn:true},
+         {from:'api',to:'api',t:'Guardrail ✗: count must be 1–20',d:'Validation fails <em>before</em> the tool runs. The error goes into the retry, as in AIC 3.',hos:3,warn:true},
          {from:'api',to:'llm',t:'Retry with the validation error',d:'"count must be between 1 and 20". This time the model doesn\'t guess. It asks the user.',hos:3},
          {from:'api',to:'phone',t:'A helpful reply, not a 500 error',d:'The request stays alive and the user gets a choice.',hos:3,phone:{bot:'I can make up to 20 cards at a time. Want 20 on Chapter 3, or should I split them by topic?'}}]},
     {time:'~1:00', title:'Upload, keep chatting, push', say:'"I\'ll upload my Chapter 4 notes, 40 pages. The app answers straight away because a background worker does the processing. I can keep asking questions, and when the notes are ready, my phone tells me."',
@@ -259,8 +259,8 @@
          {from:'api',to:'phone',t:'Push: "Chapter 4 notes are ready"',d:'When the job finishes, the backend sends the push through the Expo Push API to the registered device.',hos:4,phone:{notif:'Your Chapter 4 notes are ready to study.'}}]},
     {time:'~0:30', title:'Open the trace', say:'"Here\'s the trace for the flashcard request. Retrieval is its own span, so you can see exactly which notes were used. Generation is separate, and every answer gets a faithfulness score. This one is 0.94."',
      ev:[{from:'trace',to:'trace',t:'Open the saved trace in Langfuse',d:'Have it open in a tab before the demo starts. Don\'t search for it live.',hos:4,extra:TRACE},
-         {from:'trace',to:'db',t:'Point at the retrieval span',d:'"This is HOS 2": the four chunks, their similarity scores and their source pages.',hos:2},
-         {from:'trace',to:'llm',t:'Point at the two generations and the score',d:'Two model calls around one tool call (the HOS 1 loop), and the faithfulness score from your HOS 4 Refine work.',hos:4}]},
+         {from:'trace',to:'db',t:'Point at the retrieval span',d:'"This is AIC 2": the four chunks, their similarity scores and their source pages.',hos:2},
+         {from:'trace',to:'llm',t:'Point at the two generations and the score',d:'Two model calls around one tool call (the AIC 1 loop), and the faithfulness score from your AIC 4 Refine work.',hos:4}]},
     {time:'~0:45', title:'What didn\'t make it, and next', say:'"Two things didn\'t make it: real spaced-repetition reminders and Android push. We cut features rather than observability, because without traces we couldn\'t have debugged demo week. Next, we\'d add reminders using the push we already have."',
      ev:[{from:'phone',to:'phone',t:'Close on an honest slide',d:'A sprint review, not a sales pitch. Name the corner you cut. It\'s your Integration Debate synthesis in practice.',hos:4,phone:{sys:'Not yet: review reminders · Android push'}}]}
   ];
@@ -286,7 +286,7 @@
   }
   function render(){
     var s=STEPS[cur]; laneReset();
-    $('events').innerHTML=s.ev.map(function(e,i){ return '<li class="'+(i===idx?'cur':i<idx?'past':'')+'"><span class="n">'+(i+1)+'</span><span>'+e.t+' <span class="tag hos'+e.hos+'">'+HOS[e.hos]+'</span></span></li>'; }).join('');
+    $('events').innerHTML=s.ev.map(function(e,i){ return '<li class="'+(i===idx?'cur':i<idx?'past':'')+'"><span class="n">'+(i+1)+'</span><span>'+e.t+' <span class="tag hos'+e.hos+'">'+AIC[e.hos]+'</span></span></li>'; }).join('');
     var done=idx===s.ev.length-1;
     $('next').textContent= done ? (cur<STEPS.length-1 ? 'Next demo step ▸' : 'Start over ▸') : 'Next ▸';
     $('toEnd').disabled=done;
@@ -294,7 +294,7 @@
     var e=s.ev[idx];
     $('L-'+e.from).classList.add('from'); if(e.to!==e.from) $('L-'+e.to).classList.add(e.warn?'err':'to'); else if(e.warn) $('L-'+e.to).classList.add('err');
     $('stepbox').className='stepbox'+(e.warn?' warn':'');
-    $('stepbox').innerHTML='<span class="k">Event '+(idx+1)+' of '+s.ev.length+' · <span class="tag hos'+e.hos+'">'+HOS[e.hos]+'</span></span><p style="margin:4px 0 0"><b>'+e.t+'</b></p><p class="small" style="margin:4px 0 0">'+e.d+'</p>';
+    $('stepbox').innerHTML='<span class="k">Event '+(idx+1)+' of '+s.ev.length+' · <span class="tag hos'+e.hos+'">'+AIC[e.hos]+'</span></span><p style="margin:4px 0 0"><b>'+e.t+'</b></p><p class="small" style="margin:4px 0 0">'+e.d+'</p>';
     $('live').textContent='Event '+(idx+1)+' of '+s.ev.length+': '+e.t.replace(/<[^>]+>/g,'');
     if(done){ seen[cur]=true; pickHtml(); }
   }
