@@ -153,7 +153,7 @@
     <li><b>Push is a chain, and it fails silently.</b> Every link has to hold — the app loads, permission is granted, a real device yields a token, the backend stores it, and the job knows which device to notify. Break any one and nothing errors; the notification just never comes.</li>
     <li><b>A trace turns "it's slow" or "it's wrong" into a specific span.</b> Retrieval and generation are separate spans on purpose — that's the HOS 4 Analyze question.</li>
     <li><b>Faithfulness is measurable.</b> The score here is a word-overlap version of what your hand-written <code>score_faithfulness()</code> does in Understand &amp; Refine.</li>
-    <li><b>Alerts are a judgment call.</b> Drag the thresholds: too tight and every request pages you (noise); too loose and the hallucination sails through. That's the HOS 4 Application Challenge.</li>
+    <li><b>Alerts are a judgment call.</b> Drag the thresholds: too tight and every request pages you (noise); too loose and the hallucination sails through. That's the HOS 4 Part B challenge.</li>
   </ul>
 </div>
 <div class="project-tip">
@@ -294,7 +294,7 @@ function render(key){
   'do':'With the hallucination trace still showing, drag <b>Alert if faithfulness &lt;</b> down to 40, then try the slow scenario with a 1 s latency alert.',
   watch:'When the alerts appear and disappear.',
   expect:'Too loose and the hallucination gets through. Too tight and every request raises an alert.',
-  why:'Choosing those thresholds is the HOS 4 Application Challenge.'},
+  why:'Choosing those thresholds is the HOS 4 Part B challenge.'},
  {title:'Your turn',
   'do':'Try the slow and tool + RAG scenarios, or switch the device to a web browser.',
   expect:'You can explain where push breaks silently, and how a trace turns "it\'s wrong" into a specific span.',

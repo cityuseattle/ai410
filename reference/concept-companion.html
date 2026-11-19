@@ -627,7 +627,7 @@
                 <tr><th>Problem</th><th>What catches it</th></tr>
                 <tr><td>A tool call with a missing, misnamed or wrong-type argument</td><td>The Pydantic schema in the guardrail, before the tool runs (HOS 3)</td></tr>
                 <tr><td>The right type, but not allowed (a blank string)</td><td>A validator rule on the schema (HOS 3)</td></tr>
-                <tr><td>Valid arguments that are still wrong: over a limit, not what the user asked</td><td>A rule or lookup in your code, or a person who confirms (the Application Challenges)</td></tr>
+                <tr><td>Valid arguments that are still wrong: over a limit, not what the user asked</td><td>A rule or lookup in your code, or a person who confirms (the HOS Part B challenges)</td></tr>
                 <tr><td>An answer the documents don't support</td><td>Reduced by retrieval and an honest "I don't know" (HOS 2); spotted afterwards by the faithfulness score and its trace (HOS 4)</td></tr>
                 <tr><td>A slow request</td><td>The trace: which span took the time (HOS 4)</td></tr>
                 <tr><td>Uploads that never finish</td><td>Job status stuck on <code>queued</code>: the worker isn't running (HOS 3)</td></tr>
