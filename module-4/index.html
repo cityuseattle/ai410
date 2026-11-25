@@ -106,11 +106,11 @@
     <a href="#preview"><span class="n">Wk 7 · Mon</span><span class="t">Preview the build</span><span class="w">simulator tour · ungraded</span></a>
     <a href="#lecture"><span class="n">Wk 7 · Mon</span><span class="t">Lecture</span><span class="w">~15 min, 3 parts</span></a>
     <a href="#debate"><span class="n">Wk 7 · Tue–Sat</span><span class="t">Concept Debate A</span><span class="w">graded · 10 pts</span></a>
-    <a href="#create"><span class="n">Wk 7 · Wed–Thu</span><span class="t">AIC 4 · Create / Scaffold</span><span class="w">Build · Create · 10 pts</span></a>
-    <a href="#evaluate"><span class="n">Wk 7 · Fri–Sun</span><span class="t">AIC 4 · Evaluate</span><span class="w">Build · Evaluate · 15 pts</span></a>
+    <a href="#create"><span class="n">Wk 7 · Wed–Thu</span><span class="t">AIC 4 · Create / Scaffold</span><span class="w">Build · Create · 12 pts</span></a>
+    <a href="#evaluate"><span class="n">Wk 7 · Fri–Sun</span><span class="t">AIC 4 · Evaluate</span><span class="w">Build · Evaluate · 12 pts</span></a>
     <a href="#check-theory"><span class="n">Wk 7 · any time</span><span class="t">Knowledge Check (theory)</span><span class="w">graded · 10 pts · no AI</span></a>
-    <a href="#analyze"><span class="n">Wk 8 · Mon</span><span class="t">AIC 4 · Analyze</span><span class="w">Build · Analyze · 15 pts</span></a>
-    <a href="#refine"><span class="n">Wk 8 · Tue–Wed</span><span class="t">AIC 4 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 20 pts · no AI</span></a>
+    <a href="#analyze"><span class="n">Wk 8 · Mon</span><span class="t">AIC 4 · Analyze</span><span class="w">Build · Analyze · 12 pts</span></a>
+    <a href="#refine"><span class="n">Wk 8 · Tue–Wed</span><span class="t">AIC 4 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 24 pts · no AI</span></a>
     <a href="#challenge"><span class="n">Wk 8 · Thu</span><span class="t">AIC 4 · Part B challenge</span><span class="w">Challenge · 40 pts</span></a>
     <a href="#postmortem"><span class="n">Wk 8 · end</span><span class="t">AIC 4 · Post Mortem</span><span class="w">in Understand · no AI</span></a>
     <a href="#check"><span class="n">Wk 8 · any time</span><span class="t">Knowledge Check (skill)</span><span class="w">graded · 10 pts · no AI</span></a>
@@ -1515,7 +1515,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   </div>
   <p>Add the mobile client, push, and tracing to your AIC 3 app with an AI coding assistant.</p>
   <ol>
-    <li>Open your own <b>AIC 4</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/hos04/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 4 invite</a>) in GitHub Codespaces — your AIC 3 app, already working. If <code>npm</code> is missing, rebuild the container.</li>
+    <li>Open your own <b>AIC 4</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/aic04/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 4 invite</a>) in GitHub Codespaces — your AIC 3 app, already working. If <code>npm</code> is missing, rebuild the container.</li>
     <li>Set up the free accounts: Expo (signed in on the terminal <em>and</em> in Expo Go) and Langfuse (keys in <code>backend/.env</code>).</li>
     <li>Give your assistant the prompt below, then run <code>npx expo start --tunnel</code> in <code>mobile/</code> and scan the QR code.</li>
   </ol>
@@ -1529,7 +1529,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
 - backend/agent.py and retrieval.py: add Langfuse tracing (@observe()) so each request
   produces a trace with retrieval and generation as separate spans.</code></pre>
   <p class="small">Every snag this week has a documented fix in the <a href="hos-guide.html">AIC 4 hands-on guide</a>. Unsure what a file does? <a href="../reference/starter-code-walkthrough.html#hos4">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded under Build: Create (10 of the 100 AIC points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 4 repo.</p>
+  <p class="small"><b>Graded under Build: Create (12 of the 100 AIC points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 4 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -1549,7 +1549,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what the phone and the traces showed · what the AI got wrong, missed, or handled surprisingly well"></textarea>
   <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
-  <p class="small"><b>Graded under Build: Evaluate (15 points).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add screenshots (the notification on the phone, a trace) to <code>screenshots/</code>, then commit and push by the end of Week 7. Your commit history is your Week 7 checkpoint.</p>
+  <p class="small"><b>Graded under Build: Evaluate (12 points).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add screenshots (the notification on the phone, a trace) to <code>screenshots/</code>, then commit and push by the end of Week 7. Your commit history is your Week 7 checkpoint.</p>
 </section>
 
 <section class="module card" id="check-theory">
@@ -1586,7 +1586,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
     <button type="button" aria-pressed="false" data-k="status"><b>Why 200 OK isn't delivery</b>What the push response body tells you.</button>
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
-  <p class="small"><b>Graded under Build: Analyze (15 points).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded under Build: Analyze (12 points).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -1611,7 +1611,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   <input type="range" id="fThr" min="20" max="90" value="50" step="5">
   <div class="faith-out" id="fOut"></div>
   <p class="small muted">Notice the third sentence: half its meaningful words appear in the context, so it passes at the default threshold — and it says the opposite of the policy. That's the "one case where your heuristic would be fooled" — word overlap can't see negation.</p>
-  <p class="small"><b>Graded under Build: Apply and Understand (10 points each).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push. Your last push before the end of Week 8, challenge included, is your submission; there's nothing to upload in Brightspace.</p>
+  <p class="small"><b>Graded under Build: Apply and Understand (12 points each).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push. Your last push before the end of Week 8, challenge included, is your submission; there's nothing to upload in Brightspace.</p>
 </section>
 
 <section class="module card" id="challenge">
@@ -1631,7 +1631,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
       <li><code>DECISIONS.md</code>: your paging rule, and what each span lets you see</li>
     </ul>
   </div>
-  <p class="small muted"><b>Graded under Challenge (40 of the 100 AIC points):</b> Design — a working solution that passes the tests, including your open decision (20) · Justify — your decision argued against clear criteria, naming the trade-off it accepts (20). It's graded with the rest of AIC 4, once, at the end of Week 8.</p>
+  <p class="small muted"><b>Graded under Challenge (40 of the 100 AIC points):</b> Application — it runs in the new scenario (4) · Analysis — the parts of the problem broken down and tied to evidence (8) · Evaluation — your open decision argued against clear criteria, naming the alternative you rejected (12) · Design — the provided tests and your own pass, including the hardest edge case (16). It's graded with the rest of AIC 4, once, at the end of Week 8.</p>
 </section>
 
 <section class="module card" id="postmortem">
@@ -1645,7 +1645,7 @@ def run_agent(message):        # becomes the top-level span for the whole reques
   <p class="small">Your Analyze walkthrough and challenge decisions already cover what worked and why. The Post Mortem is for the gaps and the plan: an honest "I still don't get X" earns full credit, and a vague one doesn't. A missing or one-line Post Mortem can't earn full Understand marks.</p>
   <p class="small"><b>What happens next:</b> your instructor reads every Post Mortem when grading AIC 4 and answers the most common "still unclear" points at the start of Module 5 (Week 9), and your faculty interview may come back to them. If yours isn't covered, bring it to office hours.</p>
   <p class="small"><b>Then, the feedback survey:</b> the Monday after AIC 4 is due, the 2-minute <b>Module 4 feedback survey</b> opens in Brightspace. It's anonymous and ungraded, and it asks which activities helped you learn and which didn't. Course feedback goes there, not in your Post Mortem.</p>
-  <p class="small muted"><b>Graded under Understand (10 of the 100 AIC points),</b> together with your own explanation from Understand &amp; Refine. It's part of the same last push before the end of Week 8.</p>
+  <p class="small muted"><b>Graded under Understand (12 of the 100 AIC points),</b> together with your own explanation from Understand &amp; Refine. It's part of the same last push before the end of Week 8.</p>
 </section>
 
 <section class="module card" id="check">

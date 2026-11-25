@@ -26,7 +26,7 @@ Students reach these pages from Brightspace. Graded work is submitted in Brights
 | `figures/` | Build scripts for the interactive figures inside lessons (see `figures/README.md`) |
 | `tools/check_site.py` | Pre-push checker |
 
-Starter code lives in the private template repositories `cityuseattle/AI410-HOS01`–`04` and `AI410-AC01`–`04`; students copy them through the Classroom50 invites linked from each lesson. Instructor material (teaching guide, answer keys, example answers) is not in this repository.
+Starter code lives in the private template repositories `cityuseattle/AI410-AIC01`–`04` (one per AI Challenge, with Part B in `challenge/`); students copy them through the Classroom50 invites linked from each lesson. Instructor material (teaching guide, answer keys, example answers) is not in this repository.
 
 ## Editing
 
