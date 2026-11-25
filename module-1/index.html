@@ -77,12 +77,12 @@
     <a href="#preview"><span class="n">Wk 1 · Mon</span><span class="t">Preview the build</span><span class="w">simulator tour · ungraded</span></a>
     <a href="#lecture"><span class="n">Wk 1 · Mon</span><span class="t">Lecture</span><span class="w">~30 min, 3 parts</span></a>
     <a href="#debate"><span class="n">Wk 1 · Tue–Sat</span><span class="t">Concept Debate A</span><span class="w">graded · 10 pts</span></a>
-    <a href="#create"><span class="n">Wk 1 · Wed–Thu</span><span class="t">AIC 1 · Create / Scaffold</span><span class="w">Build · Create · 10 pts</span></a>
-    <a href="#evaluate"><span class="n">Wk 1 · Fri–Sun</span><span class="t">AIC 1 · Evaluate</span><span class="w">Build · Evaluate · 15 pts</span></a>
+    <a href="#create"><span class="n">Wk 1 · Wed–Thu</span><span class="t">AIC 1 · Create / Scaffold</span><span class="w">Build · Create · 12 pts</span></a>
+    <a href="#evaluate"><span class="n">Wk 1 · Fri–Sun</span><span class="t">AIC 1 · Evaluate</span><span class="w">Build · Evaluate · 12 pts</span></a>
     <a href="#check-theory"><span class="n">Wk 1 · any time</span><span class="t">Knowledge Check (theory)</span><span class="w">graded · 10 pts · no AI</span></a>
     <a href="#debate-b"><span class="n">Wk 2 · Tue–Sat</span><span class="t">Concept Debate B</span><span class="w">graded · 10 pts</span></a>
-    <a href="#analyze"><span class="n">Wk 2 · Mon–Tue</span><span class="t">AIC 1 · Analyze</span><span class="w">Build · Analyze · 15 pts</span></a>
-    <a href="#refine"><span class="n">Wk 2 · Wed–Thu</span><span class="t">AIC 1 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 20 pts · no AI</span></a>
+    <a href="#analyze"><span class="n">Wk 2 · Mon–Tue</span><span class="t">AIC 1 · Analyze</span><span class="w">Build · Analyze · 12 pts</span></a>
+    <a href="#refine"><span class="n">Wk 2 · Wed–Thu</span><span class="t">AIC 1 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 24 pts · no AI</span></a>
     <a href="#challenge"><span class="n">Wk 2 · Fri–Sun</span><span class="t">AIC 1 · Part B challenge</span><span class="w">Challenge · 40 pts</span></a>
     <a href="#postmortem"><span class="n">Wk 2 · end</span><span class="t">AIC 1 · Post Mortem</span><span class="w">in Understand · no AI</span></a>
     <a href="#check"><span class="n">Wk 2 · any time</span><span class="t">Knowledge Check (skill)</span><span class="w">graded · 10 pts · no AI</span></a>
@@ -1466,7 +1466,7 @@ calculate_tool = {
   </div>
   <p>Get a working app running fast with an AI coding assistant. This is the starting point, not the deliverable — you don't hand-edit anything yet.</p>
   <ol>
-    <li>Open your own <b>AIC 1</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/hos01/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 1 invite</a>) in GitHub Codespaces (its <code>.devcontainer</code> sets up Python for you).</li>
+    <li>Open your own <b>AIC 1</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/aic01/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 1 invite</a>) in GitHub Codespaces (its <code>.devcontainer</code> sets up Python for you).</li>
     <li>Put your free Gemini key in <code>backend/.env</code> as <code>GEMINI_API_KEY=…</code> — never in the frontend.</li>
     <li>Give your assistant the starting prompt below, and iterate until the chat app calls at least one tool.</li>
   </ol>
@@ -1481,7 +1481,7 @@ that's already open) — edit files here; do not create a new workspace or proje
 - requirements.txt files for both.</code></pre>
   <p class="small"><b>Two gotchas caught in testing:</b> (1) Codespaces' default Copilot Chat agent likes to build in a <em>new</em> workspace instead of your starter folder — use Agent mode and say “this existing workspace” (the prompt does). (2) A <code>502 Bad Gateway</code> usually means the assistant picked a retired model like <code>gemini-2.5-flash</code>, which new keys can't use — set it to <code>gemini-3.8-flash</code> and restart the backend.</p>
   <p class="small">Full step-by-step instructions, troubleshooting, and the exact submission list are in the <a href="hos-guide.html">AIC 1 hands-on guide</a>. Unsure what a generated file does? <a href="../reference/starter-code-walkthrough.html#hos1">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded under Build: Create (10 of the 100 AIC points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 1 repo.</p>
+  <p class="small"><b>Graded under Build: Create (12 of the 100 AIC points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 1 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -1501,7 +1501,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what I found · what the AI got wrong, missed, or handled surprisingly well"></textarea>
   <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
-  <p class="small"><b>Graded under Build: Evaluate (15 points).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
+  <p class="small"><b>Graded under Build: Evaluate (12 points).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 1. Your commit history is your Week 1 checkpoint.</p>
 </section>
 
 <section class="module card" id="check-theory">
@@ -1575,7 +1575,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
   <p class="small muted">Common trap: pasting the AI's own explanation of the code. Your instructor will ask a follow-up about one line — write it so you could answer.</p>
-  <p class="small"><b>Graded under Build: Analyze (15 points).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded under Build: Analyze (12 points).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -1591,7 +1591,7 @@ that's already open) — edit files here; do not create a new workspace or proje
     <label><input type="checkbox"><span>Write 2–3 sentences: what you changed, and one thing that surprised you.</span></label>
   </div>
   <p class="small muted">This is the mastery check: can you change the system correctly without the assistant doing it for you? Rehearse first in the <a href="simulator.html">simulator</a> — toggle a second tool on and watch the routing change.</p>
-  <p class="small"><b>Graded under Build: Apply and Understand (10 points each).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push. Your last push before the end of Week 2, challenge included, is your submission; there's nothing to upload in Brightspace.</p>
+  <p class="small"><b>Graded under Build: Apply and Understand (12 points each).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push. Your last push before the end of Week 2, challenge included, is your submission; there's nothing to upload in Brightspace.</p>
 </section>
 
 <section class="module card" id="challenge">
@@ -1616,7 +1616,7 @@ that's already open) — edit files here; do not create a new workspace or proje
       <li><code>DECISIONS.md</code>: your late-cancellation rule, and your call on two more tools</li>
     </ul>
   </div>
-  <p class="small muted"><b>Graded under Challenge (40 of the 100 AIC points):</b> Design — a working solution that passes the tests, including your open decision (20) · Justify — your decision argued against clear criteria, naming the trade-off it accepts (20). It's graded with the rest of AIC 1, once, at the end of Week 2.</p>
+  <p class="small muted"><b>Graded under Challenge (40 of the 100 AIC points):</b> Application — it runs in the new scenario (4) · Analysis — the parts of the problem broken down and tied to evidence (8) · Evaluation — your open decision argued against clear criteria, naming the alternative you rejected (12) · Design — the provided tests and your own pass, including the hardest edge case (16). It's graded with the rest of AIC 1, once, at the end of Week 2.</p>
 </section>
 
 <section class="module card" id="postmortem">
@@ -1630,7 +1630,7 @@ that's already open) — edit files here; do not create a new workspace or proje
   <p class="small">Your Analyze walkthrough and challenge decisions already cover what worked and why. The Post Mortem is for the gaps and the plan: an honest "I still don't get X" earns full credit, and a vague one doesn't. A missing or one-line Post Mortem can't earn full Understand marks.</p>
   <p class="small"><b>What happens next:</b> your instructor reads every Post Mortem when grading AIC 1 and answers the most common "still unclear" points at the start of Module 2 (Week 3). If yours isn't covered, bring it to office hours.</p>
   <p class="small"><b>Then, the feedback survey:</b> the Monday after AIC 1 is due, the 2-minute <b>Module 1 feedback survey</b> opens in Brightspace. It's anonymous and ungraded, and it asks which activities helped you learn and which didn't. Course feedback goes there, not in your Post Mortem.</p>
-  <p class="small muted"><b>Graded under Understand (10 of the 100 AIC points),</b> together with your own explanation from Understand &amp; Refine. It's part of the same last push before the end of Week 2.</p>
+  <p class="small muted"><b>Graded under Understand (12 of the 100 AIC points),</b> together with your own explanation from Understand &amp; Refine. It's part of the same last push before the end of Week 2.</p>
 </section>
 
 <section class="module card" id="check">

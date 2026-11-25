@@ -92,12 +92,12 @@
     <a href="#preview"><span class="n">Wk 5 · Mon</span><span class="t">Preview the build</span><span class="w">simulator tour · ungraded</span></a>
     <a href="#lecture"><span class="n">Wk 5 · Mon</span><span class="t">Lecture</span><span class="w">~40 min, 3 parts</span></a>
     <a href="#debate"><span class="n">Wk 5 · Tue–Sat</span><span class="t">Concept Debate A</span><span class="w">graded · 10 pts</span></a>
-    <a href="#create"><span class="n">Wk 5 · Wed–Thu</span><span class="t">AIC 3 · Create / Scaffold</span><span class="w">Build · Create · 10 pts</span></a>
-    <a href="#evaluate"><span class="n">Wk 5 · Fri–Sun</span><span class="t">AIC 3 · Evaluate</span><span class="w">Build · Evaluate · 15 pts</span></a>
+    <a href="#create"><span class="n">Wk 5 · Wed–Thu</span><span class="t">AIC 3 · Create / Scaffold</span><span class="w">Build · Create · 12 pts</span></a>
+    <a href="#evaluate"><span class="n">Wk 5 · Fri–Sun</span><span class="t">AIC 3 · Evaluate</span><span class="w">Build · Evaluate · 12 pts</span></a>
     <a href="#check-theory"><span class="n">Wk 5 · any time</span><span class="t">Knowledge Check (theory)</span><span class="w">graded · 10 pts · no AI</span></a>
     <a href="#debate-b"><span class="n">Wk 6 · Tue–Sat</span><span class="t">Concept Debate B</span><span class="w">graded · 10 pts</span></a>
-    <a href="#analyze"><span class="n">Wk 6 · Mon–Tue</span><span class="t">AIC 3 · Analyze</span><span class="w">Build · Analyze · 15 pts</span></a>
-    <a href="#refine"><span class="n">Wk 6 · Wed–Thu</span><span class="t">AIC 3 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 20 pts · no AI</span></a>
+    <a href="#analyze"><span class="n">Wk 6 · Mon–Tue</span><span class="t">AIC 3 · Analyze</span><span class="w">Build · Analyze · 12 pts</span></a>
+    <a href="#refine"><span class="n">Wk 6 · Wed–Thu</span><span class="t">AIC 3 · Understand &amp; Refine</span><span class="w">Build · Apply + Understand · 24 pts · no AI</span></a>
     <a href="#challenge"><span class="n">Wk 6 · Fri–Sat</span><span class="t">AIC 3 · Part B challenge</span><span class="w">Challenge · 40 pts</span></a>
     <a href="#postmortem"><span class="n">Wk 6 · end</span><span class="t">AIC 3 · Post Mortem</span><span class="w">in Understand · no AI</span></a>
     <a href="#check"><span class="n">Wk 6 · any time</span><span class="t">Knowledge Check (skill)</span><span class="w">graded · 10 pts · no AI</span></a>
@@ -1567,7 +1567,7 @@ def job_status(job_id: str):
   </div>
   <p>Add both reliability layers to your AIC 2 app with an AI coding assistant. As always, this is the starting point — no hand edits yet.</p>
   <ol>
-    <li>Open your own <b>AIC 3</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/hos03/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 3 invite</a>) in GitHub Codespaces — your AIC 2 app, already working.</li>
+    <li>Open your own <b>AIC 3</b> repo (<a href="https://classroom50.org/cityuseattle/ai410/assignments/aic03/accept?k=ai410" target="_blank" rel="noopener">accept the AIC 3 invite</a>) in GitHub Codespaces — your AIC 2 app, already working.</li>
     <li>Create a free Upstash Redis instance and add its URL to <code>backend/.env</code> as <code>REDIS_URL</code>.</li>
     <li>Split your terminal: one for <code>uvicorn</code>, one for <code>python worker.py</code>.</li>
     <li>Give your assistant the prompt below.</li>
@@ -1585,7 +1585,7 @@ def job_status(job_id: str):
 - backend/main.py: change POST /documents to enqueue the job and return a job_id
   immediately, and add GET /jobs/{id} to report status.</code></pre>
   <p class="small">Details, the exact <code>curl</code> commands, and common snags are in the <a href="hos-guide.html">AIC 3 hands-on guide</a>. Unsure what a file does? <a href="../reference/starter-code-walkthrough.html#hos3">Starter code walkthrough →</a></p>
-  <p class="small"><b>Graded under Build: Create (10 of the 100 AIC points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 3 repo.</p>
+  <p class="small"><b>Graded under Build: Create (12 of the 100 AIC points):</b> paste the prompt you gave your AI assistant under <b>Create</b> in <code>NOTES.md</code>, add a screenshot of the scaffolded app running to <code>screenshots/</code>, then commit and push to your Module 3 repo.</p>
 </section>
 
 <section class="module card" id="evaluate">
@@ -1605,7 +1605,7 @@ def job_status(job_id: str):
   <label class="field" for="evalNote">Draft your Evaluate note (stays in this browser)</label>
   <textarea id="evalNote" placeholder="What I tested · what the logs showed · what the AI got wrong, missed, or handled surprisingly well"></textarea>
   <p class="small"><b>A line worth adding to your Evaluate note:</b> which tests you came up with, which (if any) an AI suggested, and which problems you found yourself. It makes your own judgment easy to see.</p>
-  <p class="small"><b>Graded under Build: Evaluate (15 points).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 5. Your commit history is your Week 5 checkpoint.</p>
+  <p class="small"><b>Graded under Build: Evaluate (12 points).</b> Paste this note under <b>Evaluate</b> in <code>NOTES.md</code>, add a screenshot of the working app to <code>screenshots/</code>, then commit and push by the end of Week 5. Your commit history is your Week 5 checkpoint.</p>
 </section>
 
 <section class="module card" id="check-theory">
@@ -1679,7 +1679,7 @@ def job_status(job_id: str):
   </div>
   <div class="callout blue" id="analyzeFrame"><span class="label">Explain-it frame</span><p>Pick a piece above to see prompts that make a strong Analyze.</p></div>
   <p class="small muted">Common trap: describing what the code does. Analyze asks <em>why</em> — name the failure that would happen without it.</p>
-  <p class="small"><b>Graded under Build: Analyze (15 points).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
+  <p class="small"><b>Graded under Build: Analyze (12 points).</b> Write your walkthrough under <b>Analyze</b> in <code>NOTES.md</code>, then commit and push.</p>
 </section>
 
 <section class="module card" id="refine">
@@ -1694,7 +1694,7 @@ def job_status(job_id: str):
     <label><input type="checkbox"><span>Trigger a bad call and screenshot the guardrail catching it; confirm a good call still works.</span></label>
     <label><input type="checkbox"><span>Write 2–3 sentences: which rule you chose, and one bad input your schema still wouldn't catch.</span></label>
   </div>
-  <p class="small"><b>Graded under Build: Apply and Understand (10 points each).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push. Your last push before the end of Week 6, challenge included, is your submission; there's nothing to upload in Brightspace.</p>
+  <p class="small"><b>Graded under Build: Apply and Understand (12 points each).</b> Apply: the change you wrote by hand is committed in your repo and works as asked. Understand: your own explanation of it, under <b>Understand &amp; Refine</b> in <code>NOTES.md</code>, with its screenshots in <code>screenshots/</code>. When all four sections are in, push. Your last push before the end of Week 6, challenge included, is your submission; there's nothing to upload in Brightspace.</p>
 </section>
 
 <section class="module card" id="challenge">
@@ -1714,7 +1714,7 @@ def job_status(job_id: str):
       <li><code>DECISIONS.md</code>: your routing rules, and which layer stops each bad call</li>
     </ul>
   </div>
-  <p class="small muted"><b>Graded under Challenge (40 of the 100 AIC points):</b> Design — a working solution that passes the tests, including your open decision (20) · Justify — your decision argued against clear criteria, naming the trade-off it accepts (20). It's graded with the rest of AIC 3, once, at the end of Week 6.</p>
+  <p class="small muted"><b>Graded under Challenge (40 of the 100 AIC points):</b> Application — it runs in the new scenario (4) · Analysis — the parts of the problem broken down and tied to evidence (8) · Evaluation — your open decision argued against clear criteria, naming the alternative you rejected (12) · Design — the provided tests and your own pass, including the hardest edge case (16). It's graded with the rest of AIC 3, once, at the end of Week 6.</p>
 </section>
 
 <section class="module card" id="postmortem">
@@ -1728,7 +1728,7 @@ def job_status(job_id: str):
   <p class="small">Your Analyze walkthrough and challenge decisions already cover what worked and why. The Post Mortem is for the gaps and the plan: an honest "I still don't get X" earns full credit, and a vague one doesn't. A missing or one-line Post Mortem can't earn full Understand marks.</p>
   <p class="small"><b>What happens next:</b> your instructor reads every Post Mortem when grading AIC 3 and answers the most common "still unclear" points at the start of Module 4 (Week 7). If yours isn't covered, bring it to office hours.</p>
   <p class="small"><b>Then, the feedback survey:</b> the Monday after AIC 3 is due, the 2-minute <b>Module 3 feedback survey</b> opens in Brightspace. It's anonymous and ungraded, and it asks which activities helped you learn and which didn't. Course feedback goes there, not in your Post Mortem.</p>
-  <p class="small muted"><b>Graded under Understand (10 of the 100 AIC points),</b> together with your own explanation from Understand &amp; Refine. It's part of the same last push before the end of Week 6.</p>
+  <p class="small muted"><b>Graded under Understand (12 of the 100 AIC points),</b> together with your own explanation from Understand &amp; Refine. It's part of the same last push before the end of Week 6.</p>
 </section>
 
 <section class="module card" id="check">
